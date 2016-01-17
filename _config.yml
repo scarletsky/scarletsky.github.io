@@ -74,4 +74,4 @@ disqus_shortname: scarletskygithubio
 deploy:
   type: git
   repo: git@github.com:scarletsky/scarletsky.github.io.git
-  branch: gh-pages
+  branch: master
