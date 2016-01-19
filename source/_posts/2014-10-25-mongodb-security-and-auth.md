@@ -1,6 +1,5 @@
 ---
-layout: post
-title: 'MongoDB 安全与认证'
+title: MongoDB 安全与认证
 date: 2014-10-25 17:18
 categories: mongodb
 ---
@@ -58,5 +57,3 @@ mongodb 传输协议是不加密的，如果需要加密，可以试用 `ssh` �
 
 # 参考文献
 [Mongodb 官方文档](http://docs.mongodb.org/manual/reference/method/js-user-management/)
-
-

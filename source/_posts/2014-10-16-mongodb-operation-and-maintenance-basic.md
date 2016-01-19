@@ -1,6 +1,5 @@
 ---
-layout: post
-title: 'MongoDB 运维基础'
+title: MongoDB 运维基础
 date: 2014-10-16 17:59
 categories: mongodb
 ---
@@ -48,7 +47,7 @@ http://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/
 
 
 # 监控
-+ 使用 http 管理接口。即用浏览器访问 http://localhost:28017 
++ 使用 http 管理接口。即用浏览器访问 http://localhost:28017
    如果想要关闭该接口，需要在 mongod 启动时使用 --nohttpinterface 选项
 + 使用 serverStatus。在 mongo shell 下使用 db.rubCommand({'serverStatus;: 1})
 + mongostat 命令。

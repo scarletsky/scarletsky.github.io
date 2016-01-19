@@ -1,6 +1,5 @@
 ---
-layout: post
-title:  "JavaScript 常用技巧"
+title:  JavaScript 常用技巧
 date:   2015-01-26 18:05:00
 categories: javascript
 ---

@@ -1,6 +1,5 @@
 ---
-layout: post
-title:  "HTML5 Drag and Drop API"
+title:  HTML5 Drag and Drop API
 date:   2015-01-13 18:28:04
 categories: HTML5
 tags: drag-and-drop

@@ -1,7 +1,6 @@
 ---
-layout: post
-title:  "JavaScript 利用 Blob 进行分片上传"
-date:   2015-01-27 17:28:00
+title: JavaScript 利用 Blob 进行分片上传
+date: 2015-01-27 17:28:00
 categories: javascript
 ---
 
@@ -181,4 +180,3 @@ function upload (req, res) {
 app.post('/upload', multipartMiddleware, upload);
 
 ```
-
