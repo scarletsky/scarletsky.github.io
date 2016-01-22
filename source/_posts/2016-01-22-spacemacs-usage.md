@@ -71,6 +71,22 @@ dotspacemacs-additional-packages
 3. 创建 .editorconfig 文件，写上自己喜欢的配置。
 4. 完。
 
+
+## 设置文件默认的主模式
+
+虽然我们可以通过 `M-x` 来设置文件的主模式，但这种方式只是在单独修改某个文件的主模式时好用，如果要把所有同类型的文件都改成其他模式，这种方式的效率就太低了。
+
+在 Spacemacs 中，我们可以用 `auto-mode-alist` 来设置某一类文件默认的主模式。
+
+我们只需要在 `~/.spacemacs` 中的 `user-config` 中加入下面代码即可：
+
+```elisp
+(add-to-list 'auto-mode-alist '("\\.js\\'" . react-mode))
+```
+
+上面代码会用 `react-mode` 打开所有 `.js` 文件。
+
+
 ## Emacs 服务器
 
 Spacemacs 会在启动时启动服务器，这个服务器会在 Spacemacs 关闭的时候被杀掉。
