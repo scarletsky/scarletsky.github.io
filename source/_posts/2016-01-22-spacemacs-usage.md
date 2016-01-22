@@ -15,6 +15,12 @@ $ git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
 $ emacs
 ```
 
+## 配置文件
+
+Spacemacs 的配置文件位于 `~/.spacemacs` 中，我们只需要修改这个文件就可以制定自己的配置了。
+
+一般情况下，我们只需要在 `dotspacemacs-configuration-layers` 中添加自己需要的 layer 就可以了。
+
 ## 常用快捷键
 
 #### 配置文件管理
@@ -40,10 +46,30 @@ $ emacs
 `SPC w v | SPC w /` 垂直分割窗口
 `SPC w c` 关闭当前窗口
 
-
 #### 对齐
 `SPC j =` 自动对齐，相当于 beautify
 
+#### Shell 集成 (必须先配置 Shell layer)
+`SPC '(单引号)` 打开/关闭 Shell
+`C-k` 前一条 shell 命令，相当于在 shell 中按上箭头
+`C-j` 后一条 shell 命令，相当于在 shell 中按下箭头
+
+## 让 Spacemacs 支持 EditorConfig
+
+EditorConfig 是一个配置文件，一般位于项目的根目录，它可以让不同的编辑器和IDE 都按照相同的格式来格式化代码，对于项目的维护者来说是一个很好的工具。
+
+Spacemacs 也支持 EditorConfig，只需要在配置文件中添加配置即可。下面以 OS X 为例，通过以下步骤即可让 Spacemacs 支持 EditorConfig：
+
+1. `$ brew install editorconfig`
+2. 在 `~/.spacemacs` 中的 `dotspacemacs-additional-packages` 中添加 `editorconfig`：
+```
+dotspacemacs-additional-packages
+ '(
+   editorconfig
+   )
+```
+3. 创建 .editorconfig 文件，写上自己喜欢的配置。
+4. 完。
 
 ## Emacs 服务器
 
@@ -75,4 +101,4 @@ Spacemacs 会在启动时启动服务器，这个服务器会在 Spacemacs 关�
 ## 参考资料
 
 [https://github.com/syl20bnr/spacemacs/blob/master/doc/DOCUMENTATION.org](https://github.com/syl20bnr/spacemacs/blob/master/doc/DOCUMENTATION.org)
-
+[http://brannonlucas.com/using-editorconfig-and-spacemacs-on-os-x/](http://brannonlucas.com/using-editorconfig-and-spacemacs-on-os-x/)
