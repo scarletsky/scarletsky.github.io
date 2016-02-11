@@ -103,7 +103,7 @@ worksheet['!merges'] // 返回一个包含 range 对象的列表，[ {s: { r: 0,
 
 #### 解析 Excel 生成 JSON
 
-**Tips** 事实上，你可以直接通过 `XLSX.utils.sheet_to_json(worksheet)` 获得同样的结果
+> **Tips** 事实上，你可以直接通过 `XLSX.utils.sheet_to_json(worksheet)` 获得同样的结果
 
 **注意** 本例子中假设表的第一行为字段名
 
