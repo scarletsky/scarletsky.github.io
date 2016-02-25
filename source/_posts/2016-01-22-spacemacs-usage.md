@@ -37,15 +37,15 @@ Spacemacs 的配置文件位于 `~/.spacemacs` 中，我们只需要修改这个
 `SPC SPC` 搜索当前文件 
 
 #### 窗口管理
-`SPC f t` 或 `SPC p t` 打开/关闭侧边栏，相当于 ST / Atom 中的 `Ctrl(cmd) + k + b`
+`SPC f t 或 SPC p t` 用 NeoTree 打开/关闭侧边栏，相当于 ST / Atom 中的 `Ctrl(cmd) + k + b`
 `SPC f t` 打开当前文件所在的目录
-`SPC p t` 打开当前文件所在的根目录
+`SPC p t` 打开当前文件所在的**根**目录
 
 `SPC 0` 光标跳转到侧边栏（NeoTree）中
 `SPC n(数字)` 光标跳转到第 n 个 buffer 中
 
-`SPC w s | SPC w -` 水平分割窗口
-`SPC w v | SPC w /` 垂直分割窗口
+`SPC w s 或 SPC w -` 水平分割窗口
+`SPC w v 或 SPC w /` 垂直分割窗口
 `SPC w c` 关闭当前窗口
 
 #### 对齐
