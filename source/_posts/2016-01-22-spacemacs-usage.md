@@ -70,8 +70,9 @@ dotspacemacs-additional-packages
    editorconfig
    )
 ```
-3. 创建 .editorconfig 文件，写上自己喜欢的配置。
-4. 完。
+3. 创建 `.editorconfig` 文件，写上自己喜欢的配置。
+4. 按 `M-x` 打开 `editorconfig-mode` 或调用 `editorconfig-apply`。
+5. 完。
 
 
 ## 设置文件默认的主模式
