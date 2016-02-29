@@ -2,6 +2,7 @@
 title: JavaScript 利用 Blob 进行分片上传
 date: 2015-01-27 17:28:00
 categories: javascript
+tags: [javascript, blob, upload]
 ---
 
 # 基本流程

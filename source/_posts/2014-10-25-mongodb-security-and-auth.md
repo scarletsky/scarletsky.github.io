@@ -2,6 +2,7 @@
 title: MongoDB 安全与认证
 date: 2014-10-25 17:18
 categories: mongodb
+tags: [mongodb]
 ---
 
 # 安全和认证

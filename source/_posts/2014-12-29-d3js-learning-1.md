@@ -2,7 +2,7 @@
 title:  D3.js 学习笔记1
 date:   2014-12-29 16:28:04
 categories: javascript
-tags: d3.js
+tags: [d3.js]
 ---
 
 # 基础操作

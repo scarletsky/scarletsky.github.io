@@ -2,7 +2,7 @@
 title: HTML5 Canvas 技巧
 date: 2015-03-15 20:55:00
 categories: javascript
-tags: canvas html5
+tags: [html5, canvas]
 ---
 
 # 注意事项

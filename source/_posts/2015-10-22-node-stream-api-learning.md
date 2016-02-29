@@ -2,7 +2,7 @@
 title: Node.js 中 Stream API 的使用
 date: 2015-10-22 17:09:06
 categories: javascript
-tags: javascript
+tags: [nodejs, stream]
 ---
 
 ## 基本介绍

@@ -2,7 +2,7 @@
 title: 写在二十四岁生日
 date: 2015-10-25 17:38:50
 categories: life
-tags: life
+tags: [life, bitrhday]
 ---
 
 又一年过去了，今年是第四年。

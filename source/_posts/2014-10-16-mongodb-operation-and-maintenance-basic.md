@@ -2,6 +2,7 @@
 title: MongoDB 运维基础
 date: 2014-10-16 17:59
 categories: mongodb
+tags: [mongodb]
 ---
 
 可以试用 `mongod --help` 查看所有选项

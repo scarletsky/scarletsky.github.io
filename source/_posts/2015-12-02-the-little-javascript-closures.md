@@ -1,7 +1,8 @@
 ---
 title: The Little JavaScript Closures
 date: 2015-12-02 20:55:54
-tags: javascript
+category: javascript
+tags: [javascript, closure, 闭包]
 ---
 
 ## 写在前面

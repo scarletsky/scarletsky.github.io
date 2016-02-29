@@ -1,7 +1,8 @@
 ---
 title: (译) Haskell 中随机数的使用
 date: 2016-02-06 17:35:18
-tags: ['haskell', 'random']
+category: haskell
+tags: [haskell, random]
 ---
 
 随机数（我指的是伪随机数）是通过显式或隐式的状态来生成的。这意味着在 Haskell 中，随机数的使用（通过 `System.Random` 库）是伴随着状态的传递的。 

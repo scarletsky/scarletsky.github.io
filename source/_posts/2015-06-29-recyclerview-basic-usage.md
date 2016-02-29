@@ -2,6 +2,7 @@
 title: RecyclerView 基本用法
 date: 2015-06-29 20:55:00
 categories: android
+tags: [android, recyclerview]
 ---
 
 #基本用法

@@ -1,7 +1,7 @@
 title:  D3.js 学习笔记2
 date:   2015-01-04 17:28:04
 categories: javascript
-tags: d3.js
+tags: [d3.js]
 ---
 
 # Layout

@@ -2,7 +2,7 @@
 title: The Digest Loop and $apply
 date: 2014-10-16 11:12
 categories: javascript
-tags: angular.js
+tags: [angular.js]
 ---
 
 让我们来看一下 `Angular` 底下是怎么工作的。我们是怎样通过几行代码让神奇的数据绑定起作用的呢？我们先来理解一下 `$digest` 循环和 `$apply` 方法是怎样工作的。

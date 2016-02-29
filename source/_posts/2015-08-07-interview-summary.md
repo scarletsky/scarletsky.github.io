@@ -2,7 +2,7 @@
 title: 面试总结
 date: 2015-08-07 21:32:41
 categories: life
-tag: career
+tag: [life, career]
 ---
 
 # 面试前的准备
