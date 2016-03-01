@@ -60,7 +60,16 @@ instance Functor [] where
 > 2. 必须是可组合的，两个 `fmap` 组合使用的结果应该和两个函数组合起来再用 `fmap` 的结果相同。
 >    也就是说 `fmap f . fmap g` 必须等于 `fmap (f . g)`。
 
-条件一是什么意思 ?
+为什么 `fmap id = id` ?
+
+> 因为
+> `id :: a -> a`
+> `fmap id :: T(a) -> T(a)`
+> 令 `T(a) = a`
+> 即 `fmap id :: a -> a`
+> 所以 `fmap id = id`
+
+所以条件一是什么意思 ?
 
 > 意思是 `fmap` 只能对值调用 `f`，不能做额外的事情。
 
@@ -101,6 +110,21 @@ CJust 0 "haha"
 `fmap id` 和 `id` 返回的结果不相等 ?
 
 > 是的，所以即便 `CMaybe a` 实现了 `fmap`，但它也不是 Functor。
+
+为什么 `fmap (f . g) = fmap f . fmap g` ?
+
+> 假设
+> `f :: a -> b`, `g :: b -> c`
+> 那么
+> `f . g :: a -> c`
+> 即
+> `fmap (f . g) = T(a) -> T(c)`
+> 又因为
+> `fmap f = T(a) -> T(b)`, `fmap g = T(b) -> T(c)`
+> 所以
+> `fmap f . fmap g = T(a) -> T(c)`
+> 即 `fmap (f . g) = fmap f . fmap g`
+
 
 条件二有点像乘法分配律。
 
@@ -242,6 +266,10 @@ Functor 是类型类，只要满足以下条件的数据类型都可以成为 Fu
 - 该数据类型必须有一个以上的类型参数。
 
 最后，强烈建议看看 [这篇文章](http://adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html)，相当形象生动。
+
+## 特别感谢
+
+[@bramblex](https://github.com/bramblex) 给出 `fmap id = id` 和 `fmap (f . g) = fmap f . fmap g` 的证明过程。
 
 ## 参考资料
 
