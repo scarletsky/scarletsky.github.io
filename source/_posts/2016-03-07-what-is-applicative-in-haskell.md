@@ -34,7 +34,7 @@ class (Functor f) => Applicative f where
 
 `pure` 有什么用 ?
 
-> 把一个值变成一个 Functor 。
+> 把一个值变成一个 Applicative Functor 。
 
 `<*>` 呢 ?
 
