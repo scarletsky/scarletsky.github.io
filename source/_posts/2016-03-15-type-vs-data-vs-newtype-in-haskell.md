@@ -78,9 +78,49 @@ data Person = Person {
 ## newtype
 
 `newtype` 关键字和 `data` 类似，都是用来创建新的数据类型，但 `newtype` 的值构造器限制在一个，而 `data` 没有限制值构造器的数量。
+另外，`newtype` 速度比 `data` 要快。
+
+为什么既然有了 `data` 还要有 `newtype` ？ 先看下面这个例子：
+
+```hs
+[(+2), (*3)] <*> [2, 3]
+-- 结果是 [4, 5, 6, 9]
+-- 但我希望的结果是 [4, 9]，该怎样做 ？
+```
+
+在上面的例子中，因为 `[]` 已经是 `Applicative` 的实例了，也就是说它已经有自己的 `<*>` 方法了。
+如果不重新实现 `<*>` 方法，我们是没有办法得到 `[4, 9]` 这个结果的。
+
+但怎样才能既不改动原有的 `[]`，又可以重新实现 `<*>` 方法呢 ？
+答案就是用 `newtype` 把 `[]` 封装成一个新的类型，然后让这个新的类型成为 `Applicative` 的实例啦~
+我们来试试：
+
+```hs
+newtype ZipList a = ZipList { getZipList :: [a] } deriving (Show)
+
+-- 要让 ZipList 成为 Applicative 的实例，
+-- 必须先让 ZipList 成为 Functor 的实例
+instance Functor ZipList where
+    fmap f xs = undefined
+
+instance Applicative ZipList where
+    pure x = undefined
+    ZipList fs <*> ZipList xs = ZipList (zipWith id fs xs)
+
+-- ghci> getZipList $ ZipList [(+2), (*3)] <*> ZipList [2,3]
+-- ghci> [4, 9]
+```
+
+## 总结
+
+`type` 用来为一个已有类型声明别名。
+`data` 用来定义新的数据类型，可以有任意个值构造器。
+`newtype` 用来封装已有的数据类型，只能有一个值构造器，速度比 `data` 快。
+
 
 ## 参考资料
 
 [Build Our Own Type and Typeclss](http://learnyoua.haskell.sg/content/zh-cn/ch08/build-our-own-type-and-typeclass.html)
 [Functors, Applicative Functors and Monoids](http://learnyouahaskell.com/functors-applicative-functors-and-monoids)
-[Real World Haskell chp 3](http://cnhaskell.com/chp/3.html)
+[Defining types, streamlining functions](http://cnhaskell.com/chp/3.html)
+[Using typeclasses](http://cnhaskell.com/chp/6.html)
