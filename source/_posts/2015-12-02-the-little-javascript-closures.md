@@ -264,7 +264,7 @@ foo 函数是一个闭包吗？
 function foo() {
   function bar() {
     var x = 1;
-    console.log(x + 1);
+    return x + 1;
   }
 }
 ```
@@ -276,7 +276,7 @@ bar 函数是一个闭包吗？
 function foo() {
   var x = 1;
   function bar() {
-    console.log(x + 1);
+    return x + 1;
   }
 }
 ```
