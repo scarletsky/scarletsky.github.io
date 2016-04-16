@@ -81,13 +81,17 @@ Git 是一个优秀的版本控制工具，我们可以在 `.spacemacs` 的 `dot
 
 下面是一些常用的 git 命令，前缀为 `g`。
 
-`SPC g i` 相当于 `git init`
-`SPC g s` 相当于 `git status`
-`SPC g S` 相当于 `git add currentFile`
-`SPC g c c` 相当于 `git commit`
-`SPC g C` 相当于 `git checkout xxx` (切换分支)
-`SPC g P p` 相当于 `git push`
-`SPC g l l` 相当于 `git log`
+| Git | Magit |
+|-----|-------|
+| `git init`            | `SPC g i` |
+| `git status`          | `SPC g s` |
+| `git add`             | `SPC g s` 弹出层选中文件然后按 `s` |
+| `git add currentFile` | `SPC g S` |
+| `git commit`          | `SPC g c c` |
+| `git push`            | `SPC g P` 按提示操作 |
+| `git checkout xxx`    | `SPC g C` |
+| `git checkout -- xxx` | `SPC g s` 弹出层选中文件然后按 `u` |
+| `git log`             | `SPC g l l` |
 
 在 commit 时，我们输入完 commit message 之后，需要按 `C-c C-c` 来完成 commit 操作，也可以按 `C-c C-k` 来取消 commit 。
 
