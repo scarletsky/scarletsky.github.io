@@ -31,8 +31,8 @@ Spacemacs 的配置文件位于 `~/.spacemacs` 中，我们只需要修改这个
 #### 文件管理
 
 `SPC f f` 打开文件（夹），相当于 `$ open xxx` 或 `$ cd /path/to/project`
-`SPC p f` 搜索文件名，相当于 ST / Atom 中的 `Ctrl + p`
-`SPC s a p` 搜索内容，相当于 `$ ag xxx` 或 ST / Atom 中的 `Ctrl + Shift + f`
+`SPC /` 用合适的搜索工具搜索内容，相当于 `$ grep/ack/ag/pt xxx` 或 ST / Atom 中的 `Ctrl + Shift + f`
+`SPC f R` 重命名当前文件
 
 `SPC b k` 关闭当前 buffer
 `SPC SPC` 搜索当前文件 
@@ -48,6 +48,21 @@ Spacemacs 的配置文件位于 `~/.spacemacs` 中，我们只需要修改这个
 `SPC w s 或 SPC w -` 水平分割窗口
 `SPC w v 或 SPC w /` 垂直分割窗口
 `SPC w c` 关闭当前窗口
+
+#### 项目管理
+
+`SPC p p` 切换项目
+`SPC p D` 在 dired 中打开项目根目录
+`SPC p f` 在项目中搜索文件名，相当于 ST / Atom 中的 `Ctrl + p`
+`SPC p R` 在项目中替换字符串，根据提示输入「匹配」和「替换」的字符串，然后输入替换的方式：
+- `E` 修改刚才输入的「替换」字符串
+- `RET` 表示不做处理
+- `y` 表示只替换一处
+- `Y` 表示替换全部
+- `n` 或 `delete` 表示跳过当前匹配项，匹配下一项
+- `^` 表示跳过当前匹配项，匹配上一项
+- `,` 表示替换当前项，但不移动光标，可和 `n` 或 `^` 配合使用
+
 
 #### 对齐
 `SPC j =` 自动对齐，相当于 beautify
