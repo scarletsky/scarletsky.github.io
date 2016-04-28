@@ -87,7 +87,7 @@ dotspacemacs-additional-packages
    )
 ```
 3. 创建 `.editorconfig` 文件，写上自己喜欢的配置。
-4. 按 `M-x` 打开 `editorconfig-mode` 或调用 `editorconfig-apply`。
+4. 在 `~/.spacemacs` 中的 `docspacemacs/user-config` 中加入 `(editorconfig-mode 1)`。
 5. 完。
 
 ## Git 集成 (必须先配置Magit 的使用)
