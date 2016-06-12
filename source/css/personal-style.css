@@ -2,3 +2,11 @@ code, pre, samp {
     font-family: "Monaco";
     white-space: pre !important;
 }
+
+table {
+    table-layout: fixed;
+}
+
+table code {
+    white-space: normal !important;
+}
