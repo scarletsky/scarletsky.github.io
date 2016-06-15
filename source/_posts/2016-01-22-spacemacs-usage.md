@@ -32,6 +32,7 @@ Spacemacs 的配置文件位于 `~/.spacemacs` 中，我们只需要修改这个
 
 `SPC f f` 打开文件（夹），相当于 `$ open xxx` 或 `$ cd /path/to/project`
 `SPC /` 用合适的搜索工具搜索内容，相当于 `$ grep/ack/ag/pt xxx` 或 ST / Atom 中的 `Ctrl + Shift + f`
+`SPC s c` 清除搜索高亮
 `SPC f R` 重命名当前文件
 
 `SPC b k` 关闭当前 buffer
