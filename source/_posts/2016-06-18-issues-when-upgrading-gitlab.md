@@ -19,7 +19,7 @@ tags: gitlab
 当我启动 MySQL 的时候，报了这样的错误：
 
 ```
-$ sudo service gitlab restart
+$ sudo service mysql restart
 ...
 MySQL Job failed to start
 ```
