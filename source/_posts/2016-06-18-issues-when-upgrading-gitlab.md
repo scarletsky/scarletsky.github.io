@@ -85,8 +85,9 @@ BUNDLE_WITHOUT: development:test:postgres:mysql
 
 最开始的时候，我直接用 docker-compose 来运行 docker-gitlab，我试着先用 MySQL ，于是我把 `docker-compose.yaml` 中的 PostgreSQL 部分的东西全部改成 MySQL，然后直接用 `docker-compose up` 来运行 gitlab 。
 
-虽然运行过程中没看出什么问题，但我后来发现 MySQL 中的用户和用户组都被修改成 `messagebus:messagebus` 了！这样直接导致了我本地的 MySQL 不能正常使用了。
-最后把它改回 `mysql:adm` 才恢复正常~
+虽然运行过程中没看出什么问题，但我后来发现 MySQL 中的用户和用户组都被修改成 `messagebus:fuse` 了！这样直接导致了我本地的 MySQL 不能正常使用了。
+
+经过调查，我发现是 docker 的 `-v` 指定已存在目录的时候，会修改文件目录的用户和用户组，最后把它改回 `mysql:adm` 才恢复正常~
 
 
 
