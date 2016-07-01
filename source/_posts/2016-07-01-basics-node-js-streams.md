@@ -125,7 +125,7 @@ fs.createReadStream('input.txt.gz')
   .pipe(fs.createWriteStream('output.txt'));
 ```
 
-首先，我们通过 `input.txt.gz` 创建了一个可读流，然后让它流 `zlib.createGunzip()` 流，它会解压内容。最后，我们添加一个可写流把解压后的内容写到另一个文件中。
+首先，我们通过 `input.txt.gz` 创建了一个可读流，然后让它流向 `zlib.createGunzip()` 流，它会解压内容。最后，我们添加一个可写流把解压后的内容写到另一个文件中。
 
 
 ### 其他方法
