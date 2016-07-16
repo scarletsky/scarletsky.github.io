@@ -1,5 +1,5 @@
 ---
-title: What is applicative in haskell ?
+title: What is applicative in Haskell ?
 date: 2016-03-07 11:52:28
 categories: haskell
 tags: [haskell, applicative]

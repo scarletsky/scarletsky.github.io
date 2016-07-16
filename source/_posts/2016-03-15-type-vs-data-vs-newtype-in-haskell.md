@@ -1,5 +1,5 @@
 ---
-title: type vs data vs newtype in haskell
+title: type vs data vs newtype in Haskell
 date: 2016-03-15 18:09:56
 category: haskell
 tags: [haskell]
