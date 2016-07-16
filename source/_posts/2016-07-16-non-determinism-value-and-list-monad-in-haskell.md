@@ -1,5 +1,5 @@
 ---
-title: Why list is non-determinism value in Haskell
+title: Non-determinism value and List Monad in Haskell
 date: 2016-07-16 16:01:39
 category: haskell
 tags: haskell
