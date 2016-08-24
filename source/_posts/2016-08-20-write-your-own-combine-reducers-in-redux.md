@@ -66,7 +66,7 @@ function combineReducers(reducers) {
 // reducers
 {
   key1: function(state.key1, action) { /*...*/ },
-  key2: function(state.key2, action) { /*...*/ },
+  key2: function(state.key2, action) { /*...*/ }
 }
 ```
 
@@ -78,17 +78,36 @@ function reCombineReducers(reducers) {
   return function (state, action) {
     switch (action.type) {
       case SP_ACTION:
-        return Object.assign({}, state, { /* do something */ })
+        return Object.assign({}, state, { /* do something */ });
       default:
         return Object.keys(reducers)
                     .map(k => ({ [k]: reducers[k](state[k], action) }))
-                    .reduce((prev, next) => Object.assign({}, prev, next))
+                    .reduce((prev, next) => Object.assign({}, prev, next));
     }
   }
 }
 ```
 
 上面的例子模拟了原来 `combineReducers` 的功能，还对 `SP_ACTION` 进行了特殊的处理，很简单吧！
+
+然而，上面的例子虽然模拟了 `combineReducers` 的功能，但失去了 `combineReducers` 的检查对象变化的功能，因为现在的 default block 中会返回一个全新的对象。
+有没有方法可以既保留 `combineReducers` 的全部功能，又能扩展它呢？
+其实很简单，我们只要利用 `combineReducers` 返回的函数就可以了！
+(感谢liximomo 指出上面例子中的缺陷)
+
+```js
+function reCombineReducers(reducers) {
+  let fn = combineReducers(reducers);
+  return function (state, action) {
+    switch (action.type) {
+      case SP_ACTION:
+        return Object.assign({}, state, { /* do something */ });
+      default:
+        return fn(state, action);
+    }
+  }
+}
+```
 
 
 ## 实例
@@ -116,6 +135,7 @@ function reCombineReducers(reducers) {
 
 ```js
 function reCombineReducers(reducers) {
+  let fn = combineReducers(reducers);
   return function (state, action) {
     switch (action.type) {
       case GET_TABLE_SUCCESS:
@@ -124,9 +144,7 @@ function reCombineReducers(reducers) {
       case REMOVE_TABLE_SUCCESS:
         return initState;
       default:
-        return Object.keys(reducers)
-                    .map(k => ({ [k]: reducers[k](state[k], action) }))
-                    .reduce((prev, next) => Object.assign({}, prev, next))
+        return fn(state, action);
     }
   }
 }
