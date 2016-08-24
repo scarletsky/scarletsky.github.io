@@ -93,7 +93,7 @@ function reCombineReducers(reducers) {
 然而，上面的例子虽然模拟了 `combineReducers` 的功能，但失去了 `combineReducers` 的检查对象变化的功能，因为现在的 default block 中会返回一个全新的对象。
 有没有方法可以既保留 `combineReducers` 的全部功能，又能扩展它呢？
 其实很简单，我们只要利用 `combineReducers` 返回的函数就可以了！
-(感谢liximomo 指出上面例子中的缺陷)
+(感谢 liximomo 指出上面例子中的缺陷)
 
 ```js
 function reCombineReducers(reducers) {
