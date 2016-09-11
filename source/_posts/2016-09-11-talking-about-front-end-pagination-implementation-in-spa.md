@@ -247,7 +247,7 @@ var lastPage = Math.ceil(total / limit);
 function genPages() {
 
     if (lastPage <= 10) {
-        return Array(10).fill().map((v, i) => i + 1);
+        return Array(lastPage).fill().map((v, i) => i + 1);
     }
 
     // dynamicPages 为除第一页和最后一页之外的页码，-1 表示省略号
