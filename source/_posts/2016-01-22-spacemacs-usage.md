@@ -126,6 +126,29 @@ Git 是一个优秀的版本控制工具，我们可以在 `.spacemacs` 的 `dot
 上面代码会用 `react-mode` 打开所有 `.js` 文件。
 
 
+## 设置主模式的 hook
+
+主模式的 hook 是一个 elisp 函数，这个函数会在主模式加载时调用，常用于为特定的主模式自定义配置。
+如我想在 `js2-mode` 中作出如下配置：
+
+- 移除检查分号的提示 (否则当行末缺少了分号的时候，会给出烦人的提示)
+- 支持 Node.js 内建函数 (否则当出现 `require`, `module` 之类的时候会提示未定义变量)
+- 设置缩进为 2
+
+这时候我可以通过如下方式来设置：
+
+```elisp
+;; hooks
+(defun my-js-mode-hook ()
+  (setq js2-basic-offset 2)
+  (setq js-indent-level 2)
+  (setq js2-include-node-externs t)
+  (setq js2-strict-missing-semi-warning nil))
+
+(add-hook 'js2-mode-hook 'my-js-mode-hook)
+```
+
+
 ## Emacs 服务器
 
 Spacemacs 会在启动时启动服务器，这个服务器会在 Spacemacs 关闭的时候被杀掉。
@@ -155,5 +178,6 @@ Spacemacs 会在启动时启动服务器，这个服务器会在 Spacemacs 关�
 
 ## 参考资料
 
-[https://github.com/syl20bnr/spacemacs/blob/master/doc/DOCUMENTATION.org](https://github.com/syl20bnr/spacemacs/blob/master/doc/DOCUMENTATION.org)
-[http://brannonlucas.com/using-editorconfig-and-spacemacs-on-os-x/](http://brannonlucas.com/using-editorconfig-and-spacemacs-on-os-x/)
+https://github.com/syl20bnr/spacemacs/blob/master/doc/DOCUMENTATION.org
+http://brannonlucas.com/using-editorconfig-and-spacemacs-on-os-x/
+https://www.gnu.org/software/emacs/manual/html_node/elisp/Mode-Hooks.html
