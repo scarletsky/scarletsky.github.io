@@ -27,16 +27,26 @@ Spacemacs 的配置文件位于 `~/.spacemacs` 中，我们只需要修改这个
 #### 配置文件管理
 `SPC f e d` 快速打开配置文件 `.spacemacs`
 `SPC f e R` 同步配置文件
+`SPC q R` 重启 emacs
+
+
+#### 帮助文档
+`SPC h d` 查看 describe 相关的文档
+`SPC h d f` 查看指定函数的帮助文档
+`SPC h d b` 查看指定快捷键绑定了什么命令
+`SPC h d v` 查看指定变量的帮助文档
+
 
 #### 文件管理
-
 `SPC f f` 打开文件（夹），相当于 `$ open xxx` 或 `$ cd /path/to/project`
 `SPC /` 用合适的搜索工具搜索内容，相当于 `$ grep/ack/ag/pt xxx` 或 ST / Atom 中的 `Ctrl + Shift + f`
 `SPC s c` 清除搜索高亮
 `SPC f R` 重命名当前文件
 
-`SPC b k` 关闭当前 buffer
+`SPC b k` 关闭当前 buffer (spacemacs 0.1xx 以前)
+`SPC b d` 关闭当前 buffer (spacemacs 0.1xx 以后)
 `SPC SPC` 搜索当前文件 
+
 
 #### 窗口管理
 `SPC f t 或 SPC p t` 用 NeoTree 打开/关闭侧边栏，相当于 ST / Atom 中的 `Ctrl(cmd) + k + b`
@@ -48,10 +58,11 @@ Spacemacs 的配置文件位于 `~/.spacemacs` 中，我们只需要修改这个
 
 `SPC w s 或 SPC w -` 水平分割窗口
 `SPC w v 或 SPC w /` 垂直分割窗口
-`SPC w c` 关闭当前窗口
+`SPC w c` 关闭当前窗口 (spacemacs 0.1xx 以前)
+`SPC w d` 关闭当前窗口 (spacemacs 0.1xx 以后)
+
 
 #### 项目管理
-
 `SPC p p` 切换项目
 `SPC p D` 在 dired 中打开项目根目录
 `SPC p f` 在项目中搜索文件名，相当于 ST / Atom 中的 `Ctrl + p`
@@ -67,6 +78,7 @@ Spacemacs 的配置文件位于 `~/.spacemacs` 中，我们只需要修改这个
 
 #### 对齐
 `SPC j =` 自动对齐，相当于 beautify
+
 
 #### Shell 集成 (必须先配置 Shell layer)
 `SPC '(单引号)` 打开/关闭 Shell
@@ -97,6 +109,8 @@ Git 是一个优秀的版本控制工具，我们可以在 `.spacemacs` 的 `dot
 
 下面是一些常用的 git 命令，前缀为 `g`。
 
+spacemacs 0.1xx:
+
 | Git | Magit |
 |-----|-------|
 | `git init`            | `SPC g i` |
@@ -109,7 +123,12 @@ Git 是一个优秀的版本控制工具，我们可以在 `.spacemacs` 的 `dot
 | `git checkout -- xxx` | `SPC g s` 弹出层选中文件然后按 `u` |
 | `git log`             | `SPC g l l` |
 
+spacemacs 0.2xx:
+
+大部分命令整合到 `SPC g s` 中，需要按照提示执行命令
+
 在 commit 时，我们输入完 commit message 之后，需要按 `C-c C-c` 来完成 commit 操作，也可以按 `C-c C-k` 来取消 commit 。
+
 
 ## 设置文件默认的主模式
 
