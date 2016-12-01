@@ -145,7 +145,7 @@ Twilio (use http status)
 但在实际应用中，如果仅仅使用 Http 状态码的话，我们的代码中就遍布 Http 状态码：
 
 ```js
-// Node.j
+// Node.js
 if (!res.body.title) {
   res.statusCode = 400
 }
