@@ -113,7 +113,9 @@ fatal: ambiguous argument 'HEAD^2': unknown revision or path not in the working 
 因此，当 n 为 1 时，`~` 和 `^` 其实是等价的。
 譬如：`HEAD~~~` 和 `HEAD^^^` 是等价的。
 
-最后，放上一张 Jon Loeliger 在 [kernel.org](https://www.kernel.org/pub/software/scm/git/docs/git-rev-parse.html) 中画的图：
+最后，引用 [kernel.org](https://www.kernel.org/pub/software/scm/git/docs/git-rev-parse.html) 中非常形象的一段话：
+
+>Here is an illustration, by Jon Loeliger. Both commit nodes B and C are parents of commit node A. Parent commits are ordered left-to-right.
 
 ```
 G   H   I   J
