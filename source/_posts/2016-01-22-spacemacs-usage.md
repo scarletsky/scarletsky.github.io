@@ -85,6 +85,17 @@ Spacemacs 的配置文件位于 `~/.spacemacs` 中，我们只需要修改这个
 `C-k` 前一条 shell 命令，相当于在 shell 中按上箭头
 `C-j` 后一条 shell 命令，相当于在 shell 中按下箭头
 
+
+#### 快速翻页 (在 spacemacs 0.1xx 中没测试过)
+`SPC n , 或 . 或 < 或 >` 进入 `scrolling transient state`
+然后重复按 `,` 或 `.` 或 `<` 或 `>` 即可，
+按其他键会退出 `scrolling transient state`
+`,` 向上翻一页
+`.` 向下翻一页
+`<` 向上翻半页
+`>` 向下翻半页
+
+
 ## 让 Spacemacs 支持 EditorConfig
 
 EditorConfig 是一个配置文件，一般位于项目的根目录，它可以让不同的编辑器和IDE 都按照相同的格式来格式化代码，对于项目的维护者来说是一个很好的工具。
