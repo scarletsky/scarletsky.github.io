@@ -7,7 +7,8 @@ tags: [sql, postgresql]
 
 ## 简介
 
-PostgreSQL 是世界上功能最强大的关系型数据库。
+PostgreSQL 是世界上功能最强大的关系型数据库，除了标准的 SQL 的支持外，还有丰富的特性，可以通过扩展来增强数据库的能力。
+本文是我学习 PostgreSQL 过程中的一些总结。
 
 ## 安装
 
@@ -32,6 +33,8 @@ brew install postgresql
 
 
 ## 扩展
+
+我们知道，PostgreSQL 有非常丰富的扩展供我们使用，下面列举一些常见的扩展：
 
 ### uuid-ossp
 
@@ -173,19 +176,6 @@ UPDATE testjsonb SET value = jsonb_set(value, '{books, 3}', '10') WHERE id = 3;
 UPDATE testjsonb SET value = value - 'age' WHERE id = 2;
 ```
 
-
-## PL/pgSQL
-
-```sql
-DO $$
-DECLARE user_id UUID;
-BEGIN
-
-INSERT INTO users (name) VALUES ('scarlex') RETURNING id INTO user_id;
-INSERT INTO posts (title, user_id) VALUES ('Learning PG', user_id);
-
-END $$;
-```
 
 ## 升级
 
