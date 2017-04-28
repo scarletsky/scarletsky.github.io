@@ -8,35 +8,35 @@ tags: database, postgresql
 
 当客户端与数据库服务器连接时，它需要指定用哪个数据库用户的身份来连接。PostgreSQL 为我们提供了很多种客户端认证的方式，我们可以根据自己的需要来选择认证方式。
 
-```
-$ createuser test
-$ psql
-postgres=# \du
-                                   List of roles
- Role name |                         Attributes                         | Member of
------------+------------------------------------------------------------+-----------
- postgres  | Superuser, Create role, Create DB, Replication, Bypass RLS | {}
- test      |                                                            | {}
+## 常见情况
 
-postgres=# \password test
+```
+$ psql
+postgres=# CREATE USER test WITH PASSWORD '123456';
 postgres=# CREATE DATABASE test OWNER test;
 postgres=# \q
 
-$ psql -U test -W
+$ psql -U test
 psql: FATAL:  Peer authentication failed for user "test"
-$ psql -h localhost -U test -W
+$ psql -U test -h localhost
 psql: FATAL:  Ident authentication failed for user "test"
 
-$ useradd test
-$ sudo su - test
+$ sudo su -
+# useradd test
+# psql -U test
+psql: FATAL:  Peer authentication failed for user "test"
+# psql -U test -h localhost
+psql: FATAL:  Ident authentication failed for user "test"
+# su - test
 $ psql
 test=>
 ```
 
-## pg_hba.conf
+相信每个在生产环境中使用 PostgreSQL 的人都折腾过客户端认证的问题。
+明明用户名和密码都正确，而且用户也是数据库的拥有者，为什么 PostgreSQL 会禁止访问？
+这通常是因为 `pg_hba.conf` 没有配置好。
 
-相信每个在生产环境中使用 PostgreSQL 的人都折腾过客户端认证的问题，明明用户名和密码都正确，而且用户也是数据库的拥有者，为什么 PostgreSQL 会禁止访问？
-通常这是因为 `pg_hba.conf` 文件没有配置好。
+## pg_hba.conf
 
 `pg_hba.conf` 是 PostgreSQL 客户端认证的配置文件 (hba 是 host-based authentication 的缩写)，它位于 PostgreSQl 的配置目录下，通常是 `/usr/local/pgsql/data` 或者 `/var/lib/pgsql/data`。
 如果两个位置都找不到，但可以连接到数据库，可以直接在 psql shell 里面输入
