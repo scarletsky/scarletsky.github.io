@@ -168,58 +168,133 @@ function test2(a, b) {
 }
 ```
 
-* 不可变变量
-* 函数是一等公民
-  * 高阶函数
-  * 闭包
-  * 函数组合
-```
-h = compose(f,g)
-h(x) = f(g(x))
+### 不可变变量
+
+指的是一个变量一旦创建后，就不能再进行修改，任何修改都会生成一个新的变量。使用不可变变量最大的好处是线程安全。多个线程可以同时访问同一个不可变变量，让并行变得更容易实现。
+由于 JavaScript 原生不支持不可变变量，需要通过第三方库来实现。 (如 [Immutable.js](https://facebook.github.io/immutable-js/)，[Mori](http://swannodette.github.io/mori/) 等等)
+
+```js
+var obj = Immutable({ a: 1 });
+var obj2 = obj.set('a', 2);
+console.log(obj);  // Immutable({ a: 1 })
+console.log(obj2); // Immutable({ a: 2 })
 ```
 
-  * 柯里化
-```js
-f = curry(f)
-f(x,y,z) = f(x,y)(z) = f(x)(y,z) = f(x)(y)(z)
+
+### 函数是一等公民
+
+指的是函数和其他数据类型一样，可以赋值给变量，可以作为参数传递，可以作为返回值，可以作为数组中的函数，可以是对象中的一个值等等。下面这些术语都是围绕这一特性的应用：
+
+  * **高阶函数 (Higher order function)**
+  如果一个函数接受函数作为参数，或者返回值为函数，那么该函数就是高阶函数。
+
+  ```js
+// 接受函数的函数
+function test1(callback) {
+  callback()
+}
+
+// 返回函数的函数
+function test2() {
+  return function() {
+    console.log(1);
+  }
+}
+  ```
+
+  * **闭包 (Closure)**
+  如果一个函数引用了自由变量，那么该函数就是一个闭包。何谓自由变量？自由变量是指不属于该函数作用域的变量(所有全局变量都是自由变量，严格来说引用了全局变量的函数都是闭包，但这种闭包并没有什么用，通常情况下我们说的闭包是指函数内部的函数)。
+
+  ```js
+// test1 是普通函数
+function test1() {
+  var a = 1;
+
+  // test2 是内部函数
+  // 它引用了 test1 作用域中的变量 a
+  // 因此它是一个闭包
+  return function test2() {
+    return a + 1;
+  }
+}
+  ```
+
+  * **函数组合 (Composition)**
+  前面提到过，函数式编程的一个特点是通过串联函数来求值。然而，随着串联函数数量的增多，代码的可读性就会不断下降。函数组合就是用来解决这个问题的方法。假设有一个 `compose` 函数，它可以接受多个函数作为参数，然后返回一个新的函数。当我们为这个新函数传递参数时，该参数就会「流」过其中的函数，最后返回结果。
+
+```
+// 组合 f, g 函数, 从左到右求值
+var composed = compose(f,g);
+composed(x) = g(f(x));
+
+// 组合 f, g, h 函数, 从右到左求职
+var composed = composeRight(h, g, f);
+composed(x) = h(g(f(x)));
 ```
 
-* 模式匹配
+  * **柯里化 (Currying)**
+  柯里化是对函数的封装，当调用函数时传递参数数量不足时，会返回一个新的函数，直到参数数量足够时才进行求值。
+
 ```js
+// 假设函数 f 接受三个参数
+f = curry(f);
+f(x,y,z) = f(x,y)(z) = f(x)(y,z) = f(x)(y)(z);
+```
+
+* **模式匹配 (Pattern matching)**
+模式匹配是指可以为一个函数定义多个版本，通过传入不同参数来调用对应的函数。形式上有点像「方法重载」，但方法重载是通过传入*参数类型*不同来区分的，模式匹配没有这个限制。利用模式匹配，我们可以去掉函数中的「分支」(最常见的是 `if`)，写出非常简洁的代码。
+
+```js
+// 普通版本，需要在函数内部对参数进行判断
 function fib(x) {
   if (x === 0) return 0;
   if (x === 1) return 1;
   return fib(x-1) + fib(x-2);
 }
+
+// 模式匹配版本。
+// 由于 JavaScript 不支持模式匹配，
+// 下面代码只是作演示用途
+var fib = (0) => 0;
+var fib = (1) => 1;
+var fib = (x) => fib(x-1) + fib(x-2);
+// 调用
+fib(10);
 ```
 
-```hs
-fib 0 = 0
-fib 1 = 1
-fib x = fib(x-1) + fib(x-2)
-```
+可以看到，如果能在语言层面支持模式匹配，那么在函数定义中就可以省略很多「分支」。
+上面的例子可能不够明显，请想象一下在编写 Restful API 时，我们需要解析请求中的参数，然后返回对应内容。传统方式下，我们需要写很多 `if` 语句来进行判断，如果该 API 支持非常多参数，那么该函数就会有非常多的 `if` 语句，这种函数在维护的时候会是一个噩梦。
+如果支持模式匹配，那么我们只需要定义多个函数即可。
+
 
 ## 常见函数
-* map - 映射
- `[1,2,3]` -> `[4,5,6]`
+接下来来看看几个常见的函数。
 
-* reduce - 归纳
- `[1,2,3]` -> 6
+* `map`
+映射函数，通过定义函数来实现数据的映射，简单来说就是令一个数组变换成另一个数组，如要将 `[1,2,3]` 变换成 `[4,5,6]`，我们只需要定义一个 `x+3` 的变换即可，即：
 
-* filter - 过滤
- `[1,2,3]` -> `[1,3]`
+```js
+[1,2,3].map(x => x+3); // 返回 [4, 5, 6]
+```
 
-实现
+`map` 函数的实现非常简单，只需要遍历数组，然后对每个元素调用一次变换函数，最后返回结果即可。
+
 ```js
 function map(array, fn) {
   var result = [];
   for (var i = 0; i < array.length; i++) {
-  var transformed = fn(array[i], i);
-  result.push(transformed);
+    var transformed = fn(array[i], i);
+    result.push(transformed);
   }
   return result;
 }
 ```
+
+
+* `reduce` (有些语言里面叫 `fold`)
+归纳函数，定义一个函数来归纳数组，最后返回一个值，简单来说就是令一个数组变成一个值。
+ `[1,2,3]` -> 6
+
 
 ```js
 function reduce(array, acc, fn) {
@@ -229,6 +304,12 @@ function reduce(array, acc, fn) {
   return acc;
 }
 ```
+
+* filter - 过滤
+ `[1,2,3]` -> `[1,3]`
+
+实现
+
 
 ```js
 function filter(array, fn) {
