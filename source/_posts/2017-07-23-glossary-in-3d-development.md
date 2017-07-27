@@ -48,16 +48,16 @@ theta = Math.acos(a.dot(b));
 a.cross(b) = c
 c.length() = a.length() * b.length() * Math.sin(theta)
 ```
-
+  我们知道，三个不在同一直线上的点可以构成一个平面，我们可以通过用这三个点计算两个向量，然后再计算这两个向量的叉乘，结果就是这个平面的法线了。
 
 
 ### 矩阵(Matrix)
 
 
-### Quaternion
+### 四元数(Quaternion)
 
 
-### EulerAngles
+### 欧拉角(EulerAngles)
 
 
 
@@ -66,7 +66,7 @@ c.length() = a.length() * b.length() * Math.sin(theta)
 
 
 ### 顶点(Vertex)
-在三维空间中，一个孤立的点是普通的点，没有什么特殊的名称。如果一个点是用来构成多边形的，那么该点就被称为顶点。 
+在三维空间中，一个孤立的点是普通的点。如果一个点是用来构成多边形的，那么该点就被称为顶点。 
 
 ### 网格(Mesh)
 网格是一种复杂的形状，它由多个顶点按照某个规律连接而成，换句话说，一个网格包含了多个顶点。
@@ -79,13 +79,24 @@ c.length() = a.length() * b.length() * Math.sin(theta)
 贴图是指把一张普通的图片贴到材质的表面。每种材质都可以有多种类型的贴图，如漫反射贴图、法线贴图、高光贴图、光照贴图 等。材质除了这些贴图之外，还有其他属性，可以用来调节这些贴图的属性。
 换句话说，每种材质都可以包含多种贴图。
 
-### UV
+### UV 贴图
 
-### Axis Align Bounding Box
+### 轴向包围盒(Axis Align Bounding Box)
+轴向包围盒简称 AABB，是指包含一个模型，且边平行于坐标轴的最小六面体。
+请看看下面两张图：
+![](http://7tebgv.com1.z0.glb.clouddn.com/images/aabb.png)
+![](http://7tebgv.com1.z0.glb.clouddn.com/images/aabb2.png)
+AABB 就是在模型最外面的由细线构成包围盒，它会随着模型旋转而变化。
+实际上，AABB 并不可见，上图中的只是为了让我们更好理解才把包围盒画上去的。
+另外，第一张图中为了让我们更好看见 AABB，特意把 AABB 调大了一点点，实际上该模型的 AABB 和所有边都是重合的。
 
-### Orient Bounding Box
-
-### Ray
+### 有向包围盒(Orient Bounding Box)
+有向包围盒简称 OBB，它是包含模型且相对于坐标轴方向任意的最小的长方体。
+看看下面两张图：
+![](http://7tebgv.com1.z0.glb.clouddn.com/images/obb.png)
+![](http://7tebgv.com1.z0.glb.clouddn.com/images/obb2.png)
+白色线框表示的就是 OBB，而蓝色线框表示的则是 AABB。
+如果想看更直观的对比，可以看看这个视频：[AABB vs OBB](https://www.youtube.com/watch?v=HYO5Pthe3TE)。
 
 
 ## 程序
