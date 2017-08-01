@@ -52,18 +52,42 @@ c.length() = a.length() * b.length() * Math.sin(theta)
 
 
 ### 矩阵(Matrix)
+矩阵在 3D 开发中常常用来变换顶点坐标。
+计算方法是把矩阵与顶点坐标相乘，即可得到变换后的顶点坐标。 即：
 
+```
+vertex' = matrix * vertex
+```
 
-### 四元数(Quaternion)
+其中，最常见的矩阵有下面几种：
+
+- 模型矩阵(Model Matrix)
+  模型矩阵的作用是把局部坐标中的顶点转换成世界坐标。
+  每个模型从三维软件导出时，都会基于一套坐标系来生成顶点坐标，这个坐标系就是局部坐标。
+  当我们把这个模型放到场景中的指定位置时，由于该位置是世界坐标中的一点，我们的操作相当于把模型从原点平移到该位置。同理，我们也可以在场景中对模型进行旋转和缩放操作。
+  实际上这些操作是在操作模型矩阵，利用这个模型矩阵把模型局部坐标中的顶点转换成世界坐标的顶点。
+
+- 视图矩阵(View Matrix)
+  视图矩阵用来把顶点的世界坐标转换成相对于观察者的坐标。
+
+- 投影矩阵(Projection Matrix)
+  投影矩阵用来把顶点相对于观察者的坐标转换成屏幕坐标。
+
+这三个矩阵统称成 MVP 矩阵，我们在屏幕上看到的点都是通过如下公式进行转换的：
+
+```
+vertex' = Projection * View * Model * vertex
+```
 
 
 ### 欧拉角(EulerAngles)
+
+### 四元数(Quaternion)
 
 
 
 ## 3D 模型
 任何一个 3D 模型都是由多个简单的几何形状组成的，而这些几何形状又是通过三角形来组成的。
-
 
 ### 顶点(Vertex)
 在三维空间中，一个孤立的点是普通的点。如果一个点是用来构成多边形的，那么该点就被称为顶点。 
@@ -78,8 +102,6 @@ c.length() = a.length() * b.length() * Math.sin(theta)
 ### 贴图(Texture)
 贴图是指把一张普通的图片贴到材质的表面。每种材质都可以有多种类型的贴图，如漫反射贴图、法线贴图、高光贴图、光照贴图 等。材质除了这些贴图之外，还有其他属性，可以用来调节这些贴图的属性。
 换句话说，每种材质都可以包含多种贴图。
-
-### UV 贴图
 
 ### 轴向包围盒(Axis Align Bounding Box)
 轴向包围盒简称 AABB，是指包含一个模型，且边平行于坐标轴的最小六面体。
@@ -152,10 +174,14 @@ var indexBuffer = new Uint8Array([
 顶点着色器负责处理顶点的信息，上面提到的顶点缓冲区就是由顶点着色器来处理的。
 片元着色器负责为片元上色，它会在顶点着色器后面执行。
 
-### 渲染流程
-
 ### Draw Call
+Draw Call 是一次绘图操作，当我们把数据(如顶点、贴图、着色器等信息)准备好，然后传给 GPU 绘制就是一次 Draw Call。可以认为，Draw Call 次数越少，性能越好。
+
 
 ## 参考资料
 [3D游戏开发术语](https://jmonkeyengine.github.io/wiki/jme3/terminology_zh.html)
 [OpenGL 教程第三课：矩阵](http://www.opengl-tutorial.org/cn/beginners-tutorials/tutorial-3-matrices/)
+[模型矩阵、视图矩阵、投影矩阵](http://blog.csdn.net/jared_lau/article/details/48226193)
+[WebGL 编程指南](https://book.douban.com/subject/25909351/)
+[浅谈Draw Call和Batch的区别](http://www.manew.com/4702.html)
+[Draw calls in a nutshell](https://medium.com/@toncijukic/draw-calls-in-a-nutshell-597330a85381)
