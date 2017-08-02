@@ -81,9 +81,20 @@ vertex' = Projection * View * Model * vertex
 
 
 ### 欧拉角(EulerAngles)
+欧拉角用来表示物体旋转的角度，它由三部分组成：
+
+- 俯仰角(Pitch)，表示绕 X 轴旋转的角度。
+- 偏航角(Yaw 或 Heading)，表示绕 Y 轴旋转的角度。
+- 翻滚角(Roll 或 Bank)，表示绕 Z 轴旋转的角度。
+
+由于欧拉角非常直观易用，因此它对于新手来说非常友好。
+但是，对于任意一个角度，欧拉角的表示方式由旋转顺序来决定，即可以按照 X-Y-Z 的顺序来旋转，也可以按照 Y-Z-X 的顺序来旋转，也可以按照其他顺序来旋转，这样会导致一个角度会有多种表示方式。
+另外，如果想要在两个欧拉角之间进行插值(即想要实现平滑过度)，那是非常困难的。
+最致命的一点是，欧拉角存在万向锁。想了解的话可以观看这个[视频](http://v.youku.com/v_show/id_XNzkyOTIyMTI=.html)。
 
 ### 四元数(Quaternion)
-
+四元数是用来表达旋转的另一种方式，一个四元数表示绕一个方向旋转特定的角度。如绕 Y 轴旋转 90 度，用四元数来表示的话只需要一个方向 `Vector3(0, 1, 0)` 和一个角度 90 即可。
+四元数没有万向锁，插值非常简单。
 
 
 ## 3D 模型
@@ -182,6 +193,8 @@ Draw Call 是一次绘图操作，当我们把数据(如顶点、贴图、着色
 [3D游戏开发术语](https://jmonkeyengine.github.io/wiki/jme3/terminology_zh.html)
 [OpenGL 教程第三课：矩阵](http://www.opengl-tutorial.org/cn/beginners-tutorials/tutorial-3-matrices/)
 [模型矩阵、视图矩阵、投影矩阵](http://blog.csdn.net/jared_lau/article/details/48226193)
+[欧拉角pitch、yaw，roll的理解](http://blog.csdn.net/sinat_27456831/article/details/50042915)
+[欧拉角和旋转矩阵的转换](http://www.voidcn.com/blog/xufuyuan/article/p-4874655.html)
 [WebGL 编程指南](https://book.douban.com/subject/25909351/)
 [浅谈Draw Call和Batch的区别](http://www.manew.com/4702.html)
 [Draw calls in a nutshell](https://medium.com/@toncijukic/draw-calls-in-a-nutshell-597330a85381)
