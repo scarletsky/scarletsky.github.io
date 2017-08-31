@@ -13,7 +13,7 @@ Emacs 使用组合键的形式来触发不同的功能，最常见的是以下�
 
 - C 即 Ctrl 键，如 `<C-x>` 表示 按着 Ctrl 再按 x
 - S 即 Super 键，通常是 Windows 键或者是 Option 键
-- M 即 Meta 键，通常 Esc 键，如 `<M-x>` 表示先按下 Esc，然后松手，再按 x
+- M 即 Meta 键，通常是 Esc 键，如 `<M-x>` 表示先按下 Esc，然后松手，再按 x
 
 ## 常用键位绑定
 
