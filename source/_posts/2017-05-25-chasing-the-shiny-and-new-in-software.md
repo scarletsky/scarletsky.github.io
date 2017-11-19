@@ -1,7 +1,7 @@
 ---
 title: 「译」追赶时髦的技术
 date: 2017-05-25 08:32:09
-category: tech
+category: technology
 ---
 
 在 Web 开发领域，我们会经常看到有人讨论当前最好的框架或编程语言。[Scribd](https://www.scribd.com/) 的联合创始人 Jared Friedman 在 2015 年的时候专门写了[一篇文章](http://blog.jaredfriedman.com/2015/09/15/why-i-wouldnt-use-rails-for-a-new-company/)推荐创业公司使用 Node.js 代替 Rails。
