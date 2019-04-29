@@ -1,7 +1,7 @@
 ---
 title: 自定义 Redux 中的 combineReducers
 date: 2016-08-20 20:05:28
-category: javascript
+categories: [javascript]
 tags: [javascript, redux]
 ---
 

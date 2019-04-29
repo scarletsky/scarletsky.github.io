@@ -1,7 +1,7 @@
 ---
 title: Localtunnel（Node.js 版） 使用教程
 date: 2016-01-17 17:07:06
-category: localtunnel
+categories: [localtunnel]
 tags: [nodejs, localtunnel]
 ---
 

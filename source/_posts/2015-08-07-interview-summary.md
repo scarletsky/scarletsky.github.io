@@ -1,7 +1,7 @@
 ---
 title: 面试总结
 date: 2015-08-07 21:32:41
-categories: life
+categories: [life]
 tag: [life, career]
 ---
 

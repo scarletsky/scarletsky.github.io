@@ -1,6 +1,7 @@
 ---
 title: Webpack 打包含动态加载的类库
 date: 2019-02-19 12:11:01
+categories: [javascript, webpack]
 tags: [webpack]
 ---
 

@@ -1,6 +1,7 @@
 ---
 title: 「译」 MapReduce in MongoDB
 date: 2016-06-12 10:04:53
+categories: [database]
 tags: [mongodb]
 ---
 

@@ -1,6 +1,7 @@
 ---
 title: PostgreSQL 中的客户端认证
 date: 2017-04-26 08:05:06
+categories: [database]
 tags: [database, postgresql]
 ---
 

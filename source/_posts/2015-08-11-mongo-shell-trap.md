@@ -1,7 +1,7 @@
 ---
 title: Mongo Shell 使用过程中遇到的坑
 date: 2015-08-11 12:17:47
-categories: mongodb
+categories: [database]
 tags: [mongodb]
 ---
 

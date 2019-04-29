@@ -1,7 +1,7 @@
 ---
 title: 「译」Node.js Streams 基础
 date: 2016-07-01 13:45:12
-categories: nodejs
+categories: [nodejs]
 tags: [nodejs, stream]
 ---
 

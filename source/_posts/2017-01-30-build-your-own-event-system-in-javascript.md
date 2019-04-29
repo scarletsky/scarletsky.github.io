@@ -1,7 +1,7 @@
 ---
 title: 用 JavaScript 构建事件系统
 date: 2017-01-30 08:30:21
-category: javascript
+categories: [javascript]
 tags: [javascript]
 ---
 

@@ -1,6 +1,7 @@
 ---
 title: 【译】远程调试 iOS Safari
 date: 2019-01-10 15:51:47
+categories: [technology]
 tags: [iOS]
 ---
 

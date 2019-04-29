@@ -1,7 +1,7 @@
 ---
 title: Spacemacs 使用总结
 date: 2016-01-22 15:20:38
-category: emacs
+categories: [emacs]
 tags: [emacs, spacemacs]
 ---
 

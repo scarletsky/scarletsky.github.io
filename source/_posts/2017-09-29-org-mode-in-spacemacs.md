@@ -1,7 +1,7 @@
 ---
 title: Org mode in Spacemacs
 date: 2017-09-29 23:30:13
-category: technology
+categories: [emacs]
 tags: [emacs, spacemacs, org-mode]
 ---
 

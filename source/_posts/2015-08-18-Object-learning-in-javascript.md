@@ -1,7 +1,7 @@
 ---
 title: JavaScript 中 Object.defineProperty 的使用
 date: 2015-08-18 17:57:31
-categories: javascript
+categories: [javascript]
 tags: [javascript]
 ---
 

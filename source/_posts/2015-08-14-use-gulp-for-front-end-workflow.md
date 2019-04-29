@@ -1,7 +1,7 @@
 ---
 title: 利用 Gulp 处理前端工作流程
 date: 2015-08-14 16:57:33
-categories: javascript
+categories: [javascript]
 tags: [gulp]
 ---
 

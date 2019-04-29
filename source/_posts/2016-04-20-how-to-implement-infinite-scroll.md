@@ -1,6 +1,6 @@
 title: 如何实现无限滚动
 date: 2016-04-20 17:14:21
-category: javascript
+categories: [javascript]
 tags: [javascript, infinite scroll]
 ---
 

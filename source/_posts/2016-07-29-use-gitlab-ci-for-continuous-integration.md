@@ -1,6 +1,7 @@
 ---
 title: 用 GitLab CI 进行持续集成
 date: 2016-07-29 09:22:20
+categories: [gitlab]
 tags: [ci, gitlab-ci]
 ---
 

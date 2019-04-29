@@ -1,7 +1,7 @@
 ---
 title: 3D 开发中常见的术语
 date: 2017-07-23 16:06:39
-category: technology
+categories: [technology]
 tags: [3d]
 ---
 

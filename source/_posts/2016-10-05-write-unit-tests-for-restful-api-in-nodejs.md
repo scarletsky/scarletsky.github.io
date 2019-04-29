@@ -1,7 +1,7 @@
 ---
 title: 在 Node.js 中为 Restful API 编写单元测试
 date: 2016-10-05 11:57:26
-category: javascript
+categories: [javascript]
 tags: [javascript, nodejs]
 ---
 

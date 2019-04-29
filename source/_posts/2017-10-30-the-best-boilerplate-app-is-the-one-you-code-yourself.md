@@ -1,7 +1,7 @@
 ---
 title: 「译」自己写的才是最好的样板
 date: 2017-10-30 14:13:56
-category: technology
+categories: [technology]
 ---
 
 样板应用非常有用，它们可以令你的下一个项目非常快的构建起来，并且提供了目录结构让你有章可循。

@@ -1,8 +1,7 @@
 ---
 title: 我所了解的函数式编程
 date: 2017-06-30 22:01:07
-category: technology
-tags: [functional-programming]
+categories: [functional-programming]
 ---
 
 ## 前言

@@ -1,7 +1,7 @@
 ---
 title: Emacs key bindings for vim users
 date: 2017-08-30 21:12:59
-category: technology
+categories: [emacs]
 tags: [emacs]
 ---
 

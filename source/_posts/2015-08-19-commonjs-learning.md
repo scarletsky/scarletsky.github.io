@@ -1,7 +1,7 @@
 ---
 title: CommonJS 学习笔记
 date: 2015-08-19 10:11:10
-categories: javascript
+categories: [javascript]
 tags: [commonjs]
 ---
 

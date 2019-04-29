@@ -1,7 +1,7 @@
 ---
 title: 在 Node.js 中利用 js-xlsx 处理 Excel 文件
 date: 2016-01-30 11:31:46
-category: javascript
+categories: [javascript]
 tags: [node, javascript, excel, js-xlsx]
 ---
 

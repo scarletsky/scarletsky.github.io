@@ -1,7 +1,7 @@
 ---
 title: The Digest Loop and $apply
 date: 2014-10-16 11:12
-categories: javascript
+categories: [javascript]
 tags: [angular.js]
 ---
 

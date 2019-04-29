@@ -1,7 +1,7 @@
 ---
 title: PostgreSQL 学习笔记
 date: 2017-03-15 21:57:28
-category: sql
+categories: [sql]
 tags: [sql, postgresql]
 ---
 

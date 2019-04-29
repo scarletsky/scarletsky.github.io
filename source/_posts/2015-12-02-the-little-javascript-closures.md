@@ -1,7 +1,7 @@
 ---
 title: The Little JavaScript Closures
 date: 2015-12-02 20:55:54
-category: javascript
+categories: [javascript]
 tags: [javascript, closure, 闭包]
 ---
 

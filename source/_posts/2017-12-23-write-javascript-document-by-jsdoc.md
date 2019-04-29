@@ -1,8 +1,8 @@
 ---
 title: 用 JSDOC 编写 JavaScript 文档
 date: 2017-12-23 10:24:14
-tags: [tools]
-category: technology
+categories: [javascript]
+tags: [jsdoc]
 ---
 
 ## 简介

@@ -1,7 +1,7 @@
 ---
 title: Hubot 的简单用法
 date: 2016-04-03 00:12:49
-categories: hubot
+categories: [hubot]
 tags: [hubot]
 ---
 

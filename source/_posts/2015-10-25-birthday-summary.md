@@ -1,7 +1,7 @@
 ---
 title: 写在二十四岁生日
 date: 2015-10-25 17:38:50
-categories: life
+categories: [life]
 tags: [life, bitrhday]
 ---
 

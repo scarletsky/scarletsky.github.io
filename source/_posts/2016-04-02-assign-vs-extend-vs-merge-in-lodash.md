@@ -1,7 +1,7 @@
 ---
 title: Lodash 中 assign，extend 和 merge 的区别
 date: 2016-04-02 10:51:19
-categories: javascript
+categories: [javascript]
 tags: [javascript]
 ---
 

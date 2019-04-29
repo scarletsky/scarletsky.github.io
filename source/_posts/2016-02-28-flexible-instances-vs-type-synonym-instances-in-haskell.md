@@ -1,7 +1,7 @@
 ---
 title: FlexibleInstances 和 TypeSynonymInstances 编译指令的区别
 date: 2016-02-28 22:31:21
-category: haskell
+categories: [haskell]
 tags: [haskell]
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Promise 实现原理
 date: 2017-11-17 11:52:30
-tags:
+categories: [javascript]
 ---
 
 ## 简介

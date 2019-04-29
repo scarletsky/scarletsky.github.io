@@ -1,7 +1,7 @@
 ---
 title: 「译」 Haskell 中随机数的使用
 date: 2016-02-06 17:35:18
-category: haskell
+categories: [haskell]
 tags: [haskell, random]
 ---
 

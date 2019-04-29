@@ -1,7 +1,7 @@
 ---
 title: Git 中的 ~ 和 ^
 date: 2016-12-29 21:37:31
-category: tools
+categories: [tools]
 tags: [git]
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: 浅谈单页应用中前端分页的实现方案
 date: 2016-09-11 18:07:06
-category: javascript
+categories: [javascript]
 tags: [javascript]
 ---
 

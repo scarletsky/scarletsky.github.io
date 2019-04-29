@@ -1,7 +1,7 @@
 ---
 title: React-DnD 的使用
 date: 2015-11-17 10:59:31
-category: javascript
+categories: [javascript]
 tags: [javascript, react, dnd]
 ---
 

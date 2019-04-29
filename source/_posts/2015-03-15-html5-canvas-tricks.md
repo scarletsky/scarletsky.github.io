@@ -1,7 +1,7 @@
 ---
 title: HTML5 Canvas 技巧
 date: 2015-03-15 20:55:00
-categories: javascript
+categories: [javascript]
 tags: [html5, canvas]
 ---
 
