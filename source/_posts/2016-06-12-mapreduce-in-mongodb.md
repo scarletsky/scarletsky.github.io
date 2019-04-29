@@ -1,7 +1,7 @@
 ---
 title: 「译」 MapReduce in MongoDB
 date: 2016-06-12 10:04:53
-tags: mongodb
+tags: [mongodb]
 ---
 
 在这篇文章里面，我们会演示如何在 MongoDB 中使用 MapReduce 操作。

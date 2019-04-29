@@ -2,7 +2,7 @@
 title: Non-deterministic value and List Monad in Haskell
 date: 2016-07-16 16:01:39
 category: haskell
-tags: haskell
+tags: [haskell]
 ---
 
 ## 简介

@@ -2,7 +2,7 @@
 title: 升级 GitLab 过程中踩过的坑
 draft: true
 date: 2016-06-18 19:58:57
-tags: gitlab
+tags: [gitlab]
 ---
 
 

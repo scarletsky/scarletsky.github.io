@@ -2,7 +2,7 @@
 title: 如何用 JavaScript 下载文件
 date: 2016-07-03 18:43:41
 categories: javascript
-tags: javascript
+tags: [javascript]
 ---
 
 ## 简介
