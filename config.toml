@@ -21,7 +21,7 @@ googleAnalytics = ""      # UA-XXXXXXXX-X
 copyright = ""            # default: author.name ↓        # 默认为下面配置的author.name ↓
 
 [frontmatter]
-date  = [":filename", ":default"]
+date = [":filename", ":default"]
 
 [permalinks]
 post = "/:year/:month/:day/:slug"
