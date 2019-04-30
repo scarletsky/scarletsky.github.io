@@ -153,6 +153,5 @@ cd ..
 
 ## 参考资料
 
-https://gohugo.io/documentation/
-
-https://discourse.gohugo.io/t/extracting-date-and-slug-from-filename/
+- https://gohugo.io/documentation/
+- https://discourse.gohugo.io/t/extracting-date-and-slug-from-filename/
