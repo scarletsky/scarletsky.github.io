@@ -1,6 +1,6 @@
 ---
 title: 从 Hexo 迁移到 Hugo
-date: 2019-05-02T18:28:47+08:00
+date: 2019-04-28T18:28:47+08:00
 categories: [technology]
 ---
 
@@ -112,7 +112,39 @@ Issues 的评论系统，例如 [gitment](https://github.com/imsun/gitment)，
 
 最后就到了部署环节了。用 Hexo 的时候配置一下，然后运行 `hexo d -g` 就能部署到
 Github 上了。迁移到 Hugo 后，它官方文档推荐我们写 bash script 去部署，反正都是现
-成的了，直接抄过来然后改下就能用了～
+成的了，直接抄过来然后改下就能用了：
+
+```diff
+#!/bin/bash
+
+echo -e "\033[0;32mDeploying updates to GitHub...\033[0m"
+
+# Build the project.
+hugo # if using a theme, replace with `hugo -t <YOURTHEME>`
+
+# Go To Public folder
+cd public
+
++ git init
++ git remote add origin git@github.com:scarletsky/scarletsky.github.io.git
+# Add changes to git.
+git add .
+
+# Commit changes.
+msg="rebuilding site `date`"
+if [ $# -eq 1 ]
+  then msg="$1"
+fi
+git commit -m "$msg"
+
+# Push source and build repos.
+git push origin master -f
+
+# Come Back up to the Project Root
+cd ..
+
++ rm -rf public
+```
 
 总的来说 Hugo 还是很舒服的～
 
