@@ -1,6 +1,6 @@
 ---
 title: 从 Hexo 迁移到 Hugo
-date: 2019-04-28T18:28:47+08:00
+date: 2019-05-02T18:28:47+08:00
 categories: [technology]
 ---
 
