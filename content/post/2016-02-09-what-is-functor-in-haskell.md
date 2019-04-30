@@ -267,13 +267,15 @@ Functor 是类型类，只要满足以下条件的数据类型都可以成为 Fu
 
 最后，强烈建议看看 [这篇文章](http://adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html)，相当形象生动。
 
+
 ## 特别感谢
 
 [@bramblex](https://github.com/bramblex) 给出 `fmap id = id` 和 `fmap (f . g) = fmap f . fmap g` 的证明过程。
 
+
 ## 参考资料
 
-[Functors, Applicative Functors and Monoids](http://learnyouahaskell.com/functors-applicative-functors-and-monoids)
-[Functors, Applicatives, And Monads In Pictures](http://adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html)
-[Functor 简介](http://cnhaskell.com/chp/10.html#functor)
-http://stackoverflow.com/questions/2030863/in-functional-programming-what-is-a-functor
+- [Functors, Applicative Functors and Monoids](http://learnyouahaskell.com/functors-applicative-functors-and-monoids)
+- [Functors, Applicatives, And Monads In Pictures](http://adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html)
+- [Functor 简介](http://cnhaskell.com/chp/10.html#functor)
+- http://stackoverflow.com/questions/2030863/in-functional-programming-what-is-a-functor

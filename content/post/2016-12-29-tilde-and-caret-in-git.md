@@ -6,10 +6,12 @@ tags: [git]
 ---
 
 ## 简介
+
 在使用 Git 的时候，我们经常会看见 `~` 和 `^`，如 `HEAD~2`, `HEAD^3` 等。
 初学者经常会对这些符号感到疑惑，本文将讨论这两个符号的用途。
 
 ## 为何需要 ~ 和 ^
+
 不知道大家有没体会到，我们经常需要根据一个提交去查找它的祖先提交，如查找 `HEAD` 的第三个祖先提交。
 要找到对应的提交，我们可以直接通过 `git log`，然后手动选中第三个提交。
 
@@ -31,6 +33,7 @@ $ git log --graph --oneline
 
 
 ## ~ 的作用
+
 如果我们想要 `HEAD` 的第 10 个祖先提交，我们直接用 `HEAD~10` 就可以了。
 `<rev>~<n>` 用来表示一个提交的第 n 个祖先提交，如果不指定 n，那么默认为 1。
 另外，`HEAD~~~` 和 `HEAD~3` 是等价的。
@@ -58,6 +61,7 @@ $ git rev-parse HEAD~3
 
 
 ## ^ 的作用
+
 先看看下面这幅图：
 
 ```bash
@@ -108,6 +112,7 @@ fatal: ambiguous argument 'HEAD^2': unknown revision or path not in the working 
 
 
 ## ~ 与 ^ 的关系
+
 我们知道，`~` 获取第一个祖先提交，`^` 可以获取第一个父提交。
 其实第一个祖先提交就是第一个父提交，反之亦然。
 因此，当 n 为 1 时，`~` 和 `^` 其实是等价的。
@@ -141,5 +146,6 @@ J = F^2  = B^3^2   = A^^3^2
 ```
 
 ## 参考资料
-http://stackoverflow.com/questions/2221658/whats-the-difference-between-head-and-head-in-git
-https://www.kernel.org/pub/software/scm/git/docs/git-rev-parse.html
+
+- http://stackoverflow.com/questions/2221658/whats-the-difference-between-head-and-head-in-git
+- https://www.kernel.org/pub/software/scm/git/docs/git-rev-parse.html

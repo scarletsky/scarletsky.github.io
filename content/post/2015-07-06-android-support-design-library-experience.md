@@ -5,7 +5,7 @@ categories: [android]
 tags: [android, material design]
 ---
 
-#CoordinatorLayout
+# CoordinatorLayout
 
 这个新 Layout 是 FrameLayout 的加强版，用来协调各个子 view 的行为。最主要是用来实现 Toolbar 的折叠效果，也可以用来实现 FAB 自动消失的效果。
 
@@ -84,6 +84,7 @@ tags: [android, material design]
 
 
 
-#参考资料
-[Android Support Design 中 CoordinatorLayout 与 Behaviors 初探](http://segmentfault.com/a/1190000002888109)
-[http://stackoverflow.com/questions/30612310/android-nestedscrollview-has-wrong-size-after-applayout-behavior](http://stackoverflow.com/questions/30612310/android-nestedscrollview-has-wrong-size-after-applayout-behavior)
+# 参考资料
+
+- [Android Support Design 中 CoordinatorLayout 与 Behaviors 初探](http://segmentfault.com/a/1190000002888109)
+- http://stackoverflow.com/questions/30612310/android-nestedscrollview-has-wrong-size-after-applayout-behavior

@@ -11,6 +11,7 @@ tags: [javascript]
 
 既然都是合并对象，为什么还分三个不同的函数呢？它们之间到底有什么区别呢？
 
+
 ## assign(object, [sources])
 
 我们先看看官方网站上面的定义：
@@ -57,6 +58,7 @@ assign(test, { b: 2 }); // { a: 1, b: 2 }
 console.log(test);      // { a: 1, b: 2 }
 ```
 
+
 ## extend(object, [sources])
 
 在 3.x 版本中，`extend` 是 `assign` 的别名，它们的作用是一模一样的。
@@ -77,6 +79,7 @@ Foo.prototype.d = 4;
 extend({ a: 1 }, new Foo());
 // { a: 1, c: 3, d: 4 }
 ```
+
 
 ## merge(object, [sources])
 
@@ -118,6 +121,7 @@ merge(users, ages)
 console.log(users) // { data: [ { user: 'barney', age: 36 }, { user: 'fred', age: 40 } ]
 ```
 
+
 ## 总结
 
 ### 相同之处
@@ -135,6 +139,8 @@ console.log(users) // { data: [ { user: 'barney', age: 36 }, { user: 'fred', age
 
 - `merge` 遇到相同属性名的时候，如果属性值是纯对象或集合的时候，会合并属性值
 
+
 ## 参考资料
-https://lodash.com/docs
-http://stackoverflow.com/questions/19965844/lodash-difference-between-extend-assign-and-merge
+
+- https://lodash.com/docs
+- http://stackoverflow.com/questions/19965844/lodash-difference-between-extend-assign-and-merge

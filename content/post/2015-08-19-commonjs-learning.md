@@ -48,6 +48,7 @@ CommonJS 是 JavaScript 模块化的规范，Node.js采用了这个规范。
 
 
 # 参考资料
-http://javascript.ruanyifeng.com/nodejs/commonjs.html
-http://www.infoq.com/cn/articles/nodejs-module-mechanism/
-http://stackoverflow.com/questions/7137397/module-exports-vs-exports-in-node-js
+
+- http://javascript.ruanyifeng.com/nodejs/commonjs.html
+- http://www.infoq.com/cn/articles/nodejs-module-mechanism/
+- http://stackoverflow.com/questions/7137397/module-exports-vs-exports-in-node-js

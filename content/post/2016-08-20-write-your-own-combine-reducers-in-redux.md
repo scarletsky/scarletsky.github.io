@@ -6,6 +6,7 @@ tags: [javascript, redux]
 ---
 
 ## 简介
+
 Redux 中的 `combineReducers` 能让我们很方便地把多个 reducers 组合起来，成为一个新的 reducer。 
 然而，随着我们的应用变得越来越复杂，`combineReducers` 有可能不能满足我们的需求。
 正如 Redux 官方文档所说:
@@ -14,7 +15,9 @@ Redux 中的 `combineReducers` 能让我们很方便地把多个 reducers 组合
 
 `combineReducers` 只是方便我们使用而已，我们可以自定义一个完全不同的 `combineReducers` 来满足我们特殊的需求。
 
+
 ## 原理
+
 我们先回忆一下 reducer 的写法：
 
 ```js
@@ -111,6 +114,7 @@ function reCombineReducers(reducers) {
 
 
 ## 实例
+
 按照 Redux 的原则，不同的 reducer 应该相互独立的，它们之间不应该有任何依赖。
 这个原则看着是很美好的，但在实际使用中还是会有一些例外的情况。
 一个很简单的例子，也是我遇到过的例子，就是实现一个简单的表格 (其实我的情况复杂的多，需要实现类似 Excel 那样的操作，同时支持其他额外的功能)。
@@ -166,5 +170,6 @@ const table = reCombineReducers({
 
 
 ## 参考资料
-http://redux.js.org/docs/api/combineReducers.html
-https://github.com/reactjs/redux/blob/master/src/combineReducers.js
+
+- http://redux.js.org/docs/api/combineReducers.html
+- https://github.com/reactjs/redux/blob/master/src/combineReducers.js

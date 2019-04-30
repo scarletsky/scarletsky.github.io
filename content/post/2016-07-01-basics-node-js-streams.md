@@ -190,4 +190,5 @@ res.write('Trying to write again'); //Error !
 
 
 ## 参考资料
-https://www.sitepoint.com/basics-node-js-streams/
+
+- https://www.sitepoint.com/basics-node-js-streams/

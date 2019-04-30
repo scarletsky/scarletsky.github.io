@@ -9,6 +9,7 @@ categories: [javascript]
 Promise 是目前流行的处理异步操作结果的方式。
 本文假设读者已经了解过 Promise/A+ 规范，并熟悉 Promise 的用法。
 
+
 ## 构造
 
 我们先看看如何构造一个 Promise ：
@@ -126,7 +127,9 @@ function MyPromise(fn) {
 
 上面的例子中实现了最简单的 Promise，但离「可用」还有很长的距离，而且上面只是实现了 Promise/A+ 规范中的一小部分而已，还有很多细节需要处理的。
 
+
 ## 参考资料
-https://promisesaplus.com/
-https://www.promisejs.org/implementing/
-https://github.com/Jocs/jocs.github.io/issues/7
+
+- https://promisesaplus.com/
+- https://www.promisejs.org/implementing/
+- https://github.com/Jocs/jocs.github.io/issues/7

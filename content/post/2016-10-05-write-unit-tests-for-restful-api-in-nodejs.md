@@ -65,6 +65,7 @@ Restful API 比较好测试，测试起来也比较简单。
 JavaScript 社区里有很多测试框架可以用来编写单元测试，有 `ava`、`mocha`、`jasmine`、`tap` 等。
 这些测试框架都有提供 `beforeEach`、`afterEach` API，目的是隔离我们的测试数据，从而满足 **Isolated / Independent** 和 **Repeatable** 原则。
 
+
 ## 编写单元测试
 
 假设我们有以下 Restful API (用了 jwt 来做用户验证):
@@ -326,13 +327,14 @@ if (env === 'test' || env === 'development') {
 
 
 ## 参考资料
-https://zh.wikipedia.org/zh-cn/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95
-http://blog.hubstaff.com/why-you-should-write-unit-tests/
-http://www.yinwang.org/blog-cn/2016/09/14/tests
-https://www.zhihu.com/question/28729261/answer/94964928
-http://agileinaflash.blogspot.de/2009/02/first.html
-http://howtodoinjava.com/best-practices/first-principles-for-good-tests/
-https://github.com/ghsukumar/SFDC_Best_Practices/wiki/F.I.R.S.T-Principles-of-Unit-Testing
-https://github.com/sindresorhus/awesome-nodejs#testing
-https://github.com/visionmedia/supertest
-https://yq.aliyun.com/articles/57804
+
+- https://zh.wikipedia.org/zh-cn/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95
+- http://blog.hubstaff.com/why-you-should-write-unit-tests/
+- http://www.yinwang.org/blog-cn/2016/09/14/tests
+- https://www.zhihu.com/question/28729261/answer/94964928
+- http://agileinaflash.blogspot.de/2009/02/first.html
+- http://howtodoinjava.com/best-practices/first-principles-for-good-tests/
+- https://github.com/ghsukumar/SFDC_Best_Practices/wiki/F.I.R.S.T-Principles-of-Unit-Testing
+- https://github.com/sindresorhus/awesome-nodejs#testing
+- https://github.com/visionmedia/supertest
+- https://yq.aliyun.com/articles/57804

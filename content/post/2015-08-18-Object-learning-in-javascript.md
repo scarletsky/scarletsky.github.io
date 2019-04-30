@@ -11,11 +11,11 @@ tags: [javascript]
 
 直接在一个对象上定义一个新的属性，或修改一个已经存在的属性。这个方法会返回该对象。
 
-### 语法
+## 语法
 
 `Object.defineProperty(obj, prop, descriptor)`
 
-### 参数
+## 参数
 
 - `Object obj` 目标对象
 
@@ -35,13 +35,12 @@ tags: [javascript]
 
     + `enumerable` 是否能在for...in循环中遍历出来或在Object.keys中列举出来。默认为 `false`。
 
-#### **注意**
-在 `descriptor` 中不能**同时**设置访问器 (`get` 和 `set`) 和 `wriable` 或 `value`，否则会报以下错误：
+**注意:** 在 `descriptor` 中不能**同时**设置访问器 (`get` 和 `set`) 和 `wriable` 或 `value`，否则会报以下错误：
 ```
 Invalid property.  A property cannot both have accessors and be writable or have a value
 ```
 
-### 实际应用
+## 实际应用
 
 我们知道，在 `Express.js` 升级到 4.0 之后，它把很多功能从核心库中移除了。当我们访问那些被移除的属性时，它会报错，告诉我们该属性已经被移除了。这个功能就是通过 `Object.defineProperty` 来实现的。看看源码吧：
 
@@ -83,11 +82,11 @@ Invalid property.  A property cannot both have accessors and be writable or have
 
 和 `Object.defineProperty` 类似，只不过这个方法可以设置多个属性。
 
-### 语法
+## 语法
 
 `Object.defineProperties(obj, props)`
 
-### 参数
+## 参数
 
 - `Object obj` 目标对象
 
@@ -95,6 +94,7 @@ Invalid property.  A property cannot both have accessors and be writable or have
 
 
 # 参考资料
-http://www.cnblogs.com/rubylouvre/archive/2010/09/19/1831128.html
-https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object
-https://github.com/strongloop/express/blob/master/lib/express.js
+
+- http://www.cnblogs.com/rubylouvre/archive/2010/09/19/1831128.html
+- https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object
+- https://github.com/strongloop/express/blob/master/lib/express.js

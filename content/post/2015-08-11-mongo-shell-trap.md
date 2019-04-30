@@ -39,6 +39,5 @@ users.forEach(function(u) {
 
 # 参考资料
 
-http://stackoverflow.com/questions/8218484/mongodb-inserts-float-when-trying-to-insert-integer
-
-http://docs.mongodb.org/manual/core/shell-types/
+- http://stackoverflow.com/questions/8218484/mongodb-inserts-float-when-trying-to-insert-integer
+- http://docs.mongodb.org/manual/core/shell-types/

@@ -95,5 +95,6 @@ Error: localtunnel server returned an error, please try again
 其实有好几个 pull request 都尝试去解决这个问题的，但不知道什么原因，作者一直没去合并。或者再过一段时间，这个问题就会解决，到时候， localtunnel 就会变得更加好用了。
 
 ## 参考资料
-[https://github.com/localtunnel/localtunnel](https://github.com/localtunnel/localtunnel)
-[https://github.com/localtunnel/server](https://github.com/localtunnel/server)
+
+- [https://github.com/localtunnel/localtunnel](https://github.com/localtunnel/localtunnel)
+- [https://github.com/localtunnel/server](https://github.com/localtunnel/server)

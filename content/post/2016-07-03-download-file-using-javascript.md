@@ -10,6 +10,7 @@ tags: [javascript]
 我们知道，下载文件是一个非常常见的需求，但由于浏览器的安全策略的限制，我们通常只能通过一个额外的页面，访问某个文件的 url 来实现下载功能，但是这种用户体验非常不好。
 幸好，HTML 5 里面为 `<a>` 标签添加了一个 `download` 的属性，我们可以轻易的利用它来实现下载功能，再也不需要用以前的笨办法了。
 
+
 ## 原理
 
 我们先看看 `download` 的使用方法：
@@ -158,9 +159,10 @@ HTML 5 新的 `download` 特性真的很好用，结合 JavaScript 的动态能�
 
 
 ## 参考资料
-https://github.com/eligrey/FileSaver.js/blob/master/FileSaver.js
-https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL
-https://developer.mozilla.org/en-US/docs/Web/API/Blob
-http://stackoverflow.com/questions/19327749/javascript-blob-filename-without-link
-http://stackoverflow.com/questions/24501358/how-to-set-a-header-for-a-http-get-request-and-trigger-file-download
-http://blog.bguiz.com/2014/07/03/file-download-with-http-request-header/
+
+- https://github.com/eligrey/FileSaver.js/blob/master/FileSaver.js
+- https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL
+- https://developer.mozilla.org/en-US/docs/Web/API/Blob
+- http://stackoverflow.com/questions/19327749/javascript-blob-filename-without-link
+- http://stackoverflow.com/questions/24501358/how-to-set-a-header-for-a-http-get-request-and-trigger-file-download
+- http://blog.bguiz.com/2014/07/03/file-download-with-http-request-header/

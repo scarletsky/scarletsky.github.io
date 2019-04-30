@@ -17,6 +17,7 @@ Hubot 是 Github 的开源聊天机器人，可以用来做一些自动化任务
 
 是的，如果你的聊天软件上集成了 Hubot，你就可以轻松地用它来管理一些繁琐的事情啦！
 
+
 ## 安装
 
 官方推荐我们用 yeoman + hubot 生成器来生成我们的聊天机器人，方法如下：
@@ -28,6 +29,7 @@ $ yo hubot
 ```
 
 回答一些基本的问题后，我们的聊天机器人就生成好啦~
+
 
 ## 基本用法
 
@@ -97,6 +99,7 @@ ship it - Display a motivation squirrel
 
 当我们输入 `myhubot help` 的时候，返回的东东其实就是预定义的「输入」，这些预定义的「输入」只在 shell adapter 下有效哦！
 
+
 ## Adapter
 
 什么是 shell adapter ？ 我们运行 `./bin/hubot` 时默认的 adapter 就是 shell adapter。
@@ -147,6 +150,7 @@ module.exports = function(robot) {}
 
 想知道更多 api 的用法的话，可以参考文档：https://hubot.github.com/docs/scripting/
 
+
 ## 写在最后
 
 Hubot 真的是一个简单易用的聊天机器人，我们可以把它整合到我们的聊天软件中，让那些简单但繁琐的任务自动化起来，提高我们的工作效率！
@@ -154,4 +158,5 @@ Hubot 真的是一个简单易用的聊天机器人，我们可以把它整合�
 
 
 ## 参考资料
-https://hubot.github.com/
+
+- https://hubot.github.com/

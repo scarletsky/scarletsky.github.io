@@ -7,11 +7,13 @@ tags: [javascript]
 
 
 ## 简介
+
 在组件化开发越来越流行的今天，事件系统演者着非常重要的角色，它经常作为组件间通讯的桥梁。
 本文将讨论如何用 JavaScript 实现一个简单的事件系统。
 
 
 ## 基本结构
+
 我们先回想一下使用事件系统的方式。
 通常，我们要先通过 `on` / `listen` 方法注册为一个事件注册一个回调函数。
 然后调用 `emit` / `fire` 来触发一个事件，该事件对应的回调函数就会一一触发。
@@ -33,6 +35,7 @@ tags: [javascript]
 
 
 ## on & off & emit
+
 接下来我们将利用上述的结构来实现事件系统。其中最基本的三个操作是：
 
 - `on` 监听事件
@@ -96,6 +99,7 @@ console.log(ee._events);
 
 
 ## once
+
 有些时候，我们需要指定某些回调函数只触发一次。
 如：当页面加载完成后，执行初始化操作，这个操作就只会执行一次，之后再执行就不会生效。
 上面的事件系统无法实现这种需求，因为每次触发事件，所有绑定的回调事件都会执行，不存在只执行一次的情况。
@@ -140,4 +144,5 @@ this._onceHandlers = {
 
 
 ## 参考资料
-https://corcoran.io/2013/06/01/building-a-minimal-javascript-event-system/
+
+- https://corcoran.io/2013/06/01/building-a-minimal-javascript-event-system/

@@ -6,9 +6,12 @@ tags: [javascript]
 ---
 
 ## 简介
+
 Popover 是我们日常开发中用得比较多的组件，通常用于给定一个触发元素，当某特定事件 (`hover`, `click`等) 在该元素上触发时，弹出相关的菜单供用户选择。
 
+
 ## 目标
+
 我们的 Popover 需要实现如下特性：
 
 - 点击触发元素时，Popover 出现/消失
@@ -48,6 +51,7 @@ Popover 是我们日常开发中用得比较多的组件，通常用于给定一
 
 
 ## 监听 document 中的 click 事件
+
 一种常见的方式是在 `document` 中添加事件监听器，用 `e.target` 来判断点击是否发生在 Popover 内部。
 
 
@@ -99,6 +103,7 @@ document.addEventListener('click', function (e) {
 
 
 ## 利用 tabindex + focus + blur
+
 这种方式是利用 `tabindex` 让 Popover 能够响应 `focus` 和 `blur` 事件。
 
 ```html

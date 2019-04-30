@@ -6,6 +6,7 @@ tags: [d3.js]
 ---
 
 # 基础操作
+
 + `d3.select`, `d3.selectAll` 选择元素
 + `selection.append` 在选择集合中添加元素
 + `selection.data` 为选择元素进行数据绑定，常与 `enter` 和 `exit` 一起使用
@@ -19,13 +20,16 @@ tags: [d3.js]
 
 
 # 尺度(Scale)
+
 尺度(Scale)在 D3 中是一个很重要的概念。
 
 根据官方的定义，尺度是将输入域映射为输出范围的函数。尺度可以让用户定义参数的函数。一旦生成一个尺度，你可以调用此尺度函数，传入一个数据值，然后它会返回一个缩放后的值。你可以任意定义和使用尺度。
 
 D3 中有两种尺度，分别是 **定量变换(Quantitative)** 和 **序数变换(Ordinal)**。
 
+
 # 定量变换(Quantitative)
+
 定量变换有一个连续的域，如 [0, 1000] 这种线性区间，它可以很方便的进行数据转换。
 
 例如当我们有一个 [0, 1000] 的区间，但我们在作图的时候不想显示这么大的区间，只想让它显示 [0, 100] 的区间，这时候我们就可以利用定量变换进行数据转换了。
@@ -45,6 +49,7 @@ yScale.range() // [0, 100]
 
 
 # 序数变换(Ordinal)
+
 序数变换是包含一组离散的值，如 ['January', 'February', 'March']，像这样的值是无法创建连续区间的，只能用来创建离散区间。
 
 ```js
@@ -69,6 +74,7 @@ xScale(3) // undefined
 
 
 # 坐标轴
+
 利用尺度(Scale)，我们可以很轻松的创建坐标轴。
 
 ```js
@@ -83,6 +89,7 @@ var xAxis = d3.svg.axis()  // 创建坐标轴
 
 
 # 绘图
+
 D3 是利用 svg 进行绘图的，在操作上和用 `jQuery` 操作 `dom` 类似。
 
 在进行绘图的时候需要注意一点：绘图方向是从上往下，从左往右的。也就是左上角的坐标是 (0, 0)，右下角的坐标是 (width, height)。
@@ -220,5 +227,6 @@ svg.selectAll('rect')
 
 
 # 参考资料
-+ [官方 API 文档](https://github.com/mbostock/d3/wiki/Api-%E5%8F%82%E8%80%83)
-+ [D3 中文教程](http://pkuwwt.gitcafe.com/d3-tutorial-cn/scales.html)
+
+- [官方 API 文档](https://github.com/mbostock/d3/wiki/Api-%E5%8F%82%E8%80%83)
+- [D3 中文教程](http://pkuwwt.gitcafe.com/d3-tutorial-cn/scales.html)

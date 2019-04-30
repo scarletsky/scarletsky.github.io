@@ -6,14 +6,18 @@ tags: [emacs]
 ---
 
 ## 简介
+
 Emacs 是一个文本编辑器，号称是伪装成编辑器的操作系统。提起 Emacs，必定会联想到它的竞争对手 Vim，它们都是古老而强大的编辑器。虽然我已经用 Vim 好几年了，也听说过 Emacs 的各种强大的能力，但一直没有动力去学习它，直到最近看到强大的 org mode，才鼓起勇气去学习 Emacs。本文主要记录我学习 Emacs 的过程中与 Vim 的键位比较。
 
+
 ## 核心键位
+
 Emacs 使用组合键的形式来触发不同的功能，最常见的是以下几个键位：
 
 - C 即 Ctrl 键，如 `<C-x>` 表示 按着 Ctrl 再按 x
 - S 即 Super 键，通常是 Windows 键或者是 Option 键
 - M 即 Meta 键，通常是 Esc 键，如 `<M-x>` 表示先按下 Esc，然后松手，再按 x
+
 
 ## 常用键位绑定
 
@@ -73,9 +77,8 @@ Emacs 使用组合键的形式来触发不同的功能，最常见的是以下�
 
 
 
-
-
 ## 参考资料
-https://www.gnu.org/software/emacs/manual/
-http://notex.life/t/emacs-key-binding/18
+
+- https://www.gnu.org/software/emacs/manual/
+- http://notex.life/t/emacs-key-binding/18
 

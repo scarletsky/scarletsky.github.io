@@ -87,5 +87,6 @@ instance MyClass VectorInt where
 
 
 ## 参考资料
-http://rwh.readthedocs.org/en/latest/chp/6.html
-http://book.realworldhaskell.org/read/using-typeclasses.html
+
+- http://rwh.readthedocs.org/en/latest/chp/6.html
+- http://book.realworldhaskell.org/read/using-typeclasses.html

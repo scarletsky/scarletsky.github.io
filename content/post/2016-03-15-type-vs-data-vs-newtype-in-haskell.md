@@ -120,7 +120,7 @@ instance Applicative ZipList where
 
 ## 参考资料
 
-[Build Our Own Type and Typeclss](http://learnyoua.haskell.sg/content/zh-cn/ch08/build-our-own-type-and-typeclass.html)
-[Functors, Applicative Functors and Monoids](http://learnyouahaskell.com/functors-applicative-functors-and-monoids)
-[Defining types, streamlining functions](http://cnhaskell.com/chp/3.html)
-[Using typeclasses](http://cnhaskell.com/chp/6.html)
+- [Build Our Own Type and Typeclss](http://learnyoua.haskell.sg/content/zh-cn/ch08/build-our-own-type-and-typeclass.html)
+- [Functors, Applicative Functors and Monoids](http://learnyouahaskell.com/functors-applicative-functors-and-monoids)
+- [Defining types, streamlining functions](http://cnhaskell.com/chp/3.html)
+- [Using typeclasses](http://cnhaskell.com/chp/6.html)

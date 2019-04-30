@@ -17,10 +17,12 @@ tags: [nodejs, stream]
 
 本文是我学习 Node.js 中的 Stream API 中的一点总结，希望对大家有用。
 
+
 ## 特点
 
 - 基于事件通讯
 - 可以通过 `pipe` 来连接流
+
 
 ## 种类
 
@@ -28,6 +30,7 @@ tags: [nodejs, stream]
 - Writeable Stream  可写数据流
 - Duplex Stream  双向数据流，可以同时读和写
 - Transform Stream 转换数据流，可读可写，同时可以转换（处理）数据
+
 
 ## 事件
 
@@ -116,7 +119,9 @@ data
 ```
 
 ### 更多用法
+
 可以参考一下 https://github.com/jeresig/node-stream-playground ，进去示例网站之后直接点 add stream 就能看到结果了。
+
 
 ## 常见坑
 
@@ -140,13 +145,16 @@ data
             });
     ```
 
+
 ## 常用类库
 
 - [event-stream](https://github.com/dominictarr/event-stream) 用起来有函数式编程的感觉，个人比较喜欢
 - [awesome-nodejs#streams](https://github.com/sindresorhus/awesome-nodejs#streams) 由于其他 stream 库我都没用过，所以有需求的就直接看这里吧
 
+
 ## 参考资料
-[阮一峰 - stream接口](http://javascript.ruanyifeng.com/nodejs/stream.html)
-[nodejs.org Stream](https://nodejs.org/api/stream.html)
-[Transforming data with Node.js transform streams](http://codewinds.com/blog/2013-08-20-nodejs-transform-streams.html)
-[NodeJS: What's the difference between a Duplex stream and a Transform stream?](http://stackoverflow.com/questions/18335499/nodejs-whats-the-difference-between-a-duplex-stream-and-a-transform-stream)
+
+- [阮一峰 - stream接口](http://javascript.ruanyifeng.com/nodejs/stream.html)
+- [nodejs.org Stream](https://nodejs.org/api/stream.html)
+- [Transforming data with Node.js transform streams](http://codewinds.com/blog/2013-08-20-nodejs-transform-streams.html)
+- [NodeJS: What's the difference between a Duplex stream and a Transform stream?](http://stackoverflow.com/questions/18335499/nodejs-whats-the-difference-between-a-duplex-stream-and-a-transform-stream)

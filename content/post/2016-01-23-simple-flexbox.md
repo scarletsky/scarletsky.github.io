@@ -88,7 +88,8 @@ Flexbox 是 CSS 3 的布局方式，可以轻松实现传统布局中难以实�
 
 
 ## 参考资料
-[https://css-tricks.com/snippets/css/a-guide-to-flexbox/](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
-[http://www.w3cplus.com/css3/a-guide-to-flexbox.html](http://www.w3cplus.com/css3/a-guide-to-flexbox.html)
-[http://zh.learnlayout.com/flexbox.html](http://zh.learnlayout.com/flexbox.html)
+
+- [https://css-tricks.com/snippets/css/a-guide-to-flexbox/](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
+- [http://www.w3cplus.com/css3/a-guide-to-flexbox.html](http://www.w3cplus.com/css3/a-guide-to-flexbox.html)
+- [http://zh.learnlayout.com/flexbox.html](http://zh.learnlayout.com/flexbox.html)
 

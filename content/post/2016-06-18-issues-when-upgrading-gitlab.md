@@ -90,8 +90,8 @@ BUNDLE_WITHOUT: development:test:postgres:mysql
 经过调查，我发现是 docker 的 `-v` 指定已存在目录的时候，会修改文件目录的用户和用户组，最后把它改回 `mysql:adm` 才恢复正常~
 
 
-
 ## 参考资料
-http://stackoverflow.com/questions/22909060/mysql-job-failed-to-start
-https://gitlab.com/gitlab-org/gitlab-ci/issues/227
-https://github.com/sameersbn/docker-gitlab
+
+- http://stackoverflow.com/questions/22909060/mysql-job-failed-to-start
+- https://gitlab.com/gitlab-org/gitlab-ci/issues/227
+- https://github.com/sameersbn/docker-gitlab

@@ -10,6 +10,7 @@ tags: [hubot]
 我们在上一篇中介绍了 Hubot 的简单用法，里面提到我们可以为机器人编写脚本来让它根据不同的「输入」来给出不同的「输出」。
 本文将会介绍如何编写我们的 Hubot Scritps。
 
+
 ## 基础
 
 我们的脚本应该放在哪里才能让 hubot 找到并且正常加载呢？在上一篇文章中我们提到过，hubot 在启动时会加载 `scripts/` 目录中的脚本文件。
@@ -316,4 +317,4 @@ module.exports = (robot) ->
 ### res.random
 
 ## 参考资料
-https://hubot.github.com/docs/scripting/
+- https://hubot.github.com/docs/scripting/

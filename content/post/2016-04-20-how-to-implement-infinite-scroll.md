@@ -172,4 +172,5 @@ document.getElementById('container').addEventListener('scroll', fetchData);
 
 
 ## 参考资料
-https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect
+
+- https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect

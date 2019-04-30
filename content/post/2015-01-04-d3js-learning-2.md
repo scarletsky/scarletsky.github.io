@@ -27,6 +27,7 @@ D3 中包含的全部的 Layout 列表如下：
 
 本文主要介绍一下 `Pie Layout` 和 `Stack Layout`。
 
+
 ## Pie Layout
 
 Pie Layout 可以帮助你生成类似饼状图的数据结构。我们先看看它的使用方法。
@@ -258,4 +259,5 @@ var rects = groups.selectAll("rect")
 ```
 
 # 参考资料
-[http://chimera.labs.oreilly.com/books/1230000000345/ch11.html](http://chimera.labs.oreilly.com/books/1230000000345/ch11.html)
+
+- [http://chimera.labs.oreilly.com/books/1230000000345/ch11.html](http://chimera.labs.oreilly.com/books/1230000000345/ch11.html)

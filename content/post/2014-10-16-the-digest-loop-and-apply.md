@@ -63,6 +63,7 @@ Remember: For **all** UI elements that are bound to a $scope object, a $watch is
 
 
 # Dirty Checking
+
 Dirty checking 是一个简单的过程，可以归结为一个非常基本的概念：检查是否一个值改变了，整个应用程序尚未同步。
 
 Dirty checking 策略在许多不同的应用程序中是很普遍的，远远超过 Angular 所做的。例如游戏引擎，数据库引擎，对象关系映射器（ORMs）都是这样。
@@ -75,4 +76,5 @@ Dirty checking 策略在许多不同的应用程序中是很普遍的，远远�
 
 
 # 参考资料
-[The Digest Loop and $apply](https://www.ng-book.com/p/The-Digest-Loop-and-apply/)
+
+- [The Digest Loop and $apply](https://www.ng-book.com/p/The-Digest-Loop-and-apply/)

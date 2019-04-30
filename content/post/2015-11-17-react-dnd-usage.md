@@ -9,6 +9,7 @@ tags: [javascript, react, dnd]
 
 React DnD 是一组 React 高阶组件，可以用来帮你构建复杂的拖拽接口，同时解耦你的组件。React DnD 非常适合像 Trello 和 Storify 这样的应用，在不同地方通过拖拽转移数据，而组件会改变它们的外观和应用的状态来响应拖拽事件。
 
+
 ## 基本用法
 
 1. 把应用的根组件包装在 `DragDropContext` 中
@@ -50,6 +51,7 @@ export default DropTarget(types, spec, collect)(MyComponent2);
 ```
 
 这样，MyComponent 就变得可以拖拽，而 MyComponent2 就变得可以接受拖拽了，但这并不代表 MyComponent 可以放到 MyComponent2 中！
+
 
 ## 一些概念
 
@@ -188,9 +190,11 @@ class MyComponent extends Component {
 ```
 
 ## 具体例子
+
 - [演示](http://gaearon.github.io/react-dnd/examples-chessboard-tutorial-app.html)
 - [代码](https://github.com/gaearon/react-dnd/tree/master/examples)
 
 
 ## 参考资料
-[官方文档](http://gaearon.github.io/react-dnd/)
+
+- [官方文档](http://gaearon.github.io/react-dnd/)

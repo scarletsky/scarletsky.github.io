@@ -345,12 +345,13 @@ foo.getId(); // 2
 
 
 ## 参考资料
-[http://uternet.github.io/TLS/](http://uternet.github.io/TLS/)
-[http://www.ruanyifeng.com/blog/2009/08/learning_javascript_closures.html](http://www.ruanyifeng.com/blog/2009/08/learning_javascript_closures.html)
-[https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Closures](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Closures)
-[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var#var_hoisting](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var#var_hoisting)
-[http://javascriptissexy.com/understand-javascript-closures-with-ease/](http://javascriptissexy.com/understand-javascript-closures-with-ease/)
-[http://javascriptissexy.com/javascript-variable-scope-and-hoisting-explained/](http://javascriptissexy.com/javascript-variable-scope-and-hoisting-explained/)
-[http://stackoverflow.com/questions/12930272/javascript-closures-vs-anonymous-functions](http://stackoverflow.com/questions/12930272/javascript-closures-vs-anonymous-functions)
-[https://javascriptweblog.wordpress.com/2010/10/25/understanding-javascript-closures/](https://javascriptweblog.wordpress.com/2010/10/25/understanding-javascript-closures/)
-[http://www.moye.me/2014/12/29/closure_higher-order-function/](http://www.moye.me/2014/12/29/closure_higher-order-function/)
+
+- [http://uternet.github.io/TLS/](http://uternet.github.io/TLS/)
+- [http://www.ruanyifeng.com/blog/2009/08/learning_javascript_closures.html](http://www.ruanyifeng.com/blog/2009/08/learning_javascript_closures.html)
+- [https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Closures](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Closures)
+- [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var#var_hoisting](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var#var_hoisting)
+- [http://javascriptissexy.com/understand-javascript-closures-with-ease/](http://javascriptissexy.com/understand-javascript-closures-with-ease/)
+- [http://javascriptissexy.com/javascript-variable-scope-and-hoisting-explained/](http://javascriptissexy.com/javascript-variable-scope-and-hoisting-explained/)
+- [http://stackoverflow.com/questions/12930272/javascript-closures-vs-anonymous-functions](http://stackoverflow.com/questions/12930272/javascript-closures-vs-anonymous-functions)
+- [https://javascriptweblog.wordpress.com/2010/10/25/understanding-javascript-closures/](https://javascriptweblog.wordpress.com/2010/10/25/understanding-javascript-closures/)
+- [http://www.moye.me/2014/12/29/closure_higher-order-function/](http://www.moye.me/2014/12/29/closure_higher-order-function/)

@@ -39,7 +39,9 @@ var mongoose = require('mongoose');
 mongoose.connect('mongodb://user:pass@server:port/database?authSource=admin');
 ```
 
+
 # 用户角色权限
+
 Mongodb 内建了很多角色，详细可以去看看 [built-in-roles](http://docs.mongodb.org/manual/reference/built-in-roles/#built-in-roles)
 
 这里只说说 Superuser roles。下面几种角色可以为任何用户分配任何权限在任何数据库上，这意味着拥有以下其中一种角色的用户可以分配他们自己的任何权限在任何数据库上面。
@@ -52,9 +54,12 @@ Mongodb 内建了很多角色，详细可以去看看 [built-in-roles](http://do
 
 
 # 其他安全考虑
+
 mongodb 传输协议是不加密的，如果需要加密，可以试用 `ssh` 或者类似的技术进行加密。
 另外建议把 mongo 服务器布置在防火墙后或者布置在只有应用服务器能访问的网络中。同时建议使用 `--bindip` 选项，这样可以限制 ip 访问。运行 `mongod --bindip localhost` 后，只有本机的应用可以访问服务器。
 最后，还可以用 `--noscripting` 选项完全禁止服务端 `JavaScript` 的执行。
 
-# 参考文献
-[Mongodb 官方文档](http://docs.mongodb.org/manual/reference/method/js-user-management/)
+
+# 参考资料
+
+- [Mongodb 官方文档](http://docs.mongodb.org/manual/reference/method/js-user-management/)

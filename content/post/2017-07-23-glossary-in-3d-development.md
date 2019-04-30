@@ -6,12 +6,17 @@ tags: [3d]
 ---
 
 ## 简介
+
 在 3D 开发领域，我们会经常看到一些术语，有些是和数学相关的，有些是和模型相关的，也有一些是和程序相关的。本文是我对 3D 开发中常见术语的总结。
 
+
 ## 数学
+
 数学是 3D 开发的基石，无论你想要操作物体移动，还是在屏幕中显示一个 3D 物体，都涉及到数学计算。在 3D 开发中，最常见的数学工具是向量、矩阵、四元数。
 
+
 ### 向量(Vector)
+
 向量是既有大小又有方向的量。下面是常见的类型：
 
 - 二维向量(Vec2)
@@ -52,6 +57,7 @@ c.length() = a.length() * b.length() * Math.sin(theta)
 
 
 ### 矩阵(Matrix)
+
 矩阵在 3D 开发中常常用来变换顶点坐标。
 计算方法是把矩阵与顶点坐标相乘，即可得到变换后的顶点坐标。 即：
 
@@ -81,6 +87,7 @@ vertex' = Projection * View * Model * vertex
 
 
 ### 欧拉角(EulerAngles)
+
 欧拉角用来表示物体旋转的角度，它由三部分组成：
 
 - 俯仰角(Pitch)，表示绕 X 轴旋转的角度。
@@ -92,29 +99,42 @@ vertex' = Projection * View * Model * vertex
 另外，如果想要在两个欧拉角之间进行插值(即想要实现平滑过度)，那是非常困难的。
 最致命的一点是，欧拉角存在万向锁。想了解的话可以观看这个[视频](http://v.youku.com/v_show/id_XNzkyOTIyMTI=.html)。
 
+
 ### 四元数(Quaternion)
+
 四元数是用来表达旋转的另一种方式，一个四元数表示绕一个方向旋转特定的角度。如绕 Y 轴旋转 90 度，用四元数来表示的话只需要一个方向 `Vector3(0, 1, 0)` 和一个角度 90 即可。
 四元数没有万向锁，插值非常简单。
 
 
 ## 3D 模型
+
 任何一个 3D 模型都是由多个简单的几何形状组成的，而这些几何形状又是通过三角形来组成的。
 
+
 ### 顶点(Vertex)
+
 在三维空间中，一个孤立的点是普通的点。如果一个点是用来构成多边形的，那么该点就被称为顶点。 
 
+
 ### 网格(Mesh)
+
 网格是一种复杂的形状，它由多个顶点按照某个规律连接而成，换句话说，一个网格包含了多个顶点。
 一个模型可以包含多个网格。
 
+
 ### 材质(Material)
+
 材质管理着颜色、明暗、光泽等信息。当一个网格加上一个材质之后，它就可以在屏幕上显示特定的「色彩」了。 一个网格只有一种材质，而一种材质可以应用在多个网格上。
 
+
 ### 贴图(Texture)
+
 贴图是指把一张普通的图片贴到材质的表面。每种材质都可以有多种类型的贴图，如漫反射贴图、法线贴图、高光贴图、光照贴图 等。材质除了这些贴图之外，还有其他属性，可以用来调节这些贴图的属性。
 换句话说，每种材质都可以包含多种贴图。
 
+
 ### 轴向包围盒(Axis Align Bounding Box)
+
 轴向包围盒简称 AABB，是指包含一个模型，且边平行于坐标轴的最小六面体。
 请看看下面两张图：
 ![](http://7tebgv.com1.z0.glb.clouddn.com/images/aabb.png)
@@ -123,7 +143,9 @@ AABB 就是在模型最外面的由细线构成包围盒，它会随着模型旋
 实际上，AABB 并不可见，上图中的只是为了让我们更好理解才把包围盒画上去的。
 另外，第一张图中为了让我们更好看见 AABB，特意把 AABB 调大了一点点，实际上该模型的 AABB 和所有边都是重合的。
 
+
 ### 有向包围盒(Orient Bounding Box)
+
 有向包围盒简称 OBB，它是包含模型且相对于坐标轴方向任意的最小的长方体。
 看看下面两张图：
 ![](http://7tebgv.com1.z0.glb.clouddn.com/images/obb.png)
@@ -135,6 +157,7 @@ AABB 就是在模型最外面的由细线构成包围盒，它会随着模型旋
 ## 程序
 
 ### 顶点缓冲区(Vertex Buffer)
+
 顶点缓冲区的作用是用来存储顶点数据，然后提供给底层 API 进行绘制。
 顶点缓冲区用一维数组的方式来存储顶点信息，但绘制3D 图形每个顶点需要三个维度的数据(x, y, z)，因此，底层在绘图的时候会通过「偏移」的方式来取点。如：
 ```
@@ -147,7 +170,9 @@ var vertexBuffer = new Float32Array([
 上面这个顶点缓冲区有9个元素，但其实它包含了3个顶点的信息，每个顶点会占用3个位置。
 把数据传递给底层时，需要设置偏移量为 3，才能正确绘制图形。
 
+
 ### 索引缓冲区(Index Buffer)
+
 在绘制复杂图形的时候，我们需要用到非常多的顶点，如：
 ```
 var vertexBuffer = new Float32Array([
@@ -175,26 +200,33 @@ var indexBuffer = new Uint8Array([
 ```
 这样，我们就可以简化顶点缓冲区的数据了。
 
+
 ### 着色(Shading)
+
 简单来说，为整个三维场景上色的过程叫做着色。在真实世界中，在光线的作用下，我们可以辨认出物体的颜色，还有它们产生的阴影。
 在 3D 场景中，仅仅通过顶点所绘制出来的图形并没有光照信息，我们可以在场景中添加灯光，然后通过计算才能得到某个位置的颜色信息，再为该位置进行上色，这就是着色的过程。
 
+
 ### 着色器(Shader)
+
 着色器是运行在 GPU 上的程序，负责处理顶点信息和片元信息，是 3D 绘图中最重要的部分。
 着色器通常有两种，分别是顶点着色器(Vertex Shader)和片元着色器(Fragment Shader)。
 顶点着色器负责处理顶点的信息，上面提到的顶点缓冲区就是由顶点着色器来处理的。
 片元着色器负责为片元上色，它会在顶点着色器后面执行。
 
+
 ### Draw Call
+
 Draw Call 是一次绘图操作，当我们把数据(如顶点、贴图、着色器等信息)准备好，然后传给 GPU 绘制就是一次 Draw Call。可以认为，Draw Call 次数越少，性能越好。
 
 
 ## 参考资料
-[3D游戏开发术语](https://jmonkeyengine.github.io/wiki/jme3/terminology_zh.html)
-[OpenGL 教程第三课：矩阵](http://www.opengl-tutorial.org/cn/beginners-tutorials/tutorial-3-matrices/)
-[模型矩阵、视图矩阵、投影矩阵](http://blog.csdn.net/jared_lau/article/details/48226193)
-[欧拉角pitch、yaw，roll的理解](http://blog.csdn.net/sinat_27456831/article/details/50042915)
-[欧拉角和旋转矩阵的转换](http://www.voidcn.com/blog/xufuyuan/article/p-4874655.html)
-[WebGL 编程指南](https://book.douban.com/subject/25909351/)
-[浅谈Draw Call和Batch的区别](http://www.manew.com/4702.html)
-[Draw calls in a nutshell](https://medium.com/@toncijukic/draw-calls-in-a-nutshell-597330a85381)
+
+- [3D游戏开发术语](https://jmonkeyengine.github.io/wiki/jme3/terminology_zh.html)
+- [OpenGL 教程第三课：矩阵](http://www.opengl-tutorial.org/cn/beginners-tutorials/tutorial-3-matrices/)
+- [模型矩阵、视图矩阵、投影矩阵](http://blog.csdn.net/jared_lau/article/details/48226193)
+- [欧拉角pitch、yaw，roll的理解](http://blog.csdn.net/sinat_27456831/article/details/50042915)
+- [欧拉角和旋转矩阵的转换](http://www.voidcn.com/blog/xufuyuan/article/p-4874655.html)
+- [WebGL 编程指南](https://book.douban.com/subject/25909351/)
+- [浅谈Draw Call和Batch的区别](http://www.manew.com/4702.html)
+- [Draw calls in a nutshell](https://medium.com/@toncijukic/draw-calls-in-a-nutshell-597330a85381)

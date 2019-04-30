@@ -11,11 +11,13 @@ tags: [node, javascript, excel, js-xlsx]
 `js-xlsx` 库是目前 Github 上 star 数量最多的处理 Excel 的库，功能强大，但上手难度稍大。文档有些乱，不适合快速上手。
 本文对 `js-xlsx` 库进行一定的总结，并提供几个实用的例子供读者测试，学习，交流。
 
+
 ## 安装
 
 ```bash
 $ npm install xlsx
 ```
+
 
 ## 一些概念
 
@@ -329,5 +331,6 @@ XLSX.writeFile(wb, 'output.xlsx');
 ```
 
 ## 参考资料
-[https://github.com/SheetJS/js-xlsx](https://github.com/SheetJS/js-xlsx)
-[http://stackoverflow.com/questions/30859901/parse-xlsx-with-node-and-create-json](http://stackoverflow.com/questions/30859901/parse-xlsx-with-node-and-create-json)
+
+- [https://github.com/SheetJS/js-xlsx](https://github.com/SheetJS/js-xlsx)
+- [http://stackoverflow.com/questions/30859901/parse-xlsx-with-node-and-create-json](http://stackoverflow.com/questions/30859901/parse-xlsx-with-node-and-create-json)

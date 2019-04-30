@@ -10,11 +10,13 @@ categories: [technology]
 
 显然，这个过程本身并不是一件坏事，但这很容易会导致项目延期。你更应该把时间花在实现功能上！
 
+
 ## 我们应该用样板吗？
 
 当然！我并不是说我们不应该用样板。恰恰相反，相比使用样板 ，从零开始构建项目消耗的时间会多得多。但你应该为你的项目使用正确的样板。什么样的样板才是正确的样板呢？我认为你自己写的那份才是正确的样板。 创建自己的样板并不只是让你更加了解正在使用的技术，它还会为你留下一些你已经了解内部原理的代码片段，并且可以应用到下一个项目当中。
 
 当然，你并不需要从零开始实现。你可以选你觉得有用的样板，然后自定义它来满足你或你的团队的需求。
+
 
 ## 但并不是所有项目都一样的！
 
@@ -27,6 +29,7 @@ categories: [technology]
 
 你应该尽可能地标准化自己写的东西，不要包含太多业务相关的代码。没错，每个项目和应用场景都是不同的，但从一个你非常熟悉的样板来构建项目会让你跑得更快。
 
+
 ## 保持更新
 
 理想情况下，你应该让你的样板应用保持更新，确保你使用的依赖是最新的，并检查它们是否依然正常工作，同时要注意更新时的注意事项。慢慢地，你会知道哪些库工作正常，哪些不正常，可以用哪些库去取代它们。
@@ -35,4 +38,5 @@ categories: [technology]
 总之，你需要平衡一切。
 
 ## 参考文档
-https://mindthecode.com/the-best-boilerplate-app-is-the-one-you-code-yourself/?utm_source=wanqu.co&utm_campaign=Wanqu+Daily&utm_medium=website
+
+- https://mindthecode.com/the-best-boilerplate-app-is-the-one-you-code-yourself/?utm_source=wanqu.co&utm_campaign=Wanqu+Daily&utm_medium=website

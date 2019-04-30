@@ -208,6 +208,6 @@ Spacemacs 会在启动时启动服务器，这个服务器会在 Spacemacs 关�
 
 ## 参考资料
 
-https://github.com/syl20bnr/spacemacs/blob/master/doc/DOCUMENTATION.org
-http://brannonlucas.com/using-editorconfig-and-spacemacs-on-os-x/
-https://www.gnu.org/software/emacs/manual/html_node/elisp/Mode-Hooks.html
+- https://github.com/syl20bnr/spacemacs/blob/master/doc/DOCUMENTATION.org
+- http://brannonlucas.com/using-editorconfig-and-spacemacs-on-os-x/
+- https://www.gnu.org/software/emacs/manual/html_node/elisp/Mode-Hooks.html

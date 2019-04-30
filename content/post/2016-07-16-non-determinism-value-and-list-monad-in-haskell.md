@@ -108,7 +108,8 @@ http://stackoverflow.com/questions/28872396/haskells-filterm-with-filterm-x-true
 
 
 ## 参考资料
-http://stackoverflow.com/questions/29886852/why-is-the-following-haskell-code-non-deterministic
-http://stackoverflow.com/questions/20638893/how-can-non-determinism-be-modeled-with-a-list-monad
-http://learnyoua.haskell.sg/content/zh-cn/ch12/a-fistful-of-monads.html
-http://learnyoua.haskell.sg/content/zh-cn/ch13/for-a-few-monads-more.html
+
+- http://stackoverflow.com/questions/29886852/why-is-the-following-haskell-code-non-deterministic
+- http://stackoverflow.com/questions/20638893/how-can-non-determinism-be-modeled-with-a-list-monad
+- http://learnyoua.haskell.sg/content/zh-cn/ch12/a-fistful-of-monads.html
+- http://learnyoua.haskell.sg/content/zh-cn/ch13/for-a-few-monads-more.html

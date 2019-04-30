@@ -5,7 +5,7 @@ categories: [android]
 tags: [android, recyclerview]
 ---
 
-#基本用法
+# 基本用法
 
 - 在 XML 中添加 `<android.support.v7.widget.RecyclerView/>`
 
@@ -41,7 +41,7 @@ tags: [android, recyclerview]
 
 ```
 
-#ViewHolder
+# ViewHolder
 
 我们以前使用 `ListView` 的时候，会用以下的方式来提高 `ListView` 的性能:
 
@@ -109,6 +109,7 @@ mRecyclerView.setAdapter(adapter);
 ```
 
 
-#参考资料
-[RecyclerView全攻略](http://wobushi.ren/recyclerview.html)
-[Android RecyclerView 使用完全解析 体验艺术般的控件](http://blog.csdn.net/lmj623565791/article/details/45059587)
+# 参考资料
+
+- [RecyclerView全攻略](http://wobushi.ren/recyclerview.html)
+- [Android RecyclerView 使用完全解析 体验艺术般的控件](http://blog.csdn.net/lmj623565791/article/details/45059587)

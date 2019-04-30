@@ -287,4 +287,5 @@ function genPages() {
 
 
 ## 参考资料
-https://github.com/xitu/gold-miner/blob/master/TODO/ux-infinite-scrolling-vs-pagination.md
+
+- https://github.com/xitu/gold-miner/blob/master/TODO/ux-infinite-scrolling-vs-pagination.md

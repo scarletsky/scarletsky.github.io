@@ -204,4 +204,5 @@ main = do
 
 
 ## 参考资料
-[原文](http://www.vex.net/~trebla/haskell/random.xhtml)
+
+- [原文](http://www.vex.net/~trebla/haskell/random.xhtml)

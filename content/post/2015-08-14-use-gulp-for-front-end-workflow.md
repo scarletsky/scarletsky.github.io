@@ -167,6 +167,7 @@ gulp.task('server', ['less', 'connect', 'watch']);
 
     - `gulp.src(...).pipe(gulp.dest(...))`
 
+
 ### 实例代码
 ```js
 gulp.task('clean:build', function () {
@@ -197,6 +198,8 @@ gulp.task('copyfonts', function () {
 gulp.task('build', ['clean:build', 'minify', 'copyfonts']);
 ```
 
+
 # 参考资料
-[英文文档](https://github.com/gulpjs/gulp/blob/master/docs/API.md)
-[中文文档](http://www.gulpjs.com.cn/docs/api/)
+
+- [英文文档](https://github.com/gulpjs/gulp/blob/master/docs/API.md)
+- [中文文档](http://www.gulpjs.com.cn/docs/api/)

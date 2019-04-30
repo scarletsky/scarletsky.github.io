@@ -6,6 +6,7 @@ tags: [restful]
 ---
 
 ## 简介
+
 随着移动开发和前端开发的崛起，越来越多的 Web 后端应用都倾向于实现 Restful API。
 Restful API 是一个简单易用的前后端分离方案，它只需要对客户端请求进行处理，然后返回结果即可， 无需考虑页面渲染，一定程度上减轻了后端开发人员的负担。
 然而，正是由于 Restful API 不需要考虑页面渲染，导致它不能在页面上展示错误信息。
@@ -14,6 +15,7 @@ Restful API 是一个简单易用的前后端分离方案，它只需要对客�
 
 
 ## 设计错误信息
+
 当 Restful API 需要抛出错误的时候，我们要考虑的是：这个错误应该包含哪些信息。
 我们先看看 Github, Google, Facebook, Twitter, Twilio 的错误信息是怎样的。
 
@@ -99,6 +101,7 @@ Twilio (use http status)
 - 有些提供了给开发者看的错误信息
 
 ### Http 状态码
+
 在 Restful API 中利用 Http 状态码来表明错误类型再合适不过了，因为 Http 状态码定义了很多抽象的错误类型。
 虽然 Http 状态码定义了非常多的错误类型，但实际应用中，我们常用的状态码并不多，通常都是下面这几方面：
 
@@ -108,20 +111,24 @@ Twilio (use http status)
 
 
 ### 业务错误码
+
 很多时候，我们根据业务类型来自定义错误码。
 这些业务错误码与 Http 状态码并不重叠，这时候我们可以返回业务错误码，用来提示用户/开发者错误类型。
 
 
 ### 给用户看的错误信息
+
 当出现错误的时候，我们需要提示用户如何处理这种情况，通常这种错误信息都是必须的。
 可以看到上面几个例子中都有返回给用户看的错误信息。
 
 
 ### 给开发者看的错误信息
+
 若我们的 API 需要开放给第三方开发者，那么我们就需要考虑返回一些给开发者看的错误信息。
 
 
 ## 设计错误类型
+
 我们刚才提到过，可以利用 Http 状态码来为错误类型进行分类。
 通常我们所说的分类通常是对客户端错误进行分类， 即 4xx 类型的错误。
 
@@ -197,6 +204,7 @@ if (post.creator.id !== user.id) {
 
 
 ## 自定义错误类型
+
 要实现根据错误类型来返回指定的错误信息，我们可以通过自定义错误的方式来实现。
 假设我们自定义错误的结构如下：
 
@@ -293,7 +301,9 @@ if (!post) {
 
 最后，还剩下一个问题，根据错误类型来设置状态码，然后返回错误信息给客户端。
 
+
 ## 捕获错误信息
+
 在 Controller 中抛出自定义错误后，我们需要捕获该错误，才能返回给客户端。
 假设我们使用 koa 2 作为 web 框架来开发 restful api，那么我们要做的是添加错误处理的中间件:
 
@@ -336,15 +346,16 @@ app.use(router.routes())
 
 
 ## 参考资料
-https://zh.wikipedia.org/zh-hans/HTTP%E7%8A%B6%E6%80%81%E7%A0%81
-https://www.loggly.com/blog/node-js-error-handling/
-http://blog.restcase.com/rest-api-error-codes-101/
-https://apigee.com/about/blg/technology/restful-api-design-what-about-errors
-http://stackoverflow.com/questions/942951/rest-api-error-return-good-practices
-http://goldbergyoni.com/checklist-best-practices-of-node-js-error-handling/
-http://blogs.mulesoft.com/dev/api-dev/api-best-practices-response-handling/
-https://developers.facebook.com/docs/graph-api/using-graph-api/#errors
-https://developers.google.com/drive/v3/web/handle-errors
-https://developer.github.com/v3/#client-errors
-https://dev.twitter.com/overview/api/response-codes
-https://www.twilio.com/docs/api/errors
+
+- https://zh.wikipedia.org/zh-hans/HTTP%E7%8A%B6%E6%80%81%E7%A0%81
+- https://www.loggly.com/blog/node-js-error-handling/
+- http://blog.restcase.com/rest-api-error-codes-101/
+- https://apigee.com/about/blg/technology/restful-api-design-what-about-errors
+- http://stackoverflow.com/questions/942951/rest-api-error-return-good-practices
+- http://goldbergyoni.com/checklist-best-practices-of-node-js-error-handling/
+- http://blogs.mulesoft.com/dev/api-dev/api-best-practices-response-handling/
+- https://developers.facebook.com/docs/graph-api/using-graph-api/#errors
+- https://developers.google.com/drive/v3/web/handle-errors
+- https://developer.github.com/v3/#client-errors
+- https://dev.twitter.com/overview/api/response-codes
+- https://www.twilio.com/docs/api/errors

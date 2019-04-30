@@ -8,6 +8,7 @@ tags: [html5, dnd]
 # 基本使用
 
 ## 创建可拖放对象
+
 在 HTML5 中创建可拖动内容非常简单，只需要在元素的属性中加上 `draggable="true"` 就能创建可拖放对象了。
 
 ```html
@@ -18,6 +19,7 @@ tags: [html5, dnd]
 
 
 ## 如何拖动
+
 有了可拖放对象之后，我们还需要处理拖放事件才能实现拖放。拖放包含下面的事件：
 
 - `dragstart` 发生在元素开始被拖动时
@@ -42,7 +44,9 @@ var draggableElements = document.querySelectorAll('[draggable]');
 });
 ```
 
+
 ## DataTransfer 对象
+
 dataTransfer 属性正是这一神奇 DnD 功能的动力来源，控制着拖动操作中发送的数据。dataTransfer 可在 dragstart 事件中进行设置，并在 drop 事件中读取/处理。调用 e.dataTransfer.setData(format, data) 会将对象内容设置成 MIME 类型，并将数据有效负载作为参数传递。
 
 拖放不同对象需要设置不同的格式，下面是 MDN 推荐 drag types。
@@ -54,6 +58,7 @@ dataTransfer 属性正是这一神奇 DnD 功能的动力来源，控制着拖�
 其他类型可以查看 MDN 上面的文档：[https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Recommended_Drag_Types](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Recommended_Drag_Types)
 
 **PS：综合自己试验和网上的说法，其实设置 `setData` 的 format 设置成自定义值也是可以使用的。**
+
 
 ## DataTransfer 属性
 
@@ -81,6 +86,7 @@ dataTransfer 属性正是这一神奇 DnD 功能的动力来源，控制着拖�
 - 拖放操作的结果一般情况下会产生新的 `DOM` 结构，因此不能使用 `$(selector).on(event, fn)` 来进行事件绑定，因为这样对新产生的 DOM 不起作用。要进行动态绑定的话，可以使用下面的写法：`$(document).on(event, selector, fn)`。
 
 ## 使用示例
+
 ```html
 <!doctype html>
 <html>
@@ -193,8 +199,9 @@ dataTransfer 属性正是这一神奇 DnD 功能的动力来源，控制着拖�
 ```
 
 # 参考资料
-[http://www.html5rocks.com/zh/tutorials/dnd/basics/](http://www.html5rocks.com/zh/tutorials/dnd/basics/)
-[https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer](https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer)
-[https://developer.mozilla.org/en-US/docs/Web/Events](https://developer.mozilla.org/en-US/docs/Web/Events)
-[http://stackoverflow.com/questions/203198/event-binding-on-dynamically-created-elements](http://stackoverflow.com/questions/203198/event-binding-on-dynamically-created-elements)
-[http://www.cnblogs.com/fsjohnhuang/p/3961066.html](http://www.cnblogs.com/fsjohnhuang/p/3961066.html)
+
+- [http://www.html5rocks.com/zh/tutorials/dnd/basics/](http://www.html5rocks.com/zh/tutorials/dnd/basics/)
+- [https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer](https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer)
+- [https://developer.mozilla.org/en-US/docs/Web/Events](https://developer.mozilla.org/en-US/docs/Web/Events)
+- [http://stackoverflow.com/questions/203198/event-binding-on-dynamically-created-elements](http://stackoverflow.com/questions/203198/event-binding-on-dynamically-created-elements)
+- [http://www.cnblogs.com/fsjohnhuang/p/3961066.html](http://www.cnblogs.com/fsjohnhuang/p/3961066.html)

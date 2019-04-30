@@ -73,4 +73,4 @@ Happy Testing!
 
 ## 参考资料
 
-[(Wireless) Remote Debugging with Safari on iOS](https://silvantroxler.ch/2018/wireless-remote-debugging-with-safari-on-ios/)
+- [(Wireless) Remote Debugging with Safari on iOS](https://silvantroxler.ch/2018/wireless-remote-debugging-with-safari-on-ios/)

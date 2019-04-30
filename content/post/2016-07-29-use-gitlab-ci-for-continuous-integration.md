@@ -6,11 +6,14 @@ tags: [ci, gitlab-ci]
 ---
 
 # 简介
+
 从 GitLab 8.0 开始，GitLab CI 就已经集成在 GitLab 中，我们只要在项目中添加一个 `.gitlab-ci.yml` 文件，然后添加一个 Runner，即可进行持续集成。 而且随着 GitLab 的升级，GitLab CI 变得越来越强大，本文将介绍如何使用 GitLab CI 进行持续集成。
 
 
 # 一些概念
+
 在介绍 GitLab CI 之前，我们先看看一些持续集成相关的概念。
+
 
 ## Pipeline
 一次 Pipeline 其实相当于一次构建任务，里面可以包含多个流程，如安装依赖、运行测试、编译、部署测试服务器、部署生产服务器等流程。
@@ -298,10 +301,11 @@ deploy_production:
 
 
 # 参考资料
-https://about.gitlab.com/gitlab-ci/
-http://docs.gitlab.com/ce/ci/yaml/README.html
-http://docs.gitlab.com/ce/ci/variables/README.html
-https://gitlab.com/gitlab-org/gitlab-ci-multi-runner
-https://gitlab.com/gitlab-org/gitlab-ci-multi-runner/issues/1232
-http://stackbox.cn/2016-02-gitlab-ci-conf/
+
+- https://about.gitlab.com/gitlab-ci/
+- http://docs.gitlab.com/ce/ci/yaml/README.html
+- http://docs.gitlab.com/ce/ci/variables/README.html
+- https://gitlab.com/gitlab-org/gitlab-ci-multi-runner
+- https://gitlab.com/gitlab-org/gitlab-ci-multi-runner/issues/1232
+- http://stackbox.cn/2016-02-gitlab-ci-conf/
 

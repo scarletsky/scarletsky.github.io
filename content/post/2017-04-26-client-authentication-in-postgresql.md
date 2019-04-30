@@ -10,6 +10,7 @@ tags: [database, postgresql]
 当客户端与数据库服务器连接时，它需要指定用哪个数据库用户的身份来连接。
 PostgreSQL 为我们提供了很多种客户端认证的方式，我们可以根据自己的需要来选择认证方式。
 
+
 ## psql
 
 `psql` 是 PostgreSQL 的客户端程序，要连接 PostgreSQL 数据库，我们需要指定以下内容：
@@ -33,6 +34,7 @@ PostgreSQL 为我们提供了很多种客户端认证的方式，我们可以根
 psql postgresql://dbmaster:5433/mydb?sslmode=require
 ```
 
+
 ## 常见情况
 
 ```
@@ -50,6 +52,7 @@ psql: FATAL:  Ident authentication failed for user "test"
 相信每个在生产环境中使用 PostgreSQL 的人都折腾过客户端认证的问题。
 明明用户名和密码都正确，而且用户也是数据库的拥有者，为什么 PostgreSQL 会禁止访问？
 这通常是因为 `pg_hba.conf` 没有配置好。
+
 
 ## pg_hba.conf
 
@@ -75,6 +78,7 @@ postgres 24819  0.0  1.9 238588 20068 ?        S    Apr25   0:01 /usr/bin/postgr
 ```
 
 其中 -D 后面的就是该目录的位置了。
+
 
 ### 格式
 
@@ -149,6 +153,7 @@ host    all             all             ::1/128                 ident
 - 让 test 用户通过 `peer` 和 `ident` 认证
 - 修改 `pg_hba.conf` 的认证方式
 
+
 ### 让用户通过 peer 和 ident 认证
 
 从上面可以知道，要让用户通过 peer 和 ident 认证，我们需要在操作系统中创建对应的用户。
@@ -200,11 +205,13 @@ Password for user test:
 test=>
 ```
 
+
 ## 参考资料
-https://www.postgresql.org/docs/9.6/static/app-psql.html
-https://www.postgresql.org/docs/9.6/static/client-authentication.html
-https://www.postgresql.org/docs/9.6/static/auth-methods.html
-https://www.postgresql.org/docs/9.6/static/creating-cluster.html
-http://www.davidpashley.com/articles/postgresql-user-administration/
-http://stackoverflow.com/questions/14025972/postgresql-how-to-find-pg-hba-conf-file-using-mac-os-x
-http://stackoverflow.com/questions/2942485/psql-fatal-ident-authentication-failed-for-user-postgres
+
+- https://www.postgresql.org/docs/9.6/static/app-psql.html
+- https://www.postgresql.org/docs/9.6/static/client-authentication.html
+- https://www.postgresql.org/docs/9.6/static/auth-methods.html
+- https://www.postgresql.org/docs/9.6/static/creating-cluster.html
+- http://www.davidpashley.com/articles/postgresql-user-administration/
+- http://stackoverflow.com/questions/14025972/postgresql-how-to-find-pg-hba-conf-file-using-mac-os-x
+- http://stackoverflow.com/questions/2942485/psql-fatal-ident-authentication-failed-for-user-postgres

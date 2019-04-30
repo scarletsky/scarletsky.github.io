@@ -238,9 +238,10 @@ Org mode 还可以导出各种格式，如 HTML、LaTeX、PDF 等。
 
 
 ## 参考资料
-http://spacemacs.org/layers/+emacs/org/README.html
-https://www.youtube.com/playlist?list=PLVtKhBrRV_ZkPnBtt_TD1Cs9PJlU0IIdE
-http://notex.life/t/emacs-key-binding/18
-https://www.zhihu.com/question/19851600
-http://blog.csdn.net/u014801157/article/details/24372485
+
+- http://spacemacs.org/layers/+emacs/org/README.html
+- https://www.youtube.com/playlist?list=PLVtKhBrRV_ZkPnBtt_TD1Cs9PJlU0IIdE
+- http://notex.life/t/emacs-key-binding/18
+- https://www.zhihu.com/question/19851600
+- http://blog.csdn.net/u014801157/article/details/24372485
 

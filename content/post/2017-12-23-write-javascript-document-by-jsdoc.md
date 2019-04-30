@@ -153,5 +153,6 @@ export default class Aplication {
 
 
 ## 参考资料
-https://github.com/jsdoc3/jsdoc
-http://usejsdoc.org/
+
+- https://github.com/jsdoc3/jsdoc
+- http://usejsdoc.org/
