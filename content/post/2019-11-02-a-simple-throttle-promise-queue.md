@@ -108,4 +108,50 @@ for (var i = 0; i < resources.length; i++) {
 
 通过这种限流的 Promise 队列，我们就可以解决 `Promise.all` 并发太高而导致的奇怪问题了。
 
+
+## 封装
+
+最后封装一下上面的例子：
+
+```js
+class PromiseQueue {
+    constructor(options = {}) {
+        this.concurrency = options.concurrency || 1;
+        this._current = 0;
+        this._list = [];
+    }
+
+    add(promiseFn) {
+        this._list.push(promiseFn);
+        this.loadNext();
+    }
+
+    loadNext() {
+        if (this._list.length === 0 || this.concurrency === this._current) return;
+
+        this._current++;
+        const fn = this._list.shift();
+        const promise = fn();
+        promise.then(this.onLoaded.bind(this)).catch(this.onLoaded.bind(this));
+    }
+
+    onLoaded() {
+        this._current--;
+        this.loadNext();
+    }
+}
+
+const q = new PromiseQueue();
+[1, 2, 3, 4, 5].forEach(v => {
+    q.add(() => new Promise((resolve) => {
+       setTimeout(() => {
+           console.log(v);
+           resolve();
+       }, 1000);
+    }));
+});
+```
+
+这样，我们就能实现了一个简单限流的 Promise 队列了。
+
 (完)。
