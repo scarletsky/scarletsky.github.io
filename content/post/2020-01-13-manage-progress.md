@@ -51,6 +51,31 @@ categories: [javascript]
 
 这里有个前提：当加载某个资源的时候，必须保证这个资源及它引用的资源全部加载完成后，才能算加载完成。
 基于这个前提，我们已经实现了一个 `onProgress` 接口，这个接口返回的进度是已经包含了子资源的加载进度的了。
+翻译成代码就是：
+
+```js
+class Asset {
+    load(onProgress) {
+        return new Promise((resolve) => {
+            if (typeof onProgress !== 'function') {
+                onProgress = (_p) => {  };
+            }
+
+            let loadedCount = 0;
+            let totalCount = 10; // NOTE: just for demo
+            let onLoaded = () => {
+                loadedCount++;
+                onProgress(loadedCount / totalCont);
+                if (loadedCount === totalCount) resolve();
+            };
+
+            Promise.all(
+                this.refAssets.map(asset => asset.load().then(onLoaded))
+            );
+        });
+    }
+}
+```
 
 既然有了这个接口，如果沿用全局维护 `loadedCount` 和 `totalCount` 的形式的话，处理起来其实挺麻烦的。
 本文接下来要介绍的，就是一种变通的做法。
@@ -133,7 +158,7 @@ function reduce() {
 ```
 
 利用闭包保留资源的索引，当触发 `onProgress` 的时候，就能根据索引去更新列表中对应项的进度了。最后归并的时候就能计算出正确的进度了。
-最后一步就是整合我们所有的代码了。
+剩下的事情就是整合我们所有的代码，然后对其进行测试了。
 
 
 ## 测试
@@ -226,5 +251,9 @@ Promise.all([
   all resources loaded 
  */
 ```
+
+这种方式的优点是能避开全局管理 `loadedCount` 和 `totalCount`，把这部分工作交回资源内部管理，它要做的只是对大任务进行归并计算。
+
+缺点也很明显，需要对 `onProgress` 接口进行一次统一。在已有项目中推进难度很大，所以比较适合新项目或者小项目去实践。
 
 (完)。
