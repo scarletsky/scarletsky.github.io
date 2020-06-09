@@ -262,7 +262,7 @@ $$
 
 # 三维变换
 
-在齐次坐标下，
+三维变换与二维变换类似，只是多了一个 z 维度。在齐次坐标下，
 
 - 3D 点表示为 $ (x, y, z, 1) $
 - 3D 向量表示为 $ (x, y, z, 0) $
@@ -279,6 +279,8 @@ $$
 
 ## 正交矩阵
 
+仔细观察一下旋转矩阵，和它的逆矩阵、转置矩阵，我们会发现一个有趣的现象：
+
 $$
 R_\theta = \begin{bmatrix} cos \theta & -sin \theta \\\ sin \theta & cos \theta \end{bmatrix}
 $$
@@ -291,14 +293,470 @@ $$
 {R_\theta}^T = \begin{bmatrix} cos \theta & sin \theta \\\ -sin \theta & cos \theta \end{bmatrix}
 $$
 
+<div>
 $$
 R_{-\theta} = {R_\theta}^T
 $$
+</div>
 
-当一个矩阵的逆矩阵等于该矩阵的转置矩阵时，这个矩阵称为正交矩阵。
+旋转矩阵的逆矩阵与它的转置矩阵相同。我们可以利用旋转矩阵的这个性质来求它的逆矩阵。
 
-## 观测变换
+另外，当一个矩阵的逆矩阵等于该矩阵的转置矩阵时，这个矩阵称为正交矩阵，因此旋转矩阵也是一个正交矩阵。
 
+
+## 观测变换 (Viewing Transformation)
+
+观测变换是为了把三维空间变换成二维空间（屏幕），它由两部分组成：
+
+- 视图变换 (View Transformation)
+- 投影变换 (Projection Transformation)
+  - 正交投影
+  - 透视投影
+
+
+## 视图变换
+
+摄像机与物体的相对距离，会影响最终图像的效果。换句话说，无论是移动物体还是移动摄像机，只要保持两者的相对距离不变，那么我们就能得到相同的图像。
+
+因此，我们可以把摄像机放到原点位置，朝向 -Z 方向，其他物体与摄像机保持相对位置不变，我们就能得到与世界空间下拍摄到的一样的图像了。
+
+视图变换是用来把世界空间变换成摄像机空间。如下图所示：
+
+![](./camera_world_space.png)
+
+(世界空间)
+
+![](./camera_view_space.png)
+
+(摄像机空间)
+
+要确定视图变换，我们需要确定三个变量：
+
+1. 摄像机的位置
+2. 目标位置
+3. 摄像机的上方向
+
+如何世界空间下的摄像机变换成视图空间呢？我们可以通过以下步骤：
+
+1. 把摄像机移动到原点
+2. 把摄像机的上方向调整成与 Y 一致，并让摄像机往 -Z 方向看
+
+这些步骤就是视图变换（View Transformation）了，即：
+
+<div>
+$$
+M_{view} = R_{view} \cdot T_{view}
+$$
+</div>
+
+假设摄像机所在的世界坐标是 $ (x, y, z) $，那么：
+
+$$
+T_{view} = \begin{bmatrix} 1 & 0 & 0 & -x \\\ 0 & 1 & 0 & -y \\\ 0 & 0 & 1 & -z \\\ 0 & 0 & 0 & 1 \end{bmatrix}
+$$
+
+假设摄像机的的上方向为 $ \hat t $，同时往 $ \hat g $ 方向看，由于 $ \hat e $、$ \hat t $、$ \hat g $ 是摄像机的本地坐标系，因此三者相互垂直，所有有：
+
+$$
+\hat e = \hat g \times \hat t
+$$
+
+接下来需要求 $ R_{view} $，它是一个把摄像机的本地坐标系旋转成标准直角坐标系的变换，直接计算会比较复杂。
+
+幸运的是，我们可以利用旋转矩阵是正交矩阵的特性，来求 $ R_{view} $。
+
+首先求它的逆矩阵：
+
+<div>
+$$
+{R_{view}}^{-1}
+\begin{bmatrix}
+x_{\hat g \times \hat t} & x_t & x_{-g} & 0 \\\ 
+y_{\hat g \times \hat t} & y_t & y_{-g} & 0 \\\ 
+z_{\hat g \times \hat t} & z_t & z_{-g} & 0 \\\ 
+0 & 0 & 0 & 1
+\end{bmatrix}
+$$
+</div>
+
+然后再进行一次转置操作即可：
+
+<div>
+$$
+R_{view} = {{R_{view}}^{-1}}^T
+\begin{bmatrix}
+x_{\hat g \times \hat t} & y_{\hat g \times \hat t} & z_{\hat g \times \hat t} & 0 \\\
+x_t & y_t & z_t & 0 \\\
+x_{-g} & y_{-g} & z_{-g} & 0 \\\
+0 & 0 & 0 & 1
+\end{bmatrix}
+$$
+</div>
+
+最后，我们就可以得到视图矩阵：
+
+<div>
+$$
+M_{view} =
+R_{view} \cdot T_{view} =
+\begin{bmatrix}
+x_{\hat g \times \hat t} & y_{\hat g \times \hat t} & z_{\hat g \times \hat t} & -x \\\
+x_t & y_t & z_t & -y \\\
+x_{-g} & y_{-g} & z_{-g} & -z \\\
+0 & 0 & 0 & 1
+\end{bmatrix}
+$$
+</div>
+
+
+## 投影变换
+
+投影矩阵的作用是把三维空间变换成二维空间，即图片。
+
+常见的投影有两种：
+
+- 正交投影（不会出现近大远小的现象）
+- 透视投影（会出现近大远小的现象，透视投影下的平行线最终会汇聚在一点）
+
+
+### 正交投影
+
+![](./orthographic_projection.png)
+
+在图形学中，正交投影是把 $ [l, r] \times [b, t] \times [f, n] $ 构成的空间压缩成 $ [-1, 1]^3 $ 的立方体中。
+
+其中：
+
+- l = left
+- r = right
+- b = bottom
+- t = top
+- f = far
+- n = near
+
+**注意：因为摄像机是朝 -Z 方向的，所以 n > f。**
+
+要确定正交投影矩阵，需要经过以下步骤：
+
+1. 把空间平移到原点（空间的中心与原点重合）
+2. 把空间压缩成 $ [-1, 1]^3 $
+
+即：
+
+<div>
+$$
+M_{ortho} = S_{ortho} \cdot T_{ortho}
+$$
+</div>
+
+由于我们知道空间的六个面，因此这个空间的中心就是：$ (\frac {l + r} 2, \frac {b + t} 2, \frac {f + n} 2) $，那么就有：
+
+<div>
+$$
+T_{ortho} =
+\begin{bmatrix}
+1 & 0 & 0 & -{\frac {l + r} 2} \\\
+0 & 1 & 0 & -{\frac {b + t} 2} \\\
+0 & 0 & 1 & -{\frac {f + n} 2} \\\
+0 & 0 & 0 & 1
+\end{bmatrix}
+$$
+</div>
+
+下一步就是压缩空间了，这一步骤相当于进行一次缩放，把当前空间缩放到大小为 2 的立方体。
+
+以空间的 X 方向为例，其长度为 $ r - l $，因此 X 方向的缩放因子就是:
+
+$$
+(r - l) \times S_x = 2
+$$
+
+$$
+S_x = \frac 2 {r - l}
+$$
+
+同理可求出 $ S_y $ 和 $ S_z $，然后得到：
+
+<div>
+$$
+S_{ortho} =
+\begin{bmatrix}
+\frac 2 {r - l} & 0 & 0 & 0 \\\
+0 & \frac 2 {t - b} & 0 & 0 \\\
+0 & 0 & \frac 2 {n - f} & 0 \\\
+0 & 0 & 0 & 1
+\end{bmatrix}
+$$
+</div>
+
+最后，正交投影矩阵为：
+
+<div>
+$$
+M_{ortho} =
+S_{ortho} \cdot T_{ortho} =
+\begin{bmatrix}
+\frac 2 {r - l} & 0 & 0 & -{\frac {l + r} 2} \\\
+0 & \frac 2 {t - b} & 0 & -{\frac {b + t} 2} \\\
+0 & 0 & \frac 2 {n - f} & -{\frac {f + n} 2} \\\
+0 & 0 & 0 & 1
+\end{bmatrix}
+$$
+</div>
+
+
+### 透视投影
+
+![](./perspective_projection.png)
+
+透视投影与正交投影类似，也是经过类似的步骤：
+
+1. 把空间平移到原点
+2. 把空间压缩成长方体（近平面不变，压缩远平面）
+3. 把空间压缩成 $ [-1, 1]^3 $ 的立方体（进行一次正交投影）
+
+相比正交投影，透视投影多了一个步骤，就是把视锥体变换成长方体，这个变换暂且叫做 $ M_{p->o} $。
+要计算这个变换，我们需要先知道这个变换过程发生了什么。
+
+
+
+下图是 YZ 平面的截面：
+
+![](./perspective_projection_similar_triangle.png)
+
+经过压缩后，对于 y 坐标，空间中的一点 $ (x, y, z) $ 会变成 $ (x, y^{\prime}, z) $，根据相似三角形的性质，我们会得到如下的等式：
+
+$$
+\frac n z = \frac {y^{\prime}} y
+$$
+
+$$
+y^{\prime} = \frac n z y
+$$
+
+同理，对于 x 坐标，我们也能得到类似的等式：
+
+$$
+x^{\prime} = \frac n z x
+$$
+
+然后，我们就能得到如下的结果：
+
+<div>
+$$
+M_{persp -> ortho}
+
+\begin{bmatrix}
+x \\\
+y \\\
+z \\\
+1
+\end{bmatrix}
+
+=
+
+\begin{bmatrix}
+\frac {nx} z \\\
+\frac {ny} z \\\
+unknow \\\
+1
+\end{bmatrix}
+$$
+</div>
+
+再稍微变换一下写法（乘以z），我们能得到：
+
+<div>
+$$
+M_{persp -> ortho}
+
+\begin{bmatrix}
+x \\\
+y \\\
+z \\\
+1
+\end{bmatrix}
+
+=
+
+\begin{bmatrix}
+nx \\\
+ny \\\
+unknow \\\
+z
+\end{bmatrix}
+$$
+</div>
+
+计算一下 $ M_{persp -> ortho} $，矩阵的第一行，可以得到：
+
+$$
+ax + by + cz + d = nx
+$$
+
+于是有
+
+$$
+a = n
+$$
+
+$$
+b = 0
+$$
+
+$$
+c = 0
+$$
+
+$$
+d = 0
+$$
+
+同理，我们可以得到矩阵的雏形：
+
+<div>
+$$
+M_{persp -> ortho} =
+\begin{bmatrix}
+n & 0 & 0 & 0 \\\
+0 & n & 0 & 0 \\\
+? & ? & ? & ? \\\
+0 & 0 & 0 & 1
+\end{bmatrix}
+$$
+</div>
+
+矩阵的第三行是表示 z 方向的变换的，而我们知道有两个事实：
+
+- 任何在近平面的点，都不会发生变化，即：
+
+<div>
+$$
+\begin{bmatrix}
+? & ? & ? & ?
+\end{bmatrix}
+
+\begin{bmatrix}
+x \\\
+y \\\
+n \\\
+1
+\end{bmatrix}
+
+=
+
+\begin{bmatrix}
+x \\\
+y \\\
+n \\\
+1
+\end{bmatrix}
+
+==
+
+\begin{bmatrix}
+nx \\\
+ny \\\
+n^2 \\\
+n
+\end{bmatrix}
+$$
+</div>
+
+和刚才一样代入计算：
+
+$$
+ax + by + cn + d = n^2
+$$
+
+于是得到矩阵第三行的四个元素分别是：
+
+$$
+\begin{bmatrix}
+0 & 0 & A & B
+\end{bmatrix}
+$$
+
+- 任何在远平面上的店，z 都不会发生变化。我们取远平片中的一个中心点 $ (0, 0, f, 1) $ ，它在空间压缩前后都不会发生变化，那么：
+
+<div>
+$$
+\begin{bmatrix}
+0 & 0 & A & B
+\end{bmatrix}
+
+\begin{bmatrix}
+0 \\\
+0 \\\
+f \\\
+1
+\end{bmatrix}
+
+= 
+
+\begin{bmatrix}
+0 \\\
+0 \\\
+f \\\
+1
+\end{bmatrix}
+
+==
+
+\begin{bmatrix}
+0 \\\
+0 \\\
+f^2 \\\
+f
+\end{bmatrix}
+$$
+</div>
+
+
+联立方程组：
+
+$$
+An + B = n^2
+$$
+
+$$
+Af + B = f^2
+$$
+
+解得：
+
+$$
+A = n + f
+$$
+
+$$
+B = -nf
+$$
+
+因此，我们要求的矩阵为：
+
+<div>
+$$
+M_{persp -> ortho}
+
+=
+
+\begin{bmatrix}
+n & 0 & 0 & 0 \\\
+0 & n & 0 & 0 \\\
+0 & 0 & n + f & -nf \\\
+0 & 0 & 0 & 1
+\end{bmatrix}
+$$
+</div>
+
+所以，投影矩阵为：
+
+<div>
+$$
+M_{persp} = M_{ortho} M_{persp -> ortho}
+$$
+</div>
 
 # 参考资料
 
