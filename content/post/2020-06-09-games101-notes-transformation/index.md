@@ -342,11 +342,9 @@ $$
 
 这些步骤就是视图变换（View Transformation）了，即：
 
-<div>
 $$
 M_{view} = R_{view} \cdot T_{view}
 $$
-</div>
 
 假设摄像机所在的世界坐标是 $ (x, y, z) $，那么：
 
@@ -382,7 +380,7 @@ $$
 
 <div>
 $$
-R_{view} = {{R_{view}}^{-1}}^T
+R_{view} = {{R_{view}}^{-1}}^T =
 \begin{bmatrix}
 x_{\hat g \times \hat t} & y_{\hat g \times \hat t} & z_{\hat g \times \hat t} & 0 \\\
 x_t & y_t & z_t & 0 \\\
@@ -480,9 +478,9 @@ $$
 $$
 S_{ortho} =
 \begin{bmatrix}
-\frac 2 {r - l} & 0 & 0 & 0 \\\
-0 & \frac 2 {t - b} & 0 & 0 \\\
-0 & 0 & \frac 2 {n - f} & 0 \\\
+\frac {2 {r - l}} & 0 & 0 & 0 \\\
+0 & \frac {2 {t - b}} & 0 & 0 \\\
+0 & 0 & \frac {2 {n - f}} & 0 \\\
 0 & 0 & 0 & 1
 \end{bmatrix}
 $$
@@ -757,9 +755,55 @@ M_{persp} = M_{ortho} M_{persp -> ortho}
 $$
 </div>
 
+最后的问题就是 $ M_{ortho} $ 了。对于这个正交投影，我们只知道 $ [f, n] $，还缺少 $ [l, r] $ 和 $ [b, t] $，但我们可以通过其他途径来计算出这些需要的值。
+
+对于透视投影，还有两个重要的概念，那就是 `field of view(fov)` 和 `aspect ratio`。
+
+![](./fov_and_aspect_ratio.png)
+
+`fov` 是指视野范围，分为 `fovY` 和 `fovX`，两者可以相互推导。
+
+`aspect ratio` 是指近平面的宽高比。
+
+![](./fov_calculation.png)
+
+根据三角函数，我们可以知道：
+
+$$
+tan {\frac {fovY} 2} = \frac t {|n|}
+$$
+
+另外，根据宽高比的定义，我们可以得出：
+
+$$
+aspect = \frac {width} {height} = \frac {2r} {2t} = \frac r t
+$$
+
+联立方程可得：
+
+$$
+t = |n| \cdot tan {\frac {fovY} 2}
+$$
+
+$$
+r = aspect \cdot t
+$$
+
+$$
+b = -t
+$$
+
+$$
+l = -r
+$$
+
+这样，我们就把所需要的值都计算出来了，直接带入上面的正交矩阵公式即可。
+
+
 # 参考资料
 
 [Lecture 03 Transformation](https://www.bilibili.com/video/BV1X7411F744?p=3)
 
 [Lecture 04 Transformation Cont.](https://www.bilibili.com/video/BV1X7411F744?p=4)
 
+[Lecture 05 Rasterization 1 (Triangles)](https://www.bilibili.com/video/BV1X7411F744?p=5)
