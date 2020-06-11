@@ -483,9 +483,9 @@ $$
 $$
 S_{ortho} =
 \begin{bmatrix}
-\frac {2 {r - l}} & 0 & 0 & 0 \\\
-0 & \frac {2 {t - b}} & 0 & 0 \\\
-0 & 0 & \frac {2 {n - f}} & 0 \\\
+\frac 2 {r - l} & 0 & 0 & 0 \\\
+0 & \frac 2 {t - b} & 0 & 0 \\\
+0 & 0 & \frac 2 {n - f} & 0 \\\
 0 & 0 & 0 & 1
 \end{bmatrix}
 $$
