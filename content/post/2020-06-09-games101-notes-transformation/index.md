@@ -343,15 +343,19 @@ $$
 
 这些步骤就是视图变换（View Transformation）了，即：
 
+<div>
 $$
 M_{view} = R_{view} \cdot T_{view}
 $$
+</div>
 
 假设摄像机所在的世界坐标是 $ (x, y, z) $，那么：
 
+<div>
 $$
 T_{view} = \begin{bmatrix} 1 & 0 & 0 & -x \\\ 0 & 1 & 0 & -y \\\ 0 & 0 & 1 & -z \\\ 0 & 0 & 0 & 1 \end{bmatrix}
 $$
+</div>
 
 假设摄像机的的上方向为 $ \hat t $，同时往 $ \hat g $ 方向看，由于 $ \hat e $、$ \hat t $、$ \hat g $ 是摄像机的本地坐标系，因此三者相互垂直，所有有：
 

@@ -133,7 +133,9 @@ for (int x = 0; x < width; ++x)
         image[x][y] = inside(triangle, x + 0.5, y + 0.5)
 ```
 
-然而，如果对每个三角形都进行全屏幕采样的话，性能就非常浪费了。实际上，我们只需要对三角形所在的轴向包围盒子（Axis Align Bounding Box，简称 AABB）覆盖的范围进行采样即可：
+然而，如果对每个三角形都进行全屏幕采样的话，性能就非常浪费了。
+
+实际上，我们只需要对三角形所在的轴向包围盒子（Axis Align Bounding Box，简称 AABB）覆盖的范围进行采样即可：
 
 ![](./sample_triangle_in_aabb.png)
 
