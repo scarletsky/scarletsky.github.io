@@ -314,7 +314,98 @@ UV 坐标是指以纹理左下角为原点来建立的二维坐标系，横坐�
 
 只要三角形中的每个顶点都保存了一个 UV 坐标的信息，那么在着色的时候就可以通过 UV 坐标找到该纹理对应的区域，这样就可以实现应用纹理的效果了。
 
+现在，我们知道了三角形的三个顶点中都包含了 UV 坐标，但三角形中的任意一点的 UV 坐标又应该怎么计算呢？这时候就需要引入一个新的概念：**重心坐标**。
 
+
+# 重心坐标（Barycentric Coordinates）
+
+![](./barycentric_coordinates.png)
+
+重心坐标是以三角形的其中一个顶点为原点，分别以另外两个顶点作为基向量作为一个新的坐标系，如上图所示就是以 $ a $ 为原点，以 $ \vec {ab} $ 和 $ \vec {ac} $ 作为基的坐标系。
+
+在这个坐标系中，任意一个点 $ p $ 可以表示成：
+
+
+$$
+p = a + \beta(b - a) + \gamma(c - a)
+$$
+
+移项得：
+
+$$
+p = (1 - \beta - \gamma)a + \beta b + \gamma c
+$$
+
+令 $ \alpha = 1 - \beta - \gamma $，于是我们就能得到 p 点的表示方式：
+
+$$
+p = \alpha a + \beta b + \gamma c
+$$
+
+其中：
+
+$$
+\alpha + \beta + \gamma = 1
+$$
+
+这样，$ p $ 点的重心坐标为：
+
+$$
+p = (\alpha, \beta, \gamma)
+$$
+
+当 $ \alpha $、$ \beta $、$ \gamma $ 同时为非负数的时候，$ p $ 点会位于三角形内部。
+
+重心坐标还有另一种表示方式，即每一个分量等于该顶点所对应的面积与整个三角形面积的比值：
+
+![](./barycentric_coordinates_proportional_areas.png)
+
+如图所示，A 所对应的面积为 $ A_A $，B 所对应的面积为 $ A_B $，C 所对应的面积为 $ A_C $，于是重心坐标的三个分量就是：
+
+<div>
+$$
+\alpha = \frac {A_A} {A_A + A_B + A_C}
+$$
+
+$$
+\beta = \frac {A_B} {A_A + A_B + A_C}
+$$
+
+$$
+\gamma = \frac {A_C} {A_A + A_B + A_C}
+$$
+</div>
+
+根据重心坐标的定义，我们能得到几个很特殊的重心坐标：
+
+- $ (1, 0, 0) $：顶点 A 的坐标
+- $ (0, 1, 0) $：顶点 B 的坐标
+- $ (0, 0, 1) $：顶点 C 的坐标
+- $ (\frac 1 3, \frac 1 3, \frac 1 3) $：三角形的重心
+
+最后，我们可以把二维平面中的三角形的任意一点 $ (x, y) $ 转化成重心坐标 $ (\alpha, \beta, \gamma) $，这里有一个通用公式：
+
+<div>
+$$
+\alpha = \frac {-(x - x_B)(y_C - y_B) + (y - y_B)(x_C - x_B)} {-(x_A - x_B)(y_C - y_B) + (y_A - y_B)(x_C - x_B)}
+$$
+
+$$
+\beta = \frac {-(x - x_C)(y_A - y_C) + (y - y_C)(x_A - x_C)} {-(x_B - x_C)(y_A - y_C) + (y_B - y_C)(x_A - x_C)}
+$$
+
+$$
+\gamma = 1 - \alpha - \beta
+$$
+</div>
+
+有了重心坐标之后，我们就能计算出三角形中任意一点的属性了：
+
+![](./using_barycentric_coordinates.png)
+
+无论是位置、法线、颜色、UV 等等其他的属性，我们都能通过重心坐标计算出三角形中任意一点的属性。
+
+需要注意的是，由于三角形在投影前后的重心坐标（形状）会发生变化，因此并不能用投影后的三角形的重心坐标来计算，必须把它还原成投影前的三角形，然后计算其重心坐标，再计算对应的属性。
 
 # 参考资料
 
@@ -325,3 +416,5 @@ UV 坐标是指以纹理左下角为原点来建立的二维坐标系，横坐�
 [Lecture 09 Shading 3 (Texture Mapping Cont.)](https://www.bilibili.com/video/BV1X7411F744?p=10)
 
 [求反射向量](https://www.cnblogs.com/graphics/archive/2013/02/21/2920627.html)
+
+[三角形线性插值——重心坐标](https://rhetty.github.io/2018/03/20/%E4%B8%89%E8%A7%92%E5%BD%A2%E7%BA%BF%E6%80%A7%E6%8F%92%E5%80%BC%E2%80%94%E2%80%94%E9%87%8D%E5%BF%83%E5%9D%90%E6%A0%87/)
