@@ -407,6 +407,47 @@ $$
 
 需要注意的是，由于三角形在投影前后的重心坐标（形状）会发生变化，因此并不能用投影后的三角形的重心坐标来计算，必须把它还原成投影前的三角形，然后计算其重心坐标，再计算对应的属性。
 
+
+# 应用纹理
+
+有了重心坐标之后，我们能计算出任意一个像素对应 UV 坐标了，然后就能为每个像素应用纹理了。应用纹理的逻辑非常简单，只要遍历就可以了：
+
+```
+for each pixel(x, y):
+    uv = getUv(x, y)
+    texColor = sample2D(texture, uv)
+    kd = texColor 
+```
+
+然而在应用纹理的时候，我们会遇到一些问题，这些问题的都与纹素有关。
+
+
+## 纹素（Texel）
+
+纹素与像素非常相似，像素是组成屏幕的基本单位，而纹素则是组成纹理的基本单位，它和像素一样都是有面积的。
+
+每个像素的尺寸为 $ \frac 1 {屏幕宽度} \times \frac 1 {屏幕高度} $
+
+每个纹素的尺寸为 $ \frac 1 {纹理宽度} \times \frac 1 {纹理高度} $
+
+显然，根据重心坐标计算出来的 UV 坐标是一个浮点数，它会落在纹理中的任意位置。当我们尝试在该位置采样的时候，就会遇到一个问题：我们应该取什么颜色？
+
+![](./sample_texture.png)
+
+如图所示，
+
+## 纹理放大（Texture Magnification）
+
+
+
+## 纹理缩小（Texture Minification）
+
+
+
+# Mipmap
+
+
+
 # 参考资料
 
 [Lecture 07 Shading 1 (Illumination, Shading and  Graphics Pipeline)](https://www.bilibili.com/video/BV1X7411F744?p=8)
@@ -418,3 +459,9 @@ $$
 [求反射向量](https://www.cnblogs.com/graphics/archive/2013/02/21/2920627.html)
 
 [三角形线性插值——重心坐标](https://rhetty.github.io/2018/03/20/%E4%B8%89%E8%A7%92%E5%BD%A2%E7%BA%BF%E6%80%A7%E6%8F%92%E5%80%BC%E2%80%94%E2%80%94%E9%87%8D%E5%BF%83%E5%9D%90%E6%A0%87/)
+
+[Pixel vs. Texel](https://dmtamakuwala.blogspot.com/2013/07/pixel-vs-texel.html)
+
+[Texture Magnification](https://www.youtube.com/watch?v=ZlzXX8cLAds)
+
+[Linear Filtering](https://paroj.github.io/gltut/Texturing/Tut15%20Magnification.html)
