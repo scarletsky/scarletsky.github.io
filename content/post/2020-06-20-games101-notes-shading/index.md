@@ -434,14 +434,50 @@ for each pixel(x, y):
 
 ![](./sample_texture.png)
 
-如图所示，
+如图所示，虚线框表示纹素，黑色点表示纹素的中心，红色点表示要采样的位置。显然，我们需要一个采样策略去决定应该获得什么颜色，常见的策略有：
+
+- `Nearest` 取该采样点所在的纹素的颜色（会发生一次采样）
+
+- `Linear` 取该采样点周围四个纹素的颜色，然后进行加权平均（会发生四次采样）
+
+还有一个问题，当纹理尺寸与显示区域尺寸不同的时候，应该怎么办呢？
+
+假设我们的显示区域的尺寸是 4x4，当我们要把一张 2x2 的纹理铺满整个显示区域时，我们就需要对它进行**放大**。当我们要把一张 8x8 的纹理铺满整个显示区域时，我们就需要对它进行**缩小**。这时候就涉及到**纹理放大**和**纹理缩小**。
+
 
 ## 纹理放大（Texture Magnification）
 
+![](./texture_magnification.png)
+
+当纹理放大时，一个纹素将会映射到多个像素中。
 
 
 ## 纹理缩小（Texture Minification）
 
+![](./texture_minification.png)
+
+当纹理缩小时，多个纹素将会映射到一个像素中。
+
+
+## 实际问题
+
+![](./point_sampling_textures.png)
+
+当我们尝试渲染在一个面片上面贴一张网格图的时候，我们期望得到左边的结果，但实际上得到的是右边的结果，近距离出现锯齿，远距离出现摩尔纹。
+
+这是因为每个像素对应的纹素区域不同导致的。
+
+![](./screen_pixel_footprint_in_texture.png)
+
+- 对于近距离的像素来说，它所覆盖的纹素范围较少，纹理发生了放大。
+
+- 对于远距离的像素来说，它所覆盖的纹理范围较大，纹理发生了缩小。
+
+这是一个典型的走样问题，我们可以通过之前学到的**超采样**来实现反走样，下面是 512 倍超采样的结果：
+
+![](./512x_supersampling.png)
+
+可以看到，超采样的效果比较明显，但它有一个致命的问题：性能消耗巨大。对于远距离的像素来说，超采样明显是浪费的，有没有一种更好的方案去解决这种由纹理采样带来的问题呢？
 
 
 # Mipmap
@@ -462,6 +498,6 @@ for each pixel(x, y):
 
 [Pixel vs. Texel](https://dmtamakuwala.blogspot.com/2013/07/pixel-vs-texel.html)
 
-[Texture Magnification](https://www.youtube.com/watch?v=ZlzXX8cLAds)
+[Textures - Magnification and Minification](http://people.hsc.edu/faculty-staff/robbk/Coms385/Lectures/30%20Textures%20-%20Magnification%20and%20Minification.ppt)
 
 [Linear Filtering](https://paroj.github.io/gltut/Texturing/Tut15%20Magnification.html)
