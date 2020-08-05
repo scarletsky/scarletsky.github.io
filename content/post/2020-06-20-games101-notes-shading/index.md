@@ -473,14 +473,86 @@ for each pixel(x, y):
 
 - 对于远距离的像素来说，它所覆盖的纹理范围较大，纹理发生了缩小。
 
+这背后的问题就是，对于每个像素来说，它们表示的要表示的区域各不相同，但最终要以一个颜色来填充整个像素。
+
 这是一个典型的走样问题，我们可以通过之前学到的**超采样**来实现反走样，下面是 512 倍超采样的结果：
 
 ![](./512x_supersampling.png)
 
-可以看到，超采样的效果比较明显，但它有一个致命的问题：性能消耗巨大。对于远距离的像素来说，超采样明显是浪费的，有没有一种更好的方案去解决这种由纹理采样带来的问题呢？
+可以看到，超采样的效果比较明显，但它有一个致命的问题：性能消耗巨大。而且对于远距离的像素来说，超采样明显是浪费的，有没有一种更好的方案去解决这种由纹理采样带来的问题呢？
+
+细心想想，我们刚刚对纹理采样是一种**点查询**，也就是通过一个 UV 坐标去获取一个纹素的颜色的，如果有一种方式可以实现**范围查询**，也就是通过一个 UV 坐标去获取一个范围（任意大小）的平均颜色，那么就能完美解决这个问题了。
+
+而这个方案就是**Mipmap**。
 
 
 # Mipmap
+
+Mipmap 是指根据一张纹理去生成一系列更小的纹理的技术。
+
+![](./mipmap.png)
+
+如图所示：
+
+- 第 0 级是纹理的原尺寸
+- 第 1 级由第 0 级纹理缩放 $ \frac 1 2 $ 所得
+- ...
+- 第 n 级由第 n - 1 级纹理缩放 $ \frac 1 2 $ 所得
+- 最后一级的纹理尺寸为 1x1
+
+![](./create_mipmap.png)
+
+每一级 mipmap 中的每一个像素，都是由上一级 mipmap 相邻的四个像素求平均所得。
+
+最后，我们就能得到这个金字塔形状的贴图链：
+
+![](./mipmap_chain.png)
+
+这个 mipmap 有什么用呢？
+
+在采样的时候，我们可以先计算出这个像素覆盖了多大范围的纹素，然后再计算出这个范围应该对应到第几层 mipmap，再对该层 mipmap 进行采样，这样就相当于得到了原区域纹素的平均颜色了。 例如：
+
+- 当一个像素覆盖了 1 个纹素的时候，采样时应该访问第 0 层 mipmap
+- 当一个像素覆盖了 2 个纹素的时候，采样时应该访问第 1 层 mipmap
+- 当一个像素覆盖了 4 个纹素的时候，采样时应该访问第 2 层 mipmap
+- ...
+- 当一个像素覆盖了 128 个纹素的时候，采样时应该访问第 7 层 mipmap
+
+假设一个像素覆盖了 N 个纹素，应该采样的层数为 L，那么它们的关系就是：
+
+$$
+L = Log_2 N
+$$
+
+显然，L 有可能是一个浮点数，如 1.5，这时候应该怎么办呢？很简单，先采样第1 层，然后采样第 2 层，再对两个值进行插值即可。
+
+
+需要注意的是，由于 mipmap 通过原尺寸的纹理生成了一系列更小的纹理，这样会导致存储体积增大，增大了多少呢？显然，这是一个等比数列求和问题， 于是我们可以套用一下公式：
+
+<div>
+$$
+S_n = a_1 \frac {1 - q^n} {1 - q}
+$$
+</div>
+
+由于它的公比是 $ \frac 1 4 $（因为宽高都为上一级的一半），而首项可以看作是 1，于是代入公式可得：
+
+<div>
+$$
+S_n = 1 \cdot \frac {1 - {\frac 1 4^n}} {\frac 3 4} = \frac 4 3 \cdot (1 - \frac 1 4^n)
+$$
+</div>
+
+当 n 趋向无穷时，$ S_n = \frac 4 3 $ 。因此，使用 mipmap 之后，存储体积会比原来增大 $ \frac 1 3 $。
+
+我们来看一看使用了 mipmap 之后的效果：
+
+![](./mipmap_filtering.png)
+
+很明显，效果比之前好多了。 近距离的锯齿明显较少了，然而远距离的却是一大片模糊，这是为什么呢？
+
+
+# 各向异性（Anisotropic）
 
 
 
@@ -500,4 +572,10 @@ for each pixel(x, y):
 
 [Textures - Magnification and Minification](http://people.hsc.edu/faculty-staff/robbk/Coms385/Lectures/30%20Textures%20-%20Magnification%20and%20Minification.ppt)
 
+[MipMap Texturing](https://cgl.ethz.ch/teaching/former/vc_master_06/Downloads/Mipmaps_1.pdf)
+
+[Mipmapping](https://www.youtube.com/watch?v=8OtOFN17jxM)
+
 [Linear Filtering](https://paroj.github.io/gltut/Texturing/Tut15%20Magnification.html)
+
+[Needs More Pictures](https://paroj.github.io/gltut/Texturing/Tut15%20Needs%20More%20Pictures.html)
