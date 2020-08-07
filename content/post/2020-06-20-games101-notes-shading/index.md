@@ -486,7 +486,7 @@ for each pixel(x, y):
 而这个方案就是**Mipmap**。
 
 
-# Mipmap
+## Mipmap
 
 Mipmap 是指根据一张纹理去生成一系列更小的纹理的技术。
 
@@ -558,7 +558,7 @@ $$
 很明显，效果比之前好多了。 近距离的锯齿明显较少了，然而远距离的却是一大片模糊，这是为什么呢？
 
 
-# 各向异性过滤（Anisotropic Filtering）
+## 各向异性过滤（Anisotropic Filtering）
 
 ![](./irregular_pixel_footprint_in_texture.png)
 
@@ -572,8 +572,11 @@ $$
 
 左上角的是原纹理，顺着左上角往右下角方向生成的是 mipmap，它们与原纹理是等比例的，此外的其他纹理都是由各向异性过滤而生成的纹理。
 
-和 mipmap 一样，各向异性过滤和也是有层级的，上图中不同的颜色表示不同的层级。
+和 mipmap 一样，各向异性过滤和也是有层级的，对于上面的那张图，层级如下图所示，相同颜色的区域表示相同层级下的各向异性过滤：
 
+![](./anisotropic_levels.png)
+
+我们可以在各种图形 API 中去控制应该生成哪些层级的各向异性过滤的纹理。
 
 有了各向异性过滤之后，在对于扁矩形区域，我们就可以找到对应的纹理中查询颜色了。我们来看看使用了各向异性过滤之后的效果：
 
@@ -581,6 +584,54 @@ $$
 
 可以看到，这种方式会比之前提到的近似看成正方形的区域要好得多。
 
+
+# 各式各样的纹理
+
+上面的例子中，我们通过使用纹理去改变了着色公式中的 $ k_d $ 项，显然，着色公式中的其他项也可以利用纹理去改变的。
+
+正是这个原因，我们会看到各种各样的纹理，如表示环境光的 sphereMap 和 cubeMap，表示法线的 normalMap 等等。下面介绍几种常见的纹理。
+
+
+## 球面贴图（Spherical Map）
+
+环境贴图可以用来表示环境光照。由于环境光是来自四面八方的，因此在采样环境光的时候可以把其看成是一个球面。
+
+![](./environmental_lighting.png)
+
+上图中左图是把环境贴图应用在球面上，然后右图的场景中则是利用该环境贴图进行采样得到的结果。
+
+但球面贴图有一个缺点，就是容易发生变形，特别是靠近北极南极的区域，变形非常严重。
+
+![](./spherical_map_problem.png)
+
+这种现象就导致了如果用球面贴图提供光照信息，那么北极南极方向的光照信息会变得不准确。
+
+
+## 立方体贴图（Cube Map）
+
+![](./cube_map.png)
+
+立方体贴图是另一种环境贴图，它是利用六张图来构建成一个立方体，然后再根据法线方向去判断采样哪一个面。
+
+![](./cube_map_six_face.png)
+
+这种方案比球面贴图更少变形，但需要把一张环境贴图去成六张尺寸相同的图。
+
+
+## 凹凸贴图（Bump Map）
+
+![](./Bump-map-demo-full.png)
+
+凹凸贴图是一种为模型添加细节的贴图。凹凸贴图是一张灰度图，它保存了着色点与原始表面的高度差，以此来影响光照信息。
+
+
+## 法线贴图（Normal Map）
+
+![](./Normal_map_example.png)
+
+法线贴图是凹凸贴图的另一种实现，原理是改变着色点的法线方向，从而影响光照结果。
+
+从上面可以看到，我们可以用低模加法线贴图，来模拟高模的效果。
 
 
 # 参考资料
@@ -590,6 +641,8 @@ $$
 [Lecture 08 Shading 2 (Shading, Pipeline and Texture Mapping)](https://www.bilibili.com/video/BV1X7411F744?p=9)
 
 [Lecture 09 Shading 3 (Texture Mapping Cont.)](https://www.bilibili.com/video/BV1X7411F744?p=10)
+
+[Lecture 10 Geometry 1 (Introduction)](https://www.bilibili.com/video/BV1X7411F744?p=11)
 
 [求反射向量](https://www.cnblogs.com/graphics/archive/2013/02/21/2920627.html)
 
@@ -606,3 +659,7 @@ $$
 [Linear Filtering](https://paroj.github.io/gltut/Texturing/Tut15%20Magnification.html)
 
 [Needs More Pictures](https://paroj.github.io/gltut/Texturing/Tut15%20Needs%20More%20Pictures.html)
+
+[凹凸贴图](https://zh.wikipedia.org/wiki/%E5%87%B9%E5%87%B8%E8%B4%B4%E5%9B%BE)
+
+[法线贴图](https://zh.wikipedia.org/wiki/%E6%B3%95%E7%BA%BF%E8%B4%B4%E5%9B%BE)
