@@ -614,7 +614,7 @@ $$
 d = 0
 $$
 
-同理，我们可以得到矩阵的雏形：
+我们可以用同样的方法去计算矩阵的其它行，于是就能得到矩阵的雏形：
 
 <div>
 $$
@@ -623,7 +623,7 @@ M_{persp -> ortho} =
 n & 0 & 0 & 0 \\\
 0 & n & 0 & 0 \\\
 ? & ? & ? & ? \\\
-0 & 0 & 0 & 1
+0 & 0 & 1 & 0
 \end{bmatrix}
 $$
 </div>
@@ -747,7 +747,7 @@ M_{persp -> ortho}
 n & 0 & 0 & 0 \\\
 0 & n & 0 & 0 \\\
 0 & 0 & n + f & -nf \\\
-0 & 0 & 0 & 1
+0 & 0 & 1 & 0
 \end{bmatrix}
 $$
 </div>
@@ -802,7 +802,72 @@ $$
 l = -r
 $$
 
-这样，我们就把所需要的值都计算出来了，直接带入上面的正交矩阵公式即可。
+这样，我们就把所需要的值都计算出来了，直接带入上面的正交矩阵公式即可得到：
+
+
+# 作业
+
+## 基础
+
+```c++
+// main.cpp
+#include <cmath>
+
+constexpr double MY_PI = 3.1415926;
+constexpr double DEG_TO_RAD = MY_PI / 180.0;
+
+
+Eigen::Matrix4f get_model_matrix(float rotation_angle)
+{
+    Eigen::Matrix4f model = Eigen::Matrix4f::Identity();
+
+    float rad = rotation_angle * DEG_TO_RAD;
+    float sin_theta = sin(rad);
+    float cos_theta = cos(rad);
+
+    model(0, 0) = cos_theta;
+    model(0, 2) = -sin_theta;
+    model(2, 0) = sin_theta;
+    model(2, 2) = cos_theta;
+
+    return model;
+}
+
+
+Eigen::Matrix4f get_projection_matrix(float eye_fov, float aspect_ratio,
+                                      float zNear, float zFar)
+{
+    Eigen::Matrix4f projection = Eigen::Matrix4f::Identity();
+    Eigen::Matrix4f ortho = Eigen::Matrix4f::Identity();
+    Eigen::Matrix4f persp_to_ortho = Eigen::Matrix4f::Identity();
+
+    float n = zNear;
+    float f = zFar;
+    float t = n * tan((eye_fov / 2.0) * DEG_TO_RAD);
+    float r = aspect_ratio * t;
+    float b = -t;
+    float l = -r;
+
+    ortho(0, 0) = 2 / (r - l);
+    ortho(1, 1) = 2 / (t - b);
+    ortho(2, 2) = 2 / (n - f);
+    ortho(0, 3) = -(l + r) / 2;
+    ortho(1, 3) = -(b + t) / 2;
+    ortho(2, 3) = -(f + n) / 2;
+
+    persp_to_ortho(0, 0) = n;
+    persp_to_ortho(1, 1) = n;
+    persp_to_ortho(2, 2) = n + f;
+    persp_to_ortho(2, 3) = -(n * f);
+    persp_to_ortho(3, 2) = 1;
+    persp_to_ortho(3, 3) = 0;
+
+    projection = ortho * persp_to_ortho;
+
+    return projection;
+}
+```
+
 
 
 # 参考资料
