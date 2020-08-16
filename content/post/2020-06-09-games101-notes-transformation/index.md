@@ -809,7 +809,7 @@ $$
 
 ## 基础
 
-```c++
+```cpp
 // main.cpp
 #include <cmath>
 
@@ -877,3 +877,5 @@ Eigen::Matrix4f get_projection_matrix(float eye_fov, float aspect_ratio,
 [Lecture 04 Transformation Cont.](https://www.bilibili.com/video/BV1X7411F744?p=4)
 
 [Lecture 05 Rasterization 1 (Triangles)](https://www.bilibili.com/video/BV1X7411F744?p=5)
+
+[Rodrigues 旋轉公式](https://openhome.cc/Gossip/WebGL/Rodrigues.html)

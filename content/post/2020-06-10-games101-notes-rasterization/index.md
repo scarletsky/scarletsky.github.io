@@ -307,26 +307,170 @@ for (each triangle T)
 
 需要注意的是：**深度缓冲并不能处理透明物体**。
 
-<!-- ## 时域 & 频域 -->
 
-<!-- 在数字信号处理上，我们可以通过 **傅立叶变换** 和 **逆傅立叶变换** 来转换时域和频域。 -->
+# 作业
 
-<!-- $$ -->
-<!-- 时域 \xrightarrow[]{\text{傅立叶变换}} 频域 -->
-<!-- $$ -->
+## 基础
 
-<!-- $$ -->
-<!-- 时域 \xleftarrow[\text{逆傅立叶变换}]{} 频域 -->
-<!-- $$ -->
+```cpp
+static bool insideTriangle(int x, int y, const Vector3f* _v)
+{
+    Eigen::Vector3f p0 = _v[0];
+    Eigen::Vector3f p1 = _v[1];
+    Eigen::Vector3f p2 = _v[2];
+    Eigen::Vector3f q(x, y, 0);
+
+    Eigen::Vector3f p0p1 = p1 - p0;
+    Eigen::Vector3f p1p2 = p2 - p1;
+    Eigen::Vector3f p2p0 = p0 - p2;;
+    Eigen::Vector3f p0q = q - p0;
+    Eigen::Vector3f p1q = q - p1;
+    Eigen::Vector3f p2q = q - p2;
+
+    Eigen::Vector3f r0 = p0p1.cross(p0q);
+    Eigen::Vector3f r1 = p1p2.cross(p1q);
+    Eigen::Vector3f r2 = p2p0.cross(p2q);
+
+    return (r0.z() > 0 && r1.z() > 0 && r2.z() > 0) || (r0.z() < 0 && r1.z() < 0 && r2.z() < 0);
+}
+
+void rst::rasterizer::rasterize_triangle(const Triangle& t) {
+    auto v = t.toVector4();
+
+    int top = -9999;
+    int bottom = 9999;
+    int left = 9999;
+    int right = -9999;
+
+    for (int i = 0; i < 3; i++) {
+        Eigen::Vector4f vertex = v[i];
+
+        float x = vertex.x();
+        float y = vertex.y();
+
+        if (y > top) top = ceil(y);
+        if (y < bottom) bottom = floor(y);
+        if (x > right) right = ceil(x);
+        if (x < left) left = floor(x);
+    }
+
+    for (int x = left; x < right; x++) {
+        for (int y = bottom; y < top; y++) {
+            if (insideTriangle(x, y, t.v)) {
+
+                auto[alpha, beta, gamma] = computeBarycentric2D(x, y, t.v);
+                float w_reciprocal = 1.0/(alpha / v[0].w() + beta / v[1].w() + gamma / v[2].w());
+                float z_interpolated = alpha * v[0].z() / v[0].w() + beta * v[1].z() / v[1].w() + gamma * v[2].z() / v[2].w();
+                z_interpolated *= w_reciprocal;
+
+                Eigen::Vector3f point(x, y, 0.0);
+                auto ind = (height-1-point.y())*width + point.x();
+
+                if (depth_buf[ind] > z_interpolated) {
+                    depth_buf[ind] = z_interpolated;
+                    set_pixel(point, t.getColor());
+                }
+
+            }
+        }
+    }
+}
+```
 
 
-<!-- ## 滤波 -->
+## 提高
 
-<!-- 滤波在信号处理上是指把特定频段滤除的操作。常见的滤波有： -->
+```cpp
+static bool insideTriangle(float x, float y, const Vector3f* _v)
+{
+    Eigen::Vector3f p0 = _v[0];
+    Eigen::Vector3f p1 = _v[1];
+    Eigen::Vector3f p2 = _v[2];
+    Eigen::Vector3f q(x, y, 0);
 
-<!-- - 高通滤波：只有高频信号才能通过的滤波 -->
-<!-- - 低通滤波：只有低频信号才能通过的滤波 -->
-<!-- - 中通滤波：只有中频信号才能通过的滤波 -->
+    Eigen::Vector3f p0p1 = p1 - p0;
+    Eigen::Vector3f p1p2 = p2 - p1;
+    Eigen::Vector3f p2p0 = p0 - p2;;
+    Eigen::Vector3f p0q = q - p0;
+    Eigen::Vector3f p1q = q - p1;
+    Eigen::Vector3f p2q = q - p2;
+
+    Eigen::Vector3f r0 = p0p1.cross(p0q);
+    Eigen::Vector3f r1 = p1p2.cross(p1q);
+    Eigen::Vector3f r2 = p2p0.cross(p2q);
+
+    return (r0.z() > 0 && r1.z() > 0 && r2.z() > 0) || (r0.z() < 0 && r1.z() < 0 && r2.z() < 0);
+}
+
+//Screen space rasterization
+void rst::rasterizer::rasterize_triangle(const Triangle& t) {
+    auto v = t.toVector4();
+
+    int top = -9999;
+    int bottom = 9999;
+    int left = 9999;
+    int right = -9999;
+
+    for (int i = 0; i < 3; i++) {
+        Eigen::Vector4f vertex = v[i];
+
+        float x = vertex.x();
+        float y = vertex.y();
+
+        if (y > top) top = ceil(y);
+        if (y < bottom) bottom = floor(y);
+        if (x > right) right = ceil(x);
+        if (x < left) left = floor(x);
+    }
+
+    float sub_pixels[4][2] = {
+        { 0.0, 0.0 },
+        { 0.5, 0.0 },
+        { 0.0, 0.5 },
+        { 0.5, 0.5 }
+    };
+    int sub_pixels_length = sizeof(sub_pixels) / sizeof(sub_pixels[0]);
+
+    for (int x = left; x < right; x++) {
+        for (int y = bottom; y < top; y++) {
+
+            float pass = 0.0;
+
+            for (int i = 0; i < sub_pixels_length; i++) {
+                if (insideTriangle(x + sub_pixels[i][0], y + sub_pixels[i][1], t.v)) {
+                    pass += 1;
+                }
+            }
+
+            // NOTE: percent MUST be float, make sure pass or sub_pixels_length is float.
+            float percent = pass / sub_pixels_length;
+
+            if (pass == 2) {
+                std::cout << "percent: " << percent << " x: " << x << " y: " << y << std::endl;
+            }
+
+            if (pass > 0) {
+                auto[alpha, beta, gamma] = computeBarycentric2D(x, y, t.v);
+                float w_reciprocal = 1.0/(alpha / v[0].w() + beta / v[1].w() + gamma / v[2].w());
+                float z_interpolated = alpha * v[0].z() / v[0].w() + beta * v[1].z() / v[1].w() + gamma * v[2].z() / v[2].w();
+                z_interpolated *= w_reciprocal;
+
+                Eigen::Vector3f color = t.getColor();
+                Eigen::Vector3f point(x, y, 0.0);
+                auto ind = (height-1-point.y())*width + point.x();
+
+                if (depth_buf[ind] > z_interpolated) {
+                    depth_buf[ind] = z_interpolated;
+                    color *= percent;
+                    set_pixel(point, color);
+                }
+            }
+        }
+    }
+}
+
+```
+
 
 
 # 参考资料
