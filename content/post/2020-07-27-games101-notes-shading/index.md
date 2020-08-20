@@ -168,7 +168,7 @@ $$
 调整一下入射光 $ \vec {IO} $ 的方向，使之朝外，并使 $ \vec {OR} = \vec r $、$ \vec {OI} = \vec l $、$ \vec {ON} = \vec n $，于是我们就能得到反射公式：
 
 $$
-\vec r = 2 (\vec l \cdot \vec n) - \vec l
+\vec r = 2 \vec n (\vec l \cdot \vec n) - \vec l
 $$
 
 
