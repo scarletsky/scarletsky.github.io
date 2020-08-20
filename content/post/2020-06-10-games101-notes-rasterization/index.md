@@ -337,22 +337,10 @@ static bool insideTriangle(int x, int y, const Vector3f* _v)
 void rst::rasterizer::rasterize_triangle(const Triangle& t) {
     auto v = t.toVector4();
 
-    int top = -9999;
-    int bottom = 9999;
-    int left = 9999;
-    int right = -9999;
-
-    for (int i = 0; i < 3; i++) {
-        Eigen::Vector4f vertex = v[i];
-
-        float x = vertex.x();
-        float y = vertex.y();
-
-        if (y > top) top = ceil(y);
-        if (y < bottom) bottom = floor(y);
-        if (x > right) right = ceil(x);
-        if (x < left) left = floor(x);
-    }
+    int top = ceil(std::max(v[0].y(), std::max(v[1].y(), v[2].y())));
+    int bottom = floor(std::min(v[0].y(), std::min(v[1].y(), v[2].y())));
+    int left = floor(std::min(v[0].x(), std::min(v[1].x(), v[2].x())));
+    int right = ceil(std::max(v[0].x(), std::max(v[1].x(), v[2].x())));
 
     for (int x = left; x < right; x++) {
         for (int y = bottom; y < top; y++) {
@@ -406,22 +394,10 @@ static bool insideTriangle(float x, float y, const Vector3f* _v)
 void rst::rasterizer::rasterize_triangle(const Triangle& t) {
     auto v = t.toVector4();
 
-    int top = -9999;
-    int bottom = 9999;
-    int left = 9999;
-    int right = -9999;
-
-    for (int i = 0; i < 3; i++) {
-        Eigen::Vector4f vertex = v[i];
-
-        float x = vertex.x();
-        float y = vertex.y();
-
-        if (y > top) top = ceil(y);
-        if (y < bottom) bottom = floor(y);
-        if (x > right) right = ceil(x);
-        if (x < left) left = floor(x);
-    }
+    int top = ceil(std::max(v[0].y(), std::max(v[1].y(), v[2].y())));
+    int bottom = floor(std::min(v[0].y(), std::min(v[1].y(), v[2].y())));
+    int left = floor(std::min(v[0].x(), std::min(v[1].x(), v[2].x())));
+    int right = ceil(std::max(v[0].x(), std::max(v[1].x(), v[2].x())));
 
     float sub_pixels[4][2] = {
         { 0.0, 0.0 },
@@ -444,10 +420,6 @@ void rst::rasterizer::rasterize_triangle(const Triangle& t) {
 
             // NOTE: percent MUST be float, make sure pass or sub_pixels_length is float.
             float percent = pass / sub_pixels_length;
-
-            if (pass == 2) {
-                std::cout << "percent: " << percent << " x: " << x << " y: " << y << std::endl;
-            }
 
             if (pass > 0) {
                 auto[alpha, beta, gamma] = computeBarycentric2D(x, y, t.v);
