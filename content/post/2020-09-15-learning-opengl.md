@@ -48,7 +48,7 @@ OpenGL 是一个状态机，我们通过调用它的 API 来更新当前的状�
 
 ## 使用 Buffer
 
-```c++
+```cpp
 float positions[6] = {-0.5f, -0.5f, 0.0f, 0.5f, 0.5f, -0.5f};
 unsigned int buffer;
 // 创建 buffer
@@ -70,6 +70,64 @@ glDrawArrays(GL_TRIANGLES, 0, 3);
 glDeleteBuffers(1, &buffer);
 ```
 
+注意，MacOS 默认会用 `Legacy Profile`，对应的 OpenGL 版本是 2.1，GLSL 则是 1.20。如果想要用更高版本的 OpenGL，那么我们需要改用 `Core Profile`：：
+
+```cpp
+if (!glfwInit())
+    return -1;
+
+// 在创建 window 之前添加如下代码
+glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+```
+
+另外，在 MacOS 中我们还需要启用 Vertex Array Object 才能使用自定义的 shader：
+
+```cpp
+unsigned int vao;
+glGenVertexArrays(1, &vao);
+glBindVertexArray(vao);
+
+glEnableVertexAttribArray(0);
+// ...
+```
+
+
+## 使用 Shader
+
+```cpp
+int compileShader(unsigned int type, const std::string& source) {
+    unsigned int id = glCreateShader(type);
+    const char* src = source.c_str();
+    glShaderSource(id, 1, &src, nullptr);
+    glCompileShader(id);
+    
+    return id;
+}
+
+int createShader(const std::string& vertexShader, const std::string& fragmentShader) {
+    unsigned int program = glCreateProgram();
+    unsigned int vs = compileShader(GL_VERTEX_SHADER, vertexShader);
+    unsigned int fs = compileShader(GL_FRAGMENT_SHADER, fragmentShader);
+    glAttachShader(program, vs);
+    glAttachShader(program, fs);
+    glLinkProgram(program);
+    glValidateProgram(program);
+    
+    glDeleteShader(vs);
+    glDeleteShader(fs);
+    
+    return id;
+}
+
+std::string vertexShader = "...";
+std::string fragmentShader = "...";
+unsigned int shader = createShader(vertexShader, fragmentShader);
+glUseProgram(shader);
+```
+
 
 # 补充知识
 
@@ -78,11 +136,17 @@ glDeleteBuffers(1, &buffer);
 OpenGL 是一套跨语言、跨平台的图形编程接口，它由许许多多的函数组成，这些函数是由显卡驱动来实现的，因此我们只需要下载并安装显卡驱动，就能使用 OpenGL 了。
 
 
+
 ## GLEW (OpenGL Extension Wrangler Library)
 
 当我们在编写 OpenGL 程序的时候，编译器需要知道 OpenGL 各种函数的地址，才能正确编译出程序。但由于这些函数是在显卡驱动中实现的，而不同的平台有不同的显卡驱动，这就会导致一个问题：我们的代码不能跨平台运行。
 
-GLEW 就是一个为 OpenGL 抹平平台间差异的库。它做的事情很简单：在运行时根据当前平台去找 OpenGL 的函数地址。
+GLEW 就是一个为 OpenGL 抹平平台间差异的库。它做的事情很简单：在运行时根据当前平台去找 OpenGL 的函数地址，实现方式如下：
+
+```cpp
+#define glGenBuffers GLEW_GET_FUN(__glewGenBuffers)
+```
+
 
 
 ## GLFW (Graphics Library Framework)
