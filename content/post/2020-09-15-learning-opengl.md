@@ -46,17 +46,21 @@ error: gl.h included before glew.h
 OpenGL 是一个状态机，我们通过调用它的 API 来更新当前的状态，然后根据当前状态进行绘制。
 
 
-## 使用 Buffer
+# 使用 Vertex Buffer
+
+Vertex Buffer 用来定义顶点数据，如绘制一个平面的三角形，我们需要定义三个顶点的位置，(x1, y1)、 (x2, y2)、 (x3, y3)。然后调用 `glDrawArrays` 进行绘制即可。
+
+使用 Vertex Buffer 的时候，我们需要把它们绑定到 `GL_ARRAY_BUFFER` 上。
 
 ```cpp
-float positions[6] = {-0.5f, -0.5f, 0.0f, 0.5f, 0.5f, -0.5f};
+float positions[] = {-0.5f, -0.5f, 0.0f, 0.5f, 0.5f, -0.5f};
 unsigned int buffer;
 // 创建 buffer
 glGenBuffers(1, &buffer);
 // 绑定当前 buffer
 glBindBuffer(GL_ARRAY_BUFFER, buffer);
 // 为当前 buffer 填充数据
-glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(float), positions, GL_STATIC_DRAW);
+glBufferData(GL_ARRAY_BUFFER, sizeof(positions) / sizeof(*positions) * sizeof(float), positions, GL_STATIC_DRAW);
 
 // 启用顶点数据
 glEnableVertexAttribArray(0);
@@ -70,7 +74,17 @@ glDrawArrays(GL_TRIANGLES, 0, 3);
 glDeleteBuffers(1, &buffer);
 ```
 
-注意，MacOS 默认会用 `Legacy Profile`，对应的 OpenGL 版本是 2.1，GLSL 则是 1.20。如果想要用更高版本的 OpenGL，那么我们需要改用 `Core Profile`：：
+注意，MacOS 默认会用 `Legacy Profile`，对应的 OpenGL 版本是 2.1，GLSL 则是 1.20。
+
+我们可以通过如下的方式去测试自己当前使用的 OpenGL 版本：
+
+```c++
+std::cout << glGetString(GL_VERSION) << std::endl;
+// MacOS 下会输出
+// 2.1 ATI-3.10.15
+```
+
+如果想要用更高版本的 OpenGL，那么我们需要改用 `Core Profile`：
 
 ```cpp
 if (!glfwInit())
@@ -81,6 +95,9 @@ glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+
+// 这时候调用 glGetString(GL_VERSION) 会输出
+// 4.1 ATI-3.10.15
 ```
 
 另外，在 MacOS 中我们还需要启用 Vertex Array Object 才能使用自定义的 shader：
@@ -95,7 +112,35 @@ glEnableVertexAttribArray(0);
 ```
 
 
-## 使用 Shader
+
+# 使用 Index Buffer
+
+由于 OpenGL 最基础的图元是三角形，因此如果我们想要绘制复杂图形的话，我们就需要通过绘制多个三角面来实现。
+
+假设我们想要绘制一个矩形，那么我们就需要定义两个三角面，即 6 个顶点坐标，这种情况下就会出现顶点数据重复，数据冗余的情况。其实我们可以定义 4 个顶点坐标，然后告诉 OpenGL 如何使用这些顶点去绘制三角形即可。
+
+和 Vertex Buffer 类似，我们需要把 Index Buffer 是绑定到 `GL_ELEMENT_ARRAY_BUFFER` 上，然后用 `glDrawElements` 来代替 `glDrawArrays`。
+
+
+```cpp
+// ... bind vertex buffers
+
+float positions[] = {-0.5f, -0.5f, 0.5f, -0.5f, 0.5f,  0.5f, -0.5f,  0.5f};
+unsigned int indices[] = {
+    0, 1, 2, // 第一个三角形使用的顶点
+    0, 2, 3  // 第二个三角形使用的顶点
+};
+unsigned int ibo;
+glGenBuffers(1, &ibo);
+glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices) / sizeof(*indices) * sizeof(unsigned int), indices, GL_STATIC_DRAW);
+
+glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+```
+
+
+
+# 使用 Shader
 
 ```cpp
 int compileShader(unsigned int type, const std::string& source) {
@@ -142,11 +187,17 @@ Cherno 的教程中是把它们都保存到一个文件中，用 `#shader vertex
 
 #shader vertex
 #version 330 core
-// ...
+
+void main() {
+    // ...
+}
 
 #shader fragment
 #version 330 core
-// ...
+
+void main() {
+    // ...
+}
 ```
 
 
