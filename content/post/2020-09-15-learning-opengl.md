@@ -1,5 +1,5 @@
 ---
-title: Learning OpenGL
+title: OpenGL 学习总结 (The Cherno OpenGL 系列教程)
 date: 2020-09-15T09:10:50+08:00
 draft: true
 ---
@@ -125,6 +125,70 @@ int createShader(const std::string& vertexShader, const std::string& fragmentSha
 std::string vertexShader = "...";
 std::string fragmentShader = "...";
 unsigned int shader = createShader(vertexShader, fragmentShader);
+glUseProgram(shader);
+```
+
+
+## 从文件中获取 Shader 内容
+
+我们可以把 Shader 的内容写到单独的文件中，然后通过读取文件的方式去获得 Shader 的内容。
+
+这里面有两个派系，一种是把 Vertex Shader 和 Fragment Shader 保存到两个文件中，另一种则是把它们都保存到同一个文件中，然后通过某些标记去区分。
+
+Cherno 的教程中是把它们都保存到一个文件中，用 `#shader vertex` 和 `#shader fragment` 去区分 Vertex Shader 和 Fragment Shader 的代码。
+
+```glsl
+// in res/shaders/basic.shader
+
+#shader vertex
+#version 330 core
+// ...
+
+#shader fragment
+#version 330 core
+// ...
+```
+
+
+```cpp
+// in src/main.cpp
+#include <fstream>
+#include <string>
+#include <sstream>
+
+struct ShaderProgramSource {
+    std::string vertexSource;
+    std::string fragmentSource;
+}
+
+ShaderProgramSource parseShader(const std::string& filepath) {
+    enum class ShaderType {
+        NONE = -1,
+        VERTEX = 0,
+        FRAGMENT = 1
+    };
+    std::ifstream stream(filepath);
+    std::string line;
+    std::stringstream ss[2];
+    ShaderType type = ShaderType::NONE;
+    
+    while (getline(stream, line)) {
+        if (line.find("#shader") != std::string::npos)  {
+            if (line.find("vertex") != std::string::npos)  {
+                type = ShaderType::VERTEX; 
+            } else if (line.find("fragment") != std::string::npos) {
+                type = ShaderType::FRAGMENT;
+            }
+        } else {
+            ss[(int)type] << line << '\n';
+        }
+    }
+
+    return { ss[0].str(), ss[1].str() };
+}
+
+ShaderProgramSource source = parseShader("../res/shaders/basic.shader");
+unsigned int shader = createShader(source.vertexSource, source.fragmentSource);
 glUseProgram(shader);
 ```
 
