@@ -244,6 +244,55 @@ glUseProgram(shader);
 ```
 
 
+# 使用 Uniform
+
+`uniform` 是 GLSL 中的一种变量，用来把数据从 CPU 传递到 GPU 中。
+
+```glsl
+// in res/shaders/basic.shader
+#version 330 core;
+layout (location = 0) out vec4 color;
+uniform vec4 uColor;
+
+void main() {
+    color = uColor;
+}
+```
+
+在 Shader 中定义完 `uniform` 后，我们就可以在 CPU 中把数据传递过去了。
+
+```cpp
+// in src/main.cpp
+// 1. 获取该变量的位置
+int location = glGetUniformLocation(shader, "uColor");
+// 2. 设置值
+glUniform4f(location, 1.0f, 1.0f, 0.0f, 1.0f);
+// 3. 绘制
+glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+```
+
+需要注意的是，`glUniform` 有很多变种，对应着设置不同的数据类型，我们要根据不同的数据类型来调用不同的变种。
+
+有了 `uniform` 之后，我们就可以根据需求去实现动画了，如不断修改三角面的颜色：
+
+```cpp
+float r = 0.0f;
+float increatment = 0.0f;
+while (!glfwWindowShouldClose(window)) {
+    glClear(GL_COLOR_BUFFER_BIT);
+    if (r >= 1.0) {
+        increatment = -0.5;
+    } else if (r <= 0.0) {
+        increatment = 0.5;
+    }
+    r += increatment;
+    glUniform4f(location, r, 1.0, 0.0, 1.0);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+}
+```
+
+
+
 # 补充知识
 
 ## OpenGL (Open Graphics Library)
