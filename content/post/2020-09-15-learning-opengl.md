@@ -293,6 +293,52 @@ while (!glfwWindowShouldClose(window)) {
 
 
 
+# 调试
+
+在使用 OpenGL 的时候，我们会经常碰到黑屏的情况，这通常都是因为某个地方出错了。如：
+
+```diff
+- glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
++ glDrawElements(GL_TRIANGLES, 6, GL_INT, nullptr);
+```
+
+这里传给 OpenGL 的类型错了，就会显示黑屏了，但我们却拿不到报错信息。特别是在复杂场景下，调试起来会非常麻烦。
+而 `glDebugMessageCallback` 却是在 OpenGL 4.3 之后才有提供，这里 Cherno 给出了一种较为通用的解决方案 —— 宏。
+
+实现思路大概是封装每一个 `glXXX` 方法，然后调用 `glGetError` 来判断有没有报错，如果有报错，就直接调用 `__debugbreak`(MSVC 环境下)  或者 `__builtin_trap`(GCC 或者 Clang 环境下) 或者其他可以触发断点调试的方法。
+
+```cpp
+#define ASSERT(x) if (!(x)) __builtin_trap();
+#define GLCall(x) GLClearError();\
+  x;\
+  ASSERT(GLLogCall(#x, __FILE__, __LINE__))
+
+
+static void glClearError() {}
+static bool GLLogCall(const char* function, const char* file, int line) {
+    while (GLenum error = glGetError()) {
+        std::cout << "[OpenGL Error] (0x" << std::hex << error << "): " << function << ": " << file << ": " << line << std::endl;
+        return false;
+    }
+    return true;
+}
+
+int main(void) {
+    // ...
+    GLCall(glDrawElements(GL_TRIANGLES, 6, GL_INT, nullptr));
+}
+```
+
+然后，我们就可以用 `GLCall` 封装 `glDrawElements`，并把正确的 `GL_UNSIGNED_INT` 改成错误的 `GL_INT` 来测试报错，编译并运行程序，我们就能在控制台中看到报错：
+
+```text
+// 把 error 转成 16 进制，然后再去 GLenum 中查具体的报错，如 0x500 是指 GL_INVALID_ENUM
+// CLion 中的 line 返回的是 16 进制的，如下面输出的 af 转换成 16 进制就是 175
+[OpenGL Error] (0x500): glDrawElements(GL_TRIANGLES, 6, GL_INT, nullptr): /path/to/hello-opengl/src/main.cpp: af
+```
+
+
+
 # 补充知识
 
 ## OpenGL (Open Graphics Library)
@@ -333,3 +379,4 @@ GLFW 就是一个可以提供这些功能的 API 的库，它允许用户创建 
 
 [docs.GL](http://docs.gl/)
 
+[C/C++调试技巧-debugbreak](https://www.bilibili.com/read/cv1165694/)
