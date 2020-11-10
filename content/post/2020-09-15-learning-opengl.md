@@ -74,7 +74,7 @@ glDrawArrays(GL_TRIANGLES, 0, 3);
 glDeleteBuffers(1, &buffer);
 ```
 
-注意，MacOS 默认会用 `Legacy Profile`，对应的 OpenGL 版本是 2.1，GLSL 则是 1.20。
+注意，MacOS 默认会用 `Compatibility Profile`(`Legacy Profile`)，对应的 OpenGL 版本是 2.1，GLSL 则是 1.20。
 
 我们可以通过如下的方式去测试自己当前使用的 OpenGL 版本：
 
@@ -293,6 +293,97 @@ while (!glfwWindowShouldClose(window)) {
 
 
 
+# 使用 Vertex Array Object
+
+先总结一下绘制一个三角形的流程(去除创建 buffer、shader 的部分)：
+
+- 绑定 shader (`glUseProgram`)
+- 传递 uniform (`glUniform`)
+- 绑定 vertex buffer (`glBindBuffer`)
+- 设置 vertex layout (`glEnableVertexAttribArray` 和 `glVertexAttribPointer`)
+- 绑定 index buffer (`glBindBuffer`)
+- 调用 draw call (`glDrawArrays` 或者 `glDrawElements`)
+
+假设我们要用相同的 shader 相同的 uniform 渲染 n 个物体，这些物体都有不同的顶点属性，那么整个渲染流程就是：
+
+```cpp
+for each geometry
+
+  for each attribute
+    glBindBuffer(GL_ARRAY_BUFFER, bufferForAttribute);
+    glEnableVertexAttribArray(...);
+    glVertexAttribPointer(...);
+
+  if indexed geometry
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+    glDrawElements(...);
+  else
+    glDrawArrays(...);
+
+```
+
+可以看到，每次绘制物体的时候，我们都需要重新绑定物体的顶点属性。为什么每次渲染物体都要做这些繁琐的操作呢？
+这是因为 OpenGL 是一个状态机，每次调用 `glXXX` 之类的方法都会改变状态，因此在绘制物体的时候，我们都需要确保顶点属性的状态是正确的，所以就要不断重复调用这些方法。
+
+我们可以用 JavaScript 来解析一下绑定的时候发生了什么，假设最开始的全局状态如下：
+
+```js
+var glState = {
+  attributeState: {
+    ELEMENT_ARRAY_BUFFER: null,
+    attributes: [
+      { enable: ?, size: ?, type: ?, normalize: ?, stride: ?, offset: ?, buffer: ?, },
+      { enable: ?, size: ?, type: ?, normalize: ?, stride: ?, offset: ?, buffer: ?, },
+      { enable: ?, size: ?, type: ?, normalize: ?, stride: ?, offset: ?, buffer: ?, },
+      { enable: ?, size: ?, type: ?, normalize: ?, stride: ?, offset: ?, buffer: ?, },
+      { enable: ?, size: ?, type: ?, normalize: ?, stride: ?, offset: ?, buffer: ?, },
+      { enable: ?, size: ?, type: ?, normalize: ?, stride: ?, offset: ?, buffer: ?, },
+      { enable: ?, size: ?, type: ?, normalize: ?, stride: ?, offset: ?, buffer: ?, },
+      { enable: ?, size: ?, type: ?, normalize: ?, stride: ?, offset: ?, buffer: ?, },
+    ],
+  }
+};
+```
+
+当我们调用 `glBindBuffer`、`glEnableVertexAttribArray`、`glVertexAttribPointer` 的时候，将会修改 `glState.attributeState` 里面的状态。
+buffer 要么绑定到 `glState.attributeState.ELEMENT_ARRAY_BUFFER` 中，要么绑定到 `glState.attrributeState.attributes[n]` 中。
+
+当我们准备好这个 `glState.attributeState` 之后，我们就可以调用 `glDrawArrays` 或者 `glDrawElements` 去绘制物体了。
+绘制完物体之后，我们要把这个 `glState.attributeState` 清空，然后再为下一个物体绑定顶点属性，再调用下一次绘制操作。
+
+而 Vertex Array Object(VAO) 则是用来解决这个繁琐的问题的。VAO 解决这个问题的思路很简单，就是每个物体都有保存自己的 `attributeState`，再绘制的时候，直接替换掉整个 `glState.attributeState`。即：
+
+```c++
+// draw A
+glState.attributeState = A.attributeState;
+glDrawElements(...);
+
+// draw B
+glState.attributeState = B.attributeState;
+glDrawElements(...);
+```
+
+那么接下来的问题是，怎样创建属于物体自己的 `attributeState` 呢？答案很简单——在绑定 buffer 之前，先创建并绑定 VAO，再像以前那样绑定 buffer，那么 buffer 就会绑定到当前的 VAO 中了。
+
+```c++
+unsigned int vao;
+glGenVertexArrays(1, &vao);
+glBindVertexArray(vao);
+
+glEnableVertexAttribArray(0, ...);
+glVertexAttribPointer(0, ...);
+glEnableVertexAttribArray(1, ...);
+glVertexAttribPointer(1, ...);
+```
+
+这种初始化 VAO 的操作只需执行一次，以后需要用到这个 VAO 的时候，直接调用 `glBindVertexArray`，然后就能直接绘制了。
+
+事实上，OpenGL 中是强制使用 VAO的，那为什么我们之前用 `Compatibility Profile` 的时候，却不需要手动创建 VAO 呢？因为 `Compatibility Profile` 默认会给我们创建一个 VAO，所有 buffer 都是绑定到这个 VAO 上的。
+而当我们使用 `Core Profile` 时，它没有给创建默认的 VAO，我们必须手动创建 VAO，这也是为什么当我们使用高版本 OpenGL 的时候，要手动创建一个 VAO 后才能正常工作的原因。
+
+
+
+
 # 调试
 
 在使用 OpenGL 的时候，我们会经常碰到黑屏的情况，这通常都是因为某个地方出错了。如：
@@ -371,7 +462,9 @@ GLFW 就是一个可以提供这些功能的 API 的库，它允许用户创建 
 
 [The Cherno OpenGL Series](https://www.youtube.com/playlist?list=PLlrATfBNZ98foTJPJ_Ev03o2oq3-GGOS2)
 
-[OpenGL](https://zh.wikipedia.org/wiki/OpenGL)
+[OpenGL(Wikipedia)](https://zh.wikipedia.org/wiki/OpenGL)
+
+[OpenGL(Khronos)](https://www.khronos.org/opengl/wiki)
 
 [GLEW 官网](http://glew.sourceforge.net/)
 
@@ -380,3 +473,5 @@ GLFW 就是一个可以提供这些功能的 API 的库，它允许用户创建 
 [docs.GL](http://docs.gl/)
 
 [C/C++调试技巧-debugbreak](https://www.bilibili.com/read/cv1165694/)
+
+[WebGL2 from WebGL1](https://webgl2fundamentals.org/webgl/lessons/webgl1-to-webgl2.html)
