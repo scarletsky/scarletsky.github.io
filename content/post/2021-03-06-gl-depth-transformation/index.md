@@ -48,7 +48,7 @@ $$
 从 clip space 变换成 ndc space 时，需要执行透视除法，那么就有：
 </div>
 
-- 透视投影
+## 透视投影变换
 
 <div>
 $$
@@ -60,7 +60,7 @@ Z_{ndc} = \frac {Z_{clip}}  {W_{clip}} = \frac {A Z_{view} + B} {-Z_{view}} = -A
 $$
 </div>
 
-- 正交投影
+## 正交投影变换
 
 <div>
 $$
@@ -70,7 +70,10 @@ $$
 $$
 Z_{ndc} = \frac {Z_{clip}} {W_{clip}} = A {Z_{view}} + B
 $$
+</div>
 
+
+<div>
 在 ndc space 中，$ Z_{ndc} $ 的取值范围为 [-1, 1]。当我们需要把它保存到 Z buffer 中时，需要把取值范围变换成 [0, 1]：
 
 $$
@@ -81,8 +84,8 @@ $$
 
 这就是我们经常看的 **深度图（Depth Map）** 了。 
 
-<div>
 
+<div>
 反过来说，如果想从深度图中计算出原来的深度，那么我们可以把上面的过程反过来算：
 
 先把深度图中的值变换到 ndc space 中：
@@ -99,7 +102,7 @@ $$
 
 </div>
 
-- 透视投影
+## 透视投影逆变换
 
 <div>
 $$
@@ -134,7 +137,7 @@ $$
 
 </div>
 
-- 正交投影
+## 正交投影逆变换
 
 // TODO:
 
@@ -144,7 +147,7 @@ $$
 
 <div>
 
-这样，我们就可以从 $ Z_{ndc} $ 或者 $ Z_{buffer} $ 中计算出 $ Z_{view} $，然后就可以计算出 `W_{clip}` 了。
+这样，我们就可以从 $ Z_{ndc} $ 或者 $ Z_{buffer} $ 中计算出 $ Z_{view} $，然后就可以计算出 $ W_{clip} $ 了。
 
 假设 $ P_{43} $ 表示投影矩阵的第四行第三列，$ P_{44} $ 表示第四行第四列，根据矩阵乘法的计算我们可以得到：
 
@@ -209,6 +212,11 @@ $$
 
 ## 提取 view space 下的法线
 
+```glsl
+vec3 getViewNormal(const in vec3 viewPosition) {
+    return normalize(cross(dFdx(viewPosition), dFdx(viewPosition)));
+}
+```
 
 # 总结
 
