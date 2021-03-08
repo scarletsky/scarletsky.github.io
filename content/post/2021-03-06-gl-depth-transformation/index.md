@@ -82,11 +82,12 @@ $$
 
 </div>
 
-这就是我们经常看的 **深度图（Depth Map）** 了。 
+这就是我们经常看的**深度图（Depth Map）** 了。
 
+
+反过来说，我们也可以从深度图里面提取出 $ Z_{buffer} $，然后计算出其他坐标。
 
 <div>
-反过来说，如果想从深度图中计算出原来的深度，那么我们可以把上面的过程反过来算：
 
 先把深度图中的值变换到 ndc space 中：
 
@@ -100,17 +101,21 @@ $$
 Z_{clip} = Z_{ndc} * W_{clip}
 $$
 
+但这个过程要用到 $ Z_{view} $ 和 $ W_{clip} $，不同的投影矩阵会有不同的计算过程。
+
 </div>
 
 ## 透视投影逆变换
 
 <div>
+
+在透视投影变换时，$ W_{clip} $ 和 $ Z_{view} $ 有如下的关系：
+
 $$
 W_{clip} = -Z_{view}
 $$
 
-可以看到，这个过程里面我们需要知道 view space 下的 Z 才能变换成 clip space，那 view space 下的 Z 应该怎么计算呢？
-从上面可以知道 Z 在 ndc space 和 view space 下有如下的关系：
+从前面的式子可以知道 Z 在 ndc space 和 view space 下有如下的关系：
 
 $$
 Z_{ndc} = -A - \frac B {Z_{view}}
@@ -139,11 +144,34 @@ $$
 
 ## 正交投影逆变换
 
-// TODO:
-
 <div>
+在正交投影中，$ W_{clip} = W_{view} = 1.0 $，因此透视除法并没有影响原来的 Z。
+
+
+$$
+Z_{ndc} = A Z_{view} + B
+$$
+
+化简得：
+
+$$
+Z_{view} = \frac {Z_{ndc} - B} {A}
+$$
+
+把 A 和 B 都展开：
+
+$$
+Z_{view} = \frac {Z_{ndc}(f-n)+(f+n)} {-2}
+$$
+
+再用 $ Z_{buffer} $ 代替 $ Z_{ndc} $：
+
+$$
+Z_{view} = \frac {(2Z_{buffer} - 1)(f-n)+(f+n)} {-2} = Z_{buffer}(n-f) - n
+$$
 
 </div>
+
 
 <div>
 
@@ -157,7 +185,7 @@ $$
 
 当矩阵为透视矩阵的时候有 $ W_{clip} = -Z_{view} $；矩阵为正交矩阵的时候有 $ W_{clip} = 1.0 $。
 
-有了 $ W_{clip} $ 后，我们不仅能计算出 $ Z_{clip} $，我们甚至可以计算出当前 fragment 在 clip space 下的坐标。
+有了 $ W_{clip} $ 后，我们不仅能计算出 $ Z_{clip} $，我们也可以计算出当前 fragment 在 clip space 和 view space 下的坐标。
 
 </div>
 
@@ -166,8 +194,7 @@ $$
 
 这几个是经常出现并且很容易混淆的概念：
 
-- **深度**指的是影响深度测试的值，也就是最终在 Z buffer 中的值，取值范围是 $ [0, 1] $。
-  当使用正交投影时，深度是线性变化的；当使用透视投影时，深度是非线性变化的。
+- **深度**指的是最终在 Z buffer 中的值，取值范围是 $ [0, 1] $。 当使用正交投影时，深度是线性变化的；当使用透视投影时，深度是非线性变化的。
 
 - **线性深度**指的是还原成线性变化的深度。
 
@@ -230,3 +257,5 @@ vec3 getViewNormal(const in vec3 viewPosition) {
 [OpenGL Projection Matrix](http://www.songho.ca/opengl/gl_projectionmatrix.html)
 
 [Real depth in OpenGL / GLSL](http://web.archive.org/web/20130416194336/http://olivers.posterous.com/linear-depth-in-glsl-for-real)
+
+[Reconstructing Position From Depth](https://therealmjp.github.io/posts/reconstructing-position-from-depth/)
