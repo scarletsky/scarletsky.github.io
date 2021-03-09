@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>iOS on scarletsky</title>
+    <link>https://scarletsky.github.io/tags/ios/</link>
+    <description>Recent content in iOS on scarletsky</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 10 Jan 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://scarletsky.github.io/tags/ios/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>【译】远程调试 iOS Safari</title>
+      <link>https://scarletsky.github.io/2019/01/10/wireless-remote-debugging-with-safari-on-ios/</link>
+      <pubDate>Thu, 10 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2019/01/10/wireless-remote-debugging-with-safari-on-ios/</guid>
+      <description>如今在移动设备上测试网站变得越来越重要了，我们会经常发现在移动设备的浏览器上面网站会表现 的和桌面浏览器不一样，因此在开发网站时用真机测试变得</description>
+    </item>
+    
+  </channel>
+</rss>

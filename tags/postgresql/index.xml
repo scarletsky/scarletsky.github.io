@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>postgresql on scarletsky</title>
+    <link>https://scarletsky.github.io/tags/postgresql/</link>
+    <description>Recent content in postgresql on scarletsky</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 26 Apr 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://scarletsky.github.io/tags/postgresql/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>PostgreSQL 中的客户端认证</title>
+      <link>https://scarletsky.github.io/2017/04/26/client-authentication-in-postgresql/</link>
+      <pubDate>Wed, 26 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2017/04/26/client-authentication-in-postgresql/</guid>
+      <description>简介 当客户端与数据库服务器连接时，它需要指定用哪个数据库用户的身份来连接。 PostgreSQL 为我们提供了很多种客户端认证的方式，我们可以根据自己的需要来选择</description>
+    </item>
+    
+    <item>
+      <title>PostgreSQL 学习笔记</title>
+      <link>https://scarletsky.github.io/2017/03/15/notes-of-postgresql/</link>
+      <pubDate>Wed, 15 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2017/03/15/notes-of-postgresql/</guid>
+      <description>简介 PostgreSQL 是世界上功能最强大的关系型数据库，除了标准的 SQL 的支持外，还有丰富的特性，可以通过扩展来增强数据库的能力。 本文是我学习 PostgreSQL 过程中的一些总结</description>
+    </item>
+    
+  </channel>
+</rss>

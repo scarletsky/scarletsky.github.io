@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>android on scarletsky</title>
+    <link>https://scarletsky.github.io/categories/android/</link>
+    <description>Recent content in android on scarletsky</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 06 Jul 2015 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://scarletsky.github.io/categories/android/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Android Support Design Library 注意事项</title>
+      <link>https://scarletsky.github.io/2015/07/06/android-support-design-library-experience/</link>
+      <pubDate>Mon, 06 Jul 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/07/06/android-support-design-library-experience/</guid>
+      <description>CoordinatorLayout 这个新 Layout 是 FrameLayout 的加强版，用来协调各个子 view 的行为。最主要是用来实现 Toolbar 的折叠效果，也可以用来实现 FAB 自动消失的效果。 常见的用法如下： 1 2 3 4 5 6 7</description>
+    </item>
+    
+    <item>
+      <title>RecyclerView 基本用法</title>
+      <link>https://scarletsky.github.io/2015/06/29/recyclerview-basic-usage/</link>
+      <pubDate>Mon, 29 Jun 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/06/29/recyclerview-basic-usage/</guid>
+      <description>基本用法 在 XML 中添加 &amp;lt;android.support.v7.widget.RecyclerView/&amp;gt; 编写继承 RecyclerView.Adapter&amp;lt;RecyclerViewAdapter.ViewHolder&amp;gt; 的 Adapter Constructor 编写继承 RecyclerView.ViewHolder 的 ViewHolder onCreateViewHolder onBindViewHolder getItemCount 设置 RecyclerView setLayoutManager setAdapter setItemAnimator(可选) addItemDecoration(</description>
+    </item>
+    
+  </channel>
+</rss>

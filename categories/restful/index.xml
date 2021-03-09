@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>restful on scarletsky</title>
+    <link>https://scarletsky.github.io/categories/restful/</link>
+    <description>Recent content in restful on scarletsky</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 30 Nov 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://scarletsky.github.io/categories/restful/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Restful API 中的错误处理</title>
+      <link>https://scarletsky.github.io/2016/11/30/error-handling-in-restful-api/</link>
+      <pubDate>Wed, 30 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/11/30/error-handling-in-restful-api/</guid>
+      <description>简介 随着移动开发和前端开发的崛起，越来越多的 Web 后端应用都倾向于实现 Restful API。 Restful API 是一个简单易用的前后端分离方案，它只需要对客户端请求进行处理</description>
+    </item>
+    
+  </channel>
+</rss>

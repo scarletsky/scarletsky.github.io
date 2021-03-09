@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>gitlab on scarletsky</title>
+    <link>https://scarletsky.github.io/categories/gitlab/</link>
+    <description>Recent content in gitlab on scarletsky</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 29 Jul 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://scarletsky.github.io/categories/gitlab/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>用 GitLab CI 进行持续集成</title>
+      <link>https://scarletsky.github.io/2016/07/29/use-gitlab-ci-for-continuous-integration/</link>
+      <pubDate>Fri, 29 Jul 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/07/29/use-gitlab-ci-for-continuous-integration/</guid>
+      <description>简介 从 GitLab 8.0 开始，GitLab CI 就已经集成在 GitLab 中，我们只要在项目中添加一个 .gitlab-ci.yml 文件，然后添加一个 Runner，即可进行持续集成。 而且随着 GitLab 的升级</description>
+    </item>
+    
+    <item>
+      <title>升级 GitLab 过程中踩过的坑</title>
+      <link>https://scarletsky.github.io/2016/06/18/issues-when-upgrading-gitlab/</link>
+      <pubDate>Sat, 18 Jun 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/06/18/issues-when-upgrading-gitlab/</guid>
+      <description>简介 最近帮公司的 Gitlab 从 7.14 升级到 8.7.6，升级的主要动机是整合 Gitlab CI，提升持续集成的效率。鉴于之前也是我把 Gitlab 从 7.x 升级到 7.14 的，我以为我已经有经验</description>
+    </item>
+    
+  </channel>
+</rss>

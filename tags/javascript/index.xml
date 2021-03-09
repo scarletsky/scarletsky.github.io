@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>javascript on scarletsky</title>
+    <link>https://scarletsky.github.io/tags/javascript/</link>
+    <description>Recent content in javascript on scarletsky</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 18 Feb 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://scarletsky.github.io/tags/javascript/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>如何用 JavaScript 实现 Popover</title>
+      <link>https://scarletsky.github.io/2017/02/18/implement-popover-with-javascript/</link>
+      <pubDate>Sat, 18 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2017/02/18/implement-popover-with-javascript/</guid>
+      <description>简介 Popover 是我们日常开发中用得比较多的组件，通常用于给定一个触发元素，当某特定事件 (hover, click等) 在该元素上触发时，弹出相关的菜单供用户选择。 目</description>
+    </item>
+    
+    <item>
+      <title>用 JavaScript 构建事件系统</title>
+      <link>https://scarletsky.github.io/2017/01/30/build-your-own-event-system-in-javascript/</link>
+      <pubDate>Mon, 30 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2017/01/30/build-your-own-event-system-in-javascript/</guid>
+      <description>简介 在组件化开发越来越流行的今天，事件系统演者着非常重要的角色，它经常作为组件间通讯的桥梁。 本文将讨论如何用 JavaScript 实现一个简单的事件系统。 基本结</description>
+    </item>
+    
+    <item>
+      <title>在 Node.js 中为 Restful API 编写单元测试</title>
+      <link>https://scarletsky.github.io/2016/10/05/write-unit-tests-for-restful-api-in-nodejs/</link>
+      <pubDate>Wed, 05 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/10/05/write-unit-tests-for-restful-api-in-nodejs/</guid>
+      <description>简介 单元测试是针对程序模块来进行正确性检验的测试工作，程序单元是应用的最小可测试部件。 在 Web 应用中，我们可以把 Restful API 看作是构成应用的单元。 Restful API 比</description>
+    </item>
+    
+    <item>
+      <title>浅谈单页应用中前端分页的实现方案</title>
+      <link>https://scarletsky.github.io/2016/09/11/talking-about-front-end-pagination-implementation-in-spa/</link>
+      <pubDate>Sun, 11 Sep 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/09/11/talking-about-front-end-pagination-implementation-in-spa/</guid>
+      <description>简介 分页是开发中最常见的需求之一。 对于分页，我们讨论的最多的是后端的数据库分页，这关乎到我们应用程序的性能，也是分页这个需求的核心。 而前端要</description>
+    </item>
+    
+    <item>
+      <title>自定义 Redux 中的 combineReducers</title>
+      <link>https://scarletsky.github.io/2016/08/20/write-your-own-combine-reducers-in-redux/</link>
+      <pubDate>Sat, 20 Aug 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/08/20/write-your-own-combine-reducers-in-redux/</guid>
+      <description>简介 Redux 中的 combineReducers 能让我们很方便地把多个 reducers 组合起来，成为一个新的 reducer。 然而，随着我们的应用变得越来越复杂，combineReducers</description>
+    </item>
+    
+    <item>
+      <title>如何用 JavaScript 下载文件</title>
+      <link>https://scarletsky.github.io/2016/07/03/download-file-using-javascript/</link>
+      <pubDate>Sun, 03 Jul 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/07/03/download-file-using-javascript/</guid>
+      <description>简介 我们知道，下载文件是一个非常常见的需求，但由于浏览器的安全策略的限制，我们通常只能通过一个额外的页面，访问某个文件的 url 来实现下载功能，但</description>
+    </item>
+    
+    <item>
+      <title>如何实现无限滚动</title>
+      <link>https://scarletsky.github.io/2016/04/20/how-to-implement-infinite-scroll/</link>
+      <pubDate>Wed, 20 Apr 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/04/20/how-to-implement-infinite-scroll/</guid>
+      <description>简介 无限滚动对我们来说已经是很常见的功能了，具体表现为当页面滚动到某个位置时就自动加载数据，本文将探讨无限滚动的实现原理以及优化。 原理 我们先</description>
+    </item>
+    
+    <item>
+      <title>Lodash 中 assign，extend 和 merge 的区别</title>
+      <link>https://scarletsky.github.io/2016/04/02/assign-vs-extend-vs-merge-in-lodash/</link>
+      <pubDate>Sat, 02 Apr 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/04/02/assign-vs-extend-vs-merge-in-lodash/</guid>
+      <description>简介 我们经常在别人的代码中看见 assign，extend，merge 函数，这三个函数用起来很相似，都是合并源对象的属性到目标对象中。 既然都是</description>
+    </item>
+    
+    <item>
+      <title>在 Node.js 中利用 js-xlsx 处理 Excel 文件</title>
+      <link>https://scarletsky.github.io/2016/01/30/nodejs-process-excel/</link>
+      <pubDate>Sat, 30 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/01/30/nodejs-process-excel/</guid>
+      <description>简介 本文介绍用 Node.js 中的 js-xlsx 库来处理 Excel 文件。 js-xlsx 库是目前 Github 上 star 数量最多的处理 Excel 的库，功能强大，但上手难度稍大。文档有些乱，不适合快速上手。 本文对 js-xlsx 库</description>
+    </item>
+    
+    <item>
+      <title>The Little JavaScript Closures</title>
+      <link>https://scarletsky.github.io/2015/12/02/the-little-javascript-closures/</link>
+      <pubDate>Wed, 02 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/12/02/the-little-javascript-closures/</guid>
+      <description>写在前面 本文尝试模仿 The Little Schema 的风格，介绍 JavaScript 的闭包。本文同时也是我学习 JavaScript 闭包的一次总结。欢迎一起讨论。 简介 什么是闭包？ 闭包是一个函数 闭包都是函数</description>
+    </item>
+    
+    <item>
+      <title>React-DnD 的使用</title>
+      <link>https://scarletsky.github.io/2015/11/17/react-dnd-usage/</link>
+      <pubDate>Tue, 17 Nov 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/11/17/react-dnd-usage/</guid>
+      <description>介绍 React DnD 是一组 React 高阶组件，可以用来帮你构建复杂的拖拽接口，同时解耦你的组件。React DnD 非常适合像 Trello 和 Storify 这样的应用，在不同地方通过拖拽转移数</description>
+    </item>
+    
+    <item>
+      <title>JavaScript 中 Object.defineProperty 的使用</title>
+      <link>https://scarletsky.github.io/2015/08/18/object-learning-in-javascript/</link>
+      <pubDate>Tue, 18 Aug 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/08/18/object-learning-in-javascript/</guid>
+      <description>Object.defineProperty The Object.defineProperty() method defines a new property directly on an object, or modifies an existing property on an object, and returns the object. 直接在一个对象上定义一个新的属性，或修改一个已经存在的属性。这个方法会返回该对象。 语法 Object.defineProperty(obj, prop, descriptor)</description>
+    </item>
+    
+    <item>
+      <title>JavaScript 利用 Blob 进行分片上传</title>
+      <link>https://scarletsky.github.io/2015/01/27/javascript-upload-slice-file-using-blob/</link>
+      <pubDate>Tue, 27 Jan 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/01/27/javascript-upload-slice-file-using-blob/</guid>
+      <description>基本流程 用户选择文件 判断文件大小 如果文件小于限定文件大小，则直接上传 否则进行分片上传 分片流程 给定限定大小。 利用 Blob 对象的 slice 方法把文件分成 N 份。</description>
+    </item>
+    
+    <item>
+      <title>JavaScript 常用技巧</title>
+      <link>https://scarletsky.github.io/2015/01/26/javascript-tricks/</link>
+      <pubDate>Mon, 26 Jan 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/01/26/javascript-tricks/</guid>
+      <description>字符串操作 首字母大写 1 2 3 str.replace(/\b\w+/g, function (word) { return word.substring(0, 1).toLowerCase() + word.substring(1); }); 截取字符串最后几位 1 str.substring(str.length-X) 进制转换 1 2 d.toString(16) (十进制 -&amp;gt; 十六进制) parseInt(‘ff’, 16) (十六进</description>
+    </item>
+    
+  </channel>
+</rss>

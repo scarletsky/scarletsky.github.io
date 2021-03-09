@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>jsdoc on scarletsky</title>
+    <link>https://scarletsky.github.io/tags/jsdoc/</link>
+    <description>Recent content in jsdoc on scarletsky</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 23 Dec 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://scarletsky.github.io/tags/jsdoc/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>用 JSDOC 编写 JavaScript 文档</title>
+      <link>https://scarletsky.github.io/2017/12/23/write-javascript-document-by-jsdoc/</link>
+      <pubDate>Sat, 23 Dec 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2017/12/23/write-javascript-document-by-jsdoc/</guid>
+      <description>简介 JSDOC 是一个 API 文档生成器，你只需要在代码中添加特定格式的注释，它就可以从注释中为你生成 HTML 文档。 安装 全局安装： 1 npm install -g jsdoc 如果你更倾向项目内使用</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>js-xlsx on scarletsky</title>
+    <link>https://scarletsky.github.io/tags/js-xlsx/</link>
+    <description>Recent content in js-xlsx on scarletsky</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 30 Jan 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://scarletsky.github.io/tags/js-xlsx/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>在 Node.js 中利用 js-xlsx 处理 Excel 文件</title>
+      <link>https://scarletsky.github.io/2016/01/30/nodejs-process-excel/</link>
+      <pubDate>Sat, 30 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/01/30/nodejs-process-excel/</guid>
+      <description>简介 本文介绍用 Node.js 中的 js-xlsx 库来处理 Excel 文件。 js-xlsx 库是目前 Github 上 star 数量最多的处理 Excel 的库，功能强大，但上手难度稍大。文档有些乱，不适合快速上手。 本文对 js-xlsx 库</description>
+    </item>
+    
+  </channel>
+</rss>

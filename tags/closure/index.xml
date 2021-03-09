@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>closure on scarletsky</title>
+    <link>https://scarletsky.github.io/tags/closure/</link>
+    <description>Recent content in closure on scarletsky</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 02 Dec 2015 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://scarletsky.github.io/tags/closure/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>The Little JavaScript Closures</title>
+      <link>https://scarletsky.github.io/2015/12/02/the-little-javascript-closures/</link>
+      <pubDate>Wed, 02 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/12/02/the-little-javascript-closures/</guid>
+      <description>写在前面 本文尝试模仿 The Little Schema 的风格，介绍 JavaScript 的闭包。本文同时也是我学习 JavaScript 闭包的一次总结。欢迎一起讨论。 简介 什么是闭包？ 闭包是一个函数 闭包都是函数</description>
+    </item>
+    
+  </channel>
+</rss>

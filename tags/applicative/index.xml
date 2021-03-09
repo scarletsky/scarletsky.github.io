@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>applicative on scarletsky</title>
+    <link>https://scarletsky.github.io/tags/applicative/</link>
+    <description>Recent content in applicative on scarletsky</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 07 Mar 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://scarletsky.github.io/tags/applicative/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>What is applicative in Haskell ?</title>
+      <link>https://scarletsky.github.io/2016/03/07/what-is-applicative-in-haskell/</link>
+      <pubDate>Mon, 07 Mar 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/03/07/what-is-applicative-in-haskell/</guid>
+      <description>初探 什么是 Applicative ? Applicative 是加强版的 Functor，是一个类型类。 加强版的 Functor 是什么意思 ? 还记得 Functor 的限制吗？ fmap f x 中的 f 只接受一个参数。 fmap f x 中的 f 不能</description>
+    </item>
+    
+  </channel>
+</rss>

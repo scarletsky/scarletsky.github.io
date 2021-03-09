@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>nodejs on scarletsky</title>
+    <link>https://scarletsky.github.io/tags/nodejs/</link>
+    <description>Recent content in nodejs on scarletsky</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 05 Oct 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://scarletsky.github.io/tags/nodejs/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>在 Node.js 中为 Restful API 编写单元测试</title>
+      <link>https://scarletsky.github.io/2016/10/05/write-unit-tests-for-restful-api-in-nodejs/</link>
+      <pubDate>Wed, 05 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/10/05/write-unit-tests-for-restful-api-in-nodejs/</guid>
+      <description>简介 单元测试是针对程序模块来进行正确性检验的测试工作，程序单元是应用的最小可测试部件。 在 Web 应用中，我们可以把 Restful API 看作是构成应用的单元。 Restful API 比</description>
+    </item>
+    
+    <item>
+      <title>「译」Node.js Streams 基础</title>
+      <link>https://scarletsky.github.io/2016/07/01/basics-node-js-streams/</link>
+      <pubDate>Fri, 01 Jul 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/07/01/basics-node-js-streams/</guid>
+      <description>Node.js 天生异步和事件驱动，非常适合处理 I/O 相关的任务。如果你在处理应用中 I/O 相关的操作，你可以利用 Node.js 中的流(stream)。因此，我们先具体看看流，</description>
+    </item>
+    
+    <item>
+      <title>Localtunnel（Node.js 版） 使用教程</title>
+      <link>https://scarletsky.github.io/2016/01/17/localtunnel-usage/</link>
+      <pubDate>Sun, 17 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/01/17/localtunnel-usage/</guid>
+      <description>简介 Localtunnel 是一个可以让内网服务器暴露到公网上的开源项目。 客户端 安装 1 $ npm install -g localtunnel 使用 假设本地服务器在 8000 端口，我们可以通过下面的命令把本地服务器暴露</description>
+    </item>
+    
+    <item>
+      <title>Node.js 中 Stream API 的使用</title>
+      <link>https://scarletsky.github.io/2015/10/22/node-stream-api-learning/</link>
+      <pubDate>Thu, 22 Oct 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/10/22/node-stream-api-learning/</guid>
+      <description>基本介绍 在 Node.js 中，读取文件的方式有两种，一种是用 fs.readFile，另外一种是利用 fs.createReadStream 来读取。 fs.readFile 对于每个 Node.js 使用者来说最熟悉不过了，简单易懂，</description>
+    </item>
+    
+  </channel>
+</rss>

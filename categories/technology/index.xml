@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>technology on scarletsky</title>
+    <link>https://scarletsky.github.io/categories/technology/</link>
+    <description>Recent content in technology on scarletsky</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 15 Jun 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://scarletsky.github.io/categories/technology/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>记一次 webpack 打包 web worker 的 bug</title>
+      <link>https://scarletsky.github.io/2019/06/15/webpack-issue-in-webworker/</link>
+      <pubDate>Sat, 15 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2019/06/15/webpack-issue-in-webworker/</guid>
+      <description>前言 最近需要在项目中引入 web worker ，但是用 webpack 打包完后请求 worker 的时候总是会报 404 错误。 现象 这是一个很常见的配置： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 const WorkerPlugin =</description>
+    </item>
+    
+    <item>
+      <title>从 Hexo 迁移到 Hugo</title>
+      <link>https://scarletsky.github.io/2019/05/02/migrate-hexo-to-hugo/</link>
+      <pubDate>Thu, 02 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2019/05/02/migrate-hexo-to-hugo/</guid>
+      <description>博客之前是用 Hexo 来搭建的，现在生成的速度已经有点慢了，于是想趁着假期把 Hexo 迁 移到其他程序。通过搜索发现两款比较合适的，一个是 Zola ，另一个是 Hugo</description>
+    </item>
+    
+    <item>
+      <title>【译】远程调试 iOS Safari</title>
+      <link>https://scarletsky.github.io/2019/01/10/wireless-remote-debugging-with-safari-on-ios/</link>
+      <pubDate>Thu, 10 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2019/01/10/wireless-remote-debugging-with-safari-on-ios/</guid>
+      <description>如今在移动设备上测试网站变得越来越重要了，我们会经常发现在移动设备的浏览器上面网站会表现 的和桌面浏览器不一样，因此在开发网站时用真机测试变得</description>
+    </item>
+    
+    <item>
+      <title>「译」自己写的才是最好的样板</title>
+      <link>https://scarletsky.github.io/2017/10/30/the-best-boilerplate-app-is-the-one-you-code-yourself/</link>
+      <pubDate>Mon, 30 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2017/10/30/the-best-boilerplate-app-is-the-one-you-code-yourself/</guid>
+      <description>样板应用非常有用，它们可以令你的下一个项目非常快的构建起来，并且提供了目录结构让你有章可循。 然而，它们有时候也会浪费大量的时间。开发者们通常</description>
+    </item>
+    
+    <item>
+      <title>3D 开发中常见的术语</title>
+      <link>https://scarletsky.github.io/2017/07/23/glossary-in-3d-development/</link>
+      <pubDate>Sun, 23 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2017/07/23/glossary-in-3d-development/</guid>
+      <description>简介 在 3D 开发领域，我们会经常看到一些术语，有些是和数学相关的，有些是和模型相关的，也有一些是和程序相关的。本文是我对 3D 开发中常见术语的总结。</description>
+    </item>
+    
+    <item>
+      <title>「译」追赶时髦的技术</title>
+      <link>https://scarletsky.github.io/2017/05/25/chasing-the-shiny-and-new-in-software/</link>
+      <pubDate>Thu, 25 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2017/05/25/chasing-the-shiny-and-new-in-software/</guid>
+      <description>在 Web 开发领域，我们会经常看到有人讨论当前最好的框架或编程语言。Scribd 的联合创始人 Jared Friedman 在 2015 年的时候专门写了一篇文章推荐创业公司使用 Node.js 代替</description>
+    </item>
+    
+  </channel>
+</rss>

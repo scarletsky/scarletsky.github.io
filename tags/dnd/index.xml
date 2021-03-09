@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>dnd on scarletsky</title>
+    <link>https://scarletsky.github.io/tags/dnd/</link>
+    <description>Recent content in dnd on scarletsky</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 17 Nov 2015 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://scarletsky.github.io/tags/dnd/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>React-DnD 的使用</title>
+      <link>https://scarletsky.github.io/2015/11/17/react-dnd-usage/</link>
+      <pubDate>Tue, 17 Nov 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/11/17/react-dnd-usage/</guid>
+      <description>介绍 React DnD 是一组 React 高阶组件，可以用来帮你构建复杂的拖拽接口，同时解耦你的组件。React DnD 非常适合像 Trello 和 Storify 这样的应用，在不同地方通过拖拽转移数</description>
+    </item>
+    
+    <item>
+      <title>HTML5 Drag and Drop API</title>
+      <link>https://scarletsky.github.io/2015/01/13/html5-drag-and-drop-api/</link>
+      <pubDate>Tue, 13 Jan 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/01/13/html5-drag-and-drop-api/</guid>
+      <description>基本使用 创建可拖放对象 在 HTML5 中创建可拖动内容非常简单，只需要在元素的属性中加上 draggable=&amp;quot;true&amp;quot; 就能创建可拖放对象了。 1 2 3 &amp;lt;div class=&amp;#34;rect red&amp;#34; draggable=&amp;#34;true&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;rect green&amp;#34; draggable=&amp;#34;true&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;rect blue&amp;#34; draggable=&amp;#34;true&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; 如何拖动 有</description>
+    </item>
+    
+  </channel>
+</rss>

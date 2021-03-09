@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>nodejs on scarletsky</title>
+    <link>https://scarletsky.github.io/categories/nodejs/</link>
+    <description>Recent content in nodejs on scarletsky</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 01 Jul 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://scarletsky.github.io/categories/nodejs/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>「译」Node.js Streams 基础</title>
+      <link>https://scarletsky.github.io/2016/07/01/basics-node-js-streams/</link>
+      <pubDate>Fri, 01 Jul 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/07/01/basics-node-js-streams/</guid>
+      <description>Node.js 天生异步和事件驱动，非常适合处理 I/O 相关的任务。如果你在处理应用中 I/O 相关的操作，你可以利用 Node.js 中的流(stream)。因此，我们先具体看看流，</description>
+    </item>
+    
+  </channel>
+</rss>

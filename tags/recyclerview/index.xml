@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>recyclerview on scarletsky</title>
+    <link>https://scarletsky.github.io/tags/recyclerview/</link>
+    <description>Recent content in recyclerview on scarletsky</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 29 Jun 2015 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://scarletsky.github.io/tags/recyclerview/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>RecyclerView 基本用法</title>
+      <link>https://scarletsky.github.io/2015/06/29/recyclerview-basic-usage/</link>
+      <pubDate>Mon, 29 Jun 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/06/29/recyclerview-basic-usage/</guid>
+      <description>基本用法 在 XML 中添加 &amp;lt;android.support.v7.widget.RecyclerView/&amp;gt; 编写继承 RecyclerView.Adapter&amp;lt;RecyclerViewAdapter.ViewHolder&amp;gt; 的 Adapter Constructor 编写继承 RecyclerView.ViewHolder 的 ViewHolder onCreateViewHolder onBindViewHolder getItemCount 设置 RecyclerView setLayoutManager setAdapter setItemAnimator(可选) addItemDecoration(</description>
+    </item>
+    
+  </channel>
+</rss>
