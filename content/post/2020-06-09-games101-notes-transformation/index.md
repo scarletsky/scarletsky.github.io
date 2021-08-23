@@ -459,7 +459,7 @@ T_{ortho} =
 \begin{bmatrix}
 1 & 0 & 0 & -{\frac {r + l} 2} \\\
 0 & 1 & 0 & -{\frac {t + b} 2} \\\
-0 & 0 & 1 & -{\frac {f + n} 2} \\\
+0 & 0 & 1 & -{\frac {n + f} 2} \\\
 0 & 0 & 0 & 1
 \end{bmatrix}
 $$
@@ -500,7 +500,7 @@ S_{ortho} \cdot T_{ortho} =
 \begin{bmatrix}
 \frac 2 {r - l} & 0 & 0 & -{\frac {r + l} {r - l}} \\\
 0 & \frac 2 {t - b} & 0 & -{\frac {t + b} {t - b}} \\\
-0 & 0 & \frac 2 {n - f} & -{\frac {f + n} {f - n}} \\\
+0 & 0 & \frac 2 {n - f} & -{\frac {n + f} {n - f}} \\\
 0 & 0 & 0 & 1
 \end{bmatrix}
 $$
