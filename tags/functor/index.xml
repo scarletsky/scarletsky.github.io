@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>functor on scarletsky</title>
+    <link>https://scarletsky.github.io/tags/functor/</link>
+    <description>Recent content in functor on scarletsky</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 09 Feb 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://scarletsky.github.io/tags/functor/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>What is functor in Haskell ?</title>
+      <link>https://scarletsky.github.io/2016/02/09/what-is-functor-in-haskell/</link>
+      <pubDate>Tue, 09 Feb 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/02/09/what-is-functor-in-haskell/</guid>
+      <description>Functor 简介 什么是 Functor ? 现在你可以认为 Functor 是一种数据类型。 Functor 有什么用 ? 我们可以对 Functor 使用 fmap。 fmap 是什么东西 ? fmap 是一个函数。 fmap 是函数的话，那它的类型签</description>
+    </item>
+    
+  </channel>
+</rss>

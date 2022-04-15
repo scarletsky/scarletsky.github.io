@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>用 JSDOC 编写 JavaScript 文档 - scarletsky</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="scarletsky" /><meta name="description" content="简介 JSDOC 是一个 API 文档生成器，你只需要在代码中添加特定格式的注释，它就可以从注释中为你生成 HTML 文档。 安装 全局安装： 1 npm install -g jsdoc 如果你更倾向项目内使用" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.74.3 with theme even" />
+
+
+<link rel="canonical" href="https://scarletsky.github.io/2017/12/23/write-javascript-document-by-jsdoc/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.2e81bbed97b8b282c1aeb57488cc71c8d8c8ec559f3931531bd396bf31e0d4dd.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="用 JSDOC 编写 JavaScript 文档" />
+<meta property="og:description" content="简介 JSDOC 是一个 API 文档生成器，你只需要在代码中添加特定格式的注释，它就可以从注释中为你生成 HTML 文档。 安装 全局安装： 1 npm install -g jsdoc 如果你更倾向项目内使用" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://scarletsky.github.io/2017/12/23/write-javascript-document-by-jsdoc/" />
+<meta property="article:published_time" content="2017-12-23T10:24:14+00:00" />
+<meta property="article:modified_time" content="2019-04-30T08:32:59+08:00" />
+<meta itemprop="name" content="用 JSDOC 编写 JavaScript 文档">
+<meta itemprop="description" content="简介 JSDOC 是一个 API 文档生成器，你只需要在代码中添加特定格式的注释，它就可以从注释中为你生成 HTML 文档。 安装 全局安装： 1 npm install -g jsdoc 如果你更倾向项目内使用">
+<meta itemprop="datePublished" content="2017-12-23T10:24:14+00:00" />
+<meta itemprop="dateModified" content="2019-04-30T08:32:59+08:00" />
+<meta itemprop="wordCount" content="1217">
+
+
+
+<meta itemprop="keywords" content="jsdoc," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="用 JSDOC 编写 JavaScript 文档"/>
+<meta name="twitter:description" content="简介 JSDOC 是一个 API 文档生成器，你只需要在代码中添加特定格式的注释，它就可以从注释中为你生成 HTML 文档。 安装 全局安装： 1 npm install -g jsdoc 如果你更倾向项目内使用"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">scarletsky.github.io</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">scarletsky.github.io</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">用 JSDOC 编写 JavaScript 文档</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2017-12-23 </span>
+        <div class="post-category">
+            <a href="/categories/javascript/"> javascript </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#简介">简介</a></li>
+<li><a href="#安装">安装</a></li>
+<li><a href="#基本使用">基本使用</a></li>
+<li><a href="#配置文件">配置文件</a></li>
+<li><a href="#注释">注释</a>
+<ul>
+<li><a href="#标签-tags">标签 (Tags)</a></li>
+<li><a href="#命名路径-namepaths">命名路径 (Namepaths)</a></li>
+</ul></li>
+<li><a href="#参考资料">参考资料</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h2 id="简介">简介</h2>
+
+<p>JSDOC 是一个 API 文档生成器，你只需要在代码中添加特定格式的注释，它就可以从注释中为你生成 HTML 文档。</p>
+
+<h2 id="安装">安装</h2>
+
+<p>全局安装：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">npm install -g jsdoc</code></pre></td></tr></table>
+</div>
+</div>
+<p>如果你更倾向项目内使用，你也可以选择：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">npm install jsdoc --save-dev</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="基本使用">基本使用</h2>
+
+<p>使用 JSDOC 非常简单，先为 JavaScript 文件写好注释，然后用 JSDOC 去解析即可：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">/path/to/jsdoc file1.js file2.js ...</code></pre></td></tr></table>
+</div>
+</div>
+<p>但这种方式只适合少量文件时使用，当文件数量多了，再加上其他参数，维护起来就会非常麻烦。
+所以更好的做法是编写一份配置文件 <code>jsdoc.json</code>，然后通过 <code>-c</code> 参数来指定：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">/path/to/jsdoc -c jsdoc.json</code></pre></td></tr></table>
+</div>
+</div>
+<p>无论 JSDOC 是通过全局安装，还是局部安装，都建议使用 npm scripts 来调用它，即在 <code>package.json</code> 的 <code>scripts</code> 中添加命令(这里命名成 <code>build:doc</code>，可以根据自己爱好定义其他名字)：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&#34;scripts&#34;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;build:doc&#34;</span><span class="p">:</span> <span class="s2">&#34;jsdoc -c jsdoc.json&#34;</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>这样我们就可以通过 <code>npm run build:doc</code> 来生成文档了。</p>
+
+<p>如果实现修改文件后自动生成文档，只需要用类似 <code>nodemon</code> 之类的工具，监听指定文件的变化，然后再自动执行 <code>npm run build:doc</code> 就好了！</p>
+
+<h2 id="配置文件">配置文件</h2>
+
+<p>JSDOC 的配置项非常多，最常用的是下面这些：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&#34;source&#34;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;include&#34;</span><span class="p">:</span> <span class="p">[</span> <span class="s2">&#34;src/&#34;</span> <span class="p">],</span>
+    <span class="nt">&#34;exclude&#34;</span><span class="p">:</span> <span class="p">[</span> <span class="s2">&#34;src/libs&#34;</span> <span class="p">]</span>
+  <span class="p">},</span>
+  <span class="nt">&#34;opts&#34;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;template&#34;</span><span class="p">:</span> <span class="s2">&#34;node_modules/docdash&#34;</span><span class="p">,</span>
+    <span class="nt">&#34;encoding&#34;</span><span class="p">:</span> <span class="s2">&#34;utf8&#34;</span><span class="p">,</span>
+    <span class="nt">&#34;destination&#34;</span><span class="p">:</span> <span class="s2">&#34;./docs/&#34;</span><span class="p">,</span>
+    <span class="nt">&#34;recurse&#34;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="nt">&#34;verbose&#34;</span><span class="p">:</span> <span class="kc">true</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><code>source</code> 表示传递给 JSDOC 的文件</li>
+<li><code>source.include</code> 表示 JSDOC 需要扫描哪些文件</li>
+<li><code>source.exclude</code> 表示 JSDOC 需要排除哪些文件</li>
+<li><code>opts</code>  表示传递给 JSDOC 的选项</li>
+<li><code>opts.template</code> 生成文档的模板，默认是 <code>templates/default</code></li>
+<li><code>opts.encoding</code> 读取文件的编码，默认是 <code>utf8</code></li>
+<li><code>opts.destination</code> 生成文档的路径，默认是 <code>./out/</code></li>
+<li><code>opts.recurse</code> 运行时是否递归子目录</li>
+<li><code>opts.verbose</code> 运行时是否输出详细信息，默认是 <code>false</code></li>
+</ul>
+
+<h2 id="注释">注释</h2>
+
+<p>我们知道，JSDOC 的工作原理是通过分析 JavaScript 文件中的注释来生成 HTML 文档的。
+但是，如果想 JSDOC 生成正确的结果，我们需要编写正确格式的注释才行。它接受如下格式的注释：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="cm">/**
+</span><span class="cm"> * @author Scarlex
+</span><span class="cm"> * @class
+</span><span class="cm"> * @name Application
+</span><span class="cm"> * @description Base Class of Application.
+</span><span class="cm"> * @param {Element} canvas The canvas dom element.
+</span><span class="cm"> * @param {Object} options The options of Application. See {@link Option} for detail.
+</span><span class="cm"> * @return {Application}
+</span><span class="cm"> *
+</span><span class="cm"> * @example
+</span><span class="cm"> * // create your application
+</span><span class="cm"> * new Application(canvas, options);
+</span><span class="cm"> */</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="kr">class</span> <span class="nx">Aplication</span> <span class="p">{</span>
+
+  <span class="cm">/**
+</span><span class="cm">   * @private
+</span><span class="cm">   * @function
+</span><span class="cm">   * @name Application#intialize
+</span><span class="cm">   * @description Initialize the application.
+</span><span class="cm">   */</span>
+  <span class="nx">initialize</span><span class="p">()</span> <span class="p">{</span>
+
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>这是我们在 JavaScript 中常见的级块注释。
+需要注意的是，JSDOC 的解析器要求注释必须以 <code>/**</code> 开头，如果是以 <code>/*</code> 、 <code>/***</code> 或多于三个星号的注释都会被忽略。</p>
+
+<h3 id="标签-tags">标签 (Tags)</h3>
+
+<p>有了这种级块注释，我们就可以在里面根据需要编写文档了。JSDOC 为我们提供了非常丰富的标签，它的解析器会对这些标签进行额外处理。这些标签大概可以分成两类：级块标签和行内标签。</p>
+
+<ul>
+<li><strong>级块标签</strong>：位于注释的最顶层。JSDOC 中绝大部分标签都是级块标签。</li>
+<li><strong>行内标签</strong>：位于级块标签内的标签，如 <code>@link</code>、<code>@tutorial</code>。</li>
+</ul>
+
+<p>下面介绍一些常见的级块标签：</p>
+
+<ul>
+<li><code>@author</code> 该类/方法的作者。</li>
+<li><code>@class</code> 表示这是一个类。</li>
+<li><code>@function/@method</code> 表示这是一个函数/方法(这是同义词)。</li>
+<li><code>@private</code> 表示该类/方法是私有的，JSDOC 不会为其生成文档。</li>
+<li><code>@name</code> 该类/方法的名字。</li>
+<li><code>@description</code> 该类/方法的描述。</li>
+<li><code>@param</code> 该类/方法的参数，可重复定义。</li>
+<li><code>@return</code> 该类/方法的返回类型。</li>
+<li><code>@link</code> 创建超链接，生成文档时可以为其链接到其他部分。</li>
+<li><code>@example</code> 创建例子。</li>
+</ul>
+
+<h3 id="命名路径-namepaths">命名路径 (Namepaths)</h3>
+
+<p>不知道你有没有发现，上面例子中是用 <code>Application#initialize</code> 来表示一个实例方法的。如果是静态方法，那应该怎么表示呢？JSDOC 有自己的解析规则：</p>
+
+<ul>
+<li><code>Constructor.Method</code> 表示静态方法</li>
+<li><code>Constructor#Method</code> 表示实例方法</li>
+<li><code>Constructor~Method</code> 表示内部方法</li>
+</ul>
+
+<p>了解了这些之后，我们就可以用 JSDOC 为 JavaScript 代码编写文档了，快去试试吧！</p>
+
+<h2 id="参考资料">参考资料</h2>
+
+<ul>
+<li><a href="https://github.com/jsdoc3/jsdoc">https://github.com/jsdoc3/jsdoc</a></li>
+<li><a href="http://usejsdoc.org/">http://usejsdoc.org/</a></li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">scarletsky</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2019-04-30
+        <a href="/commit/95a170dd24bf4b87af8e8309e95f31f929054a4a" title="chore: format markdown">(95a170d)</a>
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/jsdoc/">jsdoc</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/2019/01/10/wireless-remote-debugging-with-safari-on-ios/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">【译】远程调试 iOS Safari</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/2017/11/17/how-to-implement-promise-in-javascript/">
+            <span class="next-text nav-default">Promise 实现原理</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="scarletsky/scarletsky.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:scarletsky1025@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/scarletsky" class="iconfont icon-github" title="github"></a>
+  <a href="https://scarletsky.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>scarletsky</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

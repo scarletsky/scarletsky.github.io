@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>自定义 Redux 中的 combineReducers - scarletsky</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="scarletsky" /><meta name="description" content="简介 Redux 中的 combineReducers 能让我们很方便地把多个 reducers 组合起来，成为一个新的 reducer。 然而，随着我们的应用变得越来越复杂，combineReducers" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.74.3 with theme even" />
+
+
+<link rel="canonical" href="https://scarletsky.github.io/2016/08/20/write-your-own-combine-reducers-in-redux/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.2e81bbed97b8b282c1aeb57488cc71c8d8c8ec559f3931531bd396bf31e0d4dd.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="自定义 Redux 中的 combineReducers" />
+<meta property="og:description" content="简介 Redux 中的 combineReducers 能让我们很方便地把多个 reducers 组合起来，成为一个新的 reducer。 然而，随着我们的应用变得越来越复杂，combineReducers" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://scarletsky.github.io/2016/08/20/write-your-own-combine-reducers-in-redux/" />
+<meta property="article:published_time" content="2016-08-20T20:05:28+00:00" />
+<meta property="article:modified_time" content="2019-04-30T08:32:59+08:00" />
+<meta itemprop="name" content="自定义 Redux 中的 combineReducers">
+<meta itemprop="description" content="简介 Redux 中的 combineReducers 能让我们很方便地把多个 reducers 组合起来，成为一个新的 reducer。 然而，随着我们的应用变得越来越复杂，combineReducers">
+<meta itemprop="datePublished" content="2016-08-20T20:05:28+00:00" />
+<meta itemprop="dateModified" content="2019-04-30T08:32:59+08:00" />
+<meta itemprop="wordCount" content="1536">
+
+
+
+<meta itemprop="keywords" content="javascript,redux," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="自定义 Redux 中的 combineReducers"/>
+<meta name="twitter:description" content="简介 Redux 中的 combineReducers 能让我们很方便地把多个 reducers 组合起来，成为一个新的 reducer。 然而，随着我们的应用变得越来越复杂，combineReducers"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">scarletsky.github.io</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">scarletsky.github.io</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">自定义 Redux 中的 combineReducers</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2016-08-20 </span>
+        <div class="post-category">
+            <a href="/categories/javascript/"> javascript </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#简介">简介</a></li>
+<li><a href="#原理">原理</a></li>
+<li><a href="#实例">实例</a></li>
+<li><a href="#参考资料">参考资料</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h2 id="简介">简介</h2>
+
+<p>Redux 中的 <code>combineReducers</code> 能让我们很方便地把多个 reducers 组合起来，成为一个新的 reducer。
+然而，随着我们的应用变得越来越复杂，<code>combineReducers</code> 有可能不能满足我们的需求。
+正如 Redux 官方文档所说:</p>
+
+<blockquote>
+<p>This helper is just a convenience! You can write your own combineReducers that works differently, or even assemble the state object from the child reducers manually and write a root reducing function explicitly, like you would write any other function.</p>
+</blockquote>
+
+<p><code>combineReducers</code> 只是方便我们使用而已，我们可以自定义一个完全不同的 <code>combineReducers</code> 来满足我们特殊的需求。</p>
+
+<h2 id="原理">原理</h2>
+
+<p>我们先回忆一下 reducer 的写法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">reducer</span> <span class="o">=</span> <span class="p">(</span><span class="nx">oldState</span><span class="p">,</span> <span class="nx">action</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">newState</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>reducer 是一个普通的函数，接受两个参数：<code>oldState</code> 和 <code>action</code>，然后返回一个 <code>newState</code>。
+为了把多个 reducers 组合起来，我们通常会用 Redux 自带的 <code>combineReducers</code> 来实现:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">rootReducer</span> <span class="o">=</span> <span class="nx">combineReducers</span><span class="p">({</span>
+  <span class="nx">key1</span><span class="o">:</span> <span class="nx">key1Reducer</span><span class="p">,</span>
+  <span class="nx">key2</span><span class="o">:</span> <span class="nx">key2Reducer</span>
+<span class="p">});</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>先留意一下我们传了什么给 <code>combineReducers</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="p">{</span>
+  <span class="nx">key1</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">state</span><span class="p">.</span><span class="nx">key1</span><span class="p">,</span> <span class="nx">action</span><span class="p">)</span> <span class="p">{</span> <span class="cm">/*...*/</span> <span class="p">},</span>
+  <span class="nx">key2</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">state</span><span class="p">.</span><span class="nx">key2</span><span class="p">,</span> <span class="nx">action</span><span class="p">)</span> <span class="p">{</span> <span class="cm">/*...*/</span> <span class="p">},</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>好了，让我们先来想一想，经过 <code>combineReducers</code> 的处理之后，我们得到了什么呢？
+不用想了，很显然我们得到了一个新的 reducer。
+那这个新的 reducer 又长什么样呢？</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">rootReducer</span> <span class="o">=</span> <span class="p">(</span><span class="nx">oldState</span><span class="p">,</span> <span class="nx">action</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">newState</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>你应该不会惊讶，因为所有 reducer 都长这个样子，即使它是已经被组合过的 reducer，它也是长这个样子。
+现在你应该猜到 <code>combineReducers</code> 做了什么了吧？其实它最基本形态是这样子的:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">combineReducers</span><span class="p">(</span><span class="nx">reducers</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">state</span><span class="p">,</span> <span class="nx">action</span><span class="p">)</span> <span class="p">{</span> <span class="cm">/*...*/</span> <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>它接受 <code>reducers</code> 作为参数，然后返回一个标准的 reducer 函数。</p>
+
+<blockquote>
+<p>注意:
+其实到了这一步，我们就可以自定义 <code>combineReducers</code> 了，我们完全可以写一个类似的函数，然后在里面写各种 <code>switch...case</code> 语句来达到自定义的目的。
+但我觉得我们还是先看看 Redux 自带的 <code>combineReducers</code> 做了什么比较好，因为我们自定义的 <code>combineReducers</code> 很有可能需要原来的功能。</p>
+</blockquote>
+
+<p>还记得我刚才叫你留意的地方吗？没错，就是下面这个:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="c1">// reducers
+</span><span class="c1"></span><span class="p">{</span>
+  <span class="nx">key1</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">state</span><span class="p">.</span><span class="nx">key1</span><span class="p">,</span> <span class="nx">action</span><span class="p">)</span> <span class="p">{</span> <span class="cm">/*...*/</span> <span class="p">},</span>
+  <span class="nx">key2</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">state</span><span class="p">.</span><span class="nx">key2</span><span class="p">,</span> <span class="nx">action</span><span class="p">)</span> <span class="p">{</span> <span class="cm">/*...*/</span> <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>我们来回想一下 <code>store.dispatch(action)</code> 的过程：当一个 <code>action</code> 触发的时候，所有 reducers 都应该响应这个 <code>action</code>，做出相应的改变，最后返回一个新的 <code>store</code>。
+对着上面这个结构，我们其实很容易就能写出这样的效果，还能加上一些其他的处理：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">reCombineReducers</span><span class="p">(</span><span class="nx">reducers</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">state</span><span class="p">,</span> <span class="nx">action</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">switch</span> <span class="p">(</span><span class="nx">action</span><span class="p">.</span><span class="nx">type</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">case</span> <span class="nx">SP_ACTION</span><span class="o">:</span>
+        <span class="k">return</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span><span class="p">({},</span> <span class="nx">state</span><span class="p">,</span> <span class="p">{</span> <span class="cm">/* do something */</span> <span class="p">});</span>
+      <span class="k">default</span><span class="o">:</span>
+        <span class="k">return</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">reducers</span><span class="p">)</span>
+                    <span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">k</span> <span class="p">=&gt;</span> <span class="p">({</span> <span class="p">[</span><span class="nx">k</span><span class="p">]</span><span class="o">:</span> <span class="nx">reducers</span><span class="p">[</span><span class="nx">k</span><span class="p">](</span><span class="nx">state</span><span class="p">[</span><span class="nx">k</span><span class="p">],</span> <span class="nx">action</span><span class="p">)</span> <span class="p">}))</span>
+                    <span class="p">.</span><span class="nx">reduce</span><span class="p">((</span><span class="nx">prev</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span><span class="p">({},</span> <span class="nx">prev</span><span class="p">,</span> <span class="nx">next</span><span class="p">));</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>上面的例子模拟了原来 <code>combineReducers</code> 的功能，还对 <code>SP_ACTION</code> 进行了特殊的处理，很简单吧！</p>
+
+<p>然而，上面的例子虽然模拟了 <code>combineReducers</code> 的功能，但失去了 <code>combineReducers</code> 的检查对象变化的功能，因为现在的 default block 中会返回一个全新的对象。
+有没有方法可以既保留 <code>combineReducers</code> 的全部功能，又能扩展它呢？
+其实很简单，我们只要利用 <code>combineReducers</code> 返回的函数就可以了！
+(感谢 liximomo 指出上面例子中的缺陷)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">reCombineReducers</span><span class="p">(</span><span class="nx">reducers</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">fn</span> <span class="o">=</span> <span class="nx">combineReducers</span><span class="p">(</span><span class="nx">reducers</span><span class="p">);</span>
+  <span class="k">return</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">state</span><span class="p">,</span> <span class="nx">action</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">switch</span> <span class="p">(</span><span class="nx">action</span><span class="p">.</span><span class="nx">type</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">case</span> <span class="nx">SP_ACTION</span><span class="o">:</span>
+        <span class="k">return</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span><span class="p">({},</span> <span class="nx">state</span><span class="p">,</span> <span class="p">{</span> <span class="cm">/* do something */</span> <span class="p">});</span>
+      <span class="k">default</span><span class="o">:</span>
+        <span class="k">return</span> <span class="nx">fn</span><span class="p">(</span><span class="nx">state</span><span class="p">,</span> <span class="nx">action</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="实例">实例</h2>
+
+<p>按照 Redux 的原则，不同的 reducer 应该相互独立的，它们之间不应该有任何依赖。
+这个原则看着是很美好的，但在实际使用中还是会有一些例外的情况。
+一个很简单的例子，也是我遇到过的例子，就是实现一个简单的表格 (其实我的情况复杂的多，需要实现类似 Excel 那样的操作，同时支持其他额外的功能)。
+我们先来设计一下 <code>state</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="c1">// state
+</span><span class="c1"></span><span class="p">{</span>
+  <span class="nx">rows</span><span class="o">:</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span>
+  <span class="nx">cells</span><span class="o">:</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span>
+  <span class="nx">data</span><span class="o">:</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p><code>rows</code>, <code>cells</code>, <code>data</code> 都会响应一些特定的 <code>action</code> (如 <code>CHANGE_ROW_PROPS</code>, <code>CHANGE_CELL_PROPS</code>, <code>CHANGE_DATA</code>)，做出相应的改变，这些都是我们所期望的。
+然而，当出现一些特殊的 action (如 <code>GET_TABLE_SUCCESS</code>，表示成功从服务端获取数据) 的时候，灾难就出现了：
+所有的 reducer 都需要监听 <code>GET_TABLE_SUCCESS</code> 这个 action，这意味着如果我们有 n 个 reducer 的话，我们就需要修改 n 个文件！
+当我再加上 <code>UPDATE_TABLE_SUCCESS</code>，<code>REMOVE_TABLE_SUCCESS</code> 之类的 <code>action</code> 时，我要再修改 n 个文件！
+这不合理啊，为什么我加一个简单的功能，需要修改这么多文件，最重要的是，这些修改都是非常类似！</p>
+
+<p>这时候，我们就需要自定义 <code>combineReducers</code> 来解决我们的需求拉：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">reCombineReducers</span><span class="p">(</span><span class="nx">reducers</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">fn</span> <span class="o">=</span> <span class="nx">combineReducers</span><span class="p">(</span><span class="nx">reducers</span><span class="p">);</span>
+  <span class="k">return</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">state</span><span class="p">,</span> <span class="nx">action</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">switch</span> <span class="p">(</span><span class="nx">action</span><span class="p">.</span><span class="nx">type</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">case</span> <span class="nx">GET_TABLE_SUCCESS</span><span class="o">:</span>
+      <span class="k">case</span> <span class="nx">UPDATE_TABLE_SUCCESS</span><span class="o">:</span>
+        <span class="k">return</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span><span class="p">({},</span> <span class="nx">state</span><span class="p">,</span> <span class="nx">action</span><span class="p">.</span><span class="nx">payload</span><span class="p">.</span><span class="nx">table</span><span class="p">);</span>
+      <span class="k">case</span> <span class="nx">REMOVE_TABLE_SUCCESS</span><span class="o">:</span>
+        <span class="k">return</span> <span class="nx">initState</span><span class="p">;</span>
+      <span class="k">default</span><span class="o">:</span>
+        <span class="k">return</span> <span class="nx">fn</span><span class="p">(</span><span class="nx">state</span><span class="p">,</span> <span class="nx">action</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kr">const</span> <span class="nx">table</span> <span class="o">=</span> <span class="nx">reCombineReducers</span><span class="p">({</span>
+  <span class="nx">sections</span><span class="p">,</span>
+  <span class="nx">suites</span><span class="p">,</span>
+  <span class="nx">rows</span><span class="p">,</span>
+  <span class="nx">cells</span><span class="p">,</span>
+  <span class="nx">toys</span><span class="p">,</span>
+  <span class="nx">data</span><span class="p">,</span>
+  <span class="nx">logics</span>
+<span class="p">})</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>怎么样，是不是比修改多个文件舒服很多？</p>
+
+<p>(完)</p>
+
+<h2 id="参考资料">参考资料</h2>
+
+<ul>
+<li><a href="http://redux.js.org/docs/api/combineReducers.html">http://redux.js.org/docs/api/combineReducers.html</a></li>
+<li><a href="https://github.com/reactjs/redux/blob/master/src/combineReducers.js">https://github.com/reactjs/redux/blob/master/src/combineReducers.js</a></li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">scarletsky</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2019-04-30
+        <a href="/commit/95a170dd24bf4b87af8e8309e95f31f929054a4a" title="chore: format markdown">(95a170d)</a>
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/javascript/">javascript</a>
+          <a href="/tags/redux/">redux</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/2016/09/11/talking-about-front-end-pagination-implementation-in-spa/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">浅谈单页应用中前端分页的实现方案</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/2016/07/29/use-gitlab-ci-for-continuous-integration/">
+            <span class="next-text nav-default">用 GitLab CI 进行持续集成</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="scarletsky/scarletsky.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:scarletsky1025@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/scarletsky" class="iconfont icon-github" title="github"></a>
+  <a href="https://scarletsky.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>scarletsky</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

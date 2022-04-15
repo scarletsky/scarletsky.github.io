@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>commonjs on scarletsky</title>
+    <link>https://scarletsky.github.io/tags/commonjs/</link>
+    <description>Recent content in commonjs on scarletsky</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 19 Aug 2015 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://scarletsky.github.io/tags/commonjs/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>CommonJS 学习笔记</title>
+      <link>https://scarletsky.github.io/2015/08/19/commonjs-learning/</link>
+      <pubDate>Wed, 19 Aug 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/08/19/commonjs-learning/</guid>
+      <description>概述 CommonJS 是 JavaScript 模块化的规范，Node.js采用了这个规范。 根据 CommonJS 规范，一个 JavaScript 文件就是一个模块，其他模块可以通过 require 来获取 module.exports 中暴露的内容，而其他部分</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>games101 on scarletsky</title>
+    <link>https://scarletsky.github.io/tags/games101/</link>
+    <description>Recent content in games101 on scarletsky</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 27 Jul 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://scarletsky.github.io/tags/games101/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Games101 笔记 —— 着色</title>
+      <link>https://scarletsky.github.io/2020/07/27/games101-notes-shading/</link>
+      <pubDate>Mon, 27 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2020/07/27/games101-notes-shading/</guid>
+      <description>简介 本文《GAMES101-现代计算机图形学入门》系列教程的课程笔记，仅用于个人学习使用。 着色（Shading） 在本课程中，着色指的是为物体</description>
+    </item>
+    
+    <item>
+      <title>Games101 笔记 —— 光栅化</title>
+      <link>https://scarletsky.github.io/2020/06/10/games101-notes-rasterization/</link>
+      <pubDate>Wed, 10 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2020/06/10/games101-notes-rasterization/</guid>
+      <description>简介 本文《GAMES101-现代计算机图形学入门》系列教程的课程笔记，仅用于个人学习使用。 屏幕 当进行完 MVP 变换之后，所有需要绘制的点都变换到 $</description>
+    </item>
+    
+    <item>
+      <title>Games101 笔记 —— 变换</title>
+      <link>https://scarletsky.github.io/2020/06/09/games101-notes-transformation/</link>
+      <pubDate>Tue, 09 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2020/06/09/games101-notes-transformation/</guid>
+      <description>简介 本文《GAMES101-现代计算机图形学入门》系列教程的课程笔记，仅用于个人学习使用。 二维变换 二维变换是指二维在平面中进行的变换，一个二</description>
+    </item>
+    
+    <item>
+      <title>Games101 笔记 —— 线性代数</title>
+      <link>https://scarletsky.github.io/2020/05/23/games101-notes-linear-algebra/</link>
+      <pubDate>Sat, 23 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2020/05/23/games101-notes-linear-algebra/</guid>
+      <description>简介 本文《GAMES101-现代计算机图形学入门》系列教程的课程笔记，仅用于个人学习使用。 向量 向量是用来表示方向的量，它由两部分组成：大小、</description>
+    </item>
+    
+  </channel>
+</rss>

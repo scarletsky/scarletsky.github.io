@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>编写 Hubot Scripts - scarletsky</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="scarletsky" /><meta name="description" content="简介 我们在上一篇中介绍了 Hubot 的简单用法，里面提到我们可以为机器人编写脚本来让它根据不同的「输入」来给出不同的「输出」。 本文将会介绍如何编写我们" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.74.3 with theme even" />
+
+
+<link rel="canonical" href="https://scarletsky.github.io/2016/05/02/write-your-own-hubot-scripts/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.2e81bbed97b8b282c1aeb57488cc71c8d8c8ec559f3931531bd396bf31e0d4dd.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="编写 Hubot Scripts" />
+<meta property="og:description" content="简介 我们在上一篇中介绍了 Hubot 的简单用法，里面提到我们可以为机器人编写脚本来让它根据不同的「输入」来给出不同的「输出」。 本文将会介绍如何编写我们" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://scarletsky.github.io/2016/05/02/write-your-own-hubot-scripts/" />
+<meta property="article:published_time" content="2016-05-02T16:05:37+00:00" />
+<meta property="article:modified_time" content="2019-04-30T08:32:59+08:00" />
+<meta itemprop="name" content="编写 Hubot Scripts">
+<meta itemprop="description" content="简介 我们在上一篇中介绍了 Hubot 的简单用法，里面提到我们可以为机器人编写脚本来让它根据不同的「输入」来给出不同的「输出」。 本文将会介绍如何编写我们">
+<meta itemprop="datePublished" content="2016-05-02T16:05:37+00:00" />
+<meta itemprop="dateModified" content="2019-04-30T08:32:59+08:00" />
+<meta itemprop="wordCount" content="2350">
+
+
+
+<meta itemprop="keywords" content="hubot," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="编写 Hubot Scripts"/>
+<meta name="twitter:description" content="简介 我们在上一篇中介绍了 Hubot 的简单用法，里面提到我们可以为机器人编写脚本来让它根据不同的「输入」来给出不同的「输出」。 本文将会介绍如何编写我们"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">scarletsky.github.io</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">scarletsky.github.io</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">编写 Hubot Scripts</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2016-05-02 </span>
+        <div class="post-category">
+            <a href="/categories/hubot/"> hubot </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#简介">简介</a></li>
+<li><a href="#基础">基础</a></li>
+<li><a href="#接受消息">接受消息</a>
+<ul>
+<li><a href="#robot-hear">robot.hear</a></li>
+<li><a href="#robot-respond">robot.respond</a></li>
+<li><a href="#robot-listen">robot.listen</a></li>
+</ul></li>
+<li><a href="#发送消息">发送消息</a>
+<ul>
+<li><a href="#res-send">res.send</a></li>
+<li><a href="#res-reply">res.reply</a></li>
+<li><a href="#res-match">res.match</a></li>
+</ul></li>
+<li><a href="#发出-http-请求">发出 http 请求</a></li>
+<li><a href="#响应-http-请求">响应 http 请求</a></li>
+<li><a href="#事件处理">事件处理</a></li>
+<li><a href="#错误处理">错误处理</a></li>
+<li><a href="#其他有趣而无用的方法">其他有趣而无用的方法</a>
+<ul>
+<li><a href="#robot-topic">robot.topic</a></li>
+<li><a href="#robot-enter">robot.enter</a></li>
+<li><a href="#robot-leave">robot.leave</a></li>
+<li><a href="#res-random">res.random</a></li>
+</ul></li>
+<li><a href="#参考资料">参考资料</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h2 id="简介">简介</h2>
+
+<p>我们在上一篇中介绍了 Hubot 的简单用法，里面提到我们可以为机器人编写脚本来让它根据不同的「输入」来给出不同的「输出」。
+本文将会介绍如何编写我们的 Hubot Scritps。</p>
+
+<h2 id="基础">基础</h2>
+
+<p>我们的脚本应该放在哪里才能让 hubot 找到并且正常加载呢？在上一篇文章中我们提到过，hubot 在启动时会加载 <code>scripts/</code> 目录中的脚本文件。
+但它到底是怎么加载的呢？我们可以打开 <code>bin/hubot</code> 文件看一下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-coffee" data-lang="coffee"><span class="c1"># ......
+</span><span class="c1"></span><span class="nv">loadScripts = </span><span class="nf">-&gt;</span>
+  <span class="c1"># 加载 scripts 中的脚本
+</span><span class="c1"></span>  <span class="nv">scriptsPath = </span><span class="nx">Path</span><span class="p">.</span><span class="nx">resolve</span> <span class="s">&#34;.&#34;</span><span class="p">,</span> <span class="s">&#34;scripts&#34;</span>
+  <span class="nx">robot</span><span class="p">.</span><span class="nx">load</span> <span class="nx">scriptsPath</span>
+
+  <span class="c1"># 加载 src/scripts 中的脚本
+</span><span class="c1"></span>  <span class="nv">scriptsPath = </span><span class="nx">Path</span><span class="p">.</span><span class="nx">resolve</span> <span class="s">&#34;.&#34;</span><span class="p">,</span> <span class="s">&#34;src&#34;</span><span class="p">,</span> <span class="s">&#34;scripts&#34;</span>
+  <span class="nx">robot</span><span class="p">.</span><span class="nx">load</span> <span class="nx">scriptsPath</span>
+
+  <span class="c1"># 加载 hubot-scripts.json 中列出的脚本
+</span><span class="c1"></span>  <span class="nv">hubotScripts = </span><span class="nx">Path</span><span class="p">.</span><span class="nx">resolve</span> <span class="s">&#34;.&#34;</span><span class="p">,</span> <span class="s">&#34;hubot-scripts.json&#34;</span>
+  <span class="k">if</span> <span class="nx">Fs</span><span class="p">.</span><span class="nx">existsSync</span><span class="p">(</span><span class="nx">hubotScripts</span><span class="p">)</span>
+    <span class="nv">data = </span><span class="nx">Fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="nx">hubotScripts</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">data</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span>
+      <span class="k">try</span>
+        <span class="nv">scripts = </span><span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span> <span class="nx">data</span>
+        <span class="nv">scriptsPath = </span><span class="nx">Path</span><span class="p">.</span><span class="nx">resolve</span> <span class="s">&#34;node_modules&#34;</span><span class="p">,</span> <span class="s">&#34;hubot-scripts&#34;</span><span class="p">,</span> <span class="s">&#34;src&#34;</span><span class="p">,</span> <span class="s">&#34;scripts&#34;</span>
+        <span class="nx">robot</span><span class="p">.</span><span class="nx">loadHubotScripts</span> <span class="nx">scriptsPath</span><span class="p">,</span> <span class="nx">scripts</span>
+      <span class="k">catch</span> <span class="nx">err</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">error</span> <span class="s">&#34;Error parsing JSON data from hubot-scripts.json: </span><span class="si">#{</span><span class="nx">err</span><span class="si">}</span><span class="s">&#34;</span>
+        <span class="nx">process</span><span class="p">.</span><span class="nx">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+  <span class="c1"># 加载 external-scripts.json 中列出的脚本
+</span><span class="c1"></span>  <span class="nv">externalScripts = </span><span class="nx">Path</span><span class="p">.</span><span class="nx">resolve</span> <span class="s">&#34;.&#34;</span><span class="p">,</span> <span class="s">&#34;external-scripts.json&#34;</span>
+  <span class="k">if</span> <span class="nx">Fs</span><span class="p">.</span><span class="nx">existsSync</span><span class="p">(</span><span class="nx">externalScripts</span><span class="p">)</span>
+    <span class="nx">Fs</span><span class="p">.</span><span class="nx">readFile</span> <span class="nx">externalScripts</span><span class="p">,</span> <span class="nf">(err, data) -&gt;</span>
+      <span class="k">if</span> <span class="nx">data</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="k">try</span>
+          <span class="nv">scripts = </span><span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span> <span class="nx">data</span>
+        <span class="k">catch</span> <span class="nx">err</span>
+          <span class="nx">console</span><span class="p">.</span><span class="nx">error</span> <span class="s">&#34;Error parsing JSON data from external-scripts.json: </span><span class="si">#{</span><span class="nx">err</span><span class="si">}</span><span class="s">&#34;</span>
+          <span class="nx">process</span><span class="p">.</span><span class="nx">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="nx">robot</span><span class="p">.</span><span class="nx">loadExternalScripts</span> <span class="nx">scripts</span>
+
+  <span class="c1"># 加载由 process.env.HUBOT_SCRIPTS 和 -r 参数指定的脚本
+</span><span class="c1"></span>  <span class="k">for</span> <span class="nx">path</span> <span class="k">in</span> <span class="nx">Options</span><span class="p">.</span><span class="nx">scripts</span>
+    <span class="k">if</span> <span class="nx">path</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;/&#39;</span>
+      <span class="nv">scriptsPath = </span><span class="nx">path</span>
+    <span class="k">else</span>
+      <span class="nv">scriptsPath = </span><span class="nx">Path</span><span class="p">.</span><span class="nx">resolve</span> <span class="s">&#34;.&#34;</span><span class="p">,</span> <span class="nx">path</span>
+    <span class="nx">robot</span><span class="p">.</span><span class="nx">load</span> <span class="nx">scriptsPath</span>
+<span class="err">#</span> <span class="p">......</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>其实只是先指定脚本路径，然后调用 <code>robot.load</code> 和 <code>robot.loadHubotScripts</code> 而已拉！
+而这两个方法简单来说是长这样子的：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-coffee" data-lang="coffee"><span class="c1"># ......
+</span><span class="c1"></span><span class="nv">script = </span><span class="nx">require</span><span class="p">(</span><span class="nx">path</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="k">typeof</span> <span class="nx">script</span> <span class="o">is</span> <span class="s">&#39;function&#39;</span>
+  <span class="nx">script</span> <span class="nx">@</span>
+<span class="k">else</span>
+  <span class="nx">@logger</span><span class="p">.</span><span class="nx">warning</span> <span class="s">&#34;Expected </span><span class="si">#{</span><span class="nx">full</span><span class="si">}</span><span class="s"> to assign a function to module.exports, got </span><span class="si">#{</span><span class="k">typeof</span> <span class="nx">script</span><span class="si">}</span><span class="s">&#34;</span>
+<span class="err">#</span> <span class="p">......</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>它们只是获取脚本路径，然后去 <code>require</code> 脚本，最后把 <code>this</code>(即 robot 对象) 作为参数传给 script 拉！
+所以明白为什么我们之前说脚本要写成下面这样子了吧！</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">// coffee
+module.exports = (robot) -&gt;
+
+// js
+module.exports = function(robot) {}</code></pre></td></tr></table>
+</div>
+</div>
+<p>知道了最基本的脚本写法之后，我们就可以愉快的编写属于我们的 hubot script 拉！</p>
+
+<h2 id="接受消息">接受消息</h2>
+
+<p>作为一个聊天机器人，hubot 最基本的功能是要监听特定的「输入」。
+Hubot 给我们提供了三个不同层次的方法来监听输入：<code>robot.hear</code>、<code>robot.respond</code> 和 <code>robot.listen</code>。</p>
+
+<h3 id="robot-hear">robot.hear</h3>
+
+<p>监听任何匹配的「输入」。
+即在聊天过程中，只要匹配到特定的消息，就会触发回调函数。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-coffee" data-lang="coffee"><span class="nv">module.exports = </span><span class="nf">(robot) -&gt;</span>
+
+  <span class="c1"># 匹配任何带有 hello 的消息，如
+</span><span class="c1"></span>  <span class="c1"># hello
+</span><span class="c1"></span>  <span class="c1"># hellooooo
+</span><span class="c1"></span>  <span class="c1"># haha helloooooo
+</span><span class="c1"></span>  <span class="nx">robot</span><span class="p">.</span><span class="nx">hear</span> <span class="o">/</span><span class="nx">hello</span><span class="o">/</span><span class="nx">i</span><span class="p">,</span> <span class="nf">(res) -&gt;</span>
+    <span class="err">#</span> <span class="nx">do</span> <span class="nx">what</span> <span class="nx">you</span> <span class="nx">want</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="robot-respond">robot.respond</h3>
+
+<p>监听对 hubot 说的「输入」。
+即在聊天过程中，前面带有 hubot/hubot:/@hubot 的消息才会被匹配，然后触发回调函数。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-coffee" data-lang="coffee"><span class="nv">module.exports = </span><span class="nf">(robot) -&gt;</span>
+
+  <span class="c1"># 匹配对 hubot 说的 hi，如
+</span><span class="c1"></span>  <span class="c1"># hubot hi
+</span><span class="c1"></span>  <span class="c1"># @hubot hihihi~
+</span><span class="c1"></span>  <span class="c1"># hubot: hihihi!
+</span><span class="c1"></span>  <span class="nx">robot</span><span class="p">.</span><span class="nx">respond</span> <span class="o">/</span><span class="nx">hi</span><span class="o">/</span><span class="nx">i</span><span class="p">,</span> <span class="nf">(res) -&gt;</span>
+    <span class="err">#</span> <span class="nx">do</span> <span class="nx">what</span> <span class="nx">you</span> <span class="nx">want</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="robot-listen">robot.listen</h3>
+
+<p>自由度最高的监听器，传入一个函数（Match Function）对消息进行匹配。
+该函数返回 <code>true</code> 时回调函数会被执行。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-coffee" data-lang="coffee"><span class="nv">module.exports = </span><span class="nf">(robot) -&gt;</span>
+
+  <span class="c1"># 根据「消息」对象做处理
+</span><span class="c1"></span>  <span class="nx">robot</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span>
+    <span class="nf">(message) -&gt;</span> <span class="nx">message</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">name</span> <span class="o">is</span> <span class="s">&#34;Scarlex&#34;</span><span class="p">,</span>
+    <span class="nf">(res) -&gt;</span> <span class="c1"># do what you want
+</span><span class="c1"></span>  <span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="发送消息">发送消息</h2>
+
+<p>聊天机器人除了接收「输入」之外，还需要对消息做出「响应」。
+有没有留意到上面接收消息中的回调函数都有一个 <code>res</code> 呢？
+你猜对拉！和 Node.js 中的 <code>res</code> 用来响应 <code>req</code> 一样，这里的 <code>res</code> 也是是用来响应「输入」的。
+其中比较常用的两个方法是 <code>res.send</code> 和 <code>res.reply</code>。</p>
+
+<h3 id="res-send">res.send</h3>
+
+<p>这个方法和 <code>robot.hear</code> 相反，会直接把消息发送到聊天室。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-coffee" data-lang="coffee"><span class="nv">module.exports = </span><span class="nf">(robot) -&gt;</span>
+  <span class="c1"># 匹配所有 hi 相关的输入，然后发送 hello 到聊天室
+</span><span class="c1"></span>  <span class="nx">robot</span><span class="p">.</span><span class="nx">hear</span> <span class="o">/</span><span class="nx">hi</span><span class="o">/</span><span class="nx">i</span><span class="p">,</span> <span class="nf">(res) -&gt;</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">send</span> <span class="s">&#39;hello&#39;</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="res-reply">res.reply</h3>
+
+<p>这个方法和 <code>robot.respond</code> 相反，谁对 hubot 聊天就会回复谁。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-coffee" data-lang="coffee"><span class="nv">module.exports = </span><span class="nf">(robot) -&gt;</span>
+  <span class="c1"># 匹配所有对 hubot 说的 hi，然后回复对 hubot 说话的用户，如
+</span><span class="c1"></span>  <span class="c1"># 输入 @hubot hi
+</span><span class="c1"></span>  <span class="c1"># 输出 @scarlex hello
+</span><span class="c1"></span>  <span class="nx">robot</span><span class="p">.</span><span class="nx">respond</span> <span class="o">/</span><span class="nx">hi</span><span class="o">/</span><span class="nx">i</span><span class="p">,</span> <span class="nf">(res) -&gt;</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">reply</span> <span class="s">&#39;hello&#39;</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="res-match">res.match</h3>
+
+<p>只有上面两个方法是远远不够的，因为上面两个方法并不能对「输入」做任何处理。
+不知道童鞋们有没有发现，我们其实是用正则表达式来匹配输入的，而正则表达式刚好可以用来做匹配某些关键字！
+当匹配到关键字之后，我们从哪里可以提取到这些关键字呢？
+答案就是 <code>res.match</code> 拉！</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-coffee" data-lang="coffee"><span class="nv">module.exports = </span><span class="nf">(robot) -&gt;</span>
+  <span class="c1"># 用 res.match 来获取正则表达式匹配的结果，如
+</span><span class="c1"></span>  <span class="c1"># 输入 open the first door
+</span><span class="c1"></span>  <span class="c1"># 输出 opening the first door
+</span><span class="c1"></span>  <span class="nx">robot</span><span class="p">.</span><span class="nx">hear</span> <span class="o">/</span><span class="nx">open</span> <span class="nx">the</span> <span class="p">(.</span><span class="o">*</span><span class="p">)</span> <span class="nx">door</span><span class="o">/</span><span class="nx">i</span><span class="p">,</span> <span class="nf">(res) -&gt;</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">send</span> <span class="s">&#34;opening the </span><span class="si">#{</span><span class="nx">res</span><span class="p">.</span><span class="nx">match</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s"> door&#34;</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="发出-http-请求">发出 http 请求</h2>
+
+<p>只是匹配消息再回复太简单拉！其实我们可以通过 hubot 发出 http 请求来做出更多的事情！
+Hubot 自带一个 <a href="https://github.com/technoweenie/node-scoped-http-client">node-scoped-http-client</a> 来发 http 请求。
+用法如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-coffee" data-lang="coffee"><span class="nx">robot</span>
+  <span class="p">.</span><span class="nx">http</span><span class="p">(</span><span class="s">&#39;https://github.com&#39;</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">get</span><span class="p">()</span> <span class="nf">(err, response, body) -&gt;</span>
+    <span class="err">#</span> <span class="nx">do</span> <span class="nx">what</span> <span class="nx">you</span> <span class="nx">want</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>初看会觉得很奇怪，其实这只是一个高阶函数而已，对应的 javascript 是这样的：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="nx">robot</span>
+  <span class="p">.</span><span class="nx">http</span><span class="p">(</span><span class="s1">&#39;https://github.com&#39;</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">get</span><span class="p">()(</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">response</span><span class="p">,</span> <span class="nx">body</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// do what you want
+</span><span class="c1"></span>  <span class="p">})</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>事实上，由于我们是在 Node.js 环境下运行 hubot 的， 我们可以用任何 http client 库来实现这个需求，如著名的 <a href="https://github.com/request/request">request</a> 库。
+我们要做的只是运行 <code>npm install request --save</code> 再 <code>require</code> 进来就可以了。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-coffee" data-lang="coffee"><span class="nv">request = </span><span class="nx">require</span> <span class="s">&#39;request&#39;</span>
+<span class="nv">module.exports = </span><span class="nf">(robot) -&gt;</span>
+  <span class="nx">robot</span><span class="p">.</span><span class="nx">hear</span> <span class="o">/</span><span class="nx">get</span> <span class="nx">github</span> <span class="nx">page</span><span class="o">/</span><span class="nx">i</span><span class="p">,</span> <span class="nf">(res) -&gt;</span>
+    <span class="nx">request</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;https://github.com&#39;</span><span class="p">,</span> <span class="nf">(err, response, body) -&gt;</span>
+      <span class="nx">res</span><span class="p">.</span><span class="nx">send</span> <span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>我在这里只演示了 GET 请求，其他类型的请求相信也难不倒大家拉！遇到什么问题去翻翻类库的文档就好拉！</p>
+
+<p>需要提醒一点，在发出 http 请求的时候，不要搞错了 hubot 的 <code>res</code> 对象和 request 的 <code>res</code> 对象哦！</p>
+
+<h2 id="响应-http-请求">响应 http 请求</h2>
+
+<p>Hubot 内置了一个 <a href="https://github.com/expressjs/express">express</a> 来响应 http 请求。
+它会随 hubot 一并启动，默认端口是 8080，我们可以设置环境变量 <code>EXPRESS_PORT</code> 或 <code>PORT</code> 来改变默认的端口。
+那么我们怎么才能使用它呢？很简单，只要调用 <code>robot.router</code> 就可以拉！</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-coffee" data-lang="coffee"><span class="nv">module.exports = </span><span class="nf">(robot) -&gt;</span>
+  <span class="c1"># 打开浏览器，然后输入 http://localhost:8080/hubot/haha
+</span><span class="c1"></span>  <span class="c1"># 会看见浏览器显示 ok
+</span><span class="c1"></span>  <span class="nx">robot</span><span class="p">.</span><span class="nx">router</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;/hubot/haha&#39;</span><span class="p">,</span> <span class="nf">(req, res) -&gt;</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">send</span> <span class="s">&#39;ok&#39;</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>尽情发挥你的想象力去写一些有趣的东西吧！</p>
+
+<p>哦，对了，如果想要禁用这个 express，只要在启动的时候加个 <code>-d</code> 或者 <code>--disable-httpd</code> 就好了。
+或者设置环境变量 <code>HUBOT_HTTPD</code> 为 <code>false</code> 也可以！
+即下面的方式都可以：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ ./bin/hubot -d
+$ ./bin/hubot --disable-httpd
+$ HUBOT_HTTPD=false ./bin/hubot</code></pre></td></tr></table>
+</div>
+</div>
+<p>当看到控制台输出下面这种警告的时候，就表示 express 被禁止启动拉！</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">WARNING A script has tried registering a HTTP route while the HTTP server is disabled with --disabled-httpd.</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="事件处理">事件处理</h2>
+
+<p>还有一点需要提的是，hubot 自带了一个 EventEmitter，这意味着我们可以通过 <code>robot.emit</code> 和 <code>robot.on</code> 来编写基于事件通讯的代码~</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-coffee" data-lang="coffee"><span class="nv">module.exports = </span><span class="nf">(robot) -&gt;</span>
+
+  <span class="c1"># 监听输入 event test，然后用 robot.emit 触发 wow 事件
+</span><span class="c1"></span>  <span class="nx">robot</span><span class="p">.</span><span class="nx">hear</span> <span class="o">/</span><span class="nx">event</span> <span class="nx">test</span><span class="o">/</span><span class="nx">i</span><span class="p">,</span> <span class="nf">(res) -&gt;</span>
+    <span class="nv">args = </span><span class="p">{</span> <span class="nv">id: </span><span class="s">&#39;12345&#39;</span> <span class="p">}</span>
+    <span class="nx">robot</span><span class="p">.</span><span class="nx">emit</span> <span class="s">&#39;wow&#39;</span><span class="p">,</span> <span class="nx">args</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">send</span> <span class="s">&#39;emit wow event with args: &#39;</span> <span class="o">+</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span> <span class="nx">args</span>
+
+  <span class="c1"># 用 robot.on 来监听 wow 事件，回调函数中可以获取事件发送过来的参数
+</span><span class="c1"></span>  <span class="c1"># 控制台会输出 { id: &#39;12345&#39; }
+</span><span class="c1"></span>  <span class="nx">robot</span><span class="p">.</span><span class="nx">on</span> <span class="s">&#39;wow&#39;</span><span class="p">,</span> <span class="nf">(args) -&gt;</span>
+    <span class="nx">robot</span><span class="p">.</span><span class="nx">logger</span><span class="p">.</span><span class="nx">info</span> <span class="nx">args</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>这种基于事件通讯的代码非常适合和 webhook 一起使用哦！
+想象一下，当我们 push 代码到 master 分支的时候，触发一个 webhook，然后 hubot 就帮我们自动部署新版网站，很棒吧！</p>
+
+<h2 id="错误处理">错误处理</h2>
+
+<p>任何代码都不是完美的，它们都有可能报错，当出现错误的时候，我们就需要对错误进行处理拉！
+在 hubot 里，我们可以用 <code>robot.error</code> 来捕获错误！</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-coffee" data-lang="coffee"><span class="nv">module.exports = </span><span class="nf">(robot) -&gt;</span>
+
+  <span class="c1"># 输入 error test，会触发一个错误
+</span><span class="c1"></span>  <span class="nx">robot</span><span class="p">.</span><span class="nx">hear</span> <span class="o">/</span><span class="nx">error</span> <span class="nx">test</span><span class="o">/</span><span class="nx">i</span><span class="p">,</span> <span class="nf">(res) -&gt;</span>
+    <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">([])</span>
+
+  <span class="c1"># 触发错误之后会捕获到错误，然后打印 Unexpected Error!
+</span><span class="c1"></span>  
+  <span class="nx">robot</span><span class="p">.</span><span class="nx">error</span> <span class="nf">(err, res) -&gt;</span>
+    <span class="nx">robot</span><span class="p">.</span><span class="nx">logger</span><span class="p">.</span><span class="nx">error</span> <span class="s">&#34;Unexpected Error!&#34;</span>
+    <span class="k">if</span> <span class="nx">res</span><span class="o">?</span>
+      <span class="nx">res</span><span class="p">.</span><span class="nx">reply</span> <span class="s">&#34;Unexpected Error!!!&#34;</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="其他有趣而无用的方法">其他有趣而无用的方法</h2>
+
+<p>最后提一下，hubot 自带一些有趣而无用的方法，这些方法很少用，有些需要 adapter 支持才能正常使用。</p>
+
+<h3 id="robot-topic">robot.topic</h3>
+
+<h3 id="robot-enter">robot.enter</h3>
+
+<h3 id="robot-leave">robot.leave</h3>
+
+<h3 id="res-random">res.random</h3>
+
+<h2 id="参考资料">参考资料</h2>
+
+<ul>
+<li><a href="https://hubot.github.com/docs/scripting/">https://hubot.github.com/docs/scripting/</a></li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">scarletsky</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2019-04-30
+        <a href="/commit/95a170dd24bf4b87af8e8309e95f31f929054a4a" title="chore: format markdown">(95a170d)</a>
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/hubot/">hubot</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/2016/06/12/mapreduce-in-mongodb/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">「译」 MapReduce in MongoDB</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/2016/04/20/how-to-implement-infinite-scroll/">
+            <span class="next-text nav-default">如何实现无限滚动</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="scarletsky/scarletsky.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:scarletsky1025@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/scarletsky" class="iconfont icon-github" title="github"></a>
+  <a href="https://scarletsky.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>scarletsky</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

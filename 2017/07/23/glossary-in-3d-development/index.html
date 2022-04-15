@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>3D 开发中常见的术语 - scarletsky</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="scarletsky" /><meta name="description" content="简介 在 3D 开发领域，我们会经常看到一些术语，有些是和数学相关的，有些是和模型相关的，也有一些是和程序相关的。本文是我对 3D 开发中常见术语的总结。" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.74.3 with theme even" />
+
+
+<link rel="canonical" href="https://scarletsky.github.io/2017/07/23/glossary-in-3d-development/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.2e81bbed97b8b282c1aeb57488cc71c8d8c8ec559f3931531bd396bf31e0d4dd.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="3D 开发中常见的术语" />
+<meta property="og:description" content="简介 在 3D 开发领域，我们会经常看到一些术语，有些是和数学相关的，有些是和模型相关的，也有一些是和程序相关的。本文是我对 3D 开发中常见术语的总结。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://scarletsky.github.io/2017/07/23/glossary-in-3d-development/" />
+<meta property="article:published_time" content="2017-07-23T16:06:39+00:00" />
+<meta property="article:modified_time" content="2019-04-30T08:32:59+08:00" />
+<meta itemprop="name" content="3D 开发中常见的术语">
+<meta itemprop="description" content="简介 在 3D 开发领域，我们会经常看到一些术语，有些是和数学相关的，有些是和模型相关的，也有一些是和程序相关的。本文是我对 3D 开发中常见术语的总结。">
+<meta itemprop="datePublished" content="2017-07-23T16:06:39+00:00" />
+<meta itemprop="dateModified" content="2019-04-30T08:32:59+08:00" />
+<meta itemprop="wordCount" content="3033">
+
+
+
+<meta itemprop="keywords" content="3d," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="3D 开发中常见的术语"/>
+<meta name="twitter:description" content="简介 在 3D 开发领域，我们会经常看到一些术语，有些是和数学相关的，有些是和模型相关的，也有一些是和程序相关的。本文是我对 3D 开发中常见术语的总结。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">scarletsky.github.io</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">scarletsky.github.io</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">3D 开发中常见的术语</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2017-07-23 </span>
+        <div class="post-category">
+            <a href="/categories/technology/"> technology </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#简介">简介</a></li>
+<li><a href="#数学">数学</a>
+<ul>
+<li><a href="#向量-vector">向量(Vector)</a></li>
+<li><a href="#矩阵-matrix">矩阵(Matrix)</a></li>
+<li><a href="#欧拉角-eulerangles">欧拉角(EulerAngles)</a></li>
+<li><a href="#四元数-quaternion">四元数(Quaternion)</a></li>
+</ul></li>
+<li><a href="#3d-模型">3D 模型</a>
+<ul>
+<li><a href="#顶点-vertex">顶点(Vertex)</a></li>
+<li><a href="#网格-mesh">网格(Mesh)</a></li>
+<li><a href="#材质-material">材质(Material)</a></li>
+<li><a href="#贴图-texture">贴图(Texture)</a></li>
+<li><a href="#轴向包围盒-axis-align-bounding-box">轴向包围盒(Axis Align Bounding Box)</a></li>
+<li><a href="#有向包围盒-orient-bounding-box">有向包围盒(Orient Bounding Box)</a></li>
+</ul></li>
+<li><a href="#程序">程序</a>
+<ul>
+<li><a href="#顶点缓冲区-vertex-buffer">顶点缓冲区(Vertex Buffer)</a></li>
+<li><a href="#索引缓冲区-index-buffer">索引缓冲区(Index Buffer)</a></li>
+<li><a href="#着色-shading">着色(Shading)</a></li>
+<li><a href="#着色器-shader">着色器(Shader)</a></li>
+<li><a href="#draw-call">Draw Call</a></li>
+</ul></li>
+<li><a href="#参考资料">参考资料</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h2 id="简介">简介</h2>
+
+<p>在 3D 开发领域，我们会经常看到一些术语，有些是和数学相关的，有些是和模型相关的，也有一些是和程序相关的。本文是我对 3D 开发中常见术语的总结。</p>
+
+<h2 id="数学">数学</h2>
+
+<p>数学是 3D 开发的基石，无论你想要操作物体移动，还是在屏幕中显示一个 3D 物体，都涉及到数学计算。在 3D 开发中，最常见的数学工具是向量、矩阵、四元数。</p>
+
+<h3 id="向量-vector">向量(Vector)</h3>
+
+<p>向量是既有大小又有方向的量。下面是常见的类型：</p>
+
+<ul>
+<li><p>二维向量(Vec2)
+主要用来记录平面相关的值，如鼠标事件/触摸事件的发生的坐标，二维物体坐标等。
+它有两个分量，分别是 <code>x</code> 和 <code>y</code>。</p></li>
+
+<li><p>三维向量(Vec3)
+主要用来记录空间坐标，如三维物体的位置。也可以用来表示方向，如一个平面的法线方向。
+它有三个分量，分别是 <code>x</code> 和 <code>y</code> 和 <code>z</code>。</p></li>
+</ul>
+
+<p>向量常见的操作有以下几种：</p>
+
+<ul>
+<li>加法</li>
+
+<li><p>减法</p></li>
+
+<li><p>规范化(normalize)
+即把该向量变成单位向量(长度为1)。</p></li>
+
+<li><p>点乘
+计算公式为：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">a.dot(b) = a.length() * b.length() * Math.cos(theta)</code></pre></td></tr></table>
+</div>
+</div>
+<p>点乘的结果是一个标量，通常用来求向量的在另一个向量上的投影长度，也可以用来求两向量之间的夹角。
+另外，当两向量都是单位向量时，我们可以简化上面的公式：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">a.dot(b) = Math.cos(theta)
+theta = Math.acos(a.dot(b));</code></pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p>叉乘
+叉乘的结果是一个向量，该向量会垂直于另外两个变量。它满足下面公式：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">a.cross(b) = c
+c.length() = a.length() * b.length() * Math.sin(theta)</code></pre></td></tr></table>
+</div>
+</div>
+<p>我们知道，三个不在同一直线上的点可以构成一个平面，我们可以通过用这三个点计算两个向量，然后再计算这两个向量的叉乘，结果就是这个平面的法线了。</p></li>
+</ul>
+
+<h3 id="矩阵-matrix">矩阵(Matrix)</h3>
+
+<p>矩阵在 3D 开发中常常用来变换顶点坐标。
+计算方法是把矩阵与顶点坐标相乘，即可得到变换后的顶点坐标。 即：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">vertex&#39; = matrix * vertex</code></pre></td></tr></table>
+</div>
+</div>
+<p>其中，最常见的矩阵有下面几种：</p>
+
+<ul>
+<li><p>模型矩阵(Model Matrix)
+模型矩阵的作用是把局部坐标中的顶点转换成世界坐标。
+每个模型从三维软件导出时，都会基于一套坐标系来生成顶点坐标，这个坐标系就是局部坐标。
+当我们把这个模型放到场景中的指定位置时，由于该位置是世界坐标中的一点，我们的操作相当于把模型从原点平移到该位置。同理，我们也可以在场景中对模型进行旋转和缩放操作。
+实际上这些操作是在操作模型矩阵，利用这个模型矩阵把模型局部坐标中的顶点转换成世界坐标的顶点。</p></li>
+
+<li><p>视图矩阵(View Matrix)
+视图矩阵用来把顶点的世界坐标转换成相对于观察者的坐标。</p></li>
+
+<li><p>投影矩阵(Projection Matrix)
+投影矩阵用来把顶点相对于观察者的坐标转换成屏幕坐标。</p></li>
+</ul>
+
+<p>这三个矩阵统称成 MVP 矩阵，我们在屏幕上看到的点都是通过如下公式进行转换的：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">vertex&#39; = Projection * View * Model * vertex</code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="欧拉角-eulerangles">欧拉角(EulerAngles)</h3>
+
+<p>欧拉角用来表示物体旋转的角度，它由三部分组成：</p>
+
+<ul>
+<li>俯仰角(Pitch)，表示绕 X 轴旋转的角度。</li>
+<li>偏航角(Yaw 或 Heading)，表示绕 Y 轴旋转的角度。</li>
+<li>翻滚角(Roll 或 Bank)，表示绕 Z 轴旋转的角度。</li>
+</ul>
+
+<p>由于欧拉角非常直观易用，因此它对于新手来说非常友好。
+但是，对于任意一个角度，欧拉角的表示方式由旋转顺序来决定，即可以按照 X-Y-Z 的顺序来旋转，也可以按照 Y-Z-X 的顺序来旋转，也可以按照其他顺序来旋转，这样会导致一个角度会有多种表示方式。
+另外，如果想要在两个欧拉角之间进行插值(即想要实现平滑过度)，那是非常困难的。
+最致命的一点是，欧拉角存在万向锁。想了解的话可以观看这个<a href="http://v.youku.com/v_show/id_XNzkyOTIyMTI=.html">视频</a>。</p>
+
+<h3 id="四元数-quaternion">四元数(Quaternion)</h3>
+
+<p>四元数是用来表达旋转的另一种方式，一个四元数表示绕一个方向旋转特定的角度。如绕 Y 轴旋转 90 度，用四元数来表示的话只需要一个方向 <code>Vector3(0, 1, 0)</code> 和一个角度 90 即可。
+四元数没有万向锁，插值非常简单。</p>
+
+<h2 id="3d-模型">3D 模型</h2>
+
+<p>任何一个 3D 模型都是由多个简单的几何形状组成的，而这些几何形状又是通过三角形来组成的。</p>
+
+<h3 id="顶点-vertex">顶点(Vertex)</h3>
+
+<p>在三维空间中，一个孤立的点是普通的点。如果一个点是用来构成多边形的，那么该点就被称为顶点。</p>
+
+<h3 id="网格-mesh">网格(Mesh)</h3>
+
+<p>网格是一种复杂的形状，它由多个顶点按照某个规律连接而成，换句话说，一个网格包含了多个顶点。
+一个模型可以包含多个网格。</p>
+
+<h3 id="材质-material">材质(Material)</h3>
+
+<p>材质管理着颜色、明暗、光泽等信息。当一个网格加上一个材质之后，它就可以在屏幕上显示特定的「色彩」了。 一个网格只有一种材质，而一种材质可以应用在多个网格上。</p>
+
+<h3 id="贴图-texture">贴图(Texture)</h3>
+
+<p>贴图是指把一张普通的图片贴到材质的表面。每种材质都可以有多种类型的贴图，如漫反射贴图、法线贴图、高光贴图、光照贴图 等。材质除了这些贴图之外，还有其他属性，可以用来调节这些贴图的属性。
+换句话说，每种材质都可以包含多种贴图。</p>
+
+<h3 id="轴向包围盒-axis-align-bounding-box">轴向包围盒(Axis Align Bounding Box)</h3>
+
+<p>轴向包围盒简称 AABB，是指包含一个模型，且边平行于坐标轴的最小六面体。
+请看看下面两张图：
+<img src="http://7tebgv.com1.z0.glb.clouddn.com/images/aabb.png" alt="" />
+<img src="http://7tebgv.com1.z0.glb.clouddn.com/images/aabb2.png" alt="" />
+AABB 就是在模型最外面的由细线构成包围盒，它会随着模型旋转而变化。
+实际上，AABB 并不可见，上图中的只是为了让我们更好理解才把包围盒画上去的。
+另外，第一张图中为了让我们更好看见 AABB，特意把 AABB 调大了一点点，实际上该模型的 AABB 和所有边都是重合的。</p>
+
+<h3 id="有向包围盒-orient-bounding-box">有向包围盒(Orient Bounding Box)</h3>
+
+<p>有向包围盒简称 OBB，它是包含模型且相对于坐标轴方向任意的最小的长方体。
+看看下面两张图：
+<img src="http://7tebgv.com1.z0.glb.clouddn.com/images/obb.png" alt="" />
+<img src="http://7tebgv.com1.z0.glb.clouddn.com/images/obb2.png" alt="" />
+白色线框表示的就是 OBB，而蓝色线框表示的则是 AABB。
+如果想看更直观的对比，可以看看这个视频：<a href="https://www.youtube.com/watch?v=HYO5Pthe3TE">AABB vs OBB</a>。</p>
+
+<h2 id="程序">程序</h2>
+
+<h3 id="顶点缓冲区-vertex-buffer">顶点缓冲区(Vertex Buffer)</h3>
+
+<p>顶点缓冲区的作用是用来存储顶点数据，然后提供给底层 API 进行绘制。
+顶点缓冲区用一维数组的方式来存储顶点信息，但绘制3D 图形每个顶点需要三个维度的数据(x, y, z)，因此，底层在绘图的时候会通过「偏移」的方式来取点。如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">var vertexBuffer = new Float32Array([
+  0.0,  0.5,  0.0,
+  -0.5, -0.5, 0.0,
+  0.5,  -0.5, 0.0
+]);</code></pre></td></tr></table>
+</div>
+</div>
+<p>上面这个顶点缓冲区有9个元素，但其实它包含了3个顶点的信息，每个顶点会占用3个位置。
+把数据传递给底层时，需要设置偏移量为 3，才能正确绘制图形。</p>
+
+<h3 id="索引缓冲区-index-buffer">索引缓冲区(Index Buffer)</h3>
+
+<p>在绘制复杂图形的时候，我们需要用到非常多的顶点，如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">var vertexBuffer = new Float32Array([
+  0.0,  0.5,  0.0,
+  -0.5, -0.5, 0.0,
+  0.5,  -0.5, 0.0,
+  0.0,  0.5,  0.0,
+  0.5,  -0.5, 0.0,
+  0.75, 0.5,  0.0
+]);</code></pre></td></tr></table>
+</div>
+</div>
+<p>上面的顶点缓冲区中有有两个顶点是重复的，分别是：<code>[0.0, 0.5, 0.0]</code> 和 <code>[0.5, -0.5, 0.0]</code>。如果需要绘制的图形非常复杂，那么重复的顶点会非常多，这样就造成浪费了。
+其实，我们只需要在绘制时指定顶点的顺序，就可以解决顶点重复的问题了，而索引缓冲区就是用来做这事情的。我们可以把上面的 <code>vertexBuffer</code> 进行简化，然后引入 <code>indexBuffer</code>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">var vertexBuffer = new Float32Array([
+  0.0,  0.5,  0.0,
+  -0.5, -0.5, 0.0,
+  0.5,  -0.5, 0.0,
+  0.75, 0.5,  0.0
+]);
+var indexBuffer = new Uint8Array([
+  0, 1, 2,
+  0, 2, 3
+]);</code></pre></td></tr></table>
+</div>
+</div>
+<p>这样，我们就可以简化顶点缓冲区的数据了。</p>
+
+<h3 id="着色-shading">着色(Shading)</h3>
+
+<p>简单来说，为整个三维场景上色的过程叫做着色。在真实世界中，在光线的作用下，我们可以辨认出物体的颜色，还有它们产生的阴影。
+在 3D 场景中，仅仅通过顶点所绘制出来的图形并没有光照信息，我们可以在场景中添加灯光，然后通过计算才能得到某个位置的颜色信息，再为该位置进行上色，这就是着色的过程。</p>
+
+<h3 id="着色器-shader">着色器(Shader)</h3>
+
+<p>着色器是运行在 GPU 上的程序，负责处理顶点信息和片元信息，是 3D 绘图中最重要的部分。
+着色器通常有两种，分别是顶点着色器(Vertex Shader)和片元着色器(Fragment Shader)。
+顶点着色器负责处理顶点的信息，上面提到的顶点缓冲区就是由顶点着色器来处理的。
+片元着色器负责为片元上色，它会在顶点着色器后面执行。</p>
+
+<h3 id="draw-call">Draw Call</h3>
+
+<p>Draw Call 是一次绘图操作，当我们把数据(如顶点、贴图、着色器等信息)准备好，然后传给 GPU 绘制就是一次 Draw Call。可以认为，Draw Call 次数越少，性能越好。</p>
+
+<h2 id="参考资料">参考资料</h2>
+
+<ul>
+<li><a href="https://jmonkeyengine.github.io/wiki/jme3/terminology_zh.html">3D游戏开发术语</a></li>
+<li><a href="http://www.opengl-tutorial.org/cn/beginners-tutorials/tutorial-3-matrices/">OpenGL 教程第三课：矩阵</a></li>
+<li><a href="http://blog.csdn.net/jared_lau/article/details/48226193">模型矩阵、视图矩阵、投影矩阵</a></li>
+<li><a href="http://blog.csdn.net/sinat_27456831/article/details/50042915">欧拉角pitch、yaw，roll的理解</a></li>
+<li><a href="http://www.voidcn.com/blog/xufuyuan/article/p-4874655.html">欧拉角和旋转矩阵的转换</a></li>
+<li><a href="https://book.douban.com/subject/25909351/">WebGL 编程指南</a></li>
+<li><a href="http://www.manew.com/4702.html">浅谈Draw Call和Batch的区别</a></li>
+<li><a href="https://medium.com/@toncijukic/draw-calls-in-a-nutshell-597330a85381">Draw calls in a nutshell</a></li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">scarletsky</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2019-04-30
+        <a href="/commit/95a170dd24bf4b87af8e8309e95f31f929054a4a" title="chore: format markdown">(95a170d)</a>
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/3d/">3d</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/2017/08/30/emacs-key-bindings-for-vim-users/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Emacs key bindings for vim users</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/2017/06/30/functional-programming-i-have-learned/">
+            <span class="next-text nav-default">我所了解的函数式编程</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="scarletsky/scarletsky.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:scarletsky1025@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/scarletsky" class="iconfont icon-github" title="github"></a>
+  <a href="https://scarletsky.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>scarletsky</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

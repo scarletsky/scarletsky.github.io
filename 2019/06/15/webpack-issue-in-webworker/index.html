@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>记一次 webpack 打包 web worker 的 bug - scarletsky</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="scarletsky" /><meta name="description" content="前言 最近需要在项目中引入 web worker ，但是用 webpack 打包完后请求 worker 的时候总是会报 404 错误。 现象 这是一个很常见的配置： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 const WorkerPlugin =" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.74.3 with theme even" />
+
+
+<link rel="canonical" href="https://scarletsky.github.io/2019/06/15/webpack-issue-in-webworker/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.2e81bbed97b8b282c1aeb57488cc71c8d8c8ec559f3931531bd396bf31e0d4dd.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="记一次 webpack 打包 web worker 的 bug" />
+<meta property="og:description" content="前言 最近需要在项目中引入 web worker ，但是用 webpack 打包完后请求 worker 的时候总是会报 404 错误。 现象 这是一个很常见的配置： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 const WorkerPlugin =" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://scarletsky.github.io/2019/06/15/webpack-issue-in-webworker/" />
+<meta property="article:published_time" content="2019-06-15T15:06:30+08:00" />
+<meta property="article:modified_time" content="2019-07-22T16:55:19+08:00" />
+<meta itemprop="name" content="记一次 webpack 打包 web worker 的 bug">
+<meta itemprop="description" content="前言 最近需要在项目中引入 web worker ，但是用 webpack 打包完后请求 worker 的时候总是会报 404 错误。 现象 这是一个很常见的配置： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 const WorkerPlugin =">
+<meta itemprop="datePublished" content="2019-06-15T15:06:30+08:00" />
+<meta itemprop="dateModified" content="2019-07-22T16:55:19+08:00" />
+<meta itemprop="wordCount" content="430">
+
+
+
+<meta itemprop="keywords" content="webpack," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="记一次 webpack 打包 web worker 的 bug"/>
+<meta name="twitter:description" content="前言 最近需要在项目中引入 web worker ，但是用 webpack 打包完后请求 worker 的时候总是会报 404 错误。 现象 这是一个很常见的配置： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 const WorkerPlugin ="/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">scarletsky.github.io</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">scarletsky.github.io</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">记一次 webpack 打包 web worker 的 bug</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-06-15 </span>
+        <div class="post-category">
+            <a href="/categories/technology/"> technology </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#前言">前言</a></li>
+<li><a href="#现象">现象</a></li>
+<li><a href="#调查">调查</a></li>
+<li><a href="#解决方案">解决方案</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h2 id="前言">前言</h2>
+
+<p>最近需要在项目中引入 web worker ，但是用 webpack 打包完后请求 worker 的时候总是会报 404 错误。</p>
+
+<h2 id="现象">现象</h2>
+
+<p>这是一个很常见的配置：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">WorkerPlugin</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;worker-plugin&#39;</span><span class="p">);</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1">// ...
+</span><span class="c1"></span>    <span class="nx">output</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">path</span><span class="o">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="s1">&#39;../public&#39;</span><span class="p">),</span>
+        <span class="nx">publicPath</span><span class="o">:</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span>
+        <span class="nx">filename</span><span class="o">:</span> <span class="s1">&#39;static/scripts/[name].js&#39;</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="c1">// ...
+</span><span class="c1"></span>    <span class="nx">plugins</span><span class="o">:</span> <span class="p">[</span>
+       <span class="c1">// ... 
+</span><span class="c1"></span>       <span class="k">new</span> <span class="nx">WorkerPlugin</span><span class="p">({</span>
+            <span class="nx">globalObject</span><span class="o">:</span> <span class="s1">&#39;self&#39;</span>
+       <span class="p">})</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>这样打包之后运行项目，我们会发现请求 web worker 的时候会请求 <code>/static/scripts/static/scripts/5.worker.js</code>，这个路径明显是错误的，整个的路径应该是 <code>/static/scripts/5.worker.js</code> 。</p>
+
+<h2 id="调查">调查</h2>
+
+<p><strong>先调查下为什么它会请求这个路径呢？</strong></p>
+
+<p>因为我在 web worker 里面引入了其他依赖，所以 web worker 里面就会通过 <code>importScripts</code> 来加载依赖。</p>
+
+<p><strong>那么这个路径是怎么得到的呢？</strong></p>
+
+<p>打开 webpack 打包出来的文件，我们可以找到相关的地方：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="nx">__webpack_require__</span><span class="p">.</span><span class="nx">e</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">requireEnsure</span><span class="p">(</span><span class="nx">chunkId</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">promises</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="nx">promises</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nb">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// &#34;1&#34; is the signal for &#34;already loaded&#34;
+</span><span class="c1"></span>        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">installedChunks</span><span class="p">[</span><span class="nx">chunkId</span><span class="p">])</span> <span class="p">{</span>
+            <span class="nx">importScripts</span><span class="p">(</span><span class="s2">&#34;static/scripts/&#34;</span> <span class="o">+</span> <span class="p">({}[</span><span class="nx">chunkId</span><span class="p">]</span><span class="o">||</span><span class="nx">chunkId</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&#34;.worker.js&#34;</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}));</span>
+    <span class="k">return</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span><span class="nx">promises</span><span class="p">);</span>
+<span class="p">};</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>很明显，<code>importScripts</code> 里面少了 <code>publicPath</code> ！</p>
+
+<h2 id="解决方案">解决方案</h2>
+
+<p>找到问题的根源了，接下来就很容易解决了，只要在打包的时候给它加上 <code>publicPath</code> 就可以了。</p>
+
+<p>解决方案我提交 <a href="https://github.com/webpack/webpack/pull/9270">pull request</a> 了，大家只要升级到 <code>v4.34.0+</code> 就能解决这个问题了。</p>
+
+<p><del>没想到我居然成为 webpack 的贡献者了</del></p>
+
+<p>(完)</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">scarletsky</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2019-07-22
+        <a href="/commit/9090563db54b589c05918b7f60b80c84d4d15da3" title="feat: add webpack issue in webworker">(9090563)</a>
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/webpack/">webpack</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/2019/11/02/a-simple-throttle-promise-queue/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">实现一个简单限流的 Promise 队列</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/2019/05/02/migrate-hexo-to-hugo/">
+            <span class="next-text nav-default">从 Hexo 迁移到 Hugo</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="scarletsky/scarletsky.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:scarletsky1025@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/scarletsky" class="iconfont icon-github" title="github"></a>
+  <a href="https://scarletsky.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>scarletsky</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>html5 on scarletsky</title>
+    <link>https://scarletsky.github.io/tags/html5/</link>
+    <description>Recent content in html5 on scarletsky</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 15 Mar 2015 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://scarletsky.github.io/tags/html5/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>HTML5 Canvas 技巧</title>
+      <link>https://scarletsky.github.io/2015/03/15/html5-canvas-tricks/</link>
+      <pubDate>Sun, 15 Mar 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/03/15/html5-canvas-tricks/</guid>
+      <description>注意事项 用 &amp;lt;canvas&amp;gt; 标签进行绘图时必须要设置 width 和 height 属性，这里并不是指 CSS 属性中的 width 和 height，而是 &amp;lt;canvas&amp;gt; 标签本身的属性！ 1 2 3 4 5 6 7 8 9 10 11 12 13 &amp;lt;!-- 正</description>
+    </item>
+    
+    <item>
+      <title>HTML5 Drag and Drop API</title>
+      <link>https://scarletsky.github.io/2015/01/13/html5-drag-and-drop-api/</link>
+      <pubDate>Tue, 13 Jan 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/01/13/html5-drag-and-drop-api/</guid>
+      <description>基本使用 创建可拖放对象 在 HTML5 中创建可拖动内容非常简单，只需要在元素的属性中加上 draggable=&amp;quot;true&amp;quot; 就能创建可拖放对象了。 1 2 3 &amp;lt;div class=&amp;#34;rect red&amp;#34; draggable=&amp;#34;true&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;rect green&amp;#34; draggable=&amp;#34;true&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;rect blue&amp;#34; draggable=&amp;#34;true&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; 如何拖动 有</description>
+    </item>
+    
+  </channel>
+</rss>

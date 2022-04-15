@@ -1,0 +1,1012 @@
+<?xml-stylesheet type="text/xsl" href="https://scarletsky.github.io/sitemap.xsl"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>https://scarletsky.github.io/post/</loc>
+    <lastmod>2022-04-15T21:44:15+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/</loc>
+    <lastmod>2022-04-15T21:44:15+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2021/08/18/calling-virtual-functions-in-constructor/</loc>
+    <lastmod>2021-08-19T10:16:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/graphics/</loc>
+    <lastmod>2021-03-09T17:40:11+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/opengl/</loc>
+    <lastmod>2021-03-09T17:40:11+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/</loc>
+    <lastmod>2022-04-15T21:44:15+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/webgl/</loc>
+    <lastmod>2021-03-09T17:40:11+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2021/03/06/gl-depth-transformation/</loc>
+    <lastmod>2021-03-09T17:40:11+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/games101/</loc>
+    <lastmod>2022-04-15T21:44:15+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2020/07/27/games101-notes-shading/</loc>
+    <lastmod>2020-09-01T20:56:20+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2020/06/10/games101-notes-rasterization/</loc>
+    <lastmod>2022-04-15T21:44:15+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2020/06/09/games101-notes-transformation/</loc>
+    <lastmod>2021-08-23T16:34:46+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2020/05/23/games101-notes-linear-algebra/</loc>
+    <lastmod>2020-06-11T12:18:12+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2020/05/13/git-misoperations/</loc>
+    <lastmod>2020-05-13T11:11:47+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/categories/</loc>
+    <lastmod>2020-01-13T17:12:25+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/categories/javascript/</loc>
+    <lastmod>2020-01-13T17:12:25+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2020/01/13/manage-progress/</loc>
+    <lastmod>2020-01-13T17:12:25+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2019/11/02/a-simple-throttle-promise-queue/</loc>
+    <lastmod>2019-11-08T21:09:50+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/categories/technology/</loc>
+    <lastmod>2019-07-22T16:55:19+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/webpack/</loc>
+    <lastmod>2019-07-22T16:55:19+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2019/06/15/webpack-issue-in-webworker/</loc>
+    <lastmod>2019-07-22T16:55:19+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2019/05/02/migrate-hexo-to-hugo/</loc>
+    <lastmod>2019-04-30T11:35:09+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/categories/webpack/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2019/02/19/webpack-bundling-libraries-with-dynamic-imports/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/ios/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2019/01/10/wireless-remote-debugging-with-safari-on-ios/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/jsdoc/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2017/12/23/write-javascript-document-by-jsdoc/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2017/11/17/how-to-implement-promise-in-javascript/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2017/10/30/the-best-boilerplate-app-is-the-one-you-code-yourself/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/emacs/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/categories/emacs/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2017/09/29/org-mode-in-spacemacs/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/org-mode/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/spacemacs/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2017/08/30/emacs-key-bindings-for-vim-users/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/3d/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2017/07/23/glossary-in-3d-development/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/categories/functional-programming/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2017/06/30/functional-programming-i-have-learned/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2017/05/25/chasing-the-shiny-and-new-in-software/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/database/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/categories/database/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/postgresql/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2017/04/26/client-authentication-in-postgresql/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2017/03/15/notes-of-postgresql/</loc>
+    <lastmod>2019-04-29T17:56:08+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/sql/</loc>
+    <lastmod>2019-04-29T17:56:08+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/categories/sql/</loc>
+    <lastmod>2019-04-29T17:56:08+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/javascript/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2017/02/18/implement-popover-with-javascript/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2017/01/30/build-your-own-event-system-in-javascript/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/git/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2016/12/29/tilde-and-caret-in-git/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/categories/tools/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/restful/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/categories/restful/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2016/11/30/error-handling-in-restful-api/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/nodejs/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2016/10/05/write-unit-tests-for-restful-api-in-nodejs/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2016/09/11/talking-about-front-end-pagination-implementation-in-spa/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/redux/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2016/08/20/write-your-own-combine-reducers-in-redux/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/ci/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/categories/gitlab/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/gitlab-ci/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2016/07/29/use-gitlab-ci-for-continuous-integration/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/haskell/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/categories/haskell/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2016/07/16/non-determinism-value-and-list-monad-in-haskell/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2016/07/03/download-file-using-javascript/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/categories/nodejs/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/stream/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2016/07/01/basics-node-js-streams/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/gitlab/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2016/06/18/issues-when-upgrading-gitlab/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/mongodb/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2016/06/12/mapreduce-in-mongodb/</loc>
+    <lastmod>2019-04-29T17:56:08+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/hubot/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/categories/hubot/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2016/05/02/write-your-own-hubot-scripts/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/infinite-scroll/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2016/04/20/how-to-implement-infinite-scroll/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2016/04/03/hubot-simple-usage/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2016/04/02/assign-vs-extend-vs-merge-in-lodash/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2016/03/15/type-vs-data-vs-newtype-in-haskell/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/applicative/</loc>
+    <lastmod>2019-04-29T17:56:08+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2016/03/07/what-is-applicative-in-haskell/</loc>
+    <lastmod>2019-04-29T17:56:08+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2016/02/28/flexible-instances-vs-type-synonym-instances-in-haskell/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/functor/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2016/02/09/what-is-functor-in-haskell/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/random/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2016/02/06/random-numbers-in-haskell/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/excel/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/js-xlsx/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/node/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2016/01/30/nodejs-process-excel/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/css/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/categories/css/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/flexbox/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2016/01/23/simple-flexbox/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2016/01/22/spacemacs-usage/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/localtunnel/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/categories/localtunnel/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2016/01/17/localtunnel-usage/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/closure/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2015/12/02/the-little-javascript-closures/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/%E9%97%AD%E5%8C%85/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/dnd/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/react/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2015/11/17/react-dnd-usage/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/bitrhday/</loc>
+    <lastmod>2019-04-29T17:56:08+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/life/</loc>
+    <lastmod>2019-04-29T17:56:08+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/categories/life/</loc>
+    <lastmod>2019-04-29T17:56:08+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2015/10/25/birthday-summary/</loc>
+    <lastmod>2019-04-29T17:56:08+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2015/10/22/node-stream-api-learning/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/commonjs/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2015/08/19/commonjs-learning/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2015/08/18/object-learning-in-javascript/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/gulp/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2015/08/14/use-gulp-for-front-end-workflow/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2015/08/11/mongo-shell-trap/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2015/08/07/interview-summary/</loc>
+    <lastmod>2019-04-29T17:56:08+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/android/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/categories/android/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2015/07/06/android-support-design-library-experience/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/material-design/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/recyclerview/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2015/06/29/recyclerview-basic-usage/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/canvas/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/html5/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2015/03/15/html5-canvas-tricks/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/blob/</loc>
+    <lastmod>2019-04-29T17:56:08+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2015/01/27/javascript-upload-slice-file-using-blob/</loc>
+    <lastmod>2019-04-29T17:56:08+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/upload/</loc>
+    <lastmod>2019-04-29T17:56:08+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2015/01/26/javascript-tricks/</loc>
+    <lastmod>2019-04-29T17:56:08+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/categories/html5/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2015/01/13/html5-drag-and-drop-api/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/d3.js/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2015/01/04/d3js-learning-2/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2014/12/29/d3js-learning-1/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2014/10/25/mongodb-security-and-auth/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/tags/angular.js/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2014/10/16/mongodb-operation-and-maintenance-basic/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://scarletsky.github.io/2014/10/16/the-digest-loop-and-apply/</loc>
+    <lastmod>2019-04-30T08:32:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+</urlset>

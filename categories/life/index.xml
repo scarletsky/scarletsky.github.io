@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>life on scarletsky</title>
+    <link>https://scarletsky.github.io/categories/life/</link>
+    <description>Recent content in life on scarletsky</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 25 Oct 2015 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://scarletsky.github.io/categories/life/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>写在二十四岁生日</title>
+      <link>https://scarletsky.github.io/2015/10/25/birthday-summary/</link>
+      <pubDate>Sun, 25 Oct 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/10/25/birthday-summary/</guid>
+      <description>又一年过去了，今年是第四年。 今年的生日是和女朋友一起，平平淡淡地过的。 回顾今年，我做的事情基本都是读书，学习，工作，陪妹子。 相信大家都知道读</description>
+    </item>
+    
+    <item>
+      <title>面试总结</title>
+      <link>https://scarletsky.github.io/2015/08/07/interview-summary/</link>
+      <pubDate>Fri, 07 Aug 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/08/07/interview-summary/</guid>
+      <description>面试前的准备 了解该公司的业务 如果不了解的话，面试的时候 HR 们那些一系列专业的术语会让你头晕 想清楚你为什么不去投其他公司（如BAT） 想清楚该公司</description>
+    </item>
+    
+  </channel>
+</rss>

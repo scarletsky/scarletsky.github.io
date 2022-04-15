@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>The Little JavaScript Closures - scarletsky</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="scarletsky" /><meta name="description" content="写在前面 本文尝试模仿 The Little Schema 的风格，介绍 JavaScript 的闭包。本文同时也是我学习 JavaScript 闭包的一次总结。欢迎一起讨论。 简介 什么是闭包？ 闭包是一个函数 闭包都是函数" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.74.3 with theme even" />
+
+
+<link rel="canonical" href="https://scarletsky.github.io/2015/12/02/the-little-javascript-closures/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.2e81bbed97b8b282c1aeb57488cc71c8d8c8ec559f3931531bd396bf31e0d4dd.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="The Little JavaScript Closures" />
+<meta property="og:description" content="写在前面 本文尝试模仿 The Little Schema 的风格，介绍 JavaScript 的闭包。本文同时也是我学习 JavaScript 闭包的一次总结。欢迎一起讨论。 简介 什么是闭包？ 闭包是一个函数 闭包都是函数" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://scarletsky.github.io/2015/12/02/the-little-javascript-closures/" />
+<meta property="article:published_time" content="2015-12-02T20:55:54+00:00" />
+<meta property="article:modified_time" content="2019-04-30T08:32:59+08:00" />
+<meta itemprop="name" content="The Little JavaScript Closures">
+<meta itemprop="description" content="写在前面 本文尝试模仿 The Little Schema 的风格，介绍 JavaScript 的闭包。本文同时也是我学习 JavaScript 闭包的一次总结。欢迎一起讨论。 简介 什么是闭包？ 闭包是一个函数 闭包都是函数">
+<meta itemprop="datePublished" content="2015-12-02T20:55:54+00:00" />
+<meta itemprop="dateModified" content="2019-04-30T08:32:59+08:00" />
+<meta itemprop="wordCount" content="1908">
+
+
+
+<meta itemprop="keywords" content="javascript,closure,闭包," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="The Little JavaScript Closures"/>
+<meta name="twitter:description" content="写在前面 本文尝试模仿 The Little Schema 的风格，介绍 JavaScript 的闭包。本文同时也是我学习 JavaScript 闭包的一次总结。欢迎一起讨论。 简介 什么是闭包？ 闭包是一个函数 闭包都是函数"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">scarletsky.github.io</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">scarletsky.github.io</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">The Little JavaScript Closures</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2015-12-02 </span>
+        <div class="post-category">
+            <a href="/categories/javascript/"> javascript </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#写在前面">写在前面</a></li>
+<li><a href="#简介">简介</a></li>
+<li><a href="#变量与作用域">变量与作用域</a></li>
+<li><a href="#闭包">闭包</a></li>
+<li><a href="#one-more-thing">One More Thing</a></li>
+<li><a href="#参考资料">参考资料</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h2 id="写在前面">写在前面</h2>
+
+<p>本文尝试模仿 <a href="http://uternet.github.io/TLS/">The Little Schema</a> 的风格，介绍 JavaScript 的闭包。本文同时也是我学习 JavaScript 闭包的一次总结。欢迎一起讨论。</p>
+
+<h2 id="简介">简介</h2>
+
+<p>什么是闭包？</p>
+
+<blockquote>
+<p>闭包是一个函数</p>
+</blockquote>
+
+<p>闭包都是函数吗？</p>
+
+<blockquote>
+<p>是</p>
+</blockquote>
+
+<p>函数都是闭包吗？</p>
+
+<blockquote>
+<p>不</p>
+</blockquote>
+
+<p>我怎么判断一个函数是不是闭包？</p>
+
+<blockquote>
+<p>你现在还不能回答，因为你还不知道以下概念：
+全局变量（Global Variable）
+局部变量（Local Variable）
+自由变量（Free Variable）
+词法作用域（Lexical Scope）</p>
+</blockquote>
+
+<h2 id="变量与作用域">变量与作用域</h2>
+
+<p><code>var a = 1;</code> a 是什么变量？</p>
+
+<blockquote>
+<p>全局变量</p>
+</blockquote>
+
+<p><code>a = 1;</code> a 是什么变量？</p>
+
+<blockquote>
+<p>全局变量</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>这里的 a，b 分别是什么变量？</p>
+
+<blockquote>
+<p>a 是全局变量，b 是局部变量</p>
+</blockquote>
+
+<p>为什么 a 在函数中定义还是全局变量？</p>
+
+<blockquote>
+<p>因为 a 不是用 var 声明的</p>
+</blockquote>
+
+<p>不用 <code>var</code> 声明的变量都是全局变量？</p>
+
+<blockquote>
+<p>是的</p>
+</blockquote>
+
+<p>用 <code>var</code> 声明的变量都是局部变量？</p>
+
+<blockquote>
+<p>不是</p>
+</blockquote>
+
+<p>为什么？</p>
+
+<blockquote>
+<p>在全局作用域中声明的变量都是全局变量，即使这个变量是用 var 声明的</p>
+</blockquote>
+
+<p>全局作用域是什么？</p>
+
+<blockquote>
+<p>函数作用域以外的地方都是就是全局作用域</p>
+</blockquote>
+
+<p>函数作用域又是什么？</p>
+
+<blockquote>
+<p>函数内部</p>
+</blockquote>
+
+<p>可以举个例子吗？</p>
+
+<blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="kd">function</span> <span class="nx">bar</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">baz</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>foo 变量和 bar 函数都处于全局作用域中，baz 变量处于函数作用域中</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">bar</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>这段代码中有多少个作用域？</p>
+
+<blockquote>
+<p>2 个，foo 函数所处的全局作用域和 bar 变量所处的函数作用域</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">bar</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kd">function</span> <span class="nx">baz</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">test</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>这段代码中有多少个作用域？</p>
+
+<blockquote>
+<p>3 个，foo 函数所处的全局作用域，bar 所处的函数作用域，和 test 所处的函数作用域</p>
+</blockquote>
+
+<p>上面的 bar 变量和 baz 函数处于同一个作用域吗？</p>
+
+<blockquote>
+<p>是的，因为它们都在 foo 函数中</p>
+</blockquote>
+
+<p>上面 test 变量和 bar，baz处于同一个作用域中吗？</p>
+
+<blockquote>
+<p>不是，因为 test 变量在 baz 函数中</p>
+</blockquote>
+
+<p>JavaScript 用函数来划分作用域吗？</p>
+
+<blockquote>
+<p>是的</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">bar</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">bar</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>会输出什么？</p>
+
+<blockquote>
+<p>Uncaught ReferenceError: bar is not defined</p>
+</blockquote>
+
+<p>为什么会报错呢？</p>
+
+<blockquote>
+<p>因为外部作用域<strong>不能</strong>访问内部作用域</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="kd">function</span> <span class="nx">bar</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">foo</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">bar</span><span class="p">();</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>会输出什么？</p>
+
+<blockquote>
+<p>1</p>
+</blockquote>
+
+<p>为什么不会报错？</p>
+
+<blockquote>
+<p>因为内部作用域<strong>可以</strong>访问外部作用域</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">foo</span><span class="p">();</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>会输出什么？</p>
+
+<blockquote>
+<p>2</p>
+</blockquote>
+
+<p>为什么不是输出 1 ？</p>
+
+<blockquote>
+<p>因为局部变量的优先级比外部变量高</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span>
+  <span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">foo</span><span class="p">();</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>会输出什么？</p>
+
+<blockquote>
+<p>undefined
+2</p>
+</blockquote>
+
+<p>为什么会这么奇怪？</p>
+
+<blockquote>
+<p>因为变量声明有变量提升（Variable Hoisting）的过程</p>
+</blockquote>
+
+<p>变量提升是什么？</p>
+
+<blockquote>
+<p>声明语句会在执行前被处理，在任何地方声明一个变量，相当于在顶部位置声明</p>
+</blockquote>
+
+<p>可以举个例子吗？</p>
+
+<blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="nx">bla</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">bla</span><span class="p">;</span>
+
+<span class="c1">// 相当于
+</span><span class="c1"></span>
+<span class="kd">var</span> <span class="nx">bla</span><span class="p">;</span>
+<span class="nx">bla</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>这和之前的例子有什么关系？</p>
+
+<p>函数内部声明的变量，都会先在函数的顶部声明。所以之前的例子就相当于</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">x</span><span class="p">;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span>
+  <span class="nx">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>什么是词法作用域？</p>
+
+<p>变量的作用域是由它在源代码中所处位置决定的（词法），并且嵌套的函数可以访问到其外层作用域中声明的变量。</p>
+</blockquote>
+
+<p>这和上面说到的内部作用域可以访问外部作用域有什么区别吗？</p>
+
+<blockquote>
+<p>没有</p>
+</blockquote>
+
+<p>什么是自由变量？</p>
+
+<blockquote>
+<p>在函数内部使用到，但既不是该函数的参数，也不是该函数的局部变量的变量。</p>
+</blockquote>
+
+<p>可以举个例子吗？</p>
+
+<blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="kd">function</span> <span class="nx">bar</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">baz</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">foo</span> <span class="o">+</span> <span class="nx">baz</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>这里 bar 函数有三个变量：baz, console, foo
+其中 baz 是局部变量， console 和 foo 都属于自由变量</p>
+</blockquote>
+
+<p>为什么 console 和 foo 都是自由变量？</p>
+
+<blockquote>
+<p>因为 console 和 foo 都在全局作用域中，在 bar 函数中是通过引用的方式来使用 console 和 foo 的</p>
+</blockquote>
+
+<p>还需要了解其他概念吗？</p>
+
+<blockquote>
+<p>不需要，现在已经可以深入了解闭包了</p>
+</blockquote>
+
+<h2 id="闭包">闭包</h2>
+
+<p>什么是闭包？</p>
+
+<blockquote>
+<p>闭包是一个内部函数 [注1]</p>
+</blockquote>
+
+<p>内部函数都是闭包吗？</p>
+
+<blockquote>
+<p>不是，引用了自由变量的内部函数才是闭包</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>foo 函数是一个闭包吗？</p>
+
+<blockquote>
+<p>不是，因为 foo 函数不是一个内部函数</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">function</span> <span class="nx">bar</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nx">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>bar 函数是一个闭包吗？</p>
+
+<blockquote>
+<p>不是，因为它只是一个内部函数，并没有引用自由变量</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kd">function</span> <span class="nx">bar</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>bar 函数是一个闭包吗？</p>
+
+<blockquote>
+<p>是的，因为它是一个内部函数，同时引用了自由变量</p>
+</blockquote>
+
+<p>闭包有什么特点？</p>
+
+<blockquote>
+<ol>
+<li>闭包可以访问外部变量</li>
+<li>闭包可以在外部函数返回之后依然保留外部变量的引用</li>
+<li>闭包会保留外部变量的引用，不是该变量的值</li>
+</ol>
+</blockquote>
+
+<p>第一点在前面的例子中已经懂了。</p>
+
+<blockquote>
+<p>很好</p>
+</blockquote>
+
+<p>第二点还没懂，可以举个例子吗？</p>
+
+<blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">add</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="kd">function</span><span class="p">(</span><span class="nx">y</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">x</span> <span class="o">+</span> <span class="nx">y</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">add5</span> <span class="o">=</span> <span class="nx">add</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">add5</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span> <span class="c1">// 15
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>即便 add 函数已经返回，add5 中依然可以访问 x</p>
+</blockquote>
+
+<p>第三点还没懂，可以举个例子吗？</p>
+
+<blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">user</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+  <span class="k">return</span> <span class="p">{</span>
+    <span class="nx">getId</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">id</span><span class="p">;</span> <span class="p">},</span>
+    <span class="nx">setId</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">newId</span><span class="p">)</span> <span class="p">{</span> <span class="nx">id</span> <span class="o">=</span> <span class="nx">newId</span> <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="nx">user</span><span class="p">();</span>
+<span class="nx">foo</span><span class="p">.</span><span class="nx">getId</span><span class="p">();</span> <span class="c1">// 1
+</span><span class="c1"></span><span class="nx">foo</span><span class="p">.</span><span class="nx">setId</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="nx">foo</span><span class="p">.</span><span class="nx">getId</span><span class="p">();</span> <span class="c1">// 2
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>这里闭包中的 id 是一个引用，不是实际值</p>
+</blockquote>
+
+<p>有点像私有方法？</p>
+
+<blockquote>
+<p>是的，我们可以用闭包来实现私有方法</p>
+</blockquote>
+
+<p>闭包还可以用来做什么？</p>
+
+<blockquote>
+<p>闭包是函数式编程的骨架，掌握闭包之后你可以写出函数式 JavaScript 代码。</p>
+</blockquote>
+
+<p>函数式编程是什么？</p>
+
+<blockquote>
+<p>这不是本文的讨论范围，自己去学习吧。</p>
+</blockquote>
+
+<h2 id="one-more-thing">One More Thing</h2>
+
+<p>[注1] 根据 <a href="https://javascriptweblog.wordpress.com/2010/10/25/understanding-javascript-closures/">Understanding JavaScript Closures</a> 这篇文章，事实上所有函数在创建的时候都会形成闭包。但这种闭包并没什么趣味，也没什么特别的用途，所以我们更关注的是由内部函数形成的闭包。</p>
+
+<h2 id="参考资料">参考资料</h2>
+
+<ul>
+<li><a href="http://uternet.github.io/TLS/">http://uternet.github.io/TLS/</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2009/08/learning_javascript_closures.html">http://www.ruanyifeng.com/blog/2009/08/learning_javascript_closures.html</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Closures">https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Closures</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var#var_hoisting">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var#var_hoisting</a></li>
+<li><a href="http://javascriptissexy.com/understand-javascript-closures-with-ease/">http://javascriptissexy.com/understand-javascript-closures-with-ease/</a></li>
+<li><a href="http://javascriptissexy.com/javascript-variable-scope-and-hoisting-explained/">http://javascriptissexy.com/javascript-variable-scope-and-hoisting-explained/</a></li>
+<li><a href="http://stackoverflow.com/questions/12930272/javascript-closures-vs-anonymous-functions">http://stackoverflow.com/questions/12930272/javascript-closures-vs-anonymous-functions</a></li>
+<li><a href="https://javascriptweblog.wordpress.com/2010/10/25/understanding-javascript-closures/">https://javascriptweblog.wordpress.com/2010/10/25/understanding-javascript-closures/</a></li>
+<li><a href="http://www.moye.me/2014/12/29/closure_higher-order-function/">http://www.moye.me/2014/12/29/closure_higher-order-function/</a></li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">scarletsky</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2019-04-30
+        <a href="/commit/95a170dd24bf4b87af8e8309e95f31f929054a4a" title="chore: format markdown">(95a170d)</a>
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/javascript/">javascript</a>
+          <a href="/tags/closure/">closure</a>
+          <a href="/tags/%E9%97%AD%E5%8C%85/">闭包</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/2016/01/17/localtunnel-usage/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Localtunnel（Node.js 版） 使用教程</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/2015/11/17/react-dnd-usage/">
+            <span class="next-text nav-default">React-DnD 的使用</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="scarletsky/scarletsky.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:scarletsky1025@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/scarletsky" class="iconfont icon-github" title="github"></a>
+  <a href="https://scarletsky.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>scarletsky</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

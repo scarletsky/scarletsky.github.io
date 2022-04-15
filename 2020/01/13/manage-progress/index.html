@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>JavaScript 进度管理 - scarletsky</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="scarletsky" /><meta name="description" content="前言 我们写程序的时候会经常遇到显示进度的需求，如加载进度、上传进度等。 最常见的实现方式是通过记录 已完成数量(loadedCount) 和 总数量" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.74.3 with theme even" />
+
+
+<link rel="canonical" href="https://scarletsky.github.io/2020/01/13/manage-progress/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.2e81bbed97b8b282c1aeb57488cc71c8d8c8ec559f3931531bd396bf31e0d4dd.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="JavaScript 进度管理" />
+<meta property="og:description" content="前言 我们写程序的时候会经常遇到显示进度的需求，如加载进度、上传进度等。 最常见的实现方式是通过记录 已完成数量(loadedCount) 和 总数量" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://scarletsky.github.io/2020/01/13/manage-progress/" />
+<meta property="article:published_time" content="2020-01-13T14:25:30+08:00" />
+<meta property="article:modified_time" content="2020-01-13T17:12:25+08:00" />
+<meta itemprop="name" content="JavaScript 进度管理">
+<meta itemprop="description" content="前言 我们写程序的时候会经常遇到显示进度的需求，如加载进度、上传进度等。 最常见的实现方式是通过记录 已完成数量(loadedCount) 和 总数量">
+<meta itemprop="datePublished" content="2020-01-13T14:25:30+08:00" />
+<meta itemprop="dateModified" content="2020-01-13T17:12:25+08:00" />
+<meta itemprop="wordCount" content="1709">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="JavaScript 进度管理"/>
+<meta name="twitter:description" content="前言 我们写程序的时候会经常遇到显示进度的需求，如加载进度、上传进度等。 最常见的实现方式是通过记录 已完成数量(loadedCount) 和 总数量"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">scarletsky.github.io</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">scarletsky.github.io</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">JavaScript 进度管理</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-01-13 </span>
+        <div class="post-category">
+            <a href="/categories/javascript/"> javascript </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#前言">前言</a></li>
+<li><a href="#问题">问题</a></li>
+<li><a href="#原理">原理</a></li>
+<li><a href="#测试">测试</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h2 id="前言">前言</h2>
+
+<p>我们写程序的时候会经常遇到显示进度的需求，如加载进度、上传进度等。
+最常见的实现方式是通过记录 <code>已完成数量(loadedCount)</code> 和 <code>总数量(totalCount)</code>，然后算一下就能得到进度了。
+这种方式简单粗暴，容易实现，但不好扩展，必须有个地方维护所有 <code>loadedCount</code> 和 <code>totalCount</code>。
+本文将会基于上述实现方式，实现一种更容易扩展的进度管理方式。</p>
+
+<h2 id="问题">问题</h2>
+
+<p>笔者在写 WebGL 应用，在应用预加载阶段需要计算加载进度。
+加载的内容包括：模型资源、贴图资源、脚本资源等。
+其中模型资源中又会包含材质资源，材质资源里面又会包含贴图资源。
+画图来表示的话就是如下的结构：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">+-------------------------------------------------------------+
+|                                                             |
+|  resources                                                  |
+|                                                             |
+|  +----------+   +-----------------+   +-----------------+   |
+|  | script1  |   | model1          |   | model2          |   |
+|  +----------+   |                 |   |                 |   |
+|                 | -------------+  |   | -------------+  |   |
+|  +----------+   | |model1.json |  |   | |model2.json |  |   |
+|  | script2  |   | +------------+  |   | +------------+  |   |
+|  +----------+   |                 |   |                 |   |
+|                 | +------------+  |   | +------------+  |   |
+|  +----------+   | | material1  |  |   | | material1  |  |   |
+|  | texture1 |   | | +--------+ |  |   | | +--------+ |  |   |
+|  +----------+   | | |texture1| |  |   | | |texture1| |  |   |
+|                 | | +--------+ |  |   | | +--------+ |  |   |
+|  +----------+   | | +--------+ |  |   | | +--------+ |  |   |
+|  | texture2 |   | | |texture2| |  |   | | |texture2| |  |   |
+|  +----------+   | | +--------+ |  |   | | +--------+ |  |   |
+|                 | +------------+  |   | +------------+  |   |
+|                 |                 |   |                 |   |
+|                 | +------------+  |   | +------------+  |   |
+|                 | | material2  |  |   | | material2  |  |   |
+|                 | +------------+  |   | +------------+  |   |
+|                 +-----------------+   +-----------------+   |
+|                                                             |
++-------------------------------------------------------------+</code></pre></td></tr></table>
+</div>
+</div>
+<p>这里有个前提：当加载某个资源的时候，必须保证这个资源及它引用的资源全部加载完成后，才能算加载完成。
+基于这个前提，我们已经实现了一个 <code>onProgress</code> 接口，这个接口返回的进度是已经包含了子资源的加载进度的了。
+翻译成代码就是：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">class</span> <span class="nx">Asset</span> <span class="p">{</span>
+    <span class="nx">load</span><span class="p">(</span><span class="nx">onProgress</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">onProgress</span> <span class="o">!==</span> <span class="s1">&#39;function&#39;</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">onProgress</span> <span class="o">=</span> <span class="p">(</span><span class="nx">_p</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>  <span class="p">};</span>
+            <span class="p">}</span>
+
+            <span class="kd">let</span> <span class="nx">loadedCount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+            <span class="kd">let</span> <span class="nx">totalCount</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span> <span class="c1">// NOTE: just for demo
+</span><span class="c1"></span>            <span class="kd">let</span> <span class="nx">onLoaded</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+                <span class="nx">loadedCount</span><span class="o">++</span><span class="p">;</span>
+                <span class="nx">onProgress</span><span class="p">(</span><span class="nx">loadedCount</span> <span class="o">/</span> <span class="nx">totalCont</span><span class="p">);</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nx">loadedCount</span> <span class="o">===</span> <span class="nx">totalCount</span><span class="p">)</span> <span class="nx">resolve</span><span class="p">();</span>
+            <span class="p">};</span>
+
+            <span class="nb">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span>
+                <span class="k">this</span><span class="p">.</span><span class="nx">refAssets</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">asset</span> <span class="p">=&gt;</span> <span class="nx">asset</span><span class="p">.</span><span class="nx">load</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nx">onLoaded</span><span class="p">))</span>
+            <span class="p">);</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>既然有了这个接口，如果沿用全局维护 <code>loadedCount</code> 和 <code>totalCount</code> 的形式的话，处理起来其实挺麻烦的。
+本文接下来要介绍的，就是一种变通的做法。</p>
+
+<h2 id="原理">原理</h2>
+
+<p>基本思想就是<strong>分而治之</strong>。把一个大任务拆分成多个小任务，然后分别计算所有小任务的进度，最后再把所有小任务的进度归并起来得到总进度。
+如下图表示：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">+--------------------------------------------------------------------+
+|                                                                    |
+|                                                                    |
+|   total progress                                                   |
+|                                                                    |
+|   +---------+---------+----------+----------+--------+--------+    |
+|   | script1 | script2 | texture1 | texture2 | model1 | model2 |    |
+|   |  (0~1)  |  (0~1)  |   (0~1)  |   (0~1)  |  (0~1) |  (0~1) |    |
+|   +---------+---------+----------+----------+--------+--------+    |
+|                                                                    |
+|   model1                                                           |
+|   +-------------+-----------------------+-----------+              |
+|   | model1.json |      material1        | material2 |              |
+|   |   (0~1)     |        (0~1)          |   (0~1)   |              |
+|   +------------------------+------------------------+              |
+|                 | texture1 |  texture2  |                          |
+|                 |   (0~1)  |    (0~1)   |                          |
+|                 +----------+------------+                          |
+|                                                                    |
+|   model2                                                           |
+|   +-------------+-----------------------+-----------+              |
+|   | model2.json |      material1        | material2 |              |
+|   |    (0~1)    |        (0~1)          |   (0~1)   |              |
+|   +------------------------+------------------------+              |
+|                 | texture1 |  texture2  |                          |
+|                 |   (0~1)  |    (0~1)   |                          |
+|                 +----------+------------+                          |
+|                                                                    |
++--------------------------------------------------------------------+</code></pre></td></tr></table>
+</div>
+</div>
+<p>基于这个原理去实现进度，实现方式就是通过一个列表去保存所有资源当前的加载进度，然后每次触发 <code>onProgress</code> 的时候，执行一次归并操作，计算总进度。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">progresses</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="mi">0</span><span class="p">,</span> <span class="c1">// script1,
+</span><span class="c1"></span>  <span class="mi">0</span><span class="p">,</span> <span class="c1">// script2,
+</span><span class="c1"></span>  <span class="mi">0</span><span class="p">,</span> <span class="c1">// texture1,
+</span><span class="c1"></span>  <span class="mi">0</span><span class="p">,</span> <span class="c1">// texture2,
+</span><span class="c1"></span>  <span class="mi">0</span><span class="p">,</span> <span class="c1">// model1,
+</span><span class="c1"></span>  <span class="mi">0</span><span class="p">,</span> <span class="c1">// model2
+</span><span class="c1"></span><span class="p">];</span>
+
+<span class="kd">function</span> <span class="nx">onProgress</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// TODO: progresses[??] = p;
+</span><span class="c1"></span>    <span class="k">return</span> <span class="nx">progresses</span><span class="p">.</span><span class="nx">reduce</span><span class="p">((</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="nx">progresses</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>但这里面有个难点，当触发 <code>onProgress</code> 回调的时候，如何知道应该更新列表中的哪一项呢？
+利用 JavaScript 的闭包特性，我们可以很容易实现这一功能。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">progresses</span> <span class="o">=</span> <span class="p">[];</span>
+<span class="kd">function</span> <span class="nx">add</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">progresses</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">index</span> <span class="o">=</span> <span class="nx">progresses</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="kd">function</span> <span class="nx">onProgress</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">progresses</span><span class="p">[</span><span class="nx">index</span><span class="p">]</span> <span class="o">=</span> <span class="nx">p</span><span class="p">;</span>
+        <span class="nx">reduce</span><span class="p">();</span>
+    <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">reduce</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">progresses</span><span class="p">.</span><span class="nx">reduce</span><span class="p">((</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="nx">progresses</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>利用闭包保留资源的索引，当触发 <code>onProgress</code> 的时候，就能根据索引去更新列表中对应项的进度了。最后归并的时候就能计算出正确的进度了。
+剩下的事情就是整合我们所有的代码，然后对其进行测试了。</p>
+
+<h2 id="测试">测试</h2>
+
+<p>我们可以用下面的代码来模拟一下整个加载过程：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">class</span> <span class="nx">Asset</span> <span class="p">{</span>
+    <span class="nx">constructor</span><span class="p">(</span><span class="nx">totalCount</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">loadedCount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">totalCount</span> <span class="o">=</span> <span class="nx">totalCount</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">timerId</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nx">load</span><span class="p">(</span><span class="nx">onProgress</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">onProgress</span> <span class="o">!==</span> <span class="s1">&#39;function&#39;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">onProgress</span> <span class="o">=</span> <span class="p">(</span><span class="nx">_p</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>  <span class="p">};</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">timerId</span> <span class="o">=</span> <span class="nx">setInterval</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+                <span class="k">this</span><span class="p">.</span><span class="nx">loadedCount</span><span class="o">++</span><span class="p">;</span>
+                <span class="nx">onProgress</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">loadedCount</span> <span class="o">/</span> <span class="k">this</span><span class="p">.</span><span class="nx">totalCount</span><span class="p">);</span>
+                <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">loadedCount</span> <span class="o">===</span> <span class="k">this</span><span class="p">.</span><span class="nx">totalCount</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="nx">clearInterval</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">timerId</span><span class="p">);</span>
+                    <span class="nx">resolve</span><span class="p">();</span>
+                <span class="p">}</span>
+            <span class="p">},</span> <span class="mi">1000</span><span class="p">);</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kr">class</span> <span class="nx">Progress</span> <span class="p">{</span>
+    <span class="nx">constructor</span><span class="p">(</span><span class="nx">onProgress</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">onProgress</span> <span class="o">=</span> <span class="nx">onProgress</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_list</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="p">}</span>
+
+    <span class="nx">add</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_list</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+        <span class="kr">const</span> <span class="nx">index</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_list</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="nx">p</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">_list</span><span class="p">[</span><span class="nx">index</span><span class="p">]</span> <span class="o">=</span> <span class="nx">p</span><span class="p">;</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">reduce</span><span class="p">();</span>
+        <span class="p">};</span>
+    <span class="p">}</span>
+
+    <span class="nx">reduce</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kr">const</span> <span class="nx">p</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_list</span><span class="p">.</span><span class="nx">reduce</span><span class="p">((</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="k">this</span><span class="p">.</span><span class="nx">_list</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">onProgress</span><span class="p">(</span><span class="nx">p</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kr">const</span> <span class="nx">p</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Progress</span><span class="p">(</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">asset1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Asset</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">asset2</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Asset</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">asset3</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Asset</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">asset4</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Asset</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">asset5</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Asset</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+
+<span class="nb">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">([</span>
+    <span class="nx">asset1</span><span class="p">.</span><span class="nx">load</span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">add</span><span class="p">()),</span>
+    <span class="nx">asset2</span><span class="p">.</span><span class="nx">load</span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">add</span><span class="p">()),</span>
+    <span class="nx">asset3</span><span class="p">.</span><span class="nx">load</span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">add</span><span class="p">()),</span>
+    <span class="nx">asset4</span><span class="p">.</span><span class="nx">load</span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">add</span><span class="p">()),</span>
+    <span class="nx">asset5</span><span class="p">.</span><span class="nx">load</span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">add</span><span class="p">()),</span>
+<span class="p">]).</span><span class="nx">then</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;all resources loaded&#39;</span><span class="p">));</span>
+
+<span class="cm">/**
+</span><span class="cm">  输出
+</span><span class="cm">  Promise { &lt;state&gt;: &#34;pending&#34; }
+</span><span class="cm">  
+</span><span class="cm">  0.2 
+</span><span class="cm">  0.3 
+</span><span class="cm">  0.36666666666666664 
+</span><span class="cm">  0.41666666666666663 
+</span><span class="cm">  0.45666666666666667 
+</span><span class="cm">  0.5566666666666668 
+</span><span class="cm">  0.6233333333333333 
+</span><span class="cm">  0.6733333333333333 
+</span><span class="cm">  0.7133333333333333 
+</span><span class="cm">  0.78 
+</span><span class="cm">  0.8300000000000001 
+</span><span class="cm">  0.8699999999999999 
+</span><span class="cm">  0.9199999999999999 
+</span><span class="cm">  0.96 
+</span><span class="cm">  1 
+</span><span class="cm">  all resources loaded 
+</span><span class="cm"> */</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>这种方式的优点是能避开全局管理 <code>loadedCount</code> 和 <code>totalCount</code>，把这部分工作交回资源内部管理，它要做的只是对大任务进行归并计算。</p>
+
+<p>缺点也很明显，需要对 <code>onProgress</code> 接口进行一次统一。在已有项目中推进难度很大，所以比较适合新项目或者小项目去实践。</p>
+
+<p>(完)。</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">scarletsky</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-01-13
+        <a href="/commit/bc173cd28b3658b085b3e04b614a5fb41034bb1d" title="chore: update manage progress">(bc173cd)</a>
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/2020/05/13/git-misoperations/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Git 常见错误操作 (持续更新)</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/2019/11/02/a-simple-throttle-promise-queue/">
+            <span class="next-text nav-default">实现一个简单限流的 Promise 队列</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="scarletsky/scarletsky.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:scarletsky1025@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/scarletsky" class="iconfont icon-github" title="github"></a>
+  <a href="https://scarletsky.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>scarletsky</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

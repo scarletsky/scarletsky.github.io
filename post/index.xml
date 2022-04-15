@@ -1,0 +1,636 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on scarletsky</title>
+    <link>https://scarletsky.github.io/post/</link>
+    <description>Recent content in Posts on scarletsky</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 18 Aug 2021 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://scarletsky.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>在构造函数中调用虚函数</title>
+      <link>https://scarletsky.github.io/2021/08/18/calling-virtual-functions-in-constructor/</link>
+      <pubDate>Wed, 18 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2021/08/18/calling-virtual-functions-in-constructor/</guid>
+      <description>简介 虚函数是指派生类中重新定义的成员函数。如有 A#fromJSON，当 B 继承 A 时并重新定义了 B#fromJSON，这时候 fromJSON 就是一个虚函数了。</description>
+    </item>
+    
+    <item>
+      <title>深度变换总结</title>
+      <link>https://scarletsky.github.io/2021/03/06/gl-depth-transformation/</link>
+      <pubDate>Sat, 06 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2021/03/06/gl-depth-transformation/</guid>
+      <description>空间变换 上图是 OpenGL 中的变换过程，可以用下面几行代码来描述： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 attribute vec3 localPosition; // local space -&amp;gt; world space vec4 worldPosition = modelMatrix * vec4(localPosition, 1.0); // world space -&amp;gt; view space vec4 viewPosiion = viewMatrix *</description>
+    </item>
+    
+    <item>
+      <title>Games101 笔记 —— 着色</title>
+      <link>https://scarletsky.github.io/2020/07/27/games101-notes-shading/</link>
+      <pubDate>Mon, 27 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2020/07/27/games101-notes-shading/</guid>
+      <description>简介 本文《GAMES101-现代计算机图形学入门》系列教程的课程笔记，仅用于个人学习使用。 着色（Shading） 在本课程中，着色指的是为物体</description>
+    </item>
+    
+    <item>
+      <title>Games101 笔记 —— 光栅化</title>
+      <link>https://scarletsky.github.io/2020/06/10/games101-notes-rasterization/</link>
+      <pubDate>Wed, 10 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2020/06/10/games101-notes-rasterization/</guid>
+      <description>简介 本文《GAMES101-现代计算机图形学入门》系列教程的课程笔记，仅用于个人学习使用。 屏幕 当进行完 MVP 变换之后，所有需要绘制的点都变换到 $</description>
+    </item>
+    
+    <item>
+      <title>Games101 笔记 —— 变换</title>
+      <link>https://scarletsky.github.io/2020/06/09/games101-notes-transformation/</link>
+      <pubDate>Tue, 09 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2020/06/09/games101-notes-transformation/</guid>
+      <description>简介 本文《GAMES101-现代计算机图形学入门》系列教程的课程笔记，仅用于个人学习使用。 二维变换 二维变换是指二维在平面中进行的变换，一个二</description>
+    </item>
+    
+    <item>
+      <title>Games101 笔记 —— 线性代数</title>
+      <link>https://scarletsky.github.io/2020/05/23/games101-notes-linear-algebra/</link>
+      <pubDate>Sat, 23 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2020/05/23/games101-notes-linear-algebra/</guid>
+      <description>简介 本文《GAMES101-现代计算机图形学入门》系列教程的课程笔记，仅用于个人学习使用。 向量 向量是用来表示方向的量，它由两部分组成：大小、</description>
+    </item>
+    
+    <item>
+      <title>Git 常见错误操作 (持续更新)</title>
+      <link>https://scarletsky.github.io/2020/05/13/git-misoperations/</link>
+      <pubDate>Wed, 13 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2020/05/13/git-misoperations/</guid>
+      <description>简介 本文是基于笔者的操作经验来记录 Git 的常见错误操作，会长期更新。（遇到再更新） Merge and Rebase 背景 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 服务端 develop 分支</description>
+    </item>
+    
+    <item>
+      <title>JavaScript 进度管理</title>
+      <link>https://scarletsky.github.io/2020/01/13/manage-progress/</link>
+      <pubDate>Mon, 13 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2020/01/13/manage-progress/</guid>
+      <description>前言 我们写程序的时候会经常遇到显示进度的需求，如加载进度、上传进度等。 最常见的实现方式是通过记录 已完成数量(loadedCount) 和 总数量</description>
+    </item>
+    
+    <item>
+      <title>实现一个简单限流的 Promise 队列</title>
+      <link>https://scarletsky.github.io/2019/11/02/a-simple-throttle-promise-queue/</link>
+      <pubDate>Sat, 02 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2019/11/02/a-simple-throttle-promise-queue/</guid>
+      <description>前言 Promise.all 可以用来并行处理一组 Promise，在 Promise 数量不大的时候是一个很好的方案。 但当 Promise 的数量非常庞大的时候，Promise.all 很容易出现磁</description>
+    </item>
+    
+    <item>
+      <title>记一次 webpack 打包 web worker 的 bug</title>
+      <link>https://scarletsky.github.io/2019/06/15/webpack-issue-in-webworker/</link>
+      <pubDate>Sat, 15 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2019/06/15/webpack-issue-in-webworker/</guid>
+      <description>前言 最近需要在项目中引入 web worker ，但是用 webpack 打包完后请求 worker 的时候总是会报 404 错误。 现象 这是一个很常见的配置： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 const WorkerPlugin =</description>
+    </item>
+    
+    <item>
+      <title>从 Hexo 迁移到 Hugo</title>
+      <link>https://scarletsky.github.io/2019/05/02/migrate-hexo-to-hugo/</link>
+      <pubDate>Thu, 02 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2019/05/02/migrate-hexo-to-hugo/</guid>
+      <description>博客之前是用 Hexo 来搭建的，现在生成的速度已经有点慢了，于是想趁着假期把 Hexo 迁 移到其他程序。通过搜索发现两款比较合适的，一个是 Zola ，另一个是 Hugo</description>
+    </item>
+    
+    <item>
+      <title>Webpack 打包含动态加载的类库</title>
+      <link>https://scarletsky.github.io/2019/02/19/webpack-bundling-libraries-with-dynamic-imports/</link>
+      <pubDate>Tue, 19 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2019/02/19/webpack-bundling-libraries-with-dynamic-imports/</guid>
+      <description>前言 在编写库的时候，我们有时候会希望按需加载某些依赖，例如如果代码的运行环境不支持某些功能的话，就加载相关的 Polyfill 。 webpack 作为当前最流行的打包工具，</description>
+    </item>
+    
+    <item>
+      <title>【译】远程调试 iOS Safari</title>
+      <link>https://scarletsky.github.io/2019/01/10/wireless-remote-debugging-with-safari-on-ios/</link>
+      <pubDate>Thu, 10 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2019/01/10/wireless-remote-debugging-with-safari-on-ios/</guid>
+      <description>如今在移动设备上测试网站变得越来越重要了，我们会经常发现在移动设备的浏览器上面网站会表现 的和桌面浏览器不一样，因此在开发网站时用真机测试变得</description>
+    </item>
+    
+    <item>
+      <title>用 JSDOC 编写 JavaScript 文档</title>
+      <link>https://scarletsky.github.io/2017/12/23/write-javascript-document-by-jsdoc/</link>
+      <pubDate>Sat, 23 Dec 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2017/12/23/write-javascript-document-by-jsdoc/</guid>
+      <description>简介 JSDOC 是一个 API 文档生成器，你只需要在代码中添加特定格式的注释，它就可以从注释中为你生成 HTML 文档。 安装 全局安装： 1 npm install -g jsdoc 如果你更倾向项目内使用</description>
+    </item>
+    
+    <item>
+      <title>Promise 实现原理</title>
+      <link>https://scarletsky.github.io/2017/11/17/how-to-implement-promise-in-javascript/</link>
+      <pubDate>Fri, 17 Nov 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2017/11/17/how-to-implement-promise-in-javascript/</guid>
+      <description>简介 Promise 是目前流行的处理异步操作结果的方式。 本文假设读者已经了解过 Promise/A+ 规范，并熟悉 Promise 的用法。 构造 我们先看看如何构造一个 Promise ： 1 2 3 4 5 new Promise(function(resolve, reject) { setTimeout(function() {</description>
+    </item>
+    
+    <item>
+      <title>「译」自己写的才是最好的样板</title>
+      <link>https://scarletsky.github.io/2017/10/30/the-best-boilerplate-app-is-the-one-you-code-yourself/</link>
+      <pubDate>Mon, 30 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2017/10/30/the-best-boilerplate-app-is-the-one-you-code-yourself/</guid>
+      <description>样板应用非常有用，它们可以令你的下一个项目非常快的构建起来，并且提供了目录结构让你有章可循。 然而，它们有时候也会浪费大量的时间。开发者们通常</description>
+    </item>
+    
+    <item>
+      <title>Org mode in Spacemacs</title>
+      <link>https://scarletsky.github.io/2017/09/29/org-mode-in-spacemacs/</link>
+      <pubDate>Fri, 29 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2017/09/29/org-mode-in-spacemacs/</guid>
+      <description>简介 Org mode 是 Emacs 中的一个 Major mode，本质上只是一种类似记事本的纯文本格式。它与 Markdown 非常相似，都是通过自定义标记来赋予文本样式和语义。我们可以用 Org mode</description>
+    </item>
+    
+    <item>
+      <title>Emacs key bindings for vim users</title>
+      <link>https://scarletsky.github.io/2017/08/30/emacs-key-bindings-for-vim-users/</link>
+      <pubDate>Wed, 30 Aug 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2017/08/30/emacs-key-bindings-for-vim-users/</guid>
+      <description>简介 Emacs 是一个文本编辑器，号称是伪装成编辑器的操作系统。提起 Emacs，必定会联想到它的竞争对手 Vim，它们都是古老而强大的编辑器。虽然我已经</description>
+    </item>
+    
+    <item>
+      <title>3D 开发中常见的术语</title>
+      <link>https://scarletsky.github.io/2017/07/23/glossary-in-3d-development/</link>
+      <pubDate>Sun, 23 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2017/07/23/glossary-in-3d-development/</guid>
+      <description>简介 在 3D 开发领域，我们会经常看到一些术语，有些是和数学相关的，有些是和模型相关的，也有一些是和程序相关的。本文是我对 3D 开发中常见术语的总结。</description>
+    </item>
+    
+    <item>
+      <title>我所了解的函数式编程</title>
+      <link>https://scarletsky.github.io/2017/06/30/functional-programming-i-have-learned/</link>
+      <pubDate>Fri, 30 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2017/06/30/functional-programming-i-have-learned/</guid>
+      <description>前言 我从去年年初开始接触函数式编程，看了很多和函数式编程相关的书和博客，如JS函数式编程、 Haskell趣学指南、Real World Haskell，</description>
+    </item>
+    
+    <item>
+      <title>「译」追赶时髦的技术</title>
+      <link>https://scarletsky.github.io/2017/05/25/chasing-the-shiny-and-new-in-software/</link>
+      <pubDate>Thu, 25 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2017/05/25/chasing-the-shiny-and-new-in-software/</guid>
+      <description>在 Web 开发领域，我们会经常看到有人讨论当前最好的框架或编程语言。Scribd 的联合创始人 Jared Friedman 在 2015 年的时候专门写了一篇文章推荐创业公司使用 Node.js 代替</description>
+    </item>
+    
+    <item>
+      <title>PostgreSQL 中的客户端认证</title>
+      <link>https://scarletsky.github.io/2017/04/26/client-authentication-in-postgresql/</link>
+      <pubDate>Wed, 26 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2017/04/26/client-authentication-in-postgresql/</guid>
+      <description>简介 当客户端与数据库服务器连接时，它需要指定用哪个数据库用户的身份来连接。 PostgreSQL 为我们提供了很多种客户端认证的方式，我们可以根据自己的需要来选择</description>
+    </item>
+    
+    <item>
+      <title>PostgreSQL 学习笔记</title>
+      <link>https://scarletsky.github.io/2017/03/15/notes-of-postgresql/</link>
+      <pubDate>Wed, 15 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2017/03/15/notes-of-postgresql/</guid>
+      <description>简介 PostgreSQL 是世界上功能最强大的关系型数据库，除了标准的 SQL 的支持外，还有丰富的特性，可以通过扩展来增强数据库的能力。 本文是我学习 PostgreSQL 过程中的一些总结</description>
+    </item>
+    
+    <item>
+      <title>如何用 JavaScript 实现 Popover</title>
+      <link>https://scarletsky.github.io/2017/02/18/implement-popover-with-javascript/</link>
+      <pubDate>Sat, 18 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2017/02/18/implement-popover-with-javascript/</guid>
+      <description>简介 Popover 是我们日常开发中用得比较多的组件，通常用于给定一个触发元素，当某特定事件 (hover, click等) 在该元素上触发时，弹出相关的菜单供用户选择。 目</description>
+    </item>
+    
+    <item>
+      <title>用 JavaScript 构建事件系统</title>
+      <link>https://scarletsky.github.io/2017/01/30/build-your-own-event-system-in-javascript/</link>
+      <pubDate>Mon, 30 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2017/01/30/build-your-own-event-system-in-javascript/</guid>
+      <description>简介 在组件化开发越来越流行的今天，事件系统演者着非常重要的角色，它经常作为组件间通讯的桥梁。 本文将讨论如何用 JavaScript 实现一个简单的事件系统。 基本结</description>
+    </item>
+    
+    <item>
+      <title>Git 中的 ~ 和 ^</title>
+      <link>https://scarletsky.github.io/2016/12/29/tilde-and-caret-in-git/</link>
+      <pubDate>Thu, 29 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/12/29/tilde-and-caret-in-git/</guid>
+      <description>简介 在使用 Git 的时候，我们经常会看见 ~ 和 ^，如 HEAD~2, HEAD^3 等。 初学者经常会对这些符号感到疑惑，本文将讨论这两个符号的用途。 为何需要 ~ 和 ^ 不知道大家有没</description>
+    </item>
+    
+    <item>
+      <title>Restful API 中的错误处理</title>
+      <link>https://scarletsky.github.io/2016/11/30/error-handling-in-restful-api/</link>
+      <pubDate>Wed, 30 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/11/30/error-handling-in-restful-api/</guid>
+      <description>简介 随着移动开发和前端开发的崛起，越来越多的 Web 后端应用都倾向于实现 Restful API。 Restful API 是一个简单易用的前后端分离方案，它只需要对客户端请求进行处理</description>
+    </item>
+    
+    <item>
+      <title>在 Node.js 中为 Restful API 编写单元测试</title>
+      <link>https://scarletsky.github.io/2016/10/05/write-unit-tests-for-restful-api-in-nodejs/</link>
+      <pubDate>Wed, 05 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/10/05/write-unit-tests-for-restful-api-in-nodejs/</guid>
+      <description>简介 单元测试是针对程序模块来进行正确性检验的测试工作，程序单元是应用的最小可测试部件。 在 Web 应用中，我们可以把 Restful API 看作是构成应用的单元。 Restful API 比</description>
+    </item>
+    
+    <item>
+      <title>浅谈单页应用中前端分页的实现方案</title>
+      <link>https://scarletsky.github.io/2016/09/11/talking-about-front-end-pagination-implementation-in-spa/</link>
+      <pubDate>Sun, 11 Sep 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/09/11/talking-about-front-end-pagination-implementation-in-spa/</guid>
+      <description>简介 分页是开发中最常见的需求之一。 对于分页，我们讨论的最多的是后端的数据库分页，这关乎到我们应用程序的性能，也是分页这个需求的核心。 而前端要</description>
+    </item>
+    
+    <item>
+      <title>自定义 Redux 中的 combineReducers</title>
+      <link>https://scarletsky.github.io/2016/08/20/write-your-own-combine-reducers-in-redux/</link>
+      <pubDate>Sat, 20 Aug 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/08/20/write-your-own-combine-reducers-in-redux/</guid>
+      <description>简介 Redux 中的 combineReducers 能让我们很方便地把多个 reducers 组合起来，成为一个新的 reducer。 然而，随着我们的应用变得越来越复杂，combineReducers</description>
+    </item>
+    
+    <item>
+      <title>用 GitLab CI 进行持续集成</title>
+      <link>https://scarletsky.github.io/2016/07/29/use-gitlab-ci-for-continuous-integration/</link>
+      <pubDate>Fri, 29 Jul 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/07/29/use-gitlab-ci-for-continuous-integration/</guid>
+      <description>简介 从 GitLab 8.0 开始，GitLab CI 就已经集成在 GitLab 中，我们只要在项目中添加一个 .gitlab-ci.yml 文件，然后添加一个 Runner，即可进行持续集成。 而且随着 GitLab 的升级</description>
+    </item>
+    
+    <item>
+      <title>Non-deterministic value and List Monad in Haskell</title>
+      <link>https://scarletsky.github.io/2016/07/16/non-determinism-value-and-list-monad-in-haskell/</link>
+      <pubDate>Sat, 16 Jul 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/07/16/non-determinism-value-and-list-monad-in-haskell/</guid>
+      <description>简介 看 《Learn you a haskell for a great good》 这本书的过程中，有时候会看到 non-determinism 这个词，虽然具体不知道什么意思，但不影响阅读，所以就没深究。 最近看到 List</description>
+    </item>
+    
+    <item>
+      <title>如何用 JavaScript 下载文件</title>
+      <link>https://scarletsky.github.io/2016/07/03/download-file-using-javascript/</link>
+      <pubDate>Sun, 03 Jul 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/07/03/download-file-using-javascript/</guid>
+      <description>简介 我们知道，下载文件是一个非常常见的需求，但由于浏览器的安全策略的限制，我们通常只能通过一个额外的页面，访问某个文件的 url 来实现下载功能，但</description>
+    </item>
+    
+    <item>
+      <title>「译」Node.js Streams 基础</title>
+      <link>https://scarletsky.github.io/2016/07/01/basics-node-js-streams/</link>
+      <pubDate>Fri, 01 Jul 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/07/01/basics-node-js-streams/</guid>
+      <description>Node.js 天生异步和事件驱动，非常适合处理 I/O 相关的任务。如果你在处理应用中 I/O 相关的操作，你可以利用 Node.js 中的流(stream)。因此，我们先具体看看流，</description>
+    </item>
+    
+    <item>
+      <title>升级 GitLab 过程中踩过的坑</title>
+      <link>https://scarletsky.github.io/2016/06/18/issues-when-upgrading-gitlab/</link>
+      <pubDate>Sat, 18 Jun 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/06/18/issues-when-upgrading-gitlab/</guid>
+      <description>简介 最近帮公司的 Gitlab 从 7.14 升级到 8.7.6，升级的主要动机是整合 Gitlab CI，提升持续集成的效率。鉴于之前也是我把 Gitlab 从 7.x 升级到 7.14 的，我以为我已经有经验</description>
+    </item>
+    
+    <item>
+      <title>「译」 MapReduce in MongoDB</title>
+      <link>https://scarletsky.github.io/2016/06/12/mapreduce-in-mongodb/</link>
+      <pubDate>Sun, 12 Jun 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/06/12/mapreduce-in-mongodb/</guid>
+      <description>在这篇文章里面，我们会演示如何在 MongoDB 中使用 MapReduce 操作。 我们会用 dummy-json 这个包来生成一些虚假的数据，然后用 Mongojs 如果想要快速看到结果，可以到 这里 里看看。 什么是</description>
+    </item>
+    
+    <item>
+      <title>编写 Hubot Scripts</title>
+      <link>https://scarletsky.github.io/2016/05/02/write-your-own-hubot-scripts/</link>
+      <pubDate>Mon, 02 May 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/05/02/write-your-own-hubot-scripts/</guid>
+      <description>简介 我们在上一篇中介绍了 Hubot 的简单用法，里面提到我们可以为机器人编写脚本来让它根据不同的「输入」来给出不同的「输出」。 本文将会介绍如何编写我们</description>
+    </item>
+    
+    <item>
+      <title>如何实现无限滚动</title>
+      <link>https://scarletsky.github.io/2016/04/20/how-to-implement-infinite-scroll/</link>
+      <pubDate>Wed, 20 Apr 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/04/20/how-to-implement-infinite-scroll/</guid>
+      <description>简介 无限滚动对我们来说已经是很常见的功能了，具体表现为当页面滚动到某个位置时就自动加载数据，本文将探讨无限滚动的实现原理以及优化。 原理 我们先</description>
+    </item>
+    
+    <item>
+      <title>Hubot 的简单用法</title>
+      <link>https://scarletsky.github.io/2016/04/03/hubot-simple-usage/</link>
+      <pubDate>Sun, 03 Apr 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/04/03/hubot-simple-usage/</guid>
+      <description>简介 Hubot 是 Github 的开源聊天机器人，可以用来做一些自动化任务，如部署网站，翻译语言等等。 你可能会说，这些只要写个脚本就可以做到了吧？ 确实，但你写完脚</description>
+    </item>
+    
+    <item>
+      <title>Lodash 中 assign，extend 和 merge 的区别</title>
+      <link>https://scarletsky.github.io/2016/04/02/assign-vs-extend-vs-merge-in-lodash/</link>
+      <pubDate>Sat, 02 Apr 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/04/02/assign-vs-extend-vs-merge-in-lodash/</guid>
+      <description>简介 我们经常在别人的代码中看见 assign，extend，merge 函数，这三个函数用起来很相似，都是合并源对象的属性到目标对象中。 既然都是</description>
+    </item>
+    
+    <item>
+      <title>type vs data vs newtype in Haskell</title>
+      <link>https://scarletsky.github.io/2016/03/15/type-vs-data-vs-newtype-in-haskell/</link>
+      <pubDate>Tue, 15 Mar 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/03/15/type-vs-data-vs-newtype-in-haskell/</guid>
+      <description>type type 关键字用来设置类型别名，提高代码可读性。 我们可以类比 shell 里面的 alias 命令，它是用来设置命令别名的。譬如下面的 shell 命令： 1 $ alias aria2-server=&amp;#34;aria2c --conf-path ~/aria2.conf&amp;#34; 我们用 aria2-server 来代替</description>
+    </item>
+    
+    <item>
+      <title>What is applicative in Haskell ?</title>
+      <link>https://scarletsky.github.io/2016/03/07/what-is-applicative-in-haskell/</link>
+      <pubDate>Mon, 07 Mar 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/03/07/what-is-applicative-in-haskell/</guid>
+      <description>初探 什么是 Applicative ? Applicative 是加强版的 Functor，是一个类型类。 加强版的 Functor 是什么意思 ? 还记得 Functor 的限制吗？ fmap f x 中的 f 只接受一个参数。 fmap f x 中的 f 不能</description>
+    </item>
+    
+    <item>
+      <title>FlexibleInstances 和 TypeSynonymInstances 编译指令的区别</title>
+      <link>https://scarletsky.github.io/2016/02/28/flexible-instances-vs-type-synonym-instances-in-haskell/</link>
+      <pubDate>Sun, 28 Feb 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/02/28/flexible-instances-vs-type-synonym-instances-in-haskell/</guid>
+      <description>FlexibleInstances 先看看下面这个简单的例子： 1 2 3 4 5 6 7 8 -- Learning.hs data Vector a = Vector a a deriving (Show) class MyClass a where myFun :: a -&amp;gt; a instance MyClass (Vector a) where myFun = id 这样的定义看起来是没有问题的，因为不需要</description>
+    </item>
+    
+    <item>
+      <title>What is functor in Haskell ?</title>
+      <link>https://scarletsky.github.io/2016/02/09/what-is-functor-in-haskell/</link>
+      <pubDate>Tue, 09 Feb 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/02/09/what-is-functor-in-haskell/</guid>
+      <description>Functor 简介 什么是 Functor ? 现在你可以认为 Functor 是一种数据类型。 Functor 有什么用 ? 我们可以对 Functor 使用 fmap。 fmap 是什么东西 ? fmap 是一个函数。 fmap 是函数的话，那它的类型签</description>
+    </item>
+    
+    <item>
+      <title>「译」 Haskell 中随机数的使用</title>
+      <link>https://scarletsky.github.io/2016/02/06/random-numbers-in-haskell/</link>
+      <pubDate>Sat, 06 Feb 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/02/06/random-numbers-in-haskell/</guid>
+      <description>随机数（我指的是伪随机数）是通过显式或隐式的状态来生成的。这意味着在 Haskell 中，随机数的使用（通过 System.Random 库）是伴随着状态的传递的。 大部分需要获得帮助的</description>
+    </item>
+    
+    <item>
+      <title>在 Node.js 中利用 js-xlsx 处理 Excel 文件</title>
+      <link>https://scarletsky.github.io/2016/01/30/nodejs-process-excel/</link>
+      <pubDate>Sat, 30 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/01/30/nodejs-process-excel/</guid>
+      <description>简介 本文介绍用 Node.js 中的 js-xlsx 库来处理 Excel 文件。 js-xlsx 库是目前 Github 上 star 数量最多的处理 Excel 的库，功能强大，但上手难度稍大。文档有些乱，不适合快速上手。 本文对 js-xlsx 库</description>
+    </item>
+    
+    <item>
+      <title>简单易懂的 Flexbox</title>
+      <link>https://scarletsky.github.io/2016/01/23/simple-flexbox/</link>
+      <pubDate>Sat, 23 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/01/23/simple-flexbox/</guid>
+      <description>简介 Flexbox 是 CSS 3 的布局方式，可以轻松实现传统布局中难以实现的布局。 基本用法 设置父容器的 display 为 flex，然后调节容器相关的属性。 调节子元素相关的属性</description>
+    </item>
+    
+    <item>
+      <title>Spacemacs 使用总结</title>
+      <link>https://scarletsky.github.io/2016/01/22/spacemacs-usage/</link>
+      <pubDate>Fri, 22 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/01/22/spacemacs-usage/</guid>
+      <description>简介 Spacemacs 是一份 emacs 的配置文件，想要使用它，你先要有 emacs。 安装 &amp;amp; 使用 1 2 $ git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d $ emacs 配置文件 Spacemacs 的配置文件位于 ~/.spacemacs 中，我们只需要修改这个文件就</description>
+    </item>
+    
+    <item>
+      <title>Localtunnel（Node.js 版） 使用教程</title>
+      <link>https://scarletsky.github.io/2016/01/17/localtunnel-usage/</link>
+      <pubDate>Sun, 17 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/01/17/localtunnel-usage/</guid>
+      <description>简介 Localtunnel 是一个可以让内网服务器暴露到公网上的开源项目。 客户端 安装 1 $ npm install -g localtunnel 使用 假设本地服务器在 8000 端口，我们可以通过下面的命令把本地服务器暴露</description>
+    </item>
+    
+    <item>
+      <title>The Little JavaScript Closures</title>
+      <link>https://scarletsky.github.io/2015/12/02/the-little-javascript-closures/</link>
+      <pubDate>Wed, 02 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/12/02/the-little-javascript-closures/</guid>
+      <description>写在前面 本文尝试模仿 The Little Schema 的风格，介绍 JavaScript 的闭包。本文同时也是我学习 JavaScript 闭包的一次总结。欢迎一起讨论。 简介 什么是闭包？ 闭包是一个函数 闭包都是函数</description>
+    </item>
+    
+    <item>
+      <title>React-DnD 的使用</title>
+      <link>https://scarletsky.github.io/2015/11/17/react-dnd-usage/</link>
+      <pubDate>Tue, 17 Nov 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/11/17/react-dnd-usage/</guid>
+      <description>介绍 React DnD 是一组 React 高阶组件，可以用来帮你构建复杂的拖拽接口，同时解耦你的组件。React DnD 非常适合像 Trello 和 Storify 这样的应用，在不同地方通过拖拽转移数</description>
+    </item>
+    
+    <item>
+      <title>写在二十四岁生日</title>
+      <link>https://scarletsky.github.io/2015/10/25/birthday-summary/</link>
+      <pubDate>Sun, 25 Oct 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/10/25/birthday-summary/</guid>
+      <description>又一年过去了，今年是第四年。 今年的生日是和女朋友一起，平平淡淡地过的。 回顾今年，我做的事情基本都是读书，学习，工作，陪妹子。 相信大家都知道读</description>
+    </item>
+    
+    <item>
+      <title>Node.js 中 Stream API 的使用</title>
+      <link>https://scarletsky.github.io/2015/10/22/node-stream-api-learning/</link>
+      <pubDate>Thu, 22 Oct 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/10/22/node-stream-api-learning/</guid>
+      <description>基本介绍 在 Node.js 中，读取文件的方式有两种，一种是用 fs.readFile，另外一种是利用 fs.createReadStream 来读取。 fs.readFile 对于每个 Node.js 使用者来说最熟悉不过了，简单易懂，</description>
+    </item>
+    
+    <item>
+      <title>CommonJS 学习笔记</title>
+      <link>https://scarletsky.github.io/2015/08/19/commonjs-learning/</link>
+      <pubDate>Wed, 19 Aug 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/08/19/commonjs-learning/</guid>
+      <description>概述 CommonJS 是 JavaScript 模块化的规范，Node.js采用了这个规范。 根据 CommonJS 规范，一个 JavaScript 文件就是一个模块，其他模块可以通过 require 来获取 module.exports 中暴露的内容，而其他部分</description>
+    </item>
+    
+    <item>
+      <title>JavaScript 中 Object.defineProperty 的使用</title>
+      <link>https://scarletsky.github.io/2015/08/18/object-learning-in-javascript/</link>
+      <pubDate>Tue, 18 Aug 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/08/18/object-learning-in-javascript/</guid>
+      <description>Object.defineProperty The Object.defineProperty() method defines a new property directly on an object, or modifies an existing property on an object, and returns the object. 直接在一个对象上定义一个新的属性，或修改一个已经存在的属性。这个方法会返回该对象。 语法 Object.defineProperty(obj, prop, descriptor)</description>
+    </item>
+    
+    <item>
+      <title>利用 Gulp 处理前端工作流程</title>
+      <link>https://scarletsky.github.io/2015/08/14/use-gulp-for-front-end-workflow/</link>
+      <pubDate>Fri, 14 Aug 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/08/14/use-gulp-for-front-end-workflow/</guid>
+      <description>基本用法 1 2 3 4 5 6 7 8 9 10 11 12 // gulpfile.js gulp.task(&amp;#39;foo&amp;#39;, function() { gulp.src(glob) .pipe(...) .pipe(...) .pipe(gulp.dest(...)) .pipe(...) .pipe(gulp.dest(...)) }); // shell $ gulp foo 基本 API gulp.src(glob[, options]) 根据 glob 匹配文件，返回 stream，可以通过 .pipe() 方法传递给后续的插件</description>
+    </item>
+    
+    <item>
+      <title>Mongo Shell 使用过程中遇到的坑</title>
+      <link>https://scarletsky.github.io/2015/08/11/mongo-shell-trap/</link>
+      <pubDate>Tue, 11 Aug 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/08/11/mongo-shell-trap/</guid>
+      <description>编写 js 脚本 js 脚本中不能包含 use 关键字，需要用 $ mongo mydb xxx.js 这样的方式来指定数据库 不能用 console.log，需要用 print 代替 调用 ObjectId() 时需要确保传进去的值</description>
+    </item>
+    
+    <item>
+      <title>面试总结</title>
+      <link>https://scarletsky.github.io/2015/08/07/interview-summary/</link>
+      <pubDate>Fri, 07 Aug 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/08/07/interview-summary/</guid>
+      <description>面试前的准备 了解该公司的业务 如果不了解的话，面试的时候 HR 们那些一系列专业的术语会让你头晕 想清楚你为什么不去投其他公司（如BAT） 想清楚该公司</description>
+    </item>
+    
+    <item>
+      <title>Android Support Design Library 注意事项</title>
+      <link>https://scarletsky.github.io/2015/07/06/android-support-design-library-experience/</link>
+      <pubDate>Mon, 06 Jul 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/07/06/android-support-design-library-experience/</guid>
+      <description>CoordinatorLayout 这个新 Layout 是 FrameLayout 的加强版，用来协调各个子 view 的行为。最主要是用来实现 Toolbar 的折叠效果，也可以用来实现 FAB 自动消失的效果。 常见的用法如下： 1 2 3 4 5 6 7</description>
+    </item>
+    
+    <item>
+      <title>RecyclerView 基本用法</title>
+      <link>https://scarletsky.github.io/2015/06/29/recyclerview-basic-usage/</link>
+      <pubDate>Mon, 29 Jun 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/06/29/recyclerview-basic-usage/</guid>
+      <description>基本用法 在 XML 中添加 &amp;lt;android.support.v7.widget.RecyclerView/&amp;gt; 编写继承 RecyclerView.Adapter&amp;lt;RecyclerViewAdapter.ViewHolder&amp;gt; 的 Adapter Constructor 编写继承 RecyclerView.ViewHolder 的 ViewHolder onCreateViewHolder onBindViewHolder getItemCount 设置 RecyclerView setLayoutManager setAdapter setItemAnimator(可选) addItemDecoration(</description>
+    </item>
+    
+    <item>
+      <title>HTML5 Canvas 技巧</title>
+      <link>https://scarletsky.github.io/2015/03/15/html5-canvas-tricks/</link>
+      <pubDate>Sun, 15 Mar 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/03/15/html5-canvas-tricks/</guid>
+      <description>注意事项 用 &amp;lt;canvas&amp;gt; 标签进行绘图时必须要设置 width 和 height 属性，这里并不是指 CSS 属性中的 width 和 height，而是 &amp;lt;canvas&amp;gt; 标签本身的属性！ 1 2 3 4 5 6 7 8 9 10 11 12 13 &amp;lt;!-- 正</description>
+    </item>
+    
+    <item>
+      <title>JavaScript 利用 Blob 进行分片上传</title>
+      <link>https://scarletsky.github.io/2015/01/27/javascript-upload-slice-file-using-blob/</link>
+      <pubDate>Tue, 27 Jan 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/01/27/javascript-upload-slice-file-using-blob/</guid>
+      <description>基本流程 用户选择文件 判断文件大小 如果文件小于限定文件大小，则直接上传 否则进行分片上传 分片流程 给定限定大小。 利用 Blob 对象的 slice 方法把文件分成 N 份。</description>
+    </item>
+    
+    <item>
+      <title>JavaScript 常用技巧</title>
+      <link>https://scarletsky.github.io/2015/01/26/javascript-tricks/</link>
+      <pubDate>Mon, 26 Jan 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/01/26/javascript-tricks/</guid>
+      <description>字符串操作 首字母大写 1 2 3 str.replace(/\b\w+/g, function (word) { return word.substring(0, 1).toLowerCase() + word.substring(1); }); 截取字符串最后几位 1 str.substring(str.length-X) 进制转换 1 2 d.toString(16) (十进制 -&amp;gt; 十六进制) parseInt(‘ff’, 16) (十六进</description>
+    </item>
+    
+    <item>
+      <title>HTML5 Drag and Drop API</title>
+      <link>https://scarletsky.github.io/2015/01/13/html5-drag-and-drop-api/</link>
+      <pubDate>Tue, 13 Jan 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/01/13/html5-drag-and-drop-api/</guid>
+      <description>基本使用 创建可拖放对象 在 HTML5 中创建可拖动内容非常简单，只需要在元素的属性中加上 draggable=&amp;quot;true&amp;quot; 就能创建可拖放对象了。 1 2 3 &amp;lt;div class=&amp;#34;rect red&amp;#34; draggable=&amp;#34;true&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;rect green&amp;#34; draggable=&amp;#34;true&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;rect blue&amp;#34; draggable=&amp;#34;true&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; 如何拖动 有</description>
+    </item>
+    
+    <item>
+      <title>D3.js 学习笔记2</title>
+      <link>https://scarletsky.github.io/2015/01/04/d3js-learning-2/</link>
+      <pubDate>Sun, 04 Jan 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/01/04/d3js-learning-2/</guid>
+      <description>Layout 和它的名字相比，D3 中的 Layout 并不会放任何东西在屏幕上。实际上，Layout 方法和可视化输出并没有直接关系。D3 Layout 会把你交给它的数据转换成更加</description>
+    </item>
+    
+    <item>
+      <title>D3.js 学习笔记1</title>
+      <link>https://scarletsky.github.io/2014/12/29/d3js-learning-1/</link>
+      <pubDate>Mon, 29 Dec 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2014/12/29/d3js-learning-1/</guid>
+      <description>基础操作 d3.select, d3.selectAll 选择元素 selection.append 在选择集合中添加元素 selection.data 为选择元素进行数据绑定，常与 enter 和 exit 一起使用 selection.data(data).enter 返回缺失元素集合 selection.data(data).exit 返回多余元素集合 selection.text 设置或获取选定元</description>
+    </item>
+    
+    <item>
+      <title>MongoDB 安全与认证</title>
+      <link>https://scarletsky.github.io/2014/10/25/mongodb-security-and-auth/</link>
+      <pubDate>Sat, 25 Oct 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2014/10/25/mongodb-security-and-auth/</guid>
+      <description>安全和认证 要开启安全检查，需要在启动 mongod 时添加 &amp;ndash;auth 选项 admin 数据库为管理员，在认证之后可以读写所有数据库，执行特定的管理命令。 在开启安全检查之前，一</description>
+    </item>
+    
+    <item>
+      <title>MongoDB 运维基础</title>
+      <link>https://scarletsky.github.io/2014/10/16/mongodb-operation-and-maintenance-basic/</link>
+      <pubDate>Thu, 16 Oct 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2014/10/16/mongodb-operation-and-maintenance-basic/</guid>
+      <description>可以试用 mongod --help 查看所有选项 启动 MongoDB: 1 2 3 4 mongod --dbpath xxx --port 1111 --config yyy.conf #for ubuntu service mongod start 使用配置文件获取配置信息(-f 或者 &amp;ndash;config): 1 mongod --config ~/.mongodb.conf 停止 MongoDB: 1 2 kill -2 pid (SIGINT) kill pid (SIGTEAM) 这两种方式</description>
+    </item>
+    
+    <item>
+      <title>The Digest Loop and $apply</title>
+      <link>https://scarletsky.github.io/2014/10/16/the-digest-loop-and-apply/</link>
+      <pubDate>Thu, 16 Oct 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2014/10/16/the-digest-loop-and-apply/</guid>
+      <description>让我们来看一下 Angular 底下是怎么工作的。我们是怎样通过几行代码让神奇的数据绑定起作用的呢？我们先来理解一下 $digest 循环和 $apply 方法是怎样工作的。 在通常的浏览</description>
+    </item>
+    
+  </channel>
+</rss>

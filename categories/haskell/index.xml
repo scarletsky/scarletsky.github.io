@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>haskell on scarletsky</title>
+    <link>https://scarletsky.github.io/categories/haskell/</link>
+    <description>Recent content in haskell on scarletsky</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 16 Jul 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://scarletsky.github.io/categories/haskell/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Non-deterministic value and List Monad in Haskell</title>
+      <link>https://scarletsky.github.io/2016/07/16/non-determinism-value-and-list-monad-in-haskell/</link>
+      <pubDate>Sat, 16 Jul 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/07/16/non-determinism-value-and-list-monad-in-haskell/</guid>
+      <description>简介 看 《Learn you a haskell for a great good》 这本书的过程中，有时候会看到 non-determinism 这个词，虽然具体不知道什么意思，但不影响阅读，所以就没深究。 最近看到 List</description>
+    </item>
+    
+    <item>
+      <title>type vs data vs newtype in Haskell</title>
+      <link>https://scarletsky.github.io/2016/03/15/type-vs-data-vs-newtype-in-haskell/</link>
+      <pubDate>Tue, 15 Mar 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/03/15/type-vs-data-vs-newtype-in-haskell/</guid>
+      <description>type type 关键字用来设置类型别名，提高代码可读性。 我们可以类比 shell 里面的 alias 命令，它是用来设置命令别名的。譬如下面的 shell 命令： 1 $ alias aria2-server=&amp;#34;aria2c --conf-path ~/aria2.conf&amp;#34; 我们用 aria2-server 来代替</description>
+    </item>
+    
+    <item>
+      <title>What is applicative in Haskell ?</title>
+      <link>https://scarletsky.github.io/2016/03/07/what-is-applicative-in-haskell/</link>
+      <pubDate>Mon, 07 Mar 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/03/07/what-is-applicative-in-haskell/</guid>
+      <description>初探 什么是 Applicative ? Applicative 是加强版的 Functor，是一个类型类。 加强版的 Functor 是什么意思 ? 还记得 Functor 的限制吗？ fmap f x 中的 f 只接受一个参数。 fmap f x 中的 f 不能</description>
+    </item>
+    
+    <item>
+      <title>FlexibleInstances 和 TypeSynonymInstances 编译指令的区别</title>
+      <link>https://scarletsky.github.io/2016/02/28/flexible-instances-vs-type-synonym-instances-in-haskell/</link>
+      <pubDate>Sun, 28 Feb 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/02/28/flexible-instances-vs-type-synonym-instances-in-haskell/</guid>
+      <description>FlexibleInstances 先看看下面这个简单的例子： 1 2 3 4 5 6 7 8 -- Learning.hs data Vector a = Vector a a deriving (Show) class MyClass a where myFun :: a -&amp;gt; a instance MyClass (Vector a) where myFun = id 这样的定义看起来是没有问题的，因为不需要</description>
+    </item>
+    
+    <item>
+      <title>What is functor in Haskell ?</title>
+      <link>https://scarletsky.github.io/2016/02/09/what-is-functor-in-haskell/</link>
+      <pubDate>Tue, 09 Feb 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/02/09/what-is-functor-in-haskell/</guid>
+      <description>Functor 简介 什么是 Functor ? 现在你可以认为 Functor 是一种数据类型。 Functor 有什么用 ? 我们可以对 Functor 使用 fmap。 fmap 是什么东西 ? fmap 是一个函数。 fmap 是函数的话，那它的类型签</description>
+    </item>
+    
+    <item>
+      <title>「译」 Haskell 中随机数的使用</title>
+      <link>https://scarletsky.github.io/2016/02/06/random-numbers-in-haskell/</link>
+      <pubDate>Sat, 06 Feb 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/02/06/random-numbers-in-haskell/</guid>
+      <description>随机数（我指的是伪随机数）是通过显式或隐式的状态来生成的。这意味着在 Haskell 中，随机数的使用（通过 System.Random 库）是伴随着状态的传递的。 大部分需要获得帮助的</description>
+    </item>
+    
+  </channel>
+</rss>

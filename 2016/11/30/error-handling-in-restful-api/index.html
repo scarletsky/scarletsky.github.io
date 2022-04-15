@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Restful API 中的错误处理 - scarletsky</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="scarletsky" /><meta name="description" content="简介 随着移动开发和前端开发的崛起，越来越多的 Web 后端应用都倾向于实现 Restful API。 Restful API 是一个简单易用的前后端分离方案，它只需要对客户端请求进行处理" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.74.3 with theme even" />
+
+
+<link rel="canonical" href="https://scarletsky.github.io/2016/11/30/error-handling-in-restful-api/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.2e81bbed97b8b282c1aeb57488cc71c8d8c8ec559f3931531bd396bf31e0d4dd.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Restful API 中的错误处理" />
+<meta property="og:description" content="简介 随着移动开发和前端开发的崛起，越来越多的 Web 后端应用都倾向于实现 Restful API。 Restful API 是一个简单易用的前后端分离方案，它只需要对客户端请求进行处理" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://scarletsky.github.io/2016/11/30/error-handling-in-restful-api/" />
+<meta property="article:published_time" content="2016-11-30T17:02:18+00:00" />
+<meta property="article:modified_time" content="2019-04-30T08:32:59+08:00" />
+<meta itemprop="name" content="Restful API 中的错误处理">
+<meta itemprop="description" content="简介 随着移动开发和前端开发的崛起，越来越多的 Web 后端应用都倾向于实现 Restful API。 Restful API 是一个简单易用的前后端分离方案，它只需要对客户端请求进行处理">
+<meta itemprop="datePublished" content="2016-11-30T17:02:18+00:00" />
+<meta itemprop="dateModified" content="2019-04-30T08:32:59+08:00" />
+<meta itemprop="wordCount" content="2160">
+
+
+
+<meta itemprop="keywords" content="restful," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Restful API 中的错误处理"/>
+<meta name="twitter:description" content="简介 随着移动开发和前端开发的崛起，越来越多的 Web 后端应用都倾向于实现 Restful API。 Restful API 是一个简单易用的前后端分离方案，它只需要对客户端请求进行处理"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">scarletsky.github.io</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">scarletsky.github.io</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Restful API 中的错误处理</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2016-11-30 </span>
+        <div class="post-category">
+            <a href="/categories/restful/"> restful </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#简介">简介</a></li>
+<li><a href="#设计错误信息">设计错误信息</a>
+<ul>
+<li><a href="#http-状态码">Http 状态码</a></li>
+<li><a href="#业务错误码">业务错误码</a></li>
+<li><a href="#给用户看的错误信息">给用户看的错误信息</a></li>
+<li><a href="#给开发者看的错误信息">给开发者看的错误信息</a></li>
+</ul></li>
+<li><a href="#设计错误类型">设计错误类型</a></li>
+<li><a href="#自定义错误类型">自定义错误类型</a></li>
+<li><a href="#捕获错误信息">捕获错误信息</a></li>
+<li><a href="#参考资料">参考资料</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h2 id="简介">简介</h2>
+
+<p>随着移动开发和前端开发的崛起，越来越多的 Web 后端应用都倾向于实现 Restful API。
+Restful API 是一个简单易用的前后端分离方案，它只需要对客户端请求进行处理，然后返回结果即可， 无需考虑页面渲染，一定程度上减轻了后端开发人员的负担。
+然而，正是由于 Restful API 不需要考虑页面渲染，导致它不能在页面上展示错误信息。
+那就意着当出现错误的时候，它只能通过返回一个错误的响应，来告诉用户和开发者相应的错误信息，提示他们接下来应该怎么办。
+本文将讨论 Restful API 中的错误处理方案。</p>
+
+<h2 id="设计错误信息">设计错误信息</h2>
+
+<p>当 Restful API 需要抛出错误的时候，我们要考虑的是：这个错误应该包含哪些信息。
+我们先看看 Github, Google, Facebook, Twitter, Twilio 的错误信息是怎样的。</p>
+
+<p>Github (use http status)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&#34;message&#34;</span><span class="p">:</span> <span class="s2">&#34;Validation Failed&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;errors&#34;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="nt">&#34;resource&#34;</span><span class="p">:</span> <span class="s2">&#34;Issue&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;field&#34;</span><span class="p">:</span> <span class="s2">&#34;title&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;code&#34;</span><span class="p">:</span> <span class="s2">&#34;missing_field&#34;</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>Google (use http status)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&#34;error&#34;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;errors&#34;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="p">{</span>
+        <span class="nt">&#34;domain&#34;</span><span class="p">:</span> <span class="s2">&#34;global&#34;</span><span class="p">,</span>
+        <span class="nt">&#34;reason&#34;</span><span class="p">:</span> <span class="s2">&#34;insufficientFilePermissions&#34;</span><span class="p">,</span>
+        <span class="nt">&#34;message&#34;</span><span class="p">:</span> <span class="s2">&#34;The user does not have sufficient permissions for file {fileId}.&#34;</span>
+      <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="nt">&#34;code&#34;</span><span class="p">:</span> <span class="mi">403</span><span class="p">,</span>
+    <span class="nt">&#34;message&#34;</span><span class="p">:</span> <span class="s2">&#34;The user does not have sufficient permissions for file {fileId}.&#34;</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>Facebook (use http status)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&#34;error&#34;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;message&#34;</span><span class="p">:</span> <span class="s2">&#34;Message describing the error&#34;</span><span class="p">,</span> 
+    <span class="nt">&#34;type&#34;</span><span class="p">:</span> <span class="s2">&#34;OAuthException&#34;</span><span class="p">,</span>
+    <span class="nt">&#34;code&#34;</span><span class="p">:</span> <span class="mi">190</span><span class="p">,</span>
+    <span class="nt">&#34;error_subcode&#34;</span><span class="p">:</span> <span class="mi">460</span><span class="p">,</span>
+    <span class="nt">&#34;error_user_title&#34;</span><span class="p">:</span> <span class="s2">&#34;A title&#34;</span><span class="p">,</span>
+    <span class="nt">&#34;error_user_msg&#34;</span><span class="p">:</span> <span class="s2">&#34;A message&#34;</span><span class="p">,</span>
+    <span class="nt">&#34;fbtrace_id&#34;</span><span class="p">:</span> <span class="s2">&#34;EJplcsCHuLu&#34;</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>Twitter (use http status)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&#34;errors&#34;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="nt">&#34;message&#34;</span><span class="p">:</span> <span class="s2">&#34;Sorry, that page does not exist&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;code&#34;</span><span class="p">:</span> <span class="mi">34</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>Twilio (use http status)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&#34;code&#34;</span><span class="p">:</span> <span class="mi">21211</span><span class="p">,</span>
+  <span class="nt">&#34;message&#34;</span><span class="p">:</span> <span class="s2">&#34;The &#39;To&#39; number 5551234567 is not a valid phone number.&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;more_info&#34;</span><span class="p">:</span> <span class="s2">&#34;https://www.twilio.com/docs/errors/21211&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;status&#34;</span><span class="p">:</span> <span class="mi">400</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>观察这些结构可以发现它们都有一些共同的地方：</p>
+
+<ul>
+<li>都利用了 Http 状态码</li>
+<li>有些返回了业务错误码</li>
+<li>都提供了给用户看的错误提示信息</li>
+<li>有些提供了给开发者看的错误信息</li>
+</ul>
+
+<h3 id="http-状态码">Http 状态码</h3>
+
+<p>在 Restful API 中利用 Http 状态码来表明错误类型再合适不过了，因为 Http 状态码定义了很多抽象的错误类型。
+虽然 Http 状态码定义了非常多的错误类型，但实际应用中，我们常用的状态码并不多，通常都是下面这几方面：</p>
+
+<ul>
+<li>API 正常工作 (200, 201)</li>
+<li>客户端错误 (400, 401, 403, 404)</li>
+<li>服务端错误 (500, 503)</li>
+</ul>
+
+<h3 id="业务错误码">业务错误码</h3>
+
+<p>很多时候，我们根据业务类型来自定义错误码。
+这些业务错误码与 Http 状态码并不重叠，这时候我们可以返回业务错误码，用来提示用户/开发者错误类型。</p>
+
+<h3 id="给用户看的错误信息">给用户看的错误信息</h3>
+
+<p>当出现错误的时候，我们需要提示用户如何处理这种情况，通常这种错误信息都是必须的。
+可以看到上面几个例子中都有返回给用户看的错误信息。</p>
+
+<h3 id="给开发者看的错误信息">给开发者看的错误信息</h3>
+
+<p>若我们的 API 需要开放给第三方开发者，那么我们就需要考虑返回一些给开发者看的错误信息。</p>
+
+<h2 id="设计错误类型">设计错误类型</h2>
+
+<p>我们刚才提到过，可以利用 Http 状态码来为错误类型进行分类。
+通常我们所说的分类通常是对客户端错误进行分类， 即 4xx 类型的错误。</p>
+
+<p>而这些错误类型中，我们最常用的是：</p>
+
+<ul>
+<li><p>400 Bad Request
+由于包含语法错误，当前请求无法被服务器理解。除非进行修改，否则客户端不应该重复提交这个请求。
+通常在请求参数不合法或格式错误的时候可以返回这个状态码。</p></li>
+
+<li><p>401 Unauthorized
+当前请求需要用户验证。
+通常在没有登录的状态下访问一些受保护的 API 时会用到这个状态码。</p></li>
+
+<li><p>403 Forbidden
+服务器已经理解请求，但是拒绝执行它。与401响应不同的是，身份验证并不能提供任何帮助。
+通常在没有权限操作资源时(如修改/删除一个不属于该用户的资源时)会用到这个状态码。</p></li>
+
+<li><p>404 Not Found
+请求失败，请求所希望得到的资源未被在服务器上发现。
+通常在找不到资源时返回这个状态码。</p></li>
+</ul>
+
+<p>尽管我们可以通过 Http 状态码来表示错误的类型，
+但在实际应用中，如果仅仅使用 Http 状态码的话，我们的代码中就遍布 Http 状态码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="c1">// Node.js
+</span><span class="c1"></span><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">title</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">=</span> <span class="mi">400</span>
+<span class="p">}</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">user</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">=</span> <span class="mi">401</span>
+<span class="p">}</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">post</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">=</span> <span class="mi">404</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>上面的实现方式在小项目中还可以接受，当项目变大、需求变多的时候，维护起来就变得很麻烦了。
+为了提高错误的可读性和可维护性，我们需要对各种错误进行分类。
+我个人习惯把错误分成以下几种类型：</p>
+
+<ul>
+<li>格式错误 (FORMAT_INVALID)</li>
+<li>数据不存在 (DATA_NOT_FOUND)</li>
+<li>数据已存在 (DATA_EXISTED)</li>
+<li>数据无效 (DATA_INVALID)</li>
+<li>登录错误 (LOGIN_REQUIRED)</li>
+<li>权限不足 (PERMISSION_DENIED)</li>
+</ul>
+
+<p>错误分类之后，我们抛错误的时候就变得更加直观了：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">title</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="nx">ERROR</span><span class="p">.</span><span class="nx">FORMAT_INVALID</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">user</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="nx">ERROR</span><span class="p">.</span><span class="nx">LOGIN_REQUIRED</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">post</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="nx">ERROR</span><span class="p">.</span><span class="nx">DATA_NOT_FOUND</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nx">post</span><span class="p">.</span><span class="nx">creator</span><span class="p">.</span><span class="nx">id</span> <span class="o">!==</span> <span class="nx">user</span><span class="p">.</span><span class="nx">id</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="nx">ERROR</span><span class="p">.</span><span class="nx">PERMISSION_DENIED</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>这种形式比上面的写死状态码的方式方便很多，而且维护起来也更加简单。
+但有一个问题，就是不能根据错误类型来返回指定的错误信息。</p>
+
+<h2 id="自定义错误类型">自定义错误类型</h2>
+
+<p>要实现根据错误类型来返回指定的错误信息，我们可以通过自定义错误的方式来实现。
+假设我们自定义错误的结构如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&#34;type&#34;</span><span class="p">:</span> <span class="s2">&#34;&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;code&#34;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="nt">&#34;message&#34;</span><span class="p">:</span> <span class="s2">&#34;&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;detail&#34;</span><span class="p">:</span> <span class="s2">&#34;&#34;</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>我们需要做到如下几点：</p>
+
+<ul>
+<li>根据错误类型来自动设置 <code>type</code>, <code>code</code>, <code>message</code></li>
+
+<li><p><code>detail</code> 为可选项，用来描述该错误的具体原因</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">ERROR</span> <span class="o">=</span> <span class="p">{</span>
+<span class="nx">FORMAT_INVALID</span><span class="o">:</span> <span class="s1">&#39;FORMAT_INVALID&#39;</span><span class="p">,</span>
+<span class="nx">DATA_NOT_FOUND</span><span class="o">:</span> <span class="s1">&#39;DATA_NOT_FOUND&#39;</span><span class="p">,</span>
+<span class="nx">DATA_EXISTED</span><span class="o">:</span> <span class="s1">&#39;DATA_EXISTED&#39;</span><span class="p">,</span>
+<span class="nx">DATA_INVALID</span><span class="o">:</span> <span class="s1">&#39;DATA_INVALID&#39;</span><span class="p">,</span>
+<span class="nx">LOGIN_REQUIRED</span><span class="o">:</span> <span class="s1">&#39;LOGIN_REQUIRED&#39;</span><span class="p">,</span>
+<span class="nx">PERMISSION_DENIED</span><span class="o">:</span> <span class="s1">&#39;PERMISSION_DENIED&#39;</span>
+<span class="p">}</span>
+
+<span class="kr">const</span> <span class="nx">ERROR_MAP</span> <span class="o">=</span> <span class="p">{</span>
+<span class="nx">FORMAT_INVALID</span><span class="o">:</span> <span class="p">{</span>
+<span class="nx">code</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+<span class="nx">message</span><span class="o">:</span> <span class="s1">&#39;The request format is invalid&#39;</span>
+<span class="p">},</span>
+<span class="nx">DATA_NOT_FOUND</span><span class="o">:</span> <span class="p">{</span>
+<span class="nx">code</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span>
+<span class="nx">message</span><span class="o">:</span> <span class="s1">&#39;The data is not found in database&#39;</span>
+<span class="p">},</span>
+<span class="nx">DATA_EXISTED</span><span class="o">:</span> <span class="p">{</span>
+<span class="nx">code</span><span class="o">:</span> <span class="mi">3</span><span class="p">,</span>
+<span class="nx">message</span><span class="o">:</span> <span class="s1">&#39;The data has exist in database&#39;</span>
+<span class="p">},</span>
+<span class="nx">DATA_INVALID</span><span class="o">:</span> <span class="p">{</span>
+<span class="nx">code</span><span class="o">:</span> <span class="mi">4</span><span class="p">,</span>
+<span class="nx">message</span><span class="o">:</span> <span class="s1">&#39;The data is invalid&#39;</span>
+<span class="p">},</span>
+<span class="nx">LOGIN_REQUIRED</span><span class="o">:</span> <span class="p">{</span>
+<span class="nx">code</span> <span class="mi">5</span><span class="p">,</span>
+<span class="nx">message</span><span class="o">:</span> <span class="s1">&#39;Please login first&#39;</span>
+<span class="p">},</span>
+<span class="nx">PERMISSION_DENIED</span><span class="o">:</span> <span class="p">{</span>
+<span class="nx">code</span><span class="o">:</span> <span class="mi">6</span><span class="p">,</span>
+<span class="nx">message</span><span class="o">:</span> <span class="s1">&#39;You have no permission to operate&#39;</span>
+<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kr">class</span> <span class="nx">CError</span> <span class="kr">extends</span> <span class="nb">Error</span> <span class="p">{</span>
+<span class="nx">constructor</span><span class="p">(</span><span class="nx">type</span><span class="p">,</span> <span class="nx">detail</span><span class="p">)</span> <span class="p">{</span>
+<span class="kr">super</span><span class="p">()</span>
+<span class="nb">Error</span><span class="p">.</span><span class="nx">captureStackTrace</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">constructor</span><span class="p">)</span>
+
+<span class="kd">let</span> <span class="nx">error</span> <span class="o">=</span> <span class="nx">ERROR_MAP</span><span class="p">[</span><span class="nx">type</span><span class="p">]</span>
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">error</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">code</span><span class="o">:</span> <span class="mi">999</span><span class="p">,</span>
+    <span class="nx">message</span><span class="o">:</span> <span class="s1">&#39;Unknow error type&#39;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;CError&#39;</span>
+<span class="k">this</span><span class="p">.</span><span class="nx">type</span> <span class="o">=</span> <span class="nx">error</span><span class="p">.</span><span class="nx">code</span> <span class="o">!==</span> <span class="mi">999</span> <span class="o">?</span> <span class="nx">type</span> <span class="o">:</span> <span class="s1">&#39;UNDEFINED&#39;</span>
+<span class="k">this</span><span class="p">.</span><span class="nx">code</span> <span class="o">=</span> <span class="nx">error</span><span class="p">.</span><span class="nx">code</span>
+<span class="k">this</span><span class="p">.</span><span class="nx">message</span> <span class="o">=</span> <span class="nx">error</span><span class="p">.</span><span class="nx">message</span>
+<span class="k">this</span><span class="p">.</span><span class="nx">detail</span> <span class="o">=</span> <span class="nx">detail</span>
+<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+
+<p>自定义好错误之后，我们调用起来就更加简单了：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="c1">// in controller
+</span><span class="c1"></span><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">user</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">throw</span> <span class="k">new</span> <span class="nx">CError</span><span class="p">(</span><span class="nx">ERROR</span><span class="p">.</span><span class="nx">LOGIN_REQUIRED</span><span class="p">,</span> <span class="s1">&#39;You should login first&#39;</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">title</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">throw</span> <span class="k">new</span> <span class="nx">CError</span><span class="p">(</span><span class="nx">ERROR</span><span class="p">.</span><span class="nx">FORMAT_INVALID</span><span class="p">,</span> <span class="s1">&#39;Title is required&#39;</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">post</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">throw</span> <span class="k">new</span> <span class="nx">CError</span><span class="p">(</span><span class="nx">ERROR</span><span class="p">.</span><span class="nx">DATA_NOT_FOUND</span><span class="p">,</span> <span class="s1">&#39;The post you required is not found&#39;</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>最后，还剩下一个问题，根据错误类型来设置状态码，然后返回错误信息给客户端。</p>
+
+<h2 id="捕获错误信息">捕获错误信息</h2>
+
+<p>在 Controller 中抛出自定义错误后，我们需要捕获该错误，才能返回给客户端。
+假设我们使用 koa 2 作为 web 框架来开发 restful api，那么我们要做的是添加错误处理的中间件:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">async</span> <span class="kd">function</span> <span class="nx">errorHandler</span> <span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="nx">await</span> <span class="nx">next</span><span class="p">()</span>
+  <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="kd">let</span> <span class="nx">status</span>
+
+    <span class="k">switch</span> <span class="p">(</span><span class="nx">err</span><span class="p">.</span><span class="nx">type</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">case</span> <span class="nx">ERROR</span><span class="p">.</span><span class="nx">FORMAT_INVALID</span><span class="o">:</span>
+      <span class="k">case</span> <span class="nx">ERROR</span><span class="p">.</span><span class="nx">DATA_EXISTED</span><span class="o">:</span>
+      <span class="k">case</span> <span class="nx">ERROR</span><span class="p">.</span><span class="nx">DATA_INVALID</span><span class="o">:</span>
+        <span class="nx">status</span> <span class="o">=</span> <span class="mi">400</span>
+        <span class="k">break</span>
+      <span class="k">case</span> <span class="nx">ERROR</span><span class="p">.</span><span class="nx">LOGIN_REQUIRED</span><span class="o">:</span>
+        <span class="nx">status</span> <span class="o">=</span> <span class="mi">401</span>
+      <span class="k">case</span> <span class="nx">ERROR</span><span class="p">.</span><span class="nx">PERMISSION_DENIED</span><span class="o">:</span>
+        <span class="nx">status</span> <span class="o">=</span> <span class="mi">403</span>
+      <span class="k">case</span> <span class="nx">ERROR</span><span class="p">.</span><span class="nx">DATA_NOT_FOUND</span><span class="o">:</span>
+        <span class="nx">status</span> <span class="o">=</span> <span class="mi">404</span>
+        <span class="k">break</span>
+      <span class="k">default</span><span class="o">:</span>
+        <span class="nx">status</span> <span class="o">=</span> <span class="mi">500</span>
+    <span class="p">}</span>
+
+    <span class="nx">ctx</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="nx">status</span>
+    <span class="nx">ctx</span><span class="p">.</span><span class="nx">body</span> <span class="o">=</span> <span class="nx">err</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// in app.js
+</span><span class="c1"></span><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">errorHandler</span><span class="p">)</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">router</span><span class="p">.</span><span class="nx">routes</span><span class="p">())</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>通过这种方式，我们就能优雅地处理 Restful API 中的错误信息了。</p>
+
+<h2 id="参考资料">参考资料</h2>
+
+<ul>
+<li><a href="https://zh.wikipedia.org/zh-hans/HTTP%E7%8A%B6%E6%80%81%E7%A0%81">https://zh.wikipedia.org/zh-hans/HTTP%E7%8A%B6%E6%80%81%E7%A0%81</a></li>
+<li><a href="https://www.loggly.com/blog/node-js-error-handling/">https://www.loggly.com/blog/node-js-error-handling/</a></li>
+<li><a href="http://blog.restcase.com/rest-api-error-codes-101/">http://blog.restcase.com/rest-api-error-codes-101/</a></li>
+<li><a href="https://apigee.com/about/blg/technology/restful-api-design-what-about-errors">https://apigee.com/about/blg/technology/restful-api-design-what-about-errors</a></li>
+<li><a href="http://stackoverflow.com/questions/942951/rest-api-error-return-good-practices">http://stackoverflow.com/questions/942951/rest-api-error-return-good-practices</a></li>
+<li><a href="http://goldbergyoni.com/checklist-best-practices-of-node-js-error-handling/">http://goldbergyoni.com/checklist-best-practices-of-node-js-error-handling/</a></li>
+<li><a href="http://blogs.mulesoft.com/dev/api-dev/api-best-practices-response-handling/">http://blogs.mulesoft.com/dev/api-dev/api-best-practices-response-handling/</a></li>
+<li><a href="https://developers.facebook.com/docs/graph-api/using-graph-api/#errors">https://developers.facebook.com/docs/graph-api/using-graph-api/#errors</a></li>
+<li><a href="https://developers.google.com/drive/v3/web/handle-errors">https://developers.google.com/drive/v3/web/handle-errors</a></li>
+<li><a href="https://developer.github.com/v3/#client-errors">https://developer.github.com/v3/#client-errors</a></li>
+<li><a href="https://dev.twitter.com/overview/api/response-codes">https://dev.twitter.com/overview/api/response-codes</a></li>
+<li><a href="https://www.twilio.com/docs/api/errors">https://www.twilio.com/docs/api/errors</a></li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">scarletsky</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2019-04-30
+        <a href="/commit/95a170dd24bf4b87af8e8309e95f31f929054a4a" title="chore: format markdown">(95a170d)</a>
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/restful/">restful</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/2016/12/29/tilde-and-caret-in-git/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Git 中的 ~ 和 ^</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/2016/10/05/write-unit-tests-for-restful-api-in-nodejs/">
+            <span class="next-text nav-default">在 Node.js 中为 Restful API 编写单元测试</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="scarletsky/scarletsky.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:scarletsky1025@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/scarletsky" class="iconfont icon-github" title="github"></a>
+  <a href="https://scarletsky.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>scarletsky</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>gulp on scarletsky</title>
+    <link>https://scarletsky.github.io/tags/gulp/</link>
+    <description>Recent content in gulp on scarletsky</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 14 Aug 2015 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://scarletsky.github.io/tags/gulp/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>利用 Gulp 处理前端工作流程</title>
+      <link>https://scarletsky.github.io/2015/08/14/use-gulp-for-front-end-workflow/</link>
+      <pubDate>Fri, 14 Aug 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/08/14/use-gulp-for-front-end-workflow/</guid>
+      <description>基本用法 1 2 3 4 5 6 7 8 9 10 11 12 // gulpfile.js gulp.task(&amp;#39;foo&amp;#39;, function() { gulp.src(glob) .pipe(...) .pipe(...) .pipe(gulp.dest(...)) .pipe(...) .pipe(gulp.dest(...)) }); // shell $ gulp foo 基本 API gulp.src(glob[, options]) 根据 glob 匹配文件，返回 stream，可以通过 .pipe() 方法传递给后续的插件</description>
+    </item>
+    
+  </channel>
+</rss>

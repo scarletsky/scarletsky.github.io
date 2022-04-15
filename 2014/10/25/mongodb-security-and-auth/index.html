@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>MongoDB 安全与认证 - scarletsky</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="scarletsky" /><meta name="description" content="安全和认证 要开启安全检查，需要在启动 mongod 时添加 &amp;ndash;auth 选项 admin 数据库为管理员，在认证之后可以读写所有数据库，执行特定的管理命令。 在开启安全检查之前，一" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.74.3 with theme even" />
+
+
+<link rel="canonical" href="https://scarletsky.github.io/2014/10/25/mongodb-security-and-auth/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.2e81bbed97b8b282c1aeb57488cc71c8d8c8ec559f3931531bd396bf31e0d4dd.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="MongoDB 安全与认证" />
+<meta property="og:description" content="安全和认证 要开启安全检查，需要在启动 mongod 时添加 &ndash;auth 选项 admin 数据库为管理员，在认证之后可以读写所有数据库，执行特定的管理命令。 在开启安全检查之前，一" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://scarletsky.github.io/2014/10/25/mongodb-security-and-auth/" />
+<meta property="article:published_time" content="2014-10-25T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-04-30T08:32:59+08:00" />
+<meta itemprop="name" content="MongoDB 安全与认证">
+<meta itemprop="description" content="安全和认证 要开启安全检查，需要在启动 mongod 时添加 &ndash;auth 选项 admin 数据库为管理员，在认证之后可以读写所有数据库，执行特定的管理命令。 在开启安全检查之前，一">
+<meta itemprop="dateModified" content="2019-04-30T08:32:59+08:00" />
+<meta itemprop="wordCount" content="617">
+
+
+
+<meta itemprop="keywords" content="mongodb," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="MongoDB 安全与认证"/>
+<meta name="twitter:description" content="安全和认证 要开启安全检查，需要在启动 mongod 时添加 &ndash;auth 选项 admin 数据库为管理员，在认证之后可以读写所有数据库，执行特定的管理命令。 在开启安全检查之前，一"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">scarletsky.github.io</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">scarletsky.github.io</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">MongoDB 安全与认证</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2014-10-25 </span>
+        <div class="post-category">
+            <a href="/categories/database/"> database </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#安全和认证">安全和认证</a></li>
+<li><a href="#用户角色权限">用户角色权限</a></li>
+<li><a href="#其他安全考虑">其他安全考虑</a></li>
+<li><a href="#参考资料">参考资料</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h1 id="安全和认证">安全和认证</h1>
+
+<p>要开启安全检查，需要在启动 mongod 时添加 &ndash;auth 选项
+admin 数据库为管理员，在认证之后可以读写所有数据库，执行特定的管理命令。
+在开启安全检查之前，一定要有一个管理员帐号。
+数据库的用户存储在 admin 的 <code>db.system.users</code> 集合中。</p>
+
+<p>创建管理员</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">&gt; use admin
+&gt; db.createUser<span class="o">({</span>user: <span class="s1">&#39;root&#39;</span>, pwd: <span class="s1">&#39;password&#39;</span>, roles: <span class="o">[</span><span class="s1">&#39;root&#39;</span><span class="o">]})</span> <span class="c1"># 添加管理员</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>开启验证</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">$ mongod --config /usr/local/etc/mongod.conf --auth
+
+<span class="c1"># 验证方法1</span>
+$ mongo admin -u <span class="s1">&#39;username&#39;</span> -p <span class="s1">&#39;password&#39;</span> <span class="c1"># 必须指定该用户有权限访问的数据库</span>
+
+<span class="c1"># 验证方法2</span>
+$ mongo
+&gt; use admin
+&gt; db.auth<span class="o">(</span><span class="s1">&#39;username&#39;</span>, <span class="s1">&#39;password&#39;</span><span class="o">)</span>
+&gt; use otherDatabase
+&gt; db.users.find<span class="o">()</span>.....</code></pre></td></tr></table>
+</div>
+</div>
+<p>开启验证后，我们在使用 URI 去连接数据库的时候需要注意，要加上 authSource=admin 参数才能通过验证。这里以 mongoose 为例。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">mongoose</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mongoose&#39;</span><span class="p">);</span>
+<span class="nx">mongoose</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">&#39;mongodb://user:pass@server:port/database?authSource=admin&#39;</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="用户角色权限">用户角色权限</h1>
+
+<p>Mongodb 内建了很多角色，详细可以去看看 <a href="http://docs.mongodb.org/manual/reference/built-in-roles/#built-in-roles">built-in-roles</a></p>
+
+<p>这里只说说 Superuser roles。下面几种角色可以为任何用户分配任何权限在任何数据库上，这意味着拥有以下其中一种角色的用户可以分配他们自己的任何权限在任何数据库上面。
+- dbOwner 角色，在 admin 数据库作用域中
+- userAdmin 角色，在 admin 数据库作用域中
+- userAdminAnyDatabase 角色
+- root 角色拥有全部的权限</p>
+
+<p>需要注意的是，root 角色并没有在 <code>system.users</code> 和 <code>system.roles</code> 集合中直接插入数据的能力。因此， root 并不适合用 mongorestore 恢复那些包含了这两个集合的数据。如果你需要进行这些操作，请给用户加上 <code>restore</code> 角色。</p>
+
+<h1 id="其他安全考虑">其他安全考虑</h1>
+
+<p>mongodb 传输协议是不加密的，如果需要加密，可以试用 <code>ssh</code> 或者类似的技术进行加密。
+另外建议把 mongo 服务器布置在防火墙后或者布置在只有应用服务器能访问的网络中。同时建议使用 <code>--bindip</code> 选项，这样可以限制 ip 访问。运行 <code>mongod --bindip localhost</code> 后，只有本机的应用可以访问服务器。
+最后，还可以用 <code>--noscripting</code> 选项完全禁止服务端 <code>JavaScript</code> 的执行。</p>
+
+<h1 id="参考资料">参考资料</h1>
+
+<ul>
+<li><a href="http://docs.mongodb.org/manual/reference/method/js-user-management/">Mongodb 官方文档</a></li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">scarletsky</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2019-04-30
+        <a href="/commit/95a170dd24bf4b87af8e8309e95f31f929054a4a" title="chore: format markdown">(95a170d)</a>
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/mongodb/">mongodb</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/2014/12/29/d3js-learning-1/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">D3.js 学习笔记1</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/2014/10/16/mongodb-operation-and-maintenance-basic/">
+            <span class="next-text nav-default">MongoDB 运维基础</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="scarletsky/scarletsky.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:scarletsky1025@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/scarletsky" class="iconfont icon-github" title="github"></a>
+  <a href="https://scarletsky.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>scarletsky</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

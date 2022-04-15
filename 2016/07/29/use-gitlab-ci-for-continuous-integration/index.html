@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>用 GitLab CI 进行持续集成 - scarletsky</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="scarletsky" /><meta name="description" content="简介 从 GitLab 8.0 开始，GitLab CI 就已经集成在 GitLab 中，我们只要在项目中添加一个 .gitlab-ci.yml 文件，然后添加一个 Runner，即可进行持续集成。 而且随着 GitLab 的升级" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.74.3 with theme even" />
+
+
+<link rel="canonical" href="https://scarletsky.github.io/2016/07/29/use-gitlab-ci-for-continuous-integration/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.2e81bbed97b8b282c1aeb57488cc71c8d8c8ec559f3931531bd396bf31e0d4dd.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="用 GitLab CI 进行持续集成" />
+<meta property="og:description" content="简介 从 GitLab 8.0 开始，GitLab CI 就已经集成在 GitLab 中，我们只要在项目中添加一个 .gitlab-ci.yml 文件，然后添加一个 Runner，即可进行持续集成。 而且随着 GitLab 的升级" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://scarletsky.github.io/2016/07/29/use-gitlab-ci-for-continuous-integration/" />
+<meta property="article:published_time" content="2016-07-29T09:22:20+00:00" />
+<meta property="article:modified_time" content="2019-04-30T08:32:59+08:00" />
+<meta itemprop="name" content="用 GitLab CI 进行持续集成">
+<meta itemprop="description" content="简介 从 GitLab 8.0 开始，GitLab CI 就已经集成在 GitLab 中，我们只要在项目中添加一个 .gitlab-ci.yml 文件，然后添加一个 Runner，即可进行持续集成。 而且随着 GitLab 的升级">
+<meta itemprop="datePublished" content="2016-07-29T09:22:20+00:00" />
+<meta itemprop="dateModified" content="2019-04-30T08:32:59+08:00" />
+<meta itemprop="wordCount" content="2358">
+
+
+
+<meta itemprop="keywords" content="ci,gitlab-ci," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="用 GitLab CI 进行持续集成"/>
+<meta name="twitter:description" content="简介 从 GitLab 8.0 开始，GitLab CI 就已经集成在 GitLab 中，我们只要在项目中添加一个 .gitlab-ci.yml 文件，然后添加一个 Runner，即可进行持续集成。 而且随着 GitLab 的升级"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">scarletsky.github.io</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">scarletsky.github.io</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">用 GitLab CI 进行持续集成</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2016-07-29 </span>
+        <div class="post-category">
+            <a href="/categories/gitlab/"> gitlab </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#简介">简介</a></li>
+<li><a href="#一些概念">一些概念</a>
+<ul>
+<li><a href="#pipeline">Pipeline</a></li>
+<li><a href="#stages">Stages</a></li>
+<li><a href="#jobs">Jobs</a></li>
+</ul></li>
+<li><a href="#gitlab-runner">GitLab Runner</a>
+<ul>
+<li><a href="#简介-1">简介</a></li>
+<li><a href="#安装">安装</a></li>
+<li><a href="#注册-runner">注册 Runner</a></li>
+</ul></li>
+<li><a href="#gitlab-ci-yml">.gitlab-ci.yml</a>
+<ul>
+<li><a href="#简介-2">简介</a></li>
+<li><a href="#基本写法">基本写法</a></li>
+<li><a href="#常用的关键字">常用的关键字</a>
+<ul>
+<li><a href="#stages-1">stages</a></li>
+<li><a href="#types">types</a></li>
+<li><a href="#before-script">before_script</a></li>
+<li><a href="#after-script">after_script</a></li>
+<li><a href="#variables-job-variables">variables &amp;&amp; Job.variables</a></li>
+<li><a href="#cache-job-cache">cache &amp;&amp; Job.cache</a></li>
+<li><a href="#job-script">Job.script</a></li>
+<li><a href="#job-stage">Job.stage</a></li>
+<li><a href="#job-artifacts">Job.artifacts</a></li>
+</ul></li>
+<li><a href="#实用例子">实用例子</a></li>
+</ul></li>
+<li><a href="#参考资料">参考资料</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h1 id="简介">简介</h1>
+
+<p>从 GitLab 8.0 开始，GitLab CI 就已经集成在 GitLab 中，我们只要在项目中添加一个 <code>.gitlab-ci.yml</code> 文件，然后添加一个 Runner，即可进行持续集成。 而且随着 GitLab 的升级，GitLab CI 变得越来越强大，本文将介绍如何使用 GitLab CI 进行持续集成。</p>
+
+<h1 id="一些概念">一些概念</h1>
+
+<p>在介绍 GitLab CI 之前，我们先看看一些持续集成相关的概念。</p>
+
+<h2 id="pipeline">Pipeline</h2>
+
+<p>一次 Pipeline 其实相当于一次构建任务，里面可以包含多个流程，如安装依赖、运行测试、编译、部署测试服务器、部署生产服务器等流程。
+任何提交或者 Merge Request 的合并都可以触发 Pipeline，如下图所示：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">+------------------+           +----------------+
+|                  |  trigger  |                |
+|   Commit / MR    +----------&gt;+    Pipeline    |
+|                  |           |                |
++------------------+           +----------------+</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="stages">Stages</h2>
+
+<p>Stages 表示构建阶段，说白了就是上面提到的流程。
+我们可以在一次 Pipeline 中定义多个 Stages，这些 Stages 会有以下特点：</p>
+
+<ul>
+<li>所有 Stages 会按照顺序运行，即当一个 Stage 完成后，下一个 Stage 才会开始</li>
+<li>只有当所有 Stages 完成后，该构建任务 (Pipeline) 才会成功</li>
+<li>如果任何一个 Stage 失败，那么后面的 Stages 不会执行，该构建任务 (Pipeline) 失败</li>
+</ul>
+
+<p>因此，Stages 和 Pipeline 的关系就是：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">+--------------------------------------------------------+
+|                                                        |
+|  Pipeline                                              |
+|                                                        |
+|  +-----------+     +------------+      +------------+  |
+|  |  Stage 1  |----&gt;|   Stage 2  |-----&gt;|   Stage 3  |  |
+|  +-----------+     +------------+      +------------+  |
+|                                                        |
++--------------------------------------------------------+</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="jobs">Jobs</h2>
+
+<p>Jobs 表示构建工作，表示某个 Stage 里面执行的工作。
+我们可以在 Stages 里面定义多个 Jobs，这些 Jobs 会有以下特点：</p>
+
+<ul>
+<li>相同 Stage 中的 Jobs 会并行执行</li>
+<li>相同 Stage 中的 Jobs 都执行成功时，该 Stage 才会成功</li>
+<li>如果任何一个 Job 失败，那么该 Stage 失败，即该构建任务 (Pipeline) 失败</li>
+</ul>
+
+<p>所以，Jobs 和 Stage 的关系图就是：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">+------------------------------------------+
+|                                          |
+|  Stage 1                                 |
+|                                          |
+|  +---------+  +---------+  +---------+   |
+|  |  Job 1  |  |  Job 2  |  |  Job 3  |   |
+|  +---------+  +---------+  +---------+   |
+|                                          |
++------------------------------------------+</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="gitlab-runner">GitLab Runner</h1>
+
+<h2 id="简介-1">简介</h2>
+
+<p>理解了上面的基本概念之后，有没有觉得少了些什么东西 —— 由谁来执行这些构建任务呢？
+答案就是 GitLab Runner 了！</p>
+
+<p>想问为什么不是 GitLab CI 来运行那些构建任务？
+一般来说，构建任务都会占用很多的系统资源 (譬如编译代码)，而 GitLab CI 又是 GitLab 的一部分，如果由 GitLab CI 来运行构建任务的话，在执行构建任务的时候，GitLab 的性能会大幅下降。</p>
+
+<p>GitLab CI 最大的作用是管理各个项目的构建状态，因此，运行构建任务这种浪费资源的事情就交给 GitLab Runner 来做拉！
+因为 GitLab Runner 可以安装到不同的机器上，所以在构建任务运行期间并不会影响到 GitLab 的性能~</p>
+
+<h2 id="安装">安装</h2>
+
+<p>安装 GitLab Runner 太简单了，按照着 <a href="https://gitlab.com/gitlab-org/gitlab-ci-multi-runner">官方文档</a> 的教程来就好拉！
+下面是 Debian/Ubuntu/CentOS 的安装方法，其他系统去参考官方文档：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># For Debian/Ubuntu</span>
+$ curl -L https://packages.gitlab.com/install/repositories/runner/gitlab-ci-multi-runner/script.deb.sh <span class="p">|</span> sudo bash
+$ sudo apt-get install gitlab-ci-multi-runner
+
+<span class="c1"># For CentOS</span>
+$ curl -L https://packages.gitlab.com/install/repositories/runner/gitlab-ci-multi-runner/script.rpm.sh <span class="p">|</span> sudo bash
+$ sudo yum install gitlab-ci-multi-runner</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="注册-runner">注册 Runner</h2>
+
+<p>安装好 GitLab Runner 之后，我们只要启动 Runner 然后和 CI 绑定就可以了：</p>
+
+<ul>
+<li>打开你 GitLab 中的项目页面，在项目设置中找到 runners</li>
+<li>运行 <code>sudo gitlab-ci-multi-runner register</code></li>
+<li>输入 CI URL</li>
+<li>输入 Token</li>
+<li>输入 Runner 的名字</li>
+<li>选择 Runner 的类型，简单起见还是选 Shell 吧</li>
+<li>完成</li>
+</ul>
+
+<p>当注册好 Runner 之后，可以用 <code>sudo gitlab-ci-multi-runner list</code> 命令来查看各个 Runner 的状态：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">$ sudo gitlab-runner list
+Listing configured runners          <span class="nv">ConfigFile</span><span class="o">=</span>/etc/gitlab-runner/config.toml
+my-runner                           <span class="nv">Executor</span><span class="o">=</span>shell <span class="nv">Token</span><span class="o">=</span>cd1cd7cf243afb47094677855aacd3 <span class="nv">URL</span><span class="o">=</span>http://mygitlab.com/ci</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="gitlab-ci-yml">.gitlab-ci.yml</h1>
+
+<h2 id="简介-2">简介</h2>
+
+<p>配置好 Runner 之后，我们要做的事情就是在项目根目录中添加 <code>.gitlab-ci.yml</code> 文件了。
+当我们添加了 <code>.gitlab-ci.yml</code> 文件后，每次提交代码或者合并 MR 都会自动运行构建任务了。</p>
+
+<p>还记得 Pipeline 是怎么触发的吗？Pipeline 也是通过提交代码或者合并 MR 来触发的！
+那么 Pipeline 和 <code>.gitlab-ci.yml</code> 有什么关系呢？
+其实 <code>.gitlab-ci.yml</code> 就是在定义 Pipeline 而已拉！</p>
+
+<h2 id="基本写法">基本写法</h2>
+
+<p>我们先来看看 <code>.gitlab-ci.yml</code> 是怎么写的：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="c"># 定义 stages</span><span class="w">
+</span><span class="w"></span><span class="k">stages</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- build<span class="w">
+</span><span class="w">  </span>- test<span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="c"># 定义 job</span><span class="w">
+</span><span class="w"></span><span class="k">job1</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">stage</span><span class="p">:</span><span class="w"> </span>test<span class="w">
+</span><span class="w">  </span><span class="k">script</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- echo<span class="w"> </span><span class="s2">&#34;I am job1&#34;</span><span class="w">
+</span><span class="w">    </span>- echo<span class="w"> </span><span class="s2">&#34;I am in test stage&#34;</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="c"># 定义 job</span><span class="w">
+</span><span class="w"></span><span class="k">job2</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">stage</span><span class="p">:</span><span class="w"> </span>build<span class="w">
+</span><span class="w">  </span><span class="k">script</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- echo<span class="w"> </span><span class="s2">&#34;I am job2&#34;</span><span class="w">
+</span><span class="w">    </span>- echo<span class="w"> </span><span class="s2">&#34;I am in build stage&#34;</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>写起来很简单吧！用 <code>stages</code> 关键字来定义 Pipeline 中的各个构建阶段，然后用一些非关键字来定义 jobs。
+每个 job 中可以可以再用 <code>stage</code> 关键字来指定该 job 对应哪个 stage。
+job 里面的 <code>script</code> 关键字是最关键的地方了，也是每个 job 中必须要包含的，它表示每个 job 要执行的命令。</p>
+
+<p>回想一下我们之前提到的 Stages 和 Jobs 的关系，然后猜猜上面例子的运行结果？</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-plain" data-lang="plain">I am job2
+I am in build stage
+I am job1
+I am in test stage</code></pre></td></tr></table>
+</div>
+</div>
+<p>根据我们在 <code>stages</code> 中的定义，<code>build</code> 阶段要在 <code>test</code> 阶段之前运行，所以 <code>stage:build</code> 的 jobs 会先运行，之后才会运行 <code>stage:test</code> 的 jobs。</p>
+
+<h2 id="常用的关键字">常用的关键字</h2>
+
+<p>下面介绍一些常用的关键字，想要更加详尽的内容请前往 <a href="http://docs.gitlab.com/ce/ci/yaml/README.html">官方文档</a></p>
+
+<h3 id="stages-1">stages</h3>
+
+<p>定义 Stages，默认有三个 Stages，分别是 <code>build</code>, <code>test</code>, <code>deploy</code>。</p>
+
+<h3 id="types">types</h3>
+
+<p><code>stages</code> 的别名。</p>
+
+<h3 id="before-script">before_script</h3>
+
+<p>定义任何 Jobs 运行前都会执行的命令。</p>
+
+<h3 id="after-script">after_script</h3>
+
+<blockquote>
+<p>要求 GitLab 8.7+ 和 GitLab Runner 1.2+</p>
+</blockquote>
+
+<p>定义任何 Jobs 运行完后都会执行的命令。</p>
+
+<h3 id="variables-job-variables">variables &amp;&amp; Job.variables</h3>
+
+<blockquote>
+<p>要求 GitLab Runner 0.5.0+</p>
+</blockquote>
+
+<p>定义环境变量。
+如果定义了 Job 级别的环境变量的话，该 Job 会优先使用 Job 级别的环境变量。</p>
+
+<h3 id="cache-job-cache">cache &amp;&amp; Job.cache</h3>
+
+<blockquote>
+<p>要求 GitLab Runner 0.7.0+</p>
+</blockquote>
+
+<p>定义需要缓存的文件。
+每个 Job 开始的时候，Runner 都会删掉 <code>.gitignore</code> 里面的文件。
+如果有些文件 (如 <code>node_modules/</code>) 需要多个 Jobs 共用的话，我们只能让每个 Job 都先执行一遍 <code>npm install</code>。
+这样很不方便，因此我们需要对这些文件进行缓存。缓存了的文件除了可以跨 Jobs 使用外，还可以跨 Pipeline 使用。</p>
+
+<p>具体用法请查看 <a href="http://docs.gitlab.com/ce/ci/yaml/README.html#cache">官方文档</a>。</p>
+
+<h3 id="job-script">Job.script</h3>
+
+<p>定义 Job 要运行的命令，必填项。</p>
+
+<h3 id="job-stage">Job.stage</h3>
+
+<p>定义 Job 的 stage，默认为 <code>test</code>。</p>
+
+<h3 id="job-artifacts">Job.artifacts</h3>
+
+<p>定义 Job 中生成的附件。
+当该 Job 运行成功后，生成的文件可以作为附件 (如生成的二进制文件) 保留下来，打包发送到 GitLab，之后我们可以在 GitLab 的项目页面下下载该附件。
+注意，不要把 <code>artifacts</code> 和 <code>cache</code> 混淆了。</p>
+
+<h2 id="实用例子">实用例子</h2>
+
+<p>下面给出一个我自己在用的例子：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">stages</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- install_deps<span class="w">
+</span><span class="w">  </span>- test<span class="w">
+</span><span class="w">  </span>- build<span class="w">
+</span><span class="w">  </span>- deploy_test<span class="w">
+</span><span class="w">  </span>- deploy_production<span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">cache</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">key</span><span class="p">:</span><span class="w"> </span>${CI_BUILD_REF_NAME}<span class="w">
+</span><span class="w">  </span><span class="k">paths</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- node_modules/<span class="w">
+</span><span class="w">    </span>- dist/<span class="w">
+</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="c"># 安装依赖</span><span class="w">
+</span><span class="w"></span><span class="k">install_deps</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">stage</span><span class="p">:</span><span class="w"> </span>install_deps<span class="w">
+</span><span class="w">  </span><span class="k">only</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- develop<span class="w">
+</span><span class="w">    </span>- master<span class="w">
+</span><span class="w">  </span><span class="k">script</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- npm<span class="w"> </span>install<span class="w">
+</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="c"># 运行测试用例</span><span class="w">
+</span><span class="w"></span><span class="k">test</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">stage</span><span class="p">:</span><span class="w"> </span>test<span class="w">
+</span><span class="w">  </span><span class="k">only</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- develop<span class="w">
+</span><span class="w">    </span>- master<span class="w">
+</span><span class="w">  </span><span class="k">script</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- npm<span class="w"> </span>run<span class="w"> </span>test<span class="w">
+</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="c"># 编译</span><span class="w">
+</span><span class="w"></span><span class="k">build</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">stage</span><span class="p">:</span><span class="w"> </span>build<span class="w">
+</span><span class="w">  </span><span class="k">only</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- develop<span class="w">
+</span><span class="w">    </span>- master<span class="w">
+</span><span class="w">  </span><span class="k">script</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- npm<span class="w"> </span>run<span class="w"> </span>clean<span class="w">
+</span><span class="w">    </span>- npm<span class="w"> </span>run<span class="w"> </span>build<span class="p">:</span>client<span class="w">
+</span><span class="w">    </span>- npm<span class="w"> </span>run<span class="w"> </span>build<span class="p">:</span>server<span class="w">
+</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="c"># 部署测试服务器</span><span class="w">
+</span><span class="w"></span><span class="k">deploy_test</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">stage</span><span class="p">:</span><span class="w"> </span>deploy_test<span class="w">
+</span><span class="w">  </span><span class="k">only</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- develop<span class="w">
+</span><span class="w">  </span><span class="k">script</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- pm2<span class="w"> </span>delete<span class="w"> </span>app<span class="w"> </span>||<span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">    </span>- pm2<span class="w"> </span>start<span class="w"> </span>app.js<span class="w"> </span>--name<span class="w"> </span>app<span class="w">
+</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="c"># 部署生产服务器</span><span class="w">
+</span><span class="w"></span><span class="k">deploy_production</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">stage</span><span class="p">:</span><span class="w"> </span>deploy_production<span class="w">
+</span><span class="w">  </span><span class="k">only</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- master<span class="w">
+</span><span class="w">  </span><span class="k">script</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- bash<span class="w"> </span>scripts/deploy/deploy.sh</code></pre></td></tr></table>
+</div>
+</div>
+<p>上面的配置把一次 Pipeline 分成五个阶段：</p>
+
+<ul>
+<li>安装依赖(<code>install_deps</code>)</li>
+<li>运行测试(<code>test</code>)</li>
+<li>编译(<code>build</code>)</li>
+<li>部署测试服务器(<code>deploy_test</code>)</li>
+<li>部署生产服务器(<code>deploy_production</code>)</li>
+</ul>
+
+<p>设置 <code>Job.only</code> 后，只有当 develop 分支和 master 分支有提交的时候才会触发相关的 Jobs。
+注意，我这里用 GitLab Runner 所在的服务器作为测试服务器。</p>
+
+<h1 id="参考资料">参考资料</h1>
+
+<ul>
+<li><a href="https://about.gitlab.com/gitlab-ci/">https://about.gitlab.com/gitlab-ci/</a></li>
+<li><a href="http://docs.gitlab.com/ce/ci/yaml/README.html">http://docs.gitlab.com/ce/ci/yaml/README.html</a></li>
+<li><a href="http://docs.gitlab.com/ce/ci/variables/README.html">http://docs.gitlab.com/ce/ci/variables/README.html</a></li>
+<li><a href="https://gitlab.com/gitlab-org/gitlab-ci-multi-runner">https://gitlab.com/gitlab-org/gitlab-ci-multi-runner</a></li>
+<li><a href="https://gitlab.com/gitlab-org/gitlab-ci-multi-runner/issues/1232">https://gitlab.com/gitlab-org/gitlab-ci-multi-runner/issues/1232</a></li>
+<li><a href="http://stackbox.cn/2016-02-gitlab-ci-conf/">http://stackbox.cn/2016-02-gitlab-ci-conf/</a></li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">scarletsky</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2019-04-30
+        <a href="/commit/95a170dd24bf4b87af8e8309e95f31f929054a4a" title="chore: format markdown">(95a170d)</a>
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/ci/">ci</a>
+          <a href="/tags/gitlab-ci/">gitlab-ci</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/2016/08/20/write-your-own-combine-reducers-in-redux/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">自定义 Redux 中的 combineReducers</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/2016/07/16/non-determinism-value-and-list-monad-in-haskell/">
+            <span class="next-text nav-default">Non-deterministic value and List Monad in Haskell</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="scarletsky/scarletsky.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:scarletsky1025@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/scarletsky" class="iconfont icon-github" title="github"></a>
+  <a href="https://scarletsky.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>scarletsky</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

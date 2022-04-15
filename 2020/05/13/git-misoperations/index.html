@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Git 常见错误操作 (持续更新) - scarletsky</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="scarletsky" /><meta name="description" content="简介 本文是基于笔者的操作经验来记录 Git 的常见错误操作，会长期更新。（遇到再更新） Merge and Rebase 背景 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 服务端 develop 分支" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.74.3 with theme even" />
+
+
+<link rel="canonical" href="https://scarletsky.github.io/2020/05/13/git-misoperations/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.2e81bbed97b8b282c1aeb57488cc71c8d8c8ec559f3931531bd396bf31e0d4dd.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Git 常见错误操作 (持续更新)" />
+<meta property="og:description" content="简介 本文是基于笔者的操作经验来记录 Git 的常见错误操作，会长期更新。（遇到再更新） Merge and Rebase 背景 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 服务端 develop 分支" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://scarletsky.github.io/2020/05/13/git-misoperations/" />
+<meta property="article:published_time" content="2020-05-13T09:26:55+08:00" />
+<meta property="article:modified_time" content="2020-05-13T11:11:47+08:00" />
+<meta itemprop="name" content="Git 常见错误操作 (持续更新)">
+<meta itemprop="description" content="简介 本文是基于笔者的操作经验来记录 Git 的常见错误操作，会长期更新。（遇到再更新） Merge and Rebase 背景 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 服务端 develop 分支">
+<meta itemprop="datePublished" content="2020-05-13T09:26:55+08:00" />
+<meta itemprop="dateModified" content="2020-05-13T11:11:47+08:00" />
+<meta itemprop="wordCount" content="432">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Git 常见错误操作 (持续更新)"/>
+<meta name="twitter:description" content="简介 本文是基于笔者的操作经验来记录 Git 的常见错误操作，会长期更新。（遇到再更新） Merge and Rebase 背景 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 服务端 develop 分支"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">scarletsky.github.io</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">scarletsky.github.io</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Git 常见错误操作 (持续更新)</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-05-13 </span>
+        
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#简介">简介</a></li>
+<li><a href="#merge-and-rebase">Merge and Rebase</a>
+<ul>
+<li><a href="#背景">背景</a></li>
+<li><a href="#操作">操作</a></li>
+<li><a href="#结果">结果</a></li>
+<li><a href="#分析">分析</a></li>
+<li><a href="#解决">解决</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h1 id="简介">简介</h1>
+
+<p>本文是基于笔者的操作经验来记录 Git 的常见错误操作，会长期更新。（遇到再更新）</p>
+
+<h1 id="merge-and-rebase">Merge and Rebase</h1>
+
+<h2 id="背景">背景</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">服务端 develop 分支：
+                  HEAD
+                   |
+    a -&gt; b -&gt; c -&gt; d
+
+
+本地 develop 分支:
+            HEAD
+              |
+    a -&gt; b -&gt; c
+
+A 分支：
+                      HEAD
+                        |
+    a -&gt; b -&gt; c -&gt; e -&gt; f
+
+A 分支(更新后)：
+                           HEAD
+                             |
+    a -&gt; b -&gt; c -&gt; e -&gt; f -&gt; g</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="操作">操作</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh"><span class="c1"># 当前在 develop 分支</span>
+<span class="c1"># 1. merge A</span>
+git merge A
+
+<span class="c1"># 2. 由于本地与服务端有冲突导致 push 操作失败</span>
+git push
+
+<span class="c1"># 3. rebase</span>
+git pull --rebase
+
+<span class="c1"># 4. push again</span>
+git push
+
+<span class="c1"># 5. A 更新后，又要合并 A</span>
+git merge A
+git push</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="结果">结果</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">本地 develop 分支:
+                                            HEAD
+                                              |
+    a -&gt; b -&gt; c -&gt; d -&gt; e&#39; -&gt; f&#39; -&gt; e -&gt; f -&gt; g</code></pre></td></tr></table>
+</div>
+</div>
+<p>e 和 e&rsquo;，f 和 f&rsquo; 实际上是同一个提交，但它们有不同的 commit hash。</p>
+
+<h2 id="分析">分析</h2>
+
+<p>进行 <code>git pull --rebase</code> 操作后，e 和 f 在 develop 分支上已经变成了 e&rsquo; 和 f&rsquo;，它们实际上是同一个修改，但 commit hash 发生了改变。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">                             HEAD
+                              |
+    a -&gt; b -&gt; c -&gt; d -&gt; e&#39; -&gt; f&#39;</code></pre></td></tr></table>
+</div>
+</div>
+<p>这时候我们再合并 A，就自然变成了上面的结果了。</p>
+
+<h2 id="解决">解决</h2>
+
+<ul>
+<li>避免重复合并同一个分支（master 合并 develop 分支除外）。</li>
+<li>进行 merge 操作之前先同步服务端分支。</li>
+<li>用 merge 代替 rebase。</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">scarletsky</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-05-13
+        <a href="/commit/f55df5ba9f9c3357940e59c01d30985414967dab" title="feat: add git misoperations">(f55df5b)</a>
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/2020/05/23/games101-notes-linear-algebra/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Games101 笔记 —— 线性代数</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/2020/01/13/manage-progress/">
+            <span class="next-text nav-default">JavaScript 进度管理</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="scarletsky/scarletsky.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:scarletsky1025@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/scarletsky" class="iconfont icon-github" title="github"></a>
+  <a href="https://scarletsky.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>scarletsky</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

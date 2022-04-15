@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Games101 笔记 —— 变换 - scarletsky</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="scarletsky" /><meta name="description" content="简介 本文《GAMES101-现代计算机图形学入门》系列教程的课程笔记，仅用于个人学习使用。 二维变换 二维变换是指二维在平面中进行的变换，一个二" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.74.3 with theme even" />
+
+
+<link rel="canonical" href="https://scarletsky.github.io/2020/06/09/games101-notes-transformation/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.2e81bbed97b8b282c1aeb57488cc71c8d8c8ec559f3931531bd396bf31e0d4dd.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Games101 笔记 —— 变换" />
+<meta property="og:description" content="简介 本文《GAMES101-现代计算机图形学入门》系列教程的课程笔记，仅用于个人学习使用。 二维变换 二维变换是指二维在平面中进行的变换，一个二" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://scarletsky.github.io/2020/06/09/games101-notes-transformation/" />
+<meta property="article:published_time" content="2020-05-28T17:53:57+08:00" />
+<meta property="article:modified_time" content="2021-08-23T16:34:46+08:00" />
+<meta itemprop="name" content="Games101 笔记 —— 变换">
+<meta itemprop="description" content="简介 本文《GAMES101-现代计算机图形学入门》系列教程的课程笔记，仅用于个人学习使用。 二维变换 二维变换是指二维在平面中进行的变换，一个二">
+<meta itemprop="datePublished" content="2020-05-28T17:53:57+08:00" />
+<meta itemprop="dateModified" content="2021-08-23T16:34:46+08:00" />
+<meta itemprop="wordCount" content="4979">
+
+
+
+<meta itemprop="keywords" content="games101," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Games101 笔记 —— 变换"/>
+<meta name="twitter:description" content="简介 本文《GAMES101-现代计算机图形学入门》系列教程的课程笔记，仅用于个人学习使用。 二维变换 二维变换是指二维在平面中进行的变换，一个二"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">scarletsky.github.io</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">scarletsky.github.io</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Games101 笔记 —— 变换</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-06-09 </span>
+        
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#简介">简介</a></li>
+<li><a href="#二维变换">二维变换</a>
+<ul>
+<li><a href="#缩放">缩放</a></li>
+<li><a href="#旋转">旋转</a></li>
+<li><a href="#线性变换">线性变换</a></li>
+<li><a href="#平移">平移</a></li>
+<li><a href="#齐次坐标">齐次坐标</a></li>
+<li><a href="#逆变换">逆变换</a></li>
+<li><a href="#仿射变换">仿射变换</a></li>
+<li><a href="#组合变换">组合变换</a></li>
+<li><a href="#分解复杂变换">分解复杂变换</a></li>
+</ul></li>
+<li><a href="#三维变换">三维变换</a>
+<ul>
+<li><a href="#正交矩阵">正交矩阵</a></li>
+<li><a href="#观测变换-viewing-transformation">观测变换 (Viewing Transformation)</a></li>
+<li><a href="#视图变换">视图变换</a></li>
+<li><a href="#投影变换">投影变换</a>
+<ul>
+<li><a href="#正交投影">正交投影</a></li>
+<li><a href="#透视投影">透视投影</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#作业">作业</a>
+<ul>
+<li><a href="#基础">基础</a></li>
+</ul></li>
+<li><a href="#参考资料">参考资料</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h1 id="简介">简介</h1>
+
+<p>本文《GAMES101-现代计算机图形学入门》系列教程的课程笔记，仅用于个人学习使用。</p>
+
+<h1 id="二维变换">二维变换</h1>
+
+<p>二维变换是指二维在平面中进行的变换，一个二维的点经过变换后会得到变成另一个点（一个新的坐标）。</p>
+
+<h2 id="缩放">缩放</h2>
+
+<p><img src="./2d_scale.png" alt="" /></p>
+
+<p>缩放是指点 $ (x_0, y_0) $ 经过缩放因子 $ S(x, y) $ 变换之后形成新的点 $ (x_1, y_1) $，它们间的关系是：</p>
+
+<p>$$
+x_1 = S_x \times x_0
+$$</p>
+
+<p>$$
+y_1 = S_y \times y_0
+$$</p>
+
+<p>写成矩阵的形式就是：</p>
+
+<p>$$
+\begin{bmatrix} x_1 \\ y_1 \end{bmatrix} =
+\begin{bmatrix} S_x &amp; 0 \\ 0 &amp; S_y \end{bmatrix}
+\begin{bmatrix} x_0 \\ y_0 \end{bmatrix}
+$$</p>
+
+<p><strong>镜像</strong>是一个非常常见的缩放变换，只需要把缩放因子变成负数即可实现某个方向的镜像。如当缩放因子是 $ (-1, 1) $ 时，经过缩放变换之后的图形就是以 Y 轴为对称轴的镜像。</p>
+
+<h2 id="旋转">旋转</h2>
+
+<p><img src="./2d_rotation.png" alt="" /></p>
+
+<p>旋转是指绕一点作为旋转中心，旋转 $ \theta $ 角度的变换。 如上图所示，该正方形绕原点旋转了 $ \theta $ 角度。假设正方形的边长为 1，那么我们很容易可以得到如下的关系：</p>
+
+<p>$$
+\begin{bmatrix} x_1 \\ y_1 \end{bmatrix} =
+\begin{bmatrix} A &amp; B \\ C &amp; D \end{bmatrix}
+\begin{bmatrix} x_0 \\ y_0 \end{bmatrix}
+$$</p>
+
+<p>对于右下角的点，变换前的坐标是 $ (1, 0) $，变换后的坐标是 $ (cos \theta, sin \theta) $， 我们可以得到如下的关系：</p>
+
+<p>$$
+\begin{bmatrix} cos \theta \\ sin \theta \end{bmatrix} =
+\begin{bmatrix} A &amp; B \\ C &amp; D \end{bmatrix}
+\begin{bmatrix} 1 \\ 0 \end{bmatrix}
+$$</p>
+
+<p>$$
+cos \theta = A \times 1 + B \times 0 = A
+$$</p>
+
+<p>$$
+sin \theta = C \times 1 + D \times 0 = C
+$$</p>
+
+<p>同理，对于左上角的点，变换前的坐标为 $ (0, 1) $，变换后的坐标为 $ (-sin \theta, cos \theta) $，我们同样可以得到如下的关系：</p>
+
+<p>$$
+\begin{bmatrix} -sin \theta \\ cos \theta \end{bmatrix} =
+\begin{bmatrix} A &amp; B \\ C &amp; D \end{bmatrix}
+\begin{bmatrix} 0 \\ 1 \end{bmatrix}
+$$</p>
+
+<p>$$
+-sin \theta = A \times 0 + B \times 1 = B
+$$</p>
+
+<p>$$
+cos \theta = C \times 0 + D \times 1 = D
+$$</p>
+
+<p>这样我们就得到了旋转矩阵：</p>
+
+<p>$$
+R_\theta = \begin{bmatrix} cos \theta &amp; -sin \theta \\ sin \theta &amp; cos \theta \end{bmatrix}
+$$</p>
+
+<h2 id="线性变换">线性变换</h2>
+
+<p>通过上面的例子我们可以发现，缩放和旋转都能以线性变换的形式来表示，即：</p>
+
+<p>$$
+x_1 = ax_0 + by_0
+$$</p>
+
+<p>$$
+y_1 = cx_0 + dy_0
+$$</p>
+
+<p>以矩阵的形式来表示即：</p>
+
+<p>$$
+\begin{bmatrix} x_1 \\ y_1 \end{bmatrix} =
+\begin{bmatrix} A &amp; B \\ C &amp; D \end{bmatrix}
+\begin{bmatrix} x_0 \\ y_0 \end{bmatrix}
+$$</p>
+
+<p>如果变换可以通过以矩阵M 与点相乘然后得到一个新的点的话，那么这种变换就可以称为是线性变换。</p>
+
+<h2 id="平移">平移</h2>
+
+<p><img src="./2d_translate.png" alt="" /></p>
+
+<p>平移就是把 $ (x, y) $ 移动一段距离 $ (T_x, T_y) $ 然后得到一个新的坐标，即：</p>
+
+<p>$$
+x_1 = x_0 + T_x
+$$</p>
+
+<p>$$
+y_1 = y_0 + T_y
+$$</p>
+
+<h2 id="齐次坐标">齐次坐标</h2>
+
+<p>观察平移的公式后可以发现，我们不能像缩放和旋转那样写出一个类似的平移矩阵。我们必须把带有平移的变换写成如下的形式：</p>
+
+<p>$$
+\begin{bmatrix} x_1 \\ y_1 \end{bmatrix} =
+\begin{bmatrix} A &amp; B \\ C &amp; D \end{bmatrix}
+\begin{bmatrix} x_0 \\ y_0 \end{bmatrix}
++
+\begin{bmatrix} T_x \\ T_y \end{bmatrix}
+$$</p>
+
+<p>我们希望有一个工具来统一所有变换，这个工具就是 —— 齐次坐标。</p>
+
+<p>齐次坐标是再给点、向量增加一个 w 维度：</p>
+
+<ul>
+<li>2D 点： $ (x, y, 1) $</li>
+<li>2D 向量： $ (x, y, 0) $</li>
+</ul>
+
+<p>当点、向量增加一个 w 纬度之后，我们就可以把上述带有平移的变换写成如下的形式：</p>
+
+<p>$$
+\begin{bmatrix} x_1 \\ y_1 \\ w_1 \end{bmatrix} =
+\begin{bmatrix} A &amp; B &amp; T_x \\ C &amp; D &amp; T_y \\ 0 &amp; 0 &amp; 1 \end{bmatrix}
+\begin{bmatrix} x_0 \\ y_0 \\ w_0 \end{bmatrix}
+$$</p>
+
+<p>因此，在齐次坐标下，我们就可以用一个矩阵来同时表示平移、旋转、缩放三种变换了。</p>
+
+<p>并且，由于向量具有平移不变性，因此 w 为 0 的时候刚好能保证平移矩阵与向量相乘时，w 分量依然保持 0，如：</p>
+
+<p>$$
+\begin{bmatrix} x_1 \\ y_1 \\ w_1 \end{bmatrix} =
+\begin{bmatrix} 1 &amp; 0 &amp; T_x \\ 0 &amp; 1 &amp; T_y \\ 0 &amp; 0 &amp; 1 \end{bmatrix}
+\begin{bmatrix} x_0 \\ y_0 \\ 0 \end{bmatrix} =
+\begin{bmatrix} x_0 + T_x \\ y_0 + T_y \\ 0 \end{bmatrix}
+$$</p>
+
+<p>另外，对于 w 分量，还有些相关的结论：</p>
+
+<ul>
+<li>向量 + 向量 = 向量
+
+<ul>
+<li>因为 $ w_1 + w_2 = 0 $</li>
+</ul></li>
+<li>点 - 点 = 向量
+
+<ul>
+<li>因为 $ w_1 - w_2 = 0 $</li>
+</ul></li>
+<li>点 + 向量 = 点
+
+<ul>
+<li>因为 $ w_1 + w_2 = 1 $</li>
+</ul></li>
+<li>点 + 点 = 这两点的中点
+
+<ul>
+<li>因为 $ w_1 + w_2 = 2 $，在齐次坐标下，点的 w 分量为 1，所以结果要除以 2，得到的结果正是两点的中点位置</li>
+</ul></li>
+</ul>
+
+<h2 id="逆变换">逆变换</h2>
+
+<p><img src="./2d_inverse.png" alt="" /></p>
+
+<p>逆变换是指把已应用的变换还原的变换，在数学上是指变换矩阵的逆矩阵 $ M^{-1} $。</p>
+
+<h2 id="仿射变换">仿射变换</h2>
+
+<p>$$
+仿射变换 = 线性变换 + 平移
+$$</p>
+
+<p>$$
+\begin{bmatrix} x_1 \\ y_1 \end{bmatrix} =
+\begin{bmatrix} A &amp; B \\ C &amp; D \end{bmatrix}
+\begin{bmatrix} x_0 \\ y_0 \end{bmatrix}
++
+\begin{bmatrix} T_x \\ T_y \end{bmatrix}
+$$</p>
+
+<p>其对应的齐次坐标的形式为：</p>
+
+<p>$$
+\begin{bmatrix} x_1 \\ y_1 \\ 1 \end{bmatrix} =
+\begin{bmatrix} A &amp; B &amp; T_x \\ C &amp; D &amp; T_y \\ 0 &amp; 0 &amp; 1 \end{bmatrix}
+\begin{bmatrix} x_0 \\ y_0 \\ 1 \end{bmatrix}
+$$</p>
+
+<p>相对于仿射变换，齐次坐标有如下优点：</p>
+
+<ul>
+<li>可以用一个矩阵来表示平移、旋转、缩放三种变换。</li>
+<li>逆变换可以通过逆矩阵来表示。</li>
+</ul>
+
+<p>我们可以把平移、旋转、缩放三种变换分别以齐次坐标的形式表示：</p>
+
+<p>$$
+T_{(x, y)} = \begin{bmatrix} 0 &amp; 0 &amp; T_x \\ 0 &amp; 0 &amp; T_y \\ 0 &amp; 0 &amp; 1 \end{bmatrix}
+$$</p>
+
+<p>$$
+R_{(\theta)} = \begin{bmatrix} cos \theta &amp; -sin \theta &amp; 0 \\ sin \theta &amp; cos \theta &amp; 0 \\ 0 &amp; 0 &amp; 1 \end{bmatrix}
+$$</p>
+
+<p>$$
+S_{(x, y)} = \begin{bmatrix} S_x &amp; 0 &amp; 0 \\ 0 &amp; S_y &amp; 0 \\ 0 &amp; 0 &amp; 1 \end{bmatrix}
+$$</p>
+
+<p><strong>在仿射变换下，变换的先后顺序是先进行线性变换，然后再进行平移变换。</strong></p>
+
+<h2 id="组合变换">组合变换</h2>
+
+<p>矩阵乘法没有交换律，所以两种变换是不能调换顺序的。
+即先平移再旋转并不等于先旋转再平移的结果。因此，应用变换的顺序很重要。</p>
+
+<p>而在应用变换的时候，是根据从右往左的顺序来进行的。</p>
+
+<p>$$
+T \cdot R \cdot \begin{bmatrix} x \\ y \\ 1 \end{bmatrix}
+$$</p>
+
+<p>上面这个变换表示先进行旋转，然后再进行平移。</p>
+
+<p>矩阵乘法满足结合律，因此有：</p>
+
+<p>$$
+A_n( \cdots A_2( A_1 \cdot \begin{bmatrix} x \\ y \\ 1 \end{bmatrix} ) =
+A_n \cdots A_2 \cdot A_1 \cdot \begin{bmatrix} x \\ y \\ 1 \end{bmatrix}
+$$</p>
+
+<p>观察右边的式子，我们可以预先计算 $ T = A_n \cdots A_2 \cdot A_1 $，然后直接 $ T \cdot \begin{bmatrix} x \\ y \\ 1 \end{bmatrix} $ 即可。这是一种优化计算的手段。</p>
+
+<h2 id="分解复杂变换">分解复杂变换</h2>
+
+<p>默认情况下，旋转是绕原点进行的。如果想自定义旋转中心，可以通过如下的组合变换来实现：</p>
+
+<ol>
+<li>把旋转中心平移到原点</li>
+<li>进行旋转</li>
+<li>把旋转中心平移回原来的位置</li>
+</ol>
+
+<h1 id="三维变换">三维变换</h1>
+
+<p>三维变换与二维变换类似，只是多了一个 z 维度。在齐次坐标下，</p>
+
+<ul>
+<li>3D 点表示为 $ (x, y, z, 1) $</li>
+<li>3D 向量表示为 $ (x, y, z, 0) $</li>
+</ul>
+
+<p>通常，$ (x, y, z, w) $ 在 $ w \ne 0 $ 时表示为一个 3D 的点，它的坐标为 $ (x/w, y/w, z/w) $。</p>
+
+<p>我们会用一个 $ 4 \times 4 $ 的矩阵来表示三维变换：</p>
+
+<p>$$
+\begin{bmatrix} x_1 \\ y_1 \\ z_1 \\ 1 \end{bmatrix} =
+\begin{bmatrix} A &amp; B &amp; C &amp; T_x \\ D &amp; E &amp; F &amp; T_y \\ G &amp; H &amp; I &amp; T_z  \\ 0 &amp; 0 &amp; 0 &amp; 1 \end{bmatrix}
+\begin{bmatrix} x_0 \\ y_0 \\ z_0 \\ 1 \end{bmatrix}
+$$</p>
+
+<h2 id="正交矩阵">正交矩阵</h2>
+
+<p>仔细观察一下旋转矩阵，和它的逆矩阵、转置矩阵，我们会发现一个有趣的现象：</p>
+
+<p>$$
+R_\theta = \begin{bmatrix} cos \theta &amp; -sin \theta \\ sin \theta &amp; cos \theta \end{bmatrix}
+$$</p>
+
+<p>$$
+R_{-\theta} = \begin{bmatrix} cos \theta &amp; sin \theta \\ -sin \theta &amp; cos \theta \end{bmatrix}
+$$</p>
+
+<p>$$
+{R_\theta}^T = \begin{bmatrix} cos \theta &amp; sin \theta \\ -sin \theta &amp; cos \theta \end{bmatrix}
+$$</p>
+
+<div>
+$$
+R_{-\theta} = {R_\theta}^T
+$$
+</div>
+
+<p>旋转矩阵的逆矩阵与它的转置矩阵相同。我们可以利用旋转矩阵的这个性质来求它的逆矩阵。</p>
+
+<p>另外，当一个矩阵的逆矩阵等于该矩阵的转置矩阵时，这个矩阵称为正交矩阵，因此旋转矩阵也是一个正交矩阵。</p>
+
+<h2 id="观测变换-viewing-transformation">观测变换 (Viewing Transformation)</h2>
+
+<p>观测变换是为了把三维空间变换成二维空间（屏幕），它由两部分组成：</p>
+
+<ul>
+<li>视图变换 (View Transformation)</li>
+<li>投影变换 (Projection Transformation)
+
+<ul>
+<li>正交投影</li>
+<li>透视投影</li>
+</ul></li>
+</ul>
+
+<h2 id="视图变换">视图变换</h2>
+
+<p>摄像机与物体的相对距离，会影响最终图像的效果。换句话说，无论是移动物体还是移动摄像机，只要保持两者的相对距离不变，那么我们就能得到相同的图像。</p>
+
+<p>因此，我们可以把摄像机放到原点位置，朝向 -Z 方向，其他物体与摄像机保持相对位置不变，我们就能得到与世界空间下拍摄到的一样的图像了。</p>
+
+<p>视图变换是用来把世界空间变换成摄像机空间。如下图所示：</p>
+
+<p><img src="./camera_world_space.png" alt="" /></p>
+
+<p>(世界空间)</p>
+
+<p><img src="./camera_view_space.png" alt="" /></p>
+
+<p>(摄像机空间)</p>
+
+<p>要确定视图变换，我们需要确定三个变量：</p>
+
+<ol>
+<li>摄像机的位置</li>
+<li>目标位置</li>
+<li>摄像机的上方向</li>
+</ol>
+
+<p>如何世界空间下的摄像机变换成视图空间呢？我们可以通过以下步骤：</p>
+
+<ol>
+<li>把摄像机移动到原点</li>
+<li>把摄像机的上方向调整成与 Y 一致，并让摄像机往 -Z 方向看</li>
+</ol>
+
+<p>这些步骤就是视图变换（View Transformation）了，即：</p>
+
+<div>
+$$
+M_{view} = R_{view} \cdot T_{view}
+$$
+</div>
+
+<p>假设摄像机所在的世界坐标是 $ (x, y, z) $，那么：</p>
+
+<div>
+$$
+T_{view} = \begin{bmatrix} 1 & 0 & 0 & -x \\\ 0 & 1 & 0 & -y \\\ 0 & 0 & 1 & -z \\\ 0 & 0 & 0 & 1 \end{bmatrix}
+$$
+</div>
+
+<p>假设摄像机的的上方向为 $ \hat t $，同时往 $ \hat g $ 方向看，由于 $ \hat e $、$ \hat t $、$ \hat g $ 是摄像机的本地坐标系，因此三者相互垂直，所有有：</p>
+
+<p>$$
+\hat e = \hat g \times \hat t
+$$</p>
+
+<p>接下来需要求 $ R_{view} $，它是一个把摄像机的本地坐标系旋转成标准直角坐标系的变换，直接计算会比较复杂。</p>
+
+<p>幸运的是，我们可以利用旋转矩阵是正交矩阵的特性，来求 $ R_{view} $。</p>
+
+<p>首先求它的逆矩阵：</p>
+
+<div>
+$$
+{R_{view}}^{-1}
+\begin{bmatrix}
+x_{\hat g \times \hat t} & x_t & x_{-g} & 0 \\\ 
+y_{\hat g \times \hat t} & y_t & y_{-g} & 0 \\\ 
+z_{\hat g \times \hat t} & z_t & z_{-g} & 0 \\\ 
+0 & 0 & 0 & 1
+\end{bmatrix}
+$$
+</div>
+
+<p>然后再进行一次转置操作即可：</p>
+
+<div>
+$$
+R_{view} = {{R_{view}}^{-1}}^T =
+\begin{bmatrix}
+x_{\hat g \times \hat t} & y_{\hat g \times \hat t} & z_{\hat g \times \hat t} & 0 \\\
+x_t & y_t & z_t & 0 \\\
+x_{-g} & y_{-g} & z_{-g} & 0 \\\
+0 & 0 & 0 & 1
+\end{bmatrix}
+$$
+</div>
+
+<p>最后，我们就可以得到视图矩阵：</p>
+
+<div>
+$$
+M_{view} =
+R_{view} \cdot T_{view} =
+\begin{bmatrix}
+x_{\hat g \times \hat t} & y_{\hat g \times \hat t} & z_{\hat g \times \hat t} & -x \\\
+x_t & y_t & z_t & -y \\\
+x_{-g} & y_{-g} & z_{-g} & -z \\\
+0 & 0 & 0 & 1
+\end{bmatrix}
+$$
+</div>
+
+<h2 id="投影变换">投影变换</h2>
+
+<p>投影矩阵的作用是把三维空间变换成二维空间，即图片。</p>
+
+<p>常见的投影有两种：</p>
+
+<ul>
+<li>正交投影（不会出现近大远小的现象）</li>
+<li>透视投影（会出现近大远小的现象，透视投影下的平行线最终会汇聚在一点）</li>
+</ul>
+
+<h3 id="正交投影">正交投影</h3>
+
+<p><img src="./orthographic_projection.png" alt="" /></p>
+
+<p>在图形学中，正交投影是把 $ [l, r] \times [b, t] \times [f, n] $ 构成的空间压缩成 $ [-1, 1]^3 $ 的立方体中。</p>
+
+<p>其中：</p>
+
+<ul>
+<li>l = left</li>
+<li>r = right</li>
+<li>b = bottom</li>
+<li>t = top</li>
+<li>f = far</li>
+<li>n = near</li>
+</ul>
+
+<p><strong>注意：因为摄像机是朝 -Z 方向的，所以 n &gt; f。</strong></p>
+
+<p>要确定正交投影矩阵，需要经过以下步骤：</p>
+
+<ol>
+<li>把空间平移到原点（空间的中心与原点重合）</li>
+<li>把空间压缩成 $ [-1, 1]^3 $</li>
+</ol>
+
+<p>即：</p>
+
+<div>
+$$
+M_{ortho} = S_{ortho} \cdot T_{ortho}
+$$
+</div>
+
+<p>由于我们知道空间的六个面，因此这个空间的中心就是：$ (\frac {l + r} 2, \frac {b + t} 2, \frac {f + n} 2) $，那么就有：</p>
+
+<div>
+$$
+T_{ortho} =
+\begin{bmatrix}
+1 & 0 & 0 & -{\frac {r + l} 2} \\\
+0 & 1 & 0 & -{\frac {t + b} 2} \\\
+0 & 0 & 1 & -{\frac {n + f} 2} \\\
+0 & 0 & 0 & 1
+\end{bmatrix}
+$$
+</div>
+
+<p>下一步就是压缩空间了，这一步骤相当于进行一次缩放，把当前空间缩放到大小为 2 的立方体。</p>
+
+<p>以空间的 X 方向为例，其长度为 $ r - l $，因此 X 方向的缩放因子就是:</p>
+
+<p>$$
+(r - l) \times S_x = 2
+$$</p>
+
+<p>$$
+S_x = \frac 2 {r - l}
+$$</p>
+
+<p>同理可求出 $ S_y $ 和 $ S_z $，然后得到：</p>
+
+<div>
+$$
+S_{ortho} =
+\begin{bmatrix}
+\frac 2 {r - l} & 0 & 0 & 0 \\\
+0 & \frac 2 {t - b} & 0 & 0 \\\
+0 & 0 & \frac 2 {n - f} & 0 \\\
+0 & 0 & 0 & 1
+\end{bmatrix}
+$$
+</div>
+
+<p>最后，正交投影矩阵为：</p>
+
+<div>
+$$
+M_{ortho} =
+S_{ortho} \cdot T_{ortho} =
+\begin{bmatrix}
+\frac 2 {r - l} & 0 & 0 & -{\frac {r + l} {r - l}} \\\
+0 & \frac 2 {t - b} & 0 & -{\frac {t + b} {t - b}} \\\
+0 & 0 & \frac 2 {n - f} & -{\frac {n + f} {n - f}} \\\
+0 & 0 & 0 & 1
+\end{bmatrix}
+$$
+</div>
+
+<h3 id="透视投影">透视投影</h3>
+
+<p><img src="./perspective_projection.png" alt="" /></p>
+
+<p>透视投影与正交投影类似，也是经过类似的步骤：</p>
+
+<ol>
+<li>把空间平移到原点</li>
+<li>把空间压缩成长方体（近平面不变，压缩远平面）</li>
+<li>把空间压缩成 $ [-1, 1]^3 $ 的立方体（进行一次正交投影）</li>
+</ol>
+
+<p>相比正交投影，透视投影多了一个步骤，就是把视锥体变换成长方体，这个变换暂且叫做 $ M_{p-&gt;o} $。
+要计算这个变换，我们需要先知道这个变换过程发生了什么。</p>
+
+<p>下图是 YZ 平面的截面：</p>
+
+<p><img src="./perspective_projection_similar_triangle.png" alt="" /></p>
+
+<p>经过压缩后，对于 y 坐标，空间中的一点 $ (x, y, z) $ 会变成 $ (x, y^{\prime}, z) $，根据相似三角形的性质，我们会得到如下的等式：</p>
+
+<p>$$
+\frac n z = \frac {y^{\prime}} y
+$$</p>
+
+<p>$$
+y^{\prime} = \frac n z y
+$$</p>
+
+<p>同理，对于 x 坐标，我们也能得到类似的等式：</p>
+
+<p>$$
+x^{\prime} = \frac n z x
+$$</p>
+
+<p>然后，我们就能得到如下的结果：</p>
+
+<div>
+$$
+M_{persp -> ortho}
+
+\begin{bmatrix}
+x \\\
+y \\\
+z \\\
+1
+\end{bmatrix}
+
+=
+
+\begin{bmatrix}
+\frac {nx} z \\\
+\frac {ny} z \\\
+unknow \\\
+1
+\end{bmatrix}
+$$
+</div>
+
+<p>再稍微变换一下写法（乘以z），我们能得到：</p>
+
+<div>
+$$
+M_{persp -> ortho}
+
+\begin{bmatrix}
+x \\\
+y \\\
+z \\\
+1
+\end{bmatrix}
+
+=
+
+\begin{bmatrix}
+nx \\\
+ny \\\
+unknow \\\
+z
+\end{bmatrix}
+$$
+</div>
+
+<p>计算一下 $ M_{persp -&gt; ortho} $，矩阵的第一行，可以得到：</p>
+
+<p>$$
+ax + by + cz + d = nx
+$$</p>
+
+<p>于是有</p>
+
+<p>$$
+a = n
+$$</p>
+
+<p>$$
+b = 0
+$$</p>
+
+<p>$$
+c = 0
+$$</p>
+
+<p>$$
+d = 0
+$$</p>
+
+<p>我们可以用同样的方法去计算矩阵的其它行，于是就能得到矩阵的雏形：</p>
+
+<div>
+$$
+M_{persp -> ortho} =
+\begin{bmatrix}
+n & 0 & 0 & 0 \\\
+0 & n & 0 & 0 \\\
+? & ? & ? & ? \\\
+0 & 0 & 1 & 0
+\end{bmatrix}
+$$
+</div>
+
+<p>矩阵的第三行是表示 z 方向的变换的，而我们知道有两个事实：</p>
+
+<ul>
+<li>任何在近平面的点，都不会发生变化，即：</li>
+</ul>
+
+<div>
+$$
+\begin{bmatrix}
+? & ? & ? & ?
+\end{bmatrix}
+
+\begin{bmatrix}
+x \\\
+y \\\
+n \\\
+1
+\end{bmatrix}
+
+=
+
+\begin{bmatrix}
+x \\\
+y \\\
+n \\\
+1
+\end{bmatrix}
+
+==
+
+\begin{bmatrix}
+nx \\\
+ny \\\
+n^2 \\\
+n
+\end{bmatrix}
+$$
+</div>
+
+<p>和刚才一样代入计算（因为刚才乘以过 z，所以右边要用 $ n^2 $，下面的 $ f^2 $ 同理）：</p>
+
+<p>$$
+ax + by + cn + d = n^2
+$$</p>
+
+<p>于是得到矩阵第三行的四个元素分别是：</p>
+
+<p>$$
+\begin{bmatrix}
+0 &amp; 0 &amp; A &amp; B
+\end{bmatrix}
+$$</p>
+
+<ul>
+<li>任何在远平面上的店，z 都不会发生变化。我们取远平片中的一个中心点 $ (0, 0, f, 1) $ ，它在空间压缩前后都不会发生变化，那么：</li>
+</ul>
+
+<div>
+$$
+\begin{bmatrix}
+0 & 0 & A & B
+\end{bmatrix}
+
+\begin{bmatrix}
+0 \\\
+0 \\\
+f \\\
+1
+\end{bmatrix}
+
+= 
+
+\begin{bmatrix}
+0 \\\
+0 \\\
+f \\\
+1
+\end{bmatrix}
+
+==
+
+\begin{bmatrix}
+0 \\\
+0 \\\
+f^2 \\\
+f
+\end{bmatrix}
+$$
+</div>
+
+<p>联立方程组：</p>
+
+<p>$$
+An + B = n^2
+$$</p>
+
+<p>$$
+Af + B = f^2
+$$</p>
+
+<p>解得：</p>
+
+<p>$$
+A = n + f
+$$</p>
+
+<p>$$
+B = -nf
+$$</p>
+
+<p>因此，我们要求的矩阵为：</p>
+
+<div>
+$$
+M_{persp -> ortho}
+
+=
+
+\begin{bmatrix}
+n & 0 & 0 & 0 \\\
+0 & n & 0 & 0 \\\
+0 & 0 & n + f & -nf \\\
+0 & 0 & 1 & 0
+\end{bmatrix}
+$$
+</div>
+
+<p>所以，投影矩阵为：</p>
+
+<div>
+$$
+M_{persp} = M_{ortho} M_{persp -> ortho}
+$$
+</div>
+
+<p>最后的问题就是 $ M_{ortho} $ 了。对于这个正交投影，我们只知道 $ [f, n] $，还缺少 $ [l, r] $ 和 $ [b, t] $，但我们可以通过其他途径来计算出这些需要的值。</p>
+
+<p>对于透视投影，还有两个重要的概念，那就是 <code>field of view(fov)</code> 和 <code>aspect ratio</code>。</p>
+
+<p><img src="./fov_and_aspect_ratio.png" alt="" /></p>
+
+<p><code>fov</code> 是指视野范围，分为 <code>fovY</code> 和 <code>fovX</code>，两者可以相互推导。</p>
+
+<p><code>aspect ratio</code> 是指近平面的宽高比。</p>
+
+<p><img src="./fov_calculation.png" alt="" /></p>
+
+<p>根据三角函数，我们可以知道：</p>
+
+<p>$$
+tan {\frac {fovY} 2} = \frac t {|n|}
+$$</p>
+
+<p>另外，根据宽高比的定义，我们可以得出：</p>
+
+<p>$$
+aspect = \frac {width} {height} = \frac {2r} {2t} = \frac r t
+$$</p>
+
+<p>联立方程可得：</p>
+
+<p>$$
+t = |n| \cdot tan {\frac {fovY} 2}
+$$</p>
+
+<p>$$
+r = aspect \cdot t
+$$</p>
+
+<p>$$
+b = -t
+$$</p>
+
+<p>$$
+l = -r
+$$</p>
+
+<p>这样，我们就把所需要的值都计算出来了，直接带入上面的正交矩阵公式即可得到：</p>
+
+<h1 id="作业">作业</h1>
+
+<h2 id="基础">基础</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="c1">// main.cpp
+</span><span class="c1"></span><span class="cp">#include</span> <span class="cpf">&lt;cmath&gt;</span><span class="cp">
+</span><span class="cp"></span>
+<span class="k">constexpr</span> <span class="kt">double</span> <span class="n">MY_PI</span> <span class="o">=</span> <span class="mf">3.1415926</span><span class="p">;</span>
+<span class="k">constexpr</span> <span class="kt">double</span> <span class="n">DEG_TO_RAD</span> <span class="o">=</span> <span class="n">MY_PI</span> <span class="o">/</span> <span class="mf">180.0</span><span class="p">;</span>
+
+
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix4f</span> <span class="n">get_model_matrix</span><span class="p">(</span><span class="kt">float</span> <span class="n">rotation_angle</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix4f</span> <span class="n">model</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix4f</span><span class="o">::</span><span class="n">Identity</span><span class="p">();</span>
+
+    <span class="kt">float</span> <span class="n">rad</span> <span class="o">=</span> <span class="n">rotation_angle</span> <span class="o">*</span> <span class="n">DEG_TO_RAD</span><span class="p">;</span>
+    <span class="kt">float</span> <span class="n">sin_theta</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">rad</span><span class="p">);</span>
+    <span class="kt">float</span> <span class="n">cos_theta</span> <span class="o">=</span> <span class="n">cos</span><span class="p">(</span><span class="n">rad</span><span class="p">);</span>
+
+    <span class="n">model</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">=</span> <span class="n">cos_theta</span><span class="p">;</span>
+    <span class="n">model</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="o">-</span><span class="n">sin_theta</span><span class="p">;</span>
+    <span class="n">model</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">=</span> <span class="n">sin_theta</span><span class="p">;</span>
+    <span class="n">model</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="n">cos_theta</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="n">model</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix4f</span> <span class="n">get_projection_matrix</span><span class="p">(</span><span class="kt">float</span> <span class="n">eye_fov</span><span class="p">,</span> <span class="kt">float</span> <span class="n">aspect_ratio</span><span class="p">,</span>
+                                      <span class="kt">float</span> <span class="n">zNear</span><span class="p">,</span> <span class="kt">float</span> <span class="n">zFar</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix4f</span> <span class="n">projection</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix4f</span><span class="o">::</span><span class="n">Identity</span><span class="p">();</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix4f</span> <span class="n">ortho</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix4f</span><span class="o">::</span><span class="n">Identity</span><span class="p">();</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix4f</span> <span class="n">persp_to_ortho</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix4f</span><span class="o">::</span><span class="n">Identity</span><span class="p">();</span>
+
+    <span class="kt">float</span> <span class="n">n</span> <span class="o">=</span> <span class="n">zNear</span><span class="p">;</span>
+    <span class="kt">float</span> <span class="n">f</span> <span class="o">=</span> <span class="n">zFar</span><span class="p">;</span>
+    <span class="kt">float</span> <span class="n">t</span> <span class="o">=</span> <span class="n">n</span> <span class="o">*</span> <span class="n">tan</span><span class="p">((</span><span class="n">eye_fov</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">DEG_TO_RAD</span><span class="p">);</span>
+    <span class="kt">float</span> <span class="n">r</span> <span class="o">=</span> <span class="n">aspect_ratio</span> <span class="o">*</span> <span class="n">t</span><span class="p">;</span>
+    <span class="kt">float</span> <span class="n">b</span> <span class="o">=</span> <span class="o">-</span><span class="n">t</span><span class="p">;</span>
+    <span class="kt">float</span> <span class="n">l</span> <span class="o">=</span> <span class="o">-</span><span class="n">r</span><span class="p">;</span>
+
+    <span class="n">ortho</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">r</span> <span class="o">-</span> <span class="n">l</span><span class="p">);</span>
+    <span class="n">ortho</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">t</span> <span class="o">-</span> <span class="n">b</span><span class="p">);</span>
+    <span class="n">ortho</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">f</span><span class="p">);</span>
+    <span class="n">ortho</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="n">r</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="n">ortho</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">b</span> <span class="o">+</span> <span class="n">t</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="n">ortho</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">f</span> <span class="o">+</span> <span class="n">n</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+
+    <span class="n">persp_to_ortho</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">=</span> <span class="n">n</span><span class="p">;</span>
+    <span class="n">persp_to_ortho</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">n</span><span class="p">;</span>
+    <span class="n">persp_to_ortho</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="n">n</span> <span class="o">+</span> <span class="n">f</span><span class="p">;</span>
+    <span class="n">persp_to_ortho</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="n">f</span><span class="p">);</span>
+    <span class="n">persp_to_ortho</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">persp_to_ortho</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="n">projection</span> <span class="o">=</span> <span class="n">ortho</span> <span class="o">*</span> <span class="n">persp_to_ortho</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="n">projection</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="参考资料">参考资料</h1>
+
+<p><a href="https://www.bilibili.com/video/BV1X7411F744?p=3">Lecture 03 Transformation</a></p>
+
+<p><a href="https://www.bilibili.com/video/BV1X7411F744?p=4">Lecture 04 Transformation Cont.</a></p>
+
+<p><a href="https://www.bilibili.com/video/BV1X7411F744?p=5">Lecture 05 Rasterization 1 (Triangles)</a></p>
+
+<p><a href="https://openhome.cc/Gossip/WebGL/Rodrigues.html">Rodrigues 旋轉公式</a></p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">scarletsky</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2021-08-23
+        <a href="/commit/83b058bafc5f8959c92b9171799b2dc399616bcd" title="fix: ortho matrix again">(83b058b)</a>
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/games101/">games101</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/2020/06/10/games101-notes-rasterization/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Games101 笔记 —— 光栅化</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/2020/05/23/games101-notes-linear-algebra/">
+            <span class="next-text nav-default">Games101 笔记 —— 线性代数</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="scarletsky/scarletsky.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:scarletsky1025@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/scarletsky" class="iconfont icon-github" title="github"></a>
+  <a href="https://scarletsky.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>scarletsky</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

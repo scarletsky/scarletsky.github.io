@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>d3.js on scarletsky</title>
+    <link>https://scarletsky.github.io/tags/d3.js/</link>
+    <description>Recent content in d3.js on scarletsky</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 04 Jan 2015 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://scarletsky.github.io/tags/d3.js/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>D3.js 学习笔记2</title>
+      <link>https://scarletsky.github.io/2015/01/04/d3js-learning-2/</link>
+      <pubDate>Sun, 04 Jan 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/01/04/d3js-learning-2/</guid>
+      <description>Layout 和它的名字相比，D3 中的 Layout 并不会放任何东西在屏幕上。实际上，Layout 方法和可视化输出并没有直接关系。D3 Layout 会把你交给它的数据转换成更加</description>
+    </item>
+    
+    <item>
+      <title>D3.js 学习笔记1</title>
+      <link>https://scarletsky.github.io/2014/12/29/d3js-learning-1/</link>
+      <pubDate>Mon, 29 Dec 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2014/12/29/d3js-learning-1/</guid>
+      <description>基础操作 d3.select, d3.selectAll 选择元素 selection.append 在选择集合中添加元素 selection.data 为选择元素进行数据绑定，常与 enter 和 exit 一起使用 selection.data(data).enter 返回缺失元素集合 selection.data(data).exit 返回多余元素集合 selection.text 设置或获取选定元</description>
+    </item>
+    
+  </channel>
+</rss>

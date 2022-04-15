@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>JavaScript 利用 Blob 进行分片上传 - scarletsky</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="scarletsky" /><meta name="description" content="基本流程 用户选择文件 判断文件大小 如果文件小于限定文件大小，则直接上传 否则进行分片上传 分片流程 给定限定大小。 利用 Blob 对象的 slice 方法把文件分成 N 份。" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.74.3 with theme even" />
+
+
+<link rel="canonical" href="https://scarletsky.github.io/2015/01/27/javascript-upload-slice-file-using-blob/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.2e81bbed97b8b282c1aeb57488cc71c8d8c8ec559f3931531bd396bf31e0d4dd.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="JavaScript 利用 Blob 进行分片上传" />
+<meta property="og:description" content="基本流程 用户选择文件 判断文件大小 如果文件小于限定文件大小，则直接上传 否则进行分片上传 分片流程 给定限定大小。 利用 Blob 对象的 slice 方法把文件分成 N 份。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://scarletsky.github.io/2015/01/27/javascript-upload-slice-file-using-blob/" />
+<meta property="article:published_time" content="2015-01-27T17:28:00+00:00" />
+<meta property="article:modified_time" content="2019-04-29T17:56:08+08:00" />
+<meta itemprop="name" content="JavaScript 利用 Blob 进行分片上传">
+<meta itemprop="description" content="基本流程 用户选择文件 判断文件大小 如果文件小于限定文件大小，则直接上传 否则进行分片上传 分片流程 给定限定大小。 利用 Blob 对象的 slice 方法把文件分成 N 份。">
+<meta itemprop="datePublished" content="2015-01-27T17:28:00+00:00" />
+<meta itemprop="dateModified" content="2019-04-29T17:56:08+08:00" />
+<meta itemprop="wordCount" content="798">
+
+
+
+<meta itemprop="keywords" content="javascript,blob,upload," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="JavaScript 利用 Blob 进行分片上传"/>
+<meta name="twitter:description" content="基本流程 用户选择文件 判断文件大小 如果文件小于限定文件大小，则直接上传 否则进行分片上传 分片流程 给定限定大小。 利用 Blob 对象的 slice 方法把文件分成 N 份。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">scarletsky.github.io</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">scarletsky.github.io</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">JavaScript 利用 Blob 进行分片上传</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2015-01-27 </span>
+        <div class="post-category">
+            <a href="/categories/javascript/"> javascript </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#基本流程">基本流程</a></li>
+<li><a href="#分片流程">分片流程</a></li>
+<li><a href="#服务端处理流程">服务端处理流程</a></li>
+<li><a href="#代码实例">代码实例</a>
+<ul>
+<li><a href="#客户端代码-html">客户端代码 - html</a></li>
+<li><a href="#客户端代码-javascript">客户端代码 - JavaScript</a></li>
+<li><a href="#服务端代码-nodejs">服务端代码 - NodeJS</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h1 id="基本流程">基本流程</h1>
+
+<ul>
+<li><p>用户选择文件</p></li>
+
+<li><p>判断文件大小</p>
+
+<ul>
+<li><p>如果文件小于限定文件大小，则直接上传</p></li>
+
+<li><p>否则进行分片上传</p></li>
+</ul></li>
+</ul>
+
+<hr />
+
+<h1 id="分片流程">分片流程</h1>
+
+<ul>
+<li><p>给定限定大小。</p></li>
+
+<li><p>利用 <code>Blob</code> 对象的 <code>slice</code> 方法把文件分成 N 份。</p></li>
+
+<li><p>遍历 N 次，利用 <code>FormData</code> 创建需要提交的数据，上传数据。</p></li>
+</ul>
+
+<hr />
+
+<h1 id="服务端处理流程">服务端处理流程</h1>
+
+<ul>
+<li><p>接收数据</p></li>
+
+<li><p>判断数据总份数</p>
+
+<ul>
+<li><p>如果总份数为 1，则直接保存成文件，文件名不需要改变。保存完成后，直接返回信息给客户端。</p></li>
+
+<li><p>否则保存成文件时，文件名后缀名需要带上 .partX 来表示该文件为第几部分。</p></li>
+</ul></li>
+
+<li><p>判断已上传的数据是否等于总份数。</p>
+
+<ul>
+<li><p>如果相等，则合并文件。</p></li>
+
+<li><p>合并完成后，删除带有 .partX 的文件。</p></li>
+</ul></li>
+</ul>
+
+<hr />
+
+<h1 id="代码实例">代码实例</h1>
+
+<h2 id="客户端代码-html">客户端代码 - html</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;file&#34;</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;upload&#34;</span><span class="p">/&gt;</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="客户端代码-javascript">客户端代码 - JavaScript</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">uploadFile</span> <span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">blob</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">perFileSize</span> <span class="o">=</span> <span class="mi">2097152</span><span class="p">;</span> <span class="c1">// 2 * 1024 * 1024
+</span><span class="c1"></span>    <span class="kd">var</span> <span class="nx">blobParts</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">ceil</span><span class="p">(</span><span class="nx">blob</span><span class="p">.</span><span class="nx">size</span> <span class="o">/</span> <span class="nx">perFileSize</span><span class="p">);</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">blobParts</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">fd</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FormData</span><span class="p">();</span>
+            <span class="kd">var</span> <span class="nx">_blob</span> <span class="o">=</span> <span class="nx">blob</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="nx">i</span> <span class="o">*</span> <span class="nx">perFileSize</span><span class="p">,</span> <span class="p">(</span><span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="nx">perFileSize</span><span class="p">);</span>
+
+            <span class="nx">fd</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;_blob&#39;</span><span class="p">,</span> <span class="nx">_blob</span><span class="p">);</span>
+            <span class="nx">fd</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;filename&#39;</span><span class="p">,</span> <span class="nx">blob</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span>
+            <span class="nx">fd</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+            <span class="nx">fd</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;total&#39;</span><span class="p">,</span> <span class="nx">blobParts</span><span class="p">);</span>
+
+            <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+                <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;POST&#39;</span><span class="p">,</span>
+                <span class="nx">url</span><span class="o">:</span> <span class="nx">url</span><span class="p">,</span>
+                <span class="nx">data</span><span class="o">:</span> <span class="nx">fd</span><span class="p">,</span>
+                <span class="nx">processData</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+                <span class="nx">contentType</span><span class="o">:</span> <span class="kc">false</span>
+            <span class="p">}).</span><span class="nx">done</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;upload status: &#39;</span><span class="p">);</span>
+                <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;this is &#39;</span> <span class="o">+</span> <span class="p">(</span><span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;part, total &#39;</span> <span class="o">+</span> <span class="nx">blobParts</span> <span class="o">+</span> <span class="s1">&#39; part(s).&#39;</span><span class="p">);</span>
+
+                <span class="k">if</span> <span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">===</span> <span class="mi">200</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="nx">callback</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">res</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">}).</span><span class="nx">fail</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">callback</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="kc">null</span><span class="p">);</span>
+            <span class="p">});</span>
+        <span class="p">})(</span><span class="nx">i</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#upload&#39;</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;change&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">file</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">files</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+    <span class="nx">uploadFile</span><span class="p">(</span><span class="s1">&#39;/upload&#39;</span><span class="p">,</span> <span class="nx">file</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span> <span class="p">}</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;upload successfully!&#39;</span><span class="p">);</span>
+    <span class="p">});</span>
+<span class="p">});</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="服务端代码-nodejs">服务端代码 - NodeJS</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="c1">// Expressjs
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">multipart</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;connect-multiparty&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">multipartMiddleware</span> <span class="o">=</span> <span class="nx">multipart</span><span class="p">();</span>
+
+<span class="kd">var</span> <span class="nx">uploadDir</span> <span class="o">=</span> <span class="s1">&#39;./upload/&#39;</span><span class="p">;</span>
+
+<span class="c1">// 合并文件
+</span><span class="c1"></span><span class="kd">function</span> <span class="nx">mergeFiles</span><span class="p">(</span><span class="nx">fileName</span><span class="p">,</span> <span class="nx">fileParts</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">buffers</span> <span class="o">=</span> <span class="p">[];</span>
+
+    <span class="c1">// 获取各个部分的路径
+</span><span class="c1"></span>    <span class="kd">var</span> <span class="nx">filePartsPaths</span> <span class="o">=</span> <span class="nx">fileParts</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">path</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">uploadDir</span><span class="p">,</span> <span class="nx">name</span><span class="p">);</span>
+    <span class="p">});</span>
+
+    <span class="c1">// 获取各个 part 的 buffer，并保存到 buffers 中
+</span><span class="c1"></span>    <span class="nx">filePartsPaths</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">path</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">buffer</span> <span class="o">=</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="nx">path</span><span class="p">);</span>
+        <span class="nx">buffers</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">buffer</span><span class="p">);</span>
+    <span class="p">});</span>
+
+    <span class="c1">// 合并文件
+</span><span class="c1"></span>    <span class="kd">var</span> <span class="nx">concatBuffer</span> <span class="o">=</span> <span class="nx">Buffer</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">buffers</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">concatFilePath</span> <span class="o">=</span> <span class="nx">path</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">uploadDir</span><span class="p">,</span> <span class="nx">fileName</span><span class="p">);</span>
+    <span class="nx">fs</span><span class="p">.</span><span class="nx">writeFileSync</span><span class="p">(</span><span class="nx">concatFilePath</span><span class="p">,</span> <span class="nx">concatBuffer</span><span class="p">);</span>
+
+    <span class="c1">// 删除各个 part 的文件
+</span><span class="c1"></span>    <span class="nx">filePartsPaths</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">path</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">fs</span><span class="p">.</span><span class="nx">unlinkSync</span><span class="p">(</span><span class="nx">path</span><span class="p">);</span>
+    <span class="p">});</span>
+<span class="p">}</span>
+
+
+<span class="kd">function</span> <span class="nx">upload</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">method</span> <span class="o">===</span> <span class="s1">&#39;POST&#39;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">;</span>
+        <span class="kd">var</span> <span class="nx">_blobPath</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">files</span><span class="p">.</span><span class="nx">_blob</span><span class="p">.</span><span class="nx">path</span><span class="p">;</span>
+        <span class="kd">var</span> <span class="nx">fileName</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">filename</span><span class="p">;</span>
+        <span class="kd">var</span> <span class="nx">filePath</span><span class="p">;</span>
+        <span class="kd">var</span> <span class="nx">total</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">total</span><span class="p">);</span>
+
+        <span class="c1">// 处理文件路径
+</span><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="nx">total</span> <span class="o">===</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">filePath</span> <span class="o">=</span> <span class="nx">path</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">uploadDir</span><span class="p">,</span> <span class="nx">fileName</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">fileNameWithPart</span> <span class="o">=</span> <span class="nx">fileName</span> <span class="o">+</span> <span class="s1">&#39;.part&#39;</span> <span class="o">+</span> <span class="nx">data</span><span class="p">.</span><span class="nx">index</span><span class="p">;</span>
+            <span class="nx">filePath</span> <span class="o">=</span> <span class="nx">path</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">uploadDir</span><span class="p">,</span> <span class="nx">fileNameWithPart</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="c1">// 读取上传的数据，保存到指定路径
+</span><span class="c1"></span>        <span class="kd">var</span> <span class="nx">tmpBuffer</span> <span class="o">=</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="nx">_blobPath</span><span class="p">);</span>
+        <span class="nx">fs</span><span class="p">.</span><span class="nx">writeFileSync</span><span class="p">(</span><span class="nx">filePath</span><span class="p">,</span> <span class="nx">tmpBuffer</span><span class="p">);</span>
+
+        <span class="c1">// 判断是否上传完成
+</span><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="nx">total</span> <span class="o">===</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="mi">200</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="c1">// 获取指定目录下的所有文件名
+</span><span class="c1"></span>            <span class="kd">var</span> <span class="nx">filesInDir</span> <span class="o">=</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">readdirSync</span><span class="p">(</span><span class="nx">uploadDir</span><span class="p">);</span>
+            <span class="c1">// 找出指定文件名中带有 .part 的文件
+</span><span class="c1"></span>            <span class="kd">var</span> <span class="nx">fileParts</span> <span class="o">=</span> <span class="nx">filesInDir</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="nx">name</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">fileName</span><span class="p">.</span><span class="nx">length</span> <span class="o">+</span> <span class="mi">5</span><span class="p">)</span> <span class="o">===</span> <span class="p">(</span><span class="nx">fileName</span> <span class="o">+</span> <span class="s1">&#39;.part&#39;</span><span class="p">);</span>
+            <span class="p">});</span>
+
+            <span class="c1">// 判断是否需要合并文件
+</span><span class="c1"></span>            <span class="k">if</span> <span class="p">(</span><span class="nx">fileParts</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="nx">total</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">mergeFiles</span><span class="p">(</span><span class="nx">fileName</span><span class="p">,</span> <span class="nx">fileParts</span><span class="p">);</span>
+                <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="mi">200</span><span class="p">);</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="mi">204</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="mi">405</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/upload&#39;</span><span class="p">,</span> <span class="nx">multipartMiddleware</span><span class="p">,</span> <span class="nx">upload</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">scarletsky</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2019-04-29
+        <a href="/commit/70ad05d1fafe094cbb90ae0ef3be85fc06e15547" title="feat: migrate hexo to hugo">(70ad05d)</a>
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/javascript/">javascript</a>
+          <a href="/tags/blob/">blob</a>
+          <a href="/tags/upload/">upload</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/2015/03/15/html5-canvas-tricks/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">HTML5 Canvas 技巧</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/2015/01/26/javascript-tricks/">
+            <span class="next-text nav-default">JavaScript 常用技巧</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="scarletsky/scarletsky.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:scarletsky1025@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/scarletsky" class="iconfont icon-github" title="github"></a>
+  <a href="https://scarletsky.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>scarletsky</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

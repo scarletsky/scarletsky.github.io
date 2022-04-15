@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>webpack on scarletsky</title>
+    <link>https://scarletsky.github.io/tags/webpack/</link>
+    <description>Recent content in webpack on scarletsky</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 15 Jun 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://scarletsky.github.io/tags/webpack/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>记一次 webpack 打包 web worker 的 bug</title>
+      <link>https://scarletsky.github.io/2019/06/15/webpack-issue-in-webworker/</link>
+      <pubDate>Sat, 15 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2019/06/15/webpack-issue-in-webworker/</guid>
+      <description>前言 最近需要在项目中引入 web worker ，但是用 webpack 打包完后请求 worker 的时候总是会报 404 错误。 现象 这是一个很常见的配置： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 const WorkerPlugin =</description>
+    </item>
+    
+    <item>
+      <title>Webpack 打包含动态加载的类库</title>
+      <link>https://scarletsky.github.io/2019/02/19/webpack-bundling-libraries-with-dynamic-imports/</link>
+      <pubDate>Tue, 19 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2019/02/19/webpack-bundling-libraries-with-dynamic-imports/</guid>
+      <description>前言 在编写库的时候，我们有时候会希望按需加载某些依赖，例如如果代码的运行环境不支持某些功能的话，就加载相关的 Polyfill 。 webpack 作为当前最流行的打包工具，</description>
+    </item>
+    
+  </channel>
+</rss>

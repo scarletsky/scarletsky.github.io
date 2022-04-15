@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>material design on scarletsky</title>
+    <link>https://scarletsky.github.io/tags/material-design/</link>
+    <description>Recent content in material design on scarletsky</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 06 Jul 2015 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://scarletsky.github.io/tags/material-design/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Android Support Design Library 注意事项</title>
+      <link>https://scarletsky.github.io/2015/07/06/android-support-design-library-experience/</link>
+      <pubDate>Mon, 06 Jul 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/07/06/android-support-design-library-experience/</guid>
+      <description>CoordinatorLayout 这个新 Layout 是 FrameLayout 的加强版，用来协调各个子 view 的行为。最主要是用来实现 Toolbar 的折叠效果，也可以用来实现 FAB 自动消失的效果。 常见的用法如下： 1 2 3 4 5 6 7</description>
+    </item>
+    
+  </channel>
+</rss>

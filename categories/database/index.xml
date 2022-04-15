@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>database on scarletsky</title>
+    <link>https://scarletsky.github.io/categories/database/</link>
+    <description>Recent content in database on scarletsky</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 26 Apr 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://scarletsky.github.io/categories/database/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>PostgreSQL 中的客户端认证</title>
+      <link>https://scarletsky.github.io/2017/04/26/client-authentication-in-postgresql/</link>
+      <pubDate>Wed, 26 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2017/04/26/client-authentication-in-postgresql/</guid>
+      <description>简介 当客户端与数据库服务器连接时，它需要指定用哪个数据库用户的身份来连接。 PostgreSQL 为我们提供了很多种客户端认证的方式，我们可以根据自己的需要来选择</description>
+    </item>
+    
+    <item>
+      <title>「译」 MapReduce in MongoDB</title>
+      <link>https://scarletsky.github.io/2016/06/12/mapreduce-in-mongodb/</link>
+      <pubDate>Sun, 12 Jun 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/06/12/mapreduce-in-mongodb/</guid>
+      <description>在这篇文章里面，我们会演示如何在 MongoDB 中使用 MapReduce 操作。 我们会用 dummy-json 这个包来生成一些虚假的数据，然后用 Mongojs 如果想要快速看到结果，可以到 这里 里看看。 什么是</description>
+    </item>
+    
+    <item>
+      <title>Mongo Shell 使用过程中遇到的坑</title>
+      <link>https://scarletsky.github.io/2015/08/11/mongo-shell-trap/</link>
+      <pubDate>Tue, 11 Aug 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/08/11/mongo-shell-trap/</guid>
+      <description>编写 js 脚本 js 脚本中不能包含 use 关键字，需要用 $ mongo mydb xxx.js 这样的方式来指定数据库 不能用 console.log，需要用 print 代替 调用 ObjectId() 时需要确保传进去的值</description>
+    </item>
+    
+    <item>
+      <title>MongoDB 安全与认证</title>
+      <link>https://scarletsky.github.io/2014/10/25/mongodb-security-and-auth/</link>
+      <pubDate>Sat, 25 Oct 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2014/10/25/mongodb-security-and-auth/</guid>
+      <description>安全和认证 要开启安全检查，需要在启动 mongod 时添加 &amp;ndash;auth 选项 admin 数据库为管理员，在认证之后可以读写所有数据库，执行特定的管理命令。 在开启安全检查之前，一</description>
+    </item>
+    
+    <item>
+      <title>MongoDB 运维基础</title>
+      <link>https://scarletsky.github.io/2014/10/16/mongodb-operation-and-maintenance-basic/</link>
+      <pubDate>Thu, 16 Oct 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2014/10/16/mongodb-operation-and-maintenance-basic/</guid>
+      <description>可以试用 mongod --help 查看所有选项 启动 MongoDB: 1 2 3 4 mongod --dbpath xxx --port 1111 --config yyy.conf #for ubuntu service mongod start 使用配置文件获取配置信息(-f 或者 &amp;ndash;config): 1 mongod --config ~/.mongodb.conf 停止 MongoDB: 1 2 kill -2 pid (SIGINT) kill pid (SIGTEAM) 这两种方式</description>
+    </item>
+    
+  </channel>
+</rss>

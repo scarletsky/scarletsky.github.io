@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>「译」自己写的才是最好的样板 - scarletsky</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="scarletsky" /><meta name="description" content="样板应用非常有用，它们可以令你的下一个项目非常快的构建起来，并且提供了目录结构让你有章可循。 然而，它们有时候也会浪费大量的时间。开发者们通常" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.74.3 with theme even" />
+
+
+<link rel="canonical" href="https://scarletsky.github.io/2017/10/30/the-best-boilerplate-app-is-the-one-you-code-yourself/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.2e81bbed97b8b282c1aeb57488cc71c8d8c8ec559f3931531bd396bf31e0d4dd.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="「译」自己写的才是最好的样板" />
+<meta property="og:description" content="样板应用非常有用，它们可以令你的下一个项目非常快的构建起来，并且提供了目录结构让你有章可循。 然而，它们有时候也会浪费大量的时间。开发者们通常" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://scarletsky.github.io/2017/10/30/the-best-boilerplate-app-is-the-one-you-code-yourself/" />
+<meta property="article:published_time" content="2017-10-30T14:13:56+00:00" />
+<meta property="article:modified_time" content="2019-04-30T08:32:59+08:00" />
+<meta itemprop="name" content="「译」自己写的才是最好的样板">
+<meta itemprop="description" content="样板应用非常有用，它们可以令你的下一个项目非常快的构建起来，并且提供了目录结构让你有章可循。 然而，它们有时候也会浪费大量的时间。开发者们通常">
+<meta itemprop="datePublished" content="2017-10-30T14:13:56+00:00" />
+<meta itemprop="dateModified" content="2019-04-30T08:32:59+08:00" />
+<meta itemprop="wordCount" content="824">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="「译」自己写的才是最好的样板"/>
+<meta name="twitter:description" content="样板应用非常有用，它们可以令你的下一个项目非常快的构建起来，并且提供了目录结构让你有章可循。 然而，它们有时候也会浪费大量的时间。开发者们通常"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">scarletsky.github.io</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">scarletsky.github.io</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">「译」自己写的才是最好的样板</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2017-10-30 </span>
+        <div class="post-category">
+            <a href="/categories/technology/"> technology </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#我们应该用样板吗">我们应该用样板吗？</a></li>
+<li><a href="#但并不是所有项目都一样的">但并不是所有项目都一样的！</a></li>
+<li><a href="#保持更新">保持更新</a></li>
+<li><a href="#参考文档">参考文档</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<p>样板应用非常有用，它们可以令你的下一个项目非常快的构建起来，并且提供了目录结构让你有章可循。</p>
+
+<p>然而，它们有时候也会浪费大量的时间。开发者们通常都想知道样板的底层是怎么运行的，他们会浪费时间在研究上。除此之外，样板对你的需求来说要么太精简，要么太臃肿，这意味着你还需要花时间去添加基本的功能，或者删除那些没必要的东西。</p>
+
+<p>显然，这个过程本身并不是一件坏事，但这很容易会导致项目延期。你更应该把时间花在实现功能上！</p>
+
+<h2 id="我们应该用样板吗">我们应该用样板吗？</h2>
+
+<p>当然！我并不是说我们不应该用样板。恰恰相反，相比使用样板 ，从零开始构建项目消耗的时间会多得多。但你应该为你的项目使用正确的样板。什么样的样板才是正确的样板呢？我认为你自己写的那份才是正确的样板。 创建自己的样板并不只是让你更加了解正在使用的技术，它还会为你留下一些你已经了解内部原理的代码片段，并且可以应用到下一个项目当中。</p>
+
+<p>当然，你并不需要从零开始实现。你可以选你觉得有用的样板，然后自定义它来满足你或你的团队的需求。</p>
+
+<h2 id="但并不是所有项目都一样的">但并不是所有项目都一样的！</h2>
+
+<p>我同意，进一步来讲，不是所有环境、项目团队都是一样的。例如，你可能会在自己的 side projects 中使用和在办公室时完全不一样的技术栈。从我个人而言，我写了 4 个样板应用，分别应对不同的项目、同事、客户。 举个例子，我写了以下几个样板：</p>
+
+<ul>
+<li>一个单页的 VueJS 应用</li>
+<li>一个提供 API 的 Express 应用</li>
+<li>一个静态网站生成器(Hexo)</li>
+<li>等等</li>
+</ul>
+
+<p>你应该尽可能地标准化自己写的东西，不要包含太多业务相关的代码。没错，每个项目和应用场景都是不同的，但从一个你非常熟悉的样板来构建项目会让你跑得更快。</p>
+
+<h2 id="保持更新">保持更新</h2>
+
+<p>理想情况下，你应该让你的样板应用保持更新，确保你使用的依赖是最新的，并检查它们是否依然正常工作，同时要注意更新时的注意事项。慢慢地，你会知道哪些库工作正常，哪些不正常，可以用哪些库去取代它们。
+但不要更新得太频繁，否则我们就陷入了不断花时间去修复我们的样板应用的循环中。我们应该花更多的时间在那些能改变世界的项目上！</p>
+
+<p>总之，你需要平衡一切。</p>
+
+<h2 id="参考文档">参考文档</h2>
+
+<ul>
+<li><a href="https://mindthecode.com/the-best-boilerplate-app-is-the-one-you-code-yourself/?utm_source=wanqu.co&amp;utm_campaign=Wanqu+Daily&amp;utm_medium=website">https://mindthecode.com/the-best-boilerplate-app-is-the-one-you-code-yourself/?utm_source=wanqu.co&amp;utm_campaign=Wanqu+Daily&amp;utm_medium=website</a></li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">scarletsky</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2019-04-30
+        <a href="/commit/95a170dd24bf4b87af8e8309e95f31f929054a4a" title="chore: format markdown">(95a170d)</a>
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/2017/11/17/how-to-implement-promise-in-javascript/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Promise 实现原理</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/2017/09/29/org-mode-in-spacemacs/">
+            <span class="next-text nav-default">Org mode in Spacemacs</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="scarletsky/scarletsky.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:scarletsky1025@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/scarletsky" class="iconfont icon-github" title="github"></a>
+  <a href="https://scarletsky.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>scarletsky</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

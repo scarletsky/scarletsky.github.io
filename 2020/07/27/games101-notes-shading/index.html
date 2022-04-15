@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Games101 笔记 —— 着色 - scarletsky</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="scarletsky" /><meta name="description" content="简介 本文《GAMES101-现代计算机图形学入门》系列教程的课程笔记，仅用于个人学习使用。 着色（Shading） 在本课程中，着色指的是为物体" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.74.3 with theme even" />
+
+
+<link rel="canonical" href="https://scarletsky.github.io/2020/07/27/games101-notes-shading/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.2e81bbed97b8b282c1aeb57488cc71c8d8c8ec559f3931531bd396bf31e0d4dd.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Games101 笔记 —— 着色" />
+<meta property="og:description" content="简介 本文《GAMES101-现代计算机图形学入门》系列教程的课程笔记，仅用于个人学习使用。 着色（Shading） 在本课程中，着色指的是为物体" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://scarletsky.github.io/2020/07/27/games101-notes-shading/" />
+<meta property="article:published_time" content="2020-07-27T16:30:00+08:00" />
+<meta property="article:modified_time" content="2020-09-01T20:56:20+08:00" />
+<meta itemprop="name" content="Games101 笔记 —— 着色">
+<meta itemprop="description" content="简介 本文《GAMES101-现代计算机图形学入门》系列教程的课程笔记，仅用于个人学习使用。 着色（Shading） 在本课程中，着色指的是为物体">
+<meta itemprop="datePublished" content="2020-07-27T16:30:00+08:00" />
+<meta itemprop="dateModified" content="2020-09-01T20:56:20+08:00" />
+<meta itemprop="wordCount" content="8186">
+
+
+
+<meta itemprop="keywords" content="games101," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Games101 笔记 —— 着色"/>
+<meta name="twitter:description" content="简介 本文《GAMES101-现代计算机图形学入门》系列教程的课程笔记，仅用于个人学习使用。 着色（Shading） 在本课程中，着色指的是为物体"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">scarletsky.github.io</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">scarletsky.github.io</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Games101 笔记 —— 着色</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-07-27 </span>
+        
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#简介">简介</a></li>
+<li><a href="#着色-shading">着色（Shading）</a></li>
+<li><a href="#blinn-phong-着色模型">Blinn-Phong 着色模型</a>
+<ul>
+<li><a href="#漫反射-diffuse">漫反射 （Diffuse）</a></li>
+<li><a href="#高光-specular">高光（Specular）</a></li>
+<li><a href="#环境光-ambient">环境光（Ambient）</a></li>
+</ul></li>
+<li><a href="#着色频率">着色频率</a>
+<ul>
+<li><a href="#平面着色-flat">平面着色（Flat）</a></li>
+<li><a href="#高洛德着色-gouraud">高洛德着色（Gouraud）</a></li>
+<li><a href="#冯氏着色-phong">冯氏着色（Phong）</a></li>
+<li><a href="#对比">对比</a></li>
+</ul></li>
+<li><a href="#纹理映射-texture-mapping">纹理映射（Texture Mapping）</a></li>
+<li><a href="#重心坐标-barycentric-coordinates">重心坐标（Barycentric Coordinates）</a></li>
+<li><a href="#应用纹理">应用纹理</a>
+<ul>
+<li><a href="#纹素-texel">纹素（Texel）</a></li>
+<li><a href="#纹理放大-texture-magnification">纹理放大（Texture Magnification）</a></li>
+<li><a href="#纹理缩小-texture-minification">纹理缩小（Texture Minification）</a></li>
+<li><a href="#实际问题">实际问题</a></li>
+<li><a href="#mipmap">Mipmap</a></li>
+<li><a href="#各向异性过滤-anisotropic-filtering">各向异性过滤（Anisotropic Filtering）</a></li>
+</ul></li>
+<li><a href="#各式各样的纹理">各式各样的纹理</a>
+<ul>
+<li><a href="#球面贴图-spherical-map">球面贴图（Spherical Map）</a></li>
+<li><a href="#立方体贴图-cube-map">立方体贴图（Cube Map）</a></li>
+<li><a href="#凹凸贴图-bump-map">凹凸贴图（Bump Map）</a></li>
+<li><a href="#法线贴图-normal-map">法线贴图（Normal Map）</a></li>
+</ul></li>
+<li><a href="#作业">作业</a>
+<ul>
+<li><a href="#参数插值">参数插值</a></li>
+<li><a href="#blinn-phong-反射模型">Blinn-Phong 反射模型</a></li>
+<li><a href="#texture-mapping">Texture mapping</a></li>
+<li><a href="#bump-mapping">Bump mapping</a></li>
+<li><a href="#displacement-mapping">Displacement mapping</a></li>
+</ul></li>
+<li><a href="#参考资料">参考资料</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h1 id="简介">简介</h1>
+
+<p>本文《GAMES101-现代计算机图形学入门》系列教程的课程笔记，仅用于个人学习使用。</p>
+
+<h1 id="着色-shading">着色（Shading）</h1>
+
+<p>在本课程中，着色指的是为物体应用材质。</p>
+
+<h1 id="blinn-phong-着色模型">Blinn-Phong 着色模型</h1>
+
+<p><img src="./specular_diffuse_ambient_example.png" alt="" /></p>
+
+<p>Blinn-Phong 着色模型主要有三部分组成：</p>
+
+<ul>
+<li>Diffuse （漫反射）：由物体本身的颜色决定</li>
+<li>Specular （高光）：由观察角度与光线反射角度共同决定，两者夹角越小，高光越明显</li>
+<li>Ambient （环境光）：由环境决定</li>
+</ul>
+
+<p>对于每个着色点，我们可以简化成如下图所示：</p>
+
+<p><img src="./shading_point.png" alt="" /></p>
+
+<p>其中有：</p>
+
+<ul>
+<li>n 表示表面法线方向</li>
+<li>l 表示入射光方向</li>
+<li>v 表示观察方向</li>
+</ul>
+
+<p><strong>注意：所有向量都是单位向量，所以确保向量进行过 normalize 操作。</strong></p>
+
+<p>另外，着色过程中是不会产生阴影的，阴影是通过其他技术手段来生成的。</p>
+
+<h2 id="漫反射-diffuse">漫反射 （Diffuse）</h2>
+
+<p><img src="./diffuse.png" alt="" /></p>
+
+<p>漫反射是指光线照射在物体表面后会往四周反射的现象。</p>
+
+<p>细心的同学会发现，上图中的入射光线和反射光线的颜色是不同的，这是因为当入射光线到达物体表面时，物体表面会吸收一部分能量，然后反射它没有吸收的能量（暂时不考虑折射），也就是物体本身的颜色。</p>
+
+<p>从能量的角度考虑，只有当有能量到达物体表面时，物体才能发生漫反射，那么接下来的问题是，怎么知道有多少能量到达物体表面呢？</p>
+
+<p><img src="./lambert_cosine_law.png" alt="" /></p>
+
+<p>观察上图，假设光线是离散的。</p>
+
+<p>左图中的光线与平面法线平行，平面接受了所有光线的能量（6根光线）。</p>
+
+<p>中图中的光线与平面法线夹角为 60度，平面只接受了一半光线的能量（3根光线）。</p>
+
+<p>推广到一般情况下，平面能接受的能量与该平面的法线和入射光的角度有关。其关系是：</p>
+
+<p>$$
+平面接受的能量的百分比 = cos(n, l) = n \cdot l
+$$</p>
+
+<p>接下来的问题是，能量从哪里来？以点光源为例，它的能量是从中心外四周扩散的，如下图所示：</p>
+
+<p><img src="./light_falloff.png" alt="" /></p>
+
+<p>假设传播过程中能量守恒，这意味着在半径为 1 时的能量等于半径为 r 时的能量，均为 E。然而，随着半径的增大，球面的表面积也在增大，相当于球面中单位面积的能量减少了。</p>
+
+<p>我们知道，球面的表面积公式为：</p>
+
+<p>$$
+S = 4 \pi r^2
+$$</p>
+
+<p>假设单位面积的能量为 I，那么半径为 1 时的能量为：</p>
+
+<p>$$
+E = I_{1} \times 4 \pi
+$$</p>
+
+<p>半径为 r 时的能量为：</p>
+
+<p>$$
+E = I_{r} \times 4 \pi r^2
+$$</p>
+
+<p>那么我们就能得到半径为 r 时的单位面积的能量了：</p>
+
+<div>
+$$
+I_{r} = \frac {I_1} {r^2}
+$$
+</div>
+
+<p>知道了半径为 r 时的单位面积的能量，就相当于知道了有多少能量能到达平面了。</p>
+
+<p>最后，我们来整理一下漫反射公式：</p>
+
+<p>$$
+到达着色点的能量 = \frac {I} {r^2}
+$$</p>
+
+<p>$$
+被着色点吸收的能量的百分比 = max(0, n \cdot l)
+$$</p>
+
+<p>因此：</p>
+
+<div>
+$$
+L_d = k_d \cdot (\frac I {r^2}) \cdot max(0, n \cdot l)
+$$
+</div>
+
+<p>其中：</p>
+
+<ul>
+<li>$ L_d $ 表示着色点的漫反射分量</li>
+<li>$ k_d $ 表示材质的漫反射系数，可调节</li>
+</ul>
+
+<h2 id="高光-specular">高光（Specular）</h2>
+
+<p><img src="./specular.png" alt="" /></p>
+
+<p>当光线发生反射时，如果当前视角方向与反射方向接近时，我们就能看到高光了。</p>
+
+<p>和漫反射公式类似，我们也需要知道有多少能量到达了平面，有多少能量被反射出去了，不同的地方是我们需要求视角方向与反射方向的夹角。</p>
+
+<p><img src="./reflection_vector.jpg" alt="" /></p>
+
+<p>观察上图，我们能通过向量的几何意义得出：</p>
+
+<p>$$
+\vec {OR} = \vec {IR} - \vec {IO}
+$$</p>
+
+<p>$$
+\vec {OR} = 2 \vec {P} - \vec {IO}
+$$</p>
+
+<p>$$
+\vec {P} = \vec {IO} + \vec {S}
+$$</p>
+
+<p>接下来需要求 $ \vec S $，由于 $ \theta $ 是 $ \vec {OI} $ 与 $ \vec {ON} $ 的夹角，所以计算时需要把 $ \vec {IO} $ 取反。</p>
+
+<p>另外由于点乘的结果是个标量，所以需要乘以法线才能得到 $ \vec S $：</p>
+
+<p>$$
+\vec {S} = \vec {ON} (-\vec {IO} \cdot \theta) = -\vec {ON} (\vec {IO} \cdot \vec {ON})
+$$</p>
+
+<p>把 $ \vec S $ 代入上面的式子得：</p>
+
+<p>$$
+\vec {OR} = 2(\vec {IO} - \vec {ON} (\vec {IO} \cdot \vec {ON})) - \vec {IO}
+$$</p>
+
+<p>化简得：</p>
+
+<p>$$
+\vec {OR} = \vec {IO} - 2 \vec {ON} (\vec {IO} \cdot \vec {ON}))
+$$</p>
+
+<p>调整一下入射光 $ \vec {IO} $ 的方向，使之朝外，并使 $ \vec {OR} = \vec r $、$ \vec {OI} = \vec l $、$ \vec {ON} = \vec n $，于是我们就能得到反射公式：</p>
+
+<p>$$
+\vec r = 2 \vec n (\vec l \cdot \vec n) - \vec l
+$$</p>
+
+<p>于是我们能得到类似的公式：</p>
+
+<div>
+$$
+L_s = k_s \cdot (\frac I {r^2}) \cdot max(0, v \cdot r)
+$$
+</div>
+
+<p>由于 Phong 着色模型只是经验模型，并没有考虑太多的物理意义，因此在计算高光的时候并没有像漫反射公式那样考虑有多少能量被吸收了，因此就舍弃了 $ max(0, n \cdot l) $ 部分。</p>
+
+<p>然而，上面公式计算反射光与视角夹角时会得到一个 0~90 度的范围，这意味着在这个范围中都能看到高光，这显然不符合高光的定义。因此需要对该部分进行修正：</p>
+
+<p><img src="./specular_shininess.png" alt="" /></p>
+
+<p>可以看到，如果对 $ cos $ 进行指数运算，我们能很容易的调整高光可视范围的阈值，因此可以把该公式修正成：</p>
+
+<div>
+$$
+L_s = k_s \cdot (\frac I {r^2}) \cdot max(0, v \cdot r)^p
+$$
+</div>
+
+<p>其中：</p>
+
+<ul>
+<li>$ L_s $ 表示着色点的高光分量</li>
+<li>$ k_s $ 表示材质的高光系数，可调节</li>
+<li>$ p $ 用来调节高光的可视范围</li>
+</ul>
+
+<p>Blinn Phong 着色模型在这基础上进行了优化：当反射向量与视角向量相近时，这相当于视角与入射光的 <strong>半程向量</strong> 与法线的夹角相近：</p>
+
+<p><img src="./half_vector.png" alt="" /></p>
+
+<p>于是我们可以用半程向量与法线的夹角，可以代替反射向量与视角的夹角，并且半程向量的计算也非常简单：</p>
+
+<p>$$
+\vec h = \frac {\vec l + \vec v} {||\vec l + \vec v||}
+$$</p>
+
+<p>这样就能对刚才的高光公式调整成：</p>
+
+<div>
+$$
+L_s = k_s \cdot (\frac I {r^2}) \cdot max(0, n \cdot h)^p
+$$
+</div>
+
+<h2 id="环境光-ambient">环境光（Ambient）</h2>
+
+<p><img src="./ambient.png" alt="" /></p>
+
+<p>对于没有光线直接照射的平面（如最开始的茶杯的背光位置），该平面依旧会受到环境中各种光照的反射，这就是环境光对场景的影响。</p>
+
+<p>我们可以近似地认为场景中的环境光是个常量，它表示来自场景中各个方向的光线的总和，并且不受视角方向的影响，于是有：</p>
+
+<div>
+$$
+L_a = k_a I_a
+$$
+</div>
+
+<p>其中：</p>
+
+<ul>
+<li>$ L_a $ 表示着色点的环境光分量</li>
+<li>$ k_a $ 表示材质的环境光系数，可调节</li>
+<li>$ I_a $ 表示场景的环境光强度</li>
+</ul>
+
+<p>当我们计算出漫反射、高光、环境光之后，把它们加起来，就能得到 Blinn Phong 着色模型的结果了：</p>
+
+<p><img src="./blinn_phong_reflection_model.png" alt="" /></p>
+
+<p>Blinn Phong 的着色公式为：</p>
+
+<div>
+$$
+L = L_a + L_d + L_s
+$$
+
+$$
+L = k_a I_a + k_d(\frac {I} {r^2}) max(0, n \cdot l) + k_s(\frac {I} {r^2}) max(0, n \cdot h)^p
+$$
+</div>
+
+<h1 id="着色频率">着色频率</h1>
+
+<p><img src="./shading_frequencies.png" alt="" /></p>
+
+<p>着色频率指的是发生着色的频率，如上图所示，上面三个球都拥有相同的几何形状，但应用了不同的着色频率，分别是：平面着色（左）、高洛德着色（中）、冯氏着色（右）。</p>
+
+<h2 id="平面着色-flat">平面着色（Flat）</h2>
+
+<p>平面着色是指整个三角面中共用一个方向的法线，因此表现为整个三角面的颜色都是一样的。</p>
+
+<h2 id="高洛德着色-gouraud">高洛德着色（Gouraud）</h2>
+
+<p>高洛德着色是指三角面中三个顶点分别拥有自己的法线，然后在着色时先计算出这三个顶点的颜色，然后其他像素就以插值的方式去计算出其对应的颜色。</p>
+
+<h2 id="冯氏着色-phong">冯氏着色（Phong）</h2>
+
+<p>冯氏着色是指三角面的三个顶点分别拥有自己的法线，然后其他像素也通过插值的方式计算出其对应的法线，然后每个像素都能进行着色。</p>
+
+<h2 id="对比">对比</h2>
+
+<p><img src="./shading_frequencies_diff.png" alt="" /></p>
+
+<p>如图所示，着色频率对结果的影响，取决于模型的复杂度。模型的复杂度越低，着色结果区别越大，但随着模型复杂度的提高，平面着色也可以达到冯氏着色的效果。因此我们不能迷信冯氏着色一定比平面着色好。</p>
+
+<h1 id="纹理映射-texture-mapping">纹理映射（Texture Mapping）</h1>
+
+<p><img src="./different_colors_at_diffent_places.png" alt="" /></p>
+
+<p>根据着色公示，我们能计算出每个像素的颜色。但如果我们想要模型显示出更加复杂的颜色呢？例如把一张图片贴到物体表面，如上图中的球和地面那样，它们并不是简单的光照颜色，而是复杂的颜色，这种复杂的颜色看起来是来自于某张纹理的。</p>
+
+<p>回顾漫反射公式中，我们可以通过改变 $ k_d $ 来调整漫反射分量，当这个 $ k_d $ 包含了纹理中某个区域的颜色时，这其实就相当于把该纹理应用到着色公式中了。</p>
+
+<p>事实上，我们的确是通过某种方式找到物体表面与纹理的关系的，物体表面的某一个三角面对应了纹理中的个区域：</p>
+
+<p><img src="./screen_world_texture.png" alt="" /></p>
+
+<p>如上图所示，在屏幕空间中的任意一点，我们都能找到它在贴图空间中对应的位置，这个对应关系就是 <strong>纹理映射</strong>。</p>
+
+<p>由于任意一个三维物体它都是由二维的三角面构成的，因此我们可以利用这个性质，来建立空间中的三角形与二维纹理中的映射关系。 这项工作通常是在建模软件中完成的。</p>
+
+<p><img src="./texture_applied_to_surface.png" alt="" /></p>
+
+<p>接下来的问题是，如何表示这个对应关系呢？答案是 <strong>UV坐标</strong>。</p>
+
+<p>UV 坐标是指以纹理左下角为原点来建立的二维坐标系，横坐标为 U，纵坐标为 V，它们的取值范围都是 $ [0, 1] $，这个取值范围与贴图尺寸无关，即纹理最大宽高在 UV 中都是表示为 1。</p>
+
+<p><img src="./visualization_of_texture_coordinates.png" alt="" /></p>
+
+<p>只要三角形中的每个顶点都保存了一个 UV 坐标的信息，那么在着色的时候就可以通过 UV 坐标找到该纹理对应的区域，这样就可以实现应用纹理的效果了。</p>
+
+<p>现在，我们知道了三角形的三个顶点中都包含了 UV 坐标，但三角形中的任意一点的 UV 坐标又应该怎么计算呢？这时候就需要引入一个新的概念：<strong>重心坐标</strong>。</p>
+
+<h1 id="重心坐标-barycentric-coordinates">重心坐标（Barycentric Coordinates）</h1>
+
+<p><img src="./barycentric_coordinates.png" alt="" /></p>
+
+<p>重心坐标是以三角形的其中一个顶点为原点，分别以另外两个顶点作为基向量作为一个新的坐标系，如上图所示就是以 $ a $ 为原点，以 $ \vec {ab} $ 和 $ \vec {ac} $ 作为基的坐标系。</p>
+
+<p>在这个坐标系中，任意一个点 $ p $ 可以表示成：</p>
+
+<p>$$
+p = a + \beta(b - a) + \gamma(c - a)
+$$</p>
+
+<p>移项得：</p>
+
+<p>$$
+p = (1 - \beta - \gamma)a + \beta b + \gamma c
+$$</p>
+
+<p>令 $ \alpha = 1 - \beta - \gamma $，于是我们就能得到 p 点的表示方式：</p>
+
+<p>$$
+p = \alpha a + \beta b + \gamma c
+$$</p>
+
+<p>其中：</p>
+
+<p>$$
+\alpha + \beta + \gamma = 1
+$$</p>
+
+<p>这样，$ p $ 点的重心坐标为：</p>
+
+<p>$$
+p = (\alpha, \beta, \gamma)
+$$</p>
+
+<p>当 $ \alpha $、$ \beta $、$ \gamma $ 同时为非负数的时候，$ p $ 点会位于三角形内部。</p>
+
+<p>重心坐标还有另一种表示方式，即每一个分量等于该顶点所对应的面积与整个三角形面积的比值：</p>
+
+<p><img src="./barycentric_coordinates_proportional_areas.png" alt="" /></p>
+
+<p>如图所示，A 所对应的面积为 $ A_A $，B 所对应的面积为 $ A_B $，C 所对应的面积为 $ A_C $，于是重心坐标的三个分量就是：</p>
+
+<div>
+$$
+\alpha = \frac {A_A} {A_A + A_B + A_C}
+$$
+
+$$
+\beta = \frac {A_B} {A_A + A_B + A_C}
+$$
+
+$$
+\gamma = \frac {A_C} {A_A + A_B + A_C}
+$$
+</div>
+
+<p>根据重心坐标的定义，我们能得到几个很特殊的重心坐标：</p>
+
+<ul>
+<li>$ (1, 0, 0) $：顶点 A 的坐标</li>
+<li>$ (0, 1, 0) $：顶点 B 的坐标</li>
+<li>$ (0, 0, 1) $：顶点 C 的坐标</li>
+<li>$ (\frac 1 3, \frac 1 3, \frac 1 3) $：三角形的重心</li>
+</ul>
+
+<p>最后，我们可以把二维平面中的三角形的任意一点 $ (x, y) $ 转化成重心坐标 $ (\alpha, \beta, \gamma) $，这里有一个通用公式：</p>
+
+<div>
+$$
+\alpha = \frac {-(x - x_B)(y_C - y_B) + (y - y_B)(x_C - x_B)} {-(x_A - x_B)(y_C - y_B) + (y_A - y_B)(x_C - x_B)}
+$$
+
+$$
+\beta = \frac {-(x - x_C)(y_A - y_C) + (y - y_C)(x_A - x_C)} {-(x_B - x_C)(y_A - y_C) + (y_B - y_C)(x_A - x_C)}
+$$
+
+$$
+\gamma = 1 - \alpha - \beta
+$$
+</div>
+
+<p>有了重心坐标之后，我们就能计算出三角形中任意一点的属性了：</p>
+
+<p><img src="./using_barycentric_coordinates.png" alt="" /></p>
+
+<p>无论是位置、法线、颜色、UV 等等其他的属性，我们都能通过重心坐标计算出三角形中任意一点的属性。</p>
+
+<p>需要注意的是，由于三角形在投影前后的重心坐标（形状）会发生变化，因此并不能用投影后的三角形的重心坐标来计算，必须把它还原成投影前的三角形，然后计算其重心坐标，再计算对应的属性。</p>
+
+<h1 id="应用纹理">应用纹理</h1>
+
+<p>有了重心坐标之后，我们能计算出任意一个像素对应 UV 坐标了，然后就能为每个像素应用纹理了。应用纹理的逻辑非常简单，只要遍历就可以了：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">for each pixel(x, y):
+    uv = getUv(x, y)
+    texColor = sample2D(texture, uv)
+    kd = texColor </code></pre></td></tr></table>
+</div>
+</div>
+<p>然而在应用纹理的时候，我们会遇到一些问题，这些问题的都与纹素有关。</p>
+
+<h2 id="纹素-texel">纹素（Texel）</h2>
+
+<p>纹素与像素非常相似，像素是组成屏幕的基本单位，而纹素则是组成纹理的基本单位，它和像素一样都是有面积的。</p>
+
+<p>每个像素的尺寸为 $ \frac 1 {屏幕宽度} \times \frac 1 {屏幕高度} $</p>
+
+<p>每个纹素的尺寸为 $ \frac 1 {纹理宽度} \times \frac 1 {纹理高度} $</p>
+
+<p>显然，根据重心坐标计算出来的 UV 坐标是一个浮点数，它会落在纹理中的任意位置。当我们尝试在该位置采样的时候，就会遇到一个问题：我们应该取什么颜色？</p>
+
+<p><img src="./sample_texture.png" alt="" /></p>
+
+<p>如图所示，虚线框表示纹素，黑色点表示纹素的中心，红色点表示要采样的位置。显然，我们需要一个采样策略去决定应该获得什么颜色，常见的策略有：</p>
+
+<ul>
+<li><p><code>Nearest</code> 取该采样点所在的纹素的颜色（会发生一次采样）</p></li>
+
+<li><p><code>Linear</code> 取该采样点周围四个纹素的颜色，然后进行加权平均（会发生四次采样）</p></li>
+</ul>
+
+<p>还有一个问题，当纹理尺寸与显示区域尺寸不同的时候，应该怎么办呢？</p>
+
+<p>假设我们的显示区域的尺寸是 4x4，当我们要把一张 2x2 的纹理铺满整个显示区域时，我们就需要对它进行<strong>放大</strong>。当我们要把一张 8x8 的纹理铺满整个显示区域时，我们就需要对它进行<strong>缩小</strong>。这时候就涉及到<strong>纹理放大</strong>和<strong>纹理缩小</strong>。</p>
+
+<h2 id="纹理放大-texture-magnification">纹理放大（Texture Magnification）</h2>
+
+<p><img src="./texture_magnification.png" alt="" /></p>
+
+<p>当纹理放大时，一个纹素将会映射到多个像素中。</p>
+
+<h2 id="纹理缩小-texture-minification">纹理缩小（Texture Minification）</h2>
+
+<p><img src="./texture_minification.png" alt="" /></p>
+
+<p>当纹理缩小时，多个纹素将会映射到一个像素中。</p>
+
+<h2 id="实际问题">实际问题</h2>
+
+<p><img src="./point_sampling_textures.png" alt="" /></p>
+
+<p>当我们尝试渲染在一个面片上面贴一张网格图的时候，我们期望得到左边的结果，但实际上得到的是右边的结果，近距离出现锯齿，远距离出现摩尔纹。</p>
+
+<p>这是因为每个像素对应的纹素区域不同导致的。</p>
+
+<p><img src="./screen_pixel_footprint_in_texture.png" alt="" /></p>
+
+<ul>
+<li><p>对于近距离的像素来说，它所覆盖的纹素范围较少，纹理发生了放大。</p></li>
+
+<li><p>对于远距离的像素来说，它所覆盖的纹理范围较大，纹理发生了缩小。</p></li>
+</ul>
+
+<p>这背后的问题就是，对于每个像素来说，它们表示的要表示的区域各不相同，但最终要以一个颜色来填充整个像素。</p>
+
+<p>这是一个典型的走样问题，我们可以通过之前学到的<strong>超采样</strong>来实现反走样，下面是 512 倍超采样的结果：</p>
+
+<p><img src="./512x_supersampling.png" alt="" /></p>
+
+<p>可以看到，超采样的效果比较明显，但它有一个致命的问题：性能消耗巨大。而且对于远距离的像素来说，超采样明显是浪费的，有没有一种更好的方案去解决这种由纹理采样带来的问题呢？</p>
+
+<p>细心想想，我们刚刚对纹理采样是一种<strong>点查询</strong>，也就是通过一个 UV 坐标去获取一个纹素的颜色的，如果有一种方式可以实现<strong>范围查询</strong>，也就是通过一个 UV 坐标去获取一个范围（任意大小）的平均颜色，那么就能完美解决这个问题了。</p>
+
+<p>而这个方案就是<strong>Mipmap</strong>。</p>
+
+<h2 id="mipmap">Mipmap</h2>
+
+<p>Mipmap 是指根据一张纹理去生成一系列更小的纹理的技术。</p>
+
+<p><img src="./mipmap.png" alt="" /></p>
+
+<p>如图所示：</p>
+
+<ul>
+<li>第 0 级是纹理的原尺寸</li>
+<li>第 1 级由第 0 级纹理缩放 $ \frac 1 2 $ 所得</li>
+<li>&hellip;</li>
+<li>第 n 级由第 n - 1 级纹理缩放 $ \frac 1 2 $ 所得</li>
+<li>最后一级的纹理尺寸为 1x1</li>
+</ul>
+
+<p><img src="./create_mipmap.png" alt="" /></p>
+
+<p>每一级 mipmap 中的每一个像素，都是由上一级 mipmap 相邻的四个像素求平均所得。</p>
+
+<p>最后，我们就能得到这个金字塔形状的贴图链：</p>
+
+<p><img src="./mipmap_chain.png" alt="" /></p>
+
+<p>这个 mipmap 有什么用呢？</p>
+
+<p>在采样的时候，我们可以先计算出这个像素覆盖了多大范围的纹素，然后再计算出这个范围应该对应到第几层 mipmap，再对该层 mipmap 进行采样，这样就相当于得到了原区域纹素的平均颜色了。 例如：</p>
+
+<ul>
+<li>当一个像素覆盖了 1 个纹素的时候，采样时应该访问第 0 层 mipmap</li>
+<li>当一个像素覆盖了 2 个纹素的时候，采样时应该访问第 1 层 mipmap</li>
+<li>当一个像素覆盖了 4 个纹素的时候，采样时应该访问第 2 层 mipmap</li>
+<li>&hellip;</li>
+<li>当一个像素覆盖了 128 个纹素的时候，采样时应该访问第 7 层 mipmap</li>
+</ul>
+
+<p>那要怎么计算一个像素覆盖了多少纹素呢？其实有很多方法可以计算的，这里只介绍一个简单的做法：</p>
+
+<p><img src="./pixel_mapped_texel.jpg" alt="" /></p>
+
+<p>只要根据该像素的四个角的 UV 坐标，计算出它们映射到纹理上的位置，然后把它们连起来就可以了。
+实际上，我们在采样 mipmap 的时候，会把这个查询区域近似看成<strong>正方形</strong>，而这个过程中有更复杂的算法去实现，具体可以查阅相关资料。</p>
+
+<p>假设一个像素覆盖了 N 个纹素，应该采样的层数为 L，那么它们的关系就是：</p>
+
+<p>$$
+L = Log_2 N
+$$</p>
+
+<p>显然，L 有可能是一个浮点数，如 1.5，这时候应该怎么办呢？很简单，先采样第1 层，然后采样第 2 层，再对两个值进行插值即可。</p>
+
+<p>需要注意的是，由于 mipmap 通过原尺寸的纹理生成了一系列更小的纹理，这样会导致存储体积增大，增大了多少呢？显然，这是一个等比数列求和问题， 于是我们可以套用一下公式：</p>
+
+<div>
+$$
+S_n = a_1 \frac {1 - q^n} {1 - q}
+$$
+</div>
+
+<p>由于它的公比是 $ \frac 1 4 $（因为宽高都为上一级的一半），而首项可以看作是 1，于是代入公式可得：</p>
+
+<div>
+$$
+S_n = 1 \cdot \frac {1 - {\frac 1 4^n}} {\frac 3 4} = \frac 4 3 \cdot (1 - \frac 1 4^n)
+$$
+</div>
+
+<p>当 n 趋向无穷时，$ S_n = \frac 4 3 $ 。因此，使用 mipmap 之后，存储体积会比原来增大 $ \frac 1 3 $。</p>
+
+<p>我们来看一看使用了 mipmap 之后的效果：</p>
+
+<p><img src="./mipmap_filtering.png" alt="" /></p>
+
+<p>很明显，效果比之前好多了。 近距离的锯齿明显较少了，然而远距离的却是一大片模糊，这是为什么呢？</p>
+
+<h2 id="各向异性过滤-anisotropic-filtering">各向异性过滤（Anisotropic Filtering）</h2>
+
+<p><img src="./irregular_pixel_footprint_in_texture.png" alt="" /></p>
+
+<p>这是因为对于远处的像素来说，它们覆盖的纹素实际上并不是一个正方形，而是一个扁矩形，采样 mipmap 的时候以正方形区域来采样会带来比较大的误差。</p>
+
+<p>因此这里需要一种新的策略，这就是<strong>各向异性过滤</strong>的作用了。</p>
+
+<p>和 mipmap 类似，各向异性过滤也是利用原纹理去生成更小尺寸的纹理的技术，mipmap 生成的是宽高比例不变的纹理，而各向异性过滤生成的是宽高比例会发生变化的纹理。如下图所示：</p>
+
+<p><img src="./anisotropic.png" alt="" /></p>
+
+<p>左上角的是原纹理，顺着左上角往右下角方向生成的是 mipmap，它们与原纹理是等比例的，此外的其他纹理都是由各向异性过滤而生成的纹理。</p>
+
+<p>和 mipmap 一样，各向异性过滤和也是有层级的，对于上面的那张图，层级如下图所示，相同颜色的区域表示相同层级下的各向异性过滤：</p>
+
+<p><img src="./anisotropic_levels.png" alt="" /></p>
+
+<p>我们可以在各种图形 API 中去控制应该生成哪些层级的各向异性过滤的纹理。</p>
+
+<p>有了各向异性过滤之后，在对于扁矩形区域，我们就可以找到对应的纹理中查询颜色了。我们来看看使用了各向异性过滤之后的效果：</p>
+
+<p><img src="./anisotropic_filtering.png" alt="" /></p>
+
+<p>可以看到，这种方式会比之前提到的近似看成正方形的区域要好得多。</p>
+
+<h1 id="各式各样的纹理">各式各样的纹理</h1>
+
+<p>上面的例子中，我们通过使用纹理去改变了着色公式中的 $ k_d $ 项，显然，着色公式中的其他项也可以利用纹理去改变的。</p>
+
+<p>正是这个原因，我们会看到各种各样的纹理，如表示环境光的 sphereMap 和 cubeMap，表示法线的 normalMap 等等。下面介绍几种常见的纹理。</p>
+
+<h2 id="球面贴图-spherical-map">球面贴图（Spherical Map）</h2>
+
+<p>环境贴图可以用来表示环境光照。由于环境光是来自四面八方的，因此在采样环境光的时候可以把其看成是一个球面。</p>
+
+<p><img src="./environmental_lighting.png" alt="" /></p>
+
+<p>上图中左图是把环境贴图应用在球面上，然后右图的场景中则是利用该环境贴图进行采样得到的结果。</p>
+
+<p>但球面贴图有一个缺点，就是容易发生变形，特别是靠近北极南极的区域，变形非常严重。</p>
+
+<p><img src="./spherical_map_problem.png" alt="" /></p>
+
+<p>这种现象就导致了如果用球面贴图提供光照信息，那么北极南极方向的光照信息会变得不准确。</p>
+
+<h2 id="立方体贴图-cube-map">立方体贴图（Cube Map）</h2>
+
+<p><img src="./cube_map.png" alt="" /></p>
+
+<p>立方体贴图是另一种环境贴图，它是利用六张图来构建成一个立方体，然后再根据法线方向去判断采样哪一个面。</p>
+
+<p><img src="./cube_map_six_face.png" alt="" /></p>
+
+<p>这种方案比球面贴图更少变形，但需要把一张环境贴图去成六张尺寸相同的图。</p>
+
+<h2 id="凹凸贴图-bump-map">凹凸贴图（Bump Map）</h2>
+
+<p><img src="./Bump-map-demo-full.png" alt="" /></p>
+
+<p>凹凸贴图是一种为模型添加细节的贴图。凹凸贴图是一张灰度图，它保存了着色点与原始表面的高度差，以此来影响光照信息。</p>
+
+<h2 id="法线贴图-normal-map">法线贴图（Normal Map）</h2>
+
+<p><img src="./Normal_map_example.png" alt="" /></p>
+
+<p>法线贴图是凹凸贴图的另一种实现，原理是改变着色点的法线方向，从而影响光照结果。</p>
+
+<p>从上面可以看到，我们可以用低模加法线贴图，来模拟高模的效果。</p>
+
+<h1 id="作业">作业</h1>
+
+<h2 id="参数插值">参数插值</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="c1">// rasterizer.cpp
+</span><span class="c1"></span><span class="kt">void</span> <span class="n">rst</span><span class="o">::</span><span class="n">rasterizer</span><span class="o">::</span><span class="n">rasterize_triangle</span><span class="p">(</span><span class="k">const</span> <span class="n">Triangle</span><span class="o">&amp;</span> <span class="n">t</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span><span class="p">,</span> <span class="mi">3</span><span class="o">&gt;&amp;</span> <span class="n">view_pos</span><span class="p">)</span> 
+<span class="p">{</span>
+    <span class="k">auto</span> <span class="n">v</span> <span class="o">=</span> <span class="n">t</span><span class="p">.</span><span class="n">toVector4</span><span class="p">();</span>
+
+    <span class="kt">int</span> <span class="n">top</span> <span class="o">=</span> <span class="n">ceil</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">max</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">y</span><span class="p">(),</span> <span class="n">std</span><span class="o">::</span><span class="n">max</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">y</span><span class="p">(),</span> <span class="n">v</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">y</span><span class="p">())));</span>
+    <span class="kt">int</span> <span class="n">bottom</span> <span class="o">=</span> <span class="n">floor</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">y</span><span class="p">(),</span> <span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">y</span><span class="p">(),</span> <span class="n">v</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">y</span><span class="p">())));</span>
+    <span class="kt">int</span> <span class="n">left</span> <span class="o">=</span> <span class="n">floor</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">x</span><span class="p">(),</span> <span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">x</span><span class="p">(),</span> <span class="n">v</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">x</span><span class="p">())));</span>
+    <span class="kt">int</span> <span class="n">right</span> <span class="o">=</span> <span class="n">ceil</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">max</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">x</span><span class="p">(),</span> <span class="n">std</span><span class="o">::</span><span class="n">max</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">x</span><span class="p">(),</span> <span class="n">v</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">x</span><span class="p">())));</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector4f</span> <span class="n">vertex</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+
+        <span class="kt">float</span> <span class="n">x</span> <span class="o">=</span> <span class="n">vertex</span><span class="p">.</span><span class="n">x</span><span class="p">();</span>
+        <span class="kt">float</span> <span class="n">y</span> <span class="o">=</span> <span class="n">vertex</span><span class="p">.</span><span class="n">y</span><span class="p">();</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">y</span> <span class="o">&gt;</span> <span class="n">top</span><span class="p">)</span> <span class="n">top</span> <span class="o">=</span> <span class="n">ceil</span><span class="p">(</span><span class="n">y</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">y</span> <span class="o">&lt;</span> <span class="n">bottom</span><span class="p">)</span> <span class="n">bottom</span> <span class="o">=</span> <span class="n">floor</span><span class="p">(</span><span class="n">y</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">right</span><span class="p">)</span> <span class="n">right</span> <span class="o">=</span> <span class="n">ceil</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="n">left</span><span class="p">)</span> <span class="n">left</span> <span class="o">=</span> <span class="n">floor</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="n">left</span><span class="p">;</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">right</span><span class="p">;</span> <span class="n">x</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="n">bottom</span><span class="p">;</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="n">top</span><span class="p">;</span> <span class="n">y</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">insideTriangle</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">v</span><span class="p">))</span> <span class="p">{</span>
+
+                <span class="k">auto</span><span class="p">[</span><span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">]</span> <span class="o">=</span> <span class="n">computeBarycentric2D</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">v</span><span class="p">);</span>
+                <span class="kt">float</span> <span class="n">Z</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="n">alpha</span> <span class="o">/</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">w</span><span class="p">()</span> <span class="o">+</span> <span class="n">beta</span> <span class="o">/</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">w</span><span class="p">()</span> <span class="o">+</span> <span class="n">gamma</span> <span class="o">/</span> <span class="n">v</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">w</span><span class="p">());</span>
+                <span class="kt">float</span> <span class="n">zp</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">z</span><span class="p">()</span> <span class="o">/</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">w</span><span class="p">()</span> <span class="o">+</span> <span class="n">beta</span> <span class="o">*</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">z</span><span class="p">()</span> <span class="o">/</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">w</span><span class="p">()</span> <span class="o">+</span> <span class="n">gamma</span> <span class="o">*</span> <span class="n">v</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">z</span><span class="p">()</span> <span class="o">/</span> <span class="n">v</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">w</span><span class="p">();</span>
+                <span class="n">zp</span> <span class="o">*=</span> <span class="n">Z</span><span class="p">;</span>
+
+                <span class="kt">int</span> <span class="n">index</span> <span class="o">=</span> <span class="n">get_index</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
+
+                <span class="k">if</span> <span class="p">(</span><span class="n">depth_buf</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">zp</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">depth_buf</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">zp</span><span class="p">;</span>
+
+                    <span class="k">auto</span> <span class="n">interpolated_color</span> <span class="o">=</span> <span class="n">interpolate</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">color</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">t</span><span class="p">.</span><span class="n">color</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">t</span><span class="p">.</span><span class="n">color</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="mi">1</span><span class="p">);</span>
+                    <span class="k">auto</span> <span class="n">interpolated_normal</span> <span class="o">=</span> <span class="n">interpolate</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">normal</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">t</span><span class="p">.</span><span class="n">normal</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">t</span><span class="p">.</span><span class="n">normal</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="mi">1</span><span class="p">);</span>
+                    <span class="k">auto</span> <span class="n">interpolated_texcoords</span> <span class="o">=</span> <span class="n">interpolate</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">tex_coords</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">t</span><span class="p">.</span><span class="n">tex_coords</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">t</span><span class="p">.</span><span class="n">tex_coords</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="mi">1</span><span class="p">);</span>
+                    <span class="k">auto</span> <span class="n">interpolated_shadingcoords</span> <span class="o">=</span> <span class="n">interpolate</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">view_pos</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">view_pos</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">view_pos</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="mi">1</span><span class="p">);</span>
+                    <span class="c1">//
+</span><span class="c1"></span>                    <span class="n">fragment_shader_payload</span> <span class="nf">payload</span><span class="p">(</span><span class="n">interpolated_color</span><span class="p">,</span> <span class="n">interpolated_normal</span><span class="p">.</span><span class="n">normalized</span><span class="p">(),</span> <span class="n">interpolated_texcoords</span><span class="p">,</span> <span class="n">texture</span> <span class="o">?</span> <span class="o">&amp;*</span><span class="nl">texture</span> <span class="p">:</span> <span class="k">nullptr</span><span class="p">);</span>
+                    <span class="n">payload</span><span class="p">.</span><span class="n">view_pos</span> <span class="o">=</span> <span class="n">interpolated_shadingcoords</span><span class="p">;</span>
+                    <span class="k">auto</span> <span class="n">pixel_color</span> <span class="o">=</span> <span class="n">fragment_shader</span><span class="p">(</span><span class="n">payload</span><span class="p">);</span>
+
+                    <span class="n">set_pixel</span><span class="p">(</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2i</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="n">pixel_color</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="blinn-phong-反射模型">Blinn-Phong 反射模型</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="c1">// main.cpp
+</span><span class="c1"></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">phong_fragment_shader</span><span class="p">(</span><span class="k">const</span> <span class="n">fragment_shader_payload</span><span class="o">&amp;</span> <span class="n">payload</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">ka</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span><span class="p">(</span><span class="mf">0.005</span><span class="p">,</span> <span class="mf">0.005</span><span class="p">,</span> <span class="mf">0.005</span><span class="p">);</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">kd</span> <span class="o">=</span> <span class="n">payload</span><span class="p">.</span><span class="n">color</span><span class="p">;</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">ks</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span><span class="p">(</span><span class="mf">0.7937</span><span class="p">,</span> <span class="mf">0.7937</span><span class="p">,</span> <span class="mf">0.7937</span><span class="p">);</span>
+
+    <span class="k">auto</span> <span class="n">l1</span> <span class="o">=</span> <span class="n">light</span><span class="p">{{</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">},</span> <span class="p">{</span><span class="mi">500</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">500</span><span class="p">}};</span>
+    <span class="k">auto</span> <span class="n">l2</span> <span class="o">=</span> <span class="n">light</span><span class="p">{{</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">0</span><span class="p">},</span> <span class="p">{</span><span class="mi">500</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">500</span><span class="p">}};</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">light</span><span class="o">&gt;</span> <span class="n">lights</span> <span class="o">=</span> <span class="p">{</span><span class="n">l1</span><span class="p">,</span> <span class="n">l2</span><span class="p">};</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">amb_light_intensity</span><span class="p">{</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">};</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">eye_pos</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">};</span>
+
+    <span class="kt">float</span> <span class="n">p</span> <span class="o">=</span> <span class="mi">150</span><span class="p">;</span>
+
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">color</span> <span class="o">=</span> <span class="n">payload</span><span class="p">.</span><span class="n">color</span><span class="p">;</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">point</span> <span class="o">=</span> <span class="n">payload</span><span class="p">.</span><span class="n">view_pos</span><span class="p">;</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">normal</span> <span class="o">=</span> <span class="n">payload</span><span class="p">.</span><span class="n">normal</span><span class="p">;</span>
+
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">result_color</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">};</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">La</span> <span class="o">=</span> <span class="n">ka</span><span class="p">.</span><span class="n">cwiseProduct</span><span class="p">(</span><span class="n">amb_light_intensity</span><span class="p">);</span>
+    <span class="n">result_color</span> <span class="o">+=</span> <span class="n">La</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">light</span> <span class="p">:</span> <span class="n">lights</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">view_dir</span> <span class="o">=</span> <span class="p">(</span><span class="n">eye_pos</span> <span class="o">-</span> <span class="n">point</span><span class="p">).</span><span class="n">normalized</span><span class="p">();</span>
+        <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">light_dir</span> <span class="o">=</span> <span class="p">(</span><span class="n">light</span><span class="p">.</span><span class="n">position</span> <span class="o">-</span> <span class="n">point</span><span class="p">).</span><span class="n">normalized</span><span class="p">();</span>
+        <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">half_dir</span> <span class="o">=</span> <span class="p">(</span><span class="n">view_dir</span> <span class="o">+</span> <span class="n">light_dir</span><span class="p">).</span><span class="n">normalized</span><span class="p">();</span>
+        <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">point_to_light</span> <span class="o">=</span> <span class="n">light</span><span class="p">.</span><span class="n">position</span> <span class="o">-</span> <span class="n">point</span><span class="p">;</span>
+        <span class="kt">double</span> <span class="n">r</span> <span class="o">=</span> <span class="n">point_to_light</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">point_to_light</span><span class="p">);</span>
+        <span class="kt">double</span> <span class="n">NoL</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">max</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">,</span> <span class="n">normal</span><span class="p">.</span><span class="n">normalized</span><span class="p">().</span><span class="n">dot</span><span class="p">(</span><span class="n">light_dir</span><span class="p">));</span>
+        <span class="kt">double</span> <span class="n">VoH</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">max</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">,</span> <span class="n">normal</span><span class="p">.</span><span class="n">normalized</span><span class="p">().</span><span class="n">dot</span><span class="p">(</span><span class="n">half_dir</span><span class="p">));</span>
+
+        <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">Ld</span> <span class="o">=</span> <span class="n">kd</span><span class="p">.</span><span class="n">cwiseProduct</span><span class="p">(</span><span class="n">light</span><span class="p">.</span><span class="n">intensity</span> <span class="o">/</span> <span class="n">r</span><span class="p">)</span> <span class="o">*</span> <span class="n">NoL</span><span class="p">;</span>
+        <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">Ls</span> <span class="o">=</span> <span class="n">ks</span><span class="p">.</span><span class="n">cwiseProduct</span><span class="p">(</span><span class="n">light</span><span class="p">.</span><span class="n">intensity</span> <span class="o">/</span> <span class="n">r</span><span class="p">)</span> <span class="o">*</span> <span class="n">std</span><span class="o">::</span><span class="n">pow</span><span class="p">(</span><span class="n">VoH</span><span class="p">,</span> <span class="n">p</span><span class="p">);</span>
+
+        <span class="n">result_color</span> <span class="o">+=</span> <span class="p">(</span><span class="n">Ld</span> <span class="o">+</span> <span class="n">Ls</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">result_color</span> <span class="o">*</span> <span class="mf">255.f</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="texture-mapping">Texture mapping</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="c1">// main.cpp
+</span><span class="c1"></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">texture_fragment_shader</span><span class="p">(</span><span class="k">const</span> <span class="n">fragment_shader_payload</span><span class="o">&amp;</span> <span class="n">payload</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">return_color</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">};</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">payload</span><span class="p">.</span><span class="n">texture</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">return_color</span> <span class="o">=</span> <span class="n">payload</span><span class="p">.</span><span class="n">texture</span><span class="o">-&gt;</span><span class="n">getColor</span><span class="p">(</span><span class="n">payload</span><span class="p">.</span><span class="n">tex_coords</span><span class="p">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">payload</span><span class="p">.</span><span class="n">tex_coords</span><span class="p">.</span><span class="n">y</span><span class="p">());</span>
+    <span class="p">}</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">texture_color</span><span class="p">;</span>
+    <span class="n">texture_color</span> <span class="o">&lt;&lt;</span> <span class="n">return_color</span><span class="p">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">return_color</span><span class="p">.</span><span class="n">y</span><span class="p">(),</span> <span class="n">return_color</span><span class="p">.</span><span class="n">z</span><span class="p">();</span>
+
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">ka</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span><span class="p">(</span><span class="mf">0.005</span><span class="p">,</span> <span class="mf">0.005</span><span class="p">,</span> <span class="mf">0.005</span><span class="p">);</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">kd</span> <span class="o">=</span> <span class="n">texture_color</span> <span class="o">/</span> <span class="mf">255.f</span><span class="p">;</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">ks</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span><span class="p">(</span><span class="mf">0.7937</span><span class="p">,</span> <span class="mf">0.7937</span><span class="p">,</span> <span class="mf">0.7937</span><span class="p">);</span>
+
+    <span class="k">auto</span> <span class="n">l1</span> <span class="o">=</span> <span class="n">light</span><span class="p">{{</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">},</span> <span class="p">{</span><span class="mi">500</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">500</span><span class="p">}};</span>
+    <span class="k">auto</span> <span class="n">l2</span> <span class="o">=</span> <span class="n">light</span><span class="p">{{</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">0</span><span class="p">},</span> <span class="p">{</span><span class="mi">500</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">500</span><span class="p">}};</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">light</span><span class="o">&gt;</span> <span class="n">lights</span> <span class="o">=</span> <span class="p">{</span><span class="n">l1</span><span class="p">,</span> <span class="n">l2</span><span class="p">};</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">amb_light_intensity</span><span class="p">{</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">};</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">eye_pos</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">};</span>
+
+    <span class="kt">float</span> <span class="n">p</span> <span class="o">=</span> <span class="mi">150</span><span class="p">;</span>
+
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">color</span> <span class="o">=</span> <span class="n">texture_color</span><span class="p">;</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">point</span> <span class="o">=</span> <span class="n">payload</span><span class="p">.</span><span class="n">view_pos</span><span class="p">;</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">normal</span> <span class="o">=</span> <span class="n">payload</span><span class="p">.</span><span class="n">normal</span><span class="p">;</span>
+
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">result_color</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">};</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">La</span> <span class="o">=</span> <span class="n">ka</span><span class="p">.</span><span class="n">cwiseProduct</span><span class="p">(</span><span class="n">amb_light_intensity</span><span class="p">);</span>
+    <span class="n">result_color</span> <span class="o">+=</span> <span class="n">La</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">light</span> <span class="p">:</span> <span class="n">lights</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">view_dir</span> <span class="o">=</span> <span class="p">(</span><span class="n">eye_pos</span> <span class="o">-</span> <span class="n">point</span><span class="p">).</span><span class="n">normalized</span><span class="p">();</span>
+        <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">light_dir</span> <span class="o">=</span> <span class="p">(</span><span class="n">light</span><span class="p">.</span><span class="n">position</span> <span class="o">-</span> <span class="n">point</span><span class="p">).</span><span class="n">normalized</span><span class="p">();</span>
+        <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">half_dir</span> <span class="o">=</span> <span class="p">(</span><span class="n">view_dir</span> <span class="o">+</span> <span class="n">light_dir</span><span class="p">).</span><span class="n">normalized</span><span class="p">();</span>
+        <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">point_to_light</span> <span class="o">=</span> <span class="n">light</span><span class="p">.</span><span class="n">position</span> <span class="o">-</span> <span class="n">point</span><span class="p">;</span>
+        <span class="kt">double</span> <span class="n">r</span> <span class="o">=</span> <span class="n">point_to_light</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">point_to_light</span><span class="p">);</span>
+        <span class="kt">double</span> <span class="n">NoL</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">max</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">,</span> <span class="n">normal</span><span class="p">.</span><span class="n">normalized</span><span class="p">().</span><span class="n">dot</span><span class="p">(</span><span class="n">light_dir</span><span class="p">));</span>
+        <span class="kt">double</span> <span class="n">VoH</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">max</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">,</span> <span class="n">normal</span><span class="p">.</span><span class="n">normalized</span><span class="p">().</span><span class="n">dot</span><span class="p">(</span><span class="n">half_dir</span><span class="p">));</span>
+
+        <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">Ld</span> <span class="o">=</span> <span class="n">kd</span><span class="p">.</span><span class="n">cwiseProduct</span><span class="p">(</span><span class="n">light</span><span class="p">.</span><span class="n">intensity</span> <span class="o">/</span> <span class="n">r</span><span class="p">)</span> <span class="o">*</span> <span class="n">NoL</span><span class="p">;</span>
+        <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">Ls</span> <span class="o">=</span> <span class="n">ks</span><span class="p">.</span><span class="n">cwiseProduct</span><span class="p">(</span><span class="n">light</span><span class="p">.</span><span class="n">intensity</span> <span class="o">/</span> <span class="n">r</span><span class="p">)</span> <span class="o">*</span> <span class="n">std</span><span class="o">::</span><span class="n">pow</span><span class="p">(</span><span class="n">VoH</span><span class="p">,</span> <span class="n">p</span><span class="p">);</span>
+        <span class="n">result_color</span> <span class="o">+=</span> <span class="p">(</span><span class="n">Ld</span> <span class="o">+</span> <span class="n">Ls</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">result_color</span> <span class="o">*</span> <span class="mf">255.f</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="bump-mapping">Bump mapping</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="c1">// main.cpp
+</span><span class="c1"></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">bump_fragment_shader</span><span class="p">(</span><span class="k">const</span> <span class="n">fragment_shader_payload</span><span class="o">&amp;</span> <span class="n">payload</span><span class="p">)</span>
+<span class="p">{</span>
+    
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">ka</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span><span class="p">(</span><span class="mf">0.005</span><span class="p">,</span> <span class="mf">0.005</span><span class="p">,</span> <span class="mf">0.005</span><span class="p">);</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">kd</span> <span class="o">=</span> <span class="n">payload</span><span class="p">.</span><span class="n">color</span><span class="p">;</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">ks</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span><span class="p">(</span><span class="mf">0.7937</span><span class="p">,</span> <span class="mf">0.7937</span><span class="p">,</span> <span class="mf">0.7937</span><span class="p">);</span>
+
+    <span class="k">auto</span> <span class="n">l1</span> <span class="o">=</span> <span class="n">light</span><span class="p">{{</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">},</span> <span class="p">{</span><span class="mi">500</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">500</span><span class="p">}};</span>
+    <span class="k">auto</span> <span class="n">l2</span> <span class="o">=</span> <span class="n">light</span><span class="p">{{</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">0</span><span class="p">},</span> <span class="p">{</span><span class="mi">500</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">500</span><span class="p">}};</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">light</span><span class="o">&gt;</span> <span class="n">lights</span> <span class="o">=</span> <span class="p">{</span><span class="n">l1</span><span class="p">,</span> <span class="n">l2</span><span class="p">};</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">amb_light_intensity</span><span class="p">{</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">};</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">eye_pos</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">};</span>
+
+    <span class="kt">float</span> <span class="n">p</span> <span class="o">=</span> <span class="mi">150</span><span class="p">;</span>
+
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">color</span> <span class="o">=</span> <span class="n">payload</span><span class="p">.</span><span class="n">color</span><span class="p">;</span> 
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">point</span> <span class="o">=</span> <span class="n">payload</span><span class="p">.</span><span class="n">view_pos</span><span class="p">;</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">normal</span> <span class="o">=</span> <span class="n">payload</span><span class="p">.</span><span class="n">normal</span><span class="p">;</span>
+
+
+    <span class="kt">float</span> <span class="n">kh</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">kn</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">;</span>
+
+    <span class="kt">float</span> <span class="n">x</span> <span class="o">=</span> <span class="n">normal</span><span class="p">.</span><span class="n">x</span><span class="p">();</span>
+    <span class="kt">float</span> <span class="n">y</span> <span class="o">=</span> <span class="n">normal</span><span class="p">.</span><span class="n">y</span><span class="p">();</span>
+    <span class="kt">float</span> <span class="n">z</span> <span class="o">=</span> <span class="n">normal</span><span class="p">.</span><span class="n">z</span><span class="p">();</span>
+    <span class="kt">float</span> <span class="n">u</span> <span class="o">=</span> <span class="n">payload</span><span class="p">.</span><span class="n">tex_coords</span><span class="p">.</span><span class="n">x</span><span class="p">();</span>
+    <span class="kt">float</span> <span class="n">v</span> <span class="o">=</span> <span class="n">payload</span><span class="p">.</span><span class="n">tex_coords</span><span class="p">.</span><span class="n">y</span><span class="p">();</span>
+    <span class="kt">float</span> <span class="n">w</span> <span class="o">=</span> <span class="n">payload</span><span class="p">.</span><span class="n">texture</span><span class="o">-&gt;</span><span class="n">width</span><span class="p">;</span>
+    <span class="kt">float</span> <span class="n">h</span> <span class="o">=</span> <span class="n">payload</span><span class="p">.</span><span class="n">texture</span><span class="o">-&gt;</span><span class="n">height</span><span class="p">;</span>
+
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">t</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">y</span> <span class="o">/</span> <span class="n">std</span><span class="o">::</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">z</span> <span class="o">*</span> <span class="n">z</span><span class="p">),</span> <span class="n">std</span><span class="o">::</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">z</span> <span class="o">*</span> <span class="n">z</span><span class="p">),</span> <span class="n">z</span> <span class="o">*</span> <span class="n">y</span> <span class="o">/</span> <span class="n">std</span><span class="o">::</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">z</span> <span class="o">*</span> <span class="n">z</span><span class="p">));</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">b</span> <span class="o">=</span> <span class="n">normal</span><span class="p">.</span><span class="n">cross</span><span class="p">(</span><span class="n">t</span><span class="p">);</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix3f</span> <span class="n">TBN</span><span class="p">;</span>
+    <span class="n">TBN</span> <span class="o">&lt;&lt;</span> <span class="n">t</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">normal</span><span class="p">;</span>
+
+    <span class="kt">float</span> <span class="n">dU</span> <span class="o">=</span> <span class="n">kh</span> <span class="o">*</span> <span class="n">kn</span> <span class="o">*</span> <span class="p">(</span><span class="n">payload</span><span class="p">.</span><span class="n">texture</span><span class="o">-&gt;</span><span class="n">getColor</span><span class="p">(</span><span class="n">u</span> <span class="o">+</span> <span class="mf">1.0f</span> <span class="o">/</span> <span class="n">w</span><span class="p">,</span> <span class="n">v</span><span class="p">).</span><span class="n">norm</span><span class="p">()</span> <span class="o">-</span> <span class="n">payload</span><span class="p">.</span><span class="n">texture</span><span class="o">-&gt;</span><span class="n">getColor</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">).</span><span class="n">norm</span><span class="p">());</span>
+    <span class="kt">float</span> <span class="n">dV</span> <span class="o">=</span> <span class="n">kh</span> <span class="o">*</span> <span class="n">kn</span> <span class="o">*</span> <span class="p">(</span><span class="n">payload</span><span class="p">.</span><span class="n">texture</span><span class="o">-&gt;</span><span class="n">getColor</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span> <span class="o">+</span> <span class="mf">1.0f</span> <span class="o">/</span> <span class="n">h</span><span class="p">).</span><span class="n">norm</span><span class="p">()</span> <span class="o">-</span> <span class="n">payload</span><span class="p">.</span><span class="n">texture</span><span class="o">-&gt;</span><span class="n">getColor</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">).</span><span class="n">norm</span><span class="p">());</span>
+
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">ln</span><span class="p">(</span><span class="o">-</span><span class="n">dU</span><span class="p">,</span> <span class="o">-</span><span class="n">dV</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">);</span>
+    <span class="n">normal</span> <span class="o">=</span> <span class="n">TBN</span> <span class="o">*</span> <span class="n">ln</span><span class="p">;</span>
+    <span class="n">normal</span><span class="p">.</span><span class="n">normalized</span><span class="p">();</span>
+
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">result_color</span> <span class="o">=</span> <span class="n">normal</span><span class="p">;</span>
+
+
+    <span class="k">return</span> <span class="n">result_color</span> <span class="o">*</span> <span class="mf">255.f</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="displacement-mapping">Displacement mapping</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="c1">// main.cpp
+</span><span class="c1"></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">displacement_fragment_shader</span><span class="p">(</span><span class="k">const</span> <span class="n">fragment_shader_payload</span><span class="o">&amp;</span> <span class="n">payload</span><span class="p">)</span>
+<span class="p">{</span>
+    
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">ka</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span><span class="p">(</span><span class="mf">0.005</span><span class="p">,</span> <span class="mf">0.005</span><span class="p">,</span> <span class="mf">0.005</span><span class="p">);</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">kd</span> <span class="o">=</span> <span class="n">payload</span><span class="p">.</span><span class="n">color</span><span class="p">;</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">ks</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span><span class="p">(</span><span class="mf">0.7937</span><span class="p">,</span> <span class="mf">0.7937</span><span class="p">,</span> <span class="mf">0.7937</span><span class="p">);</span>
+
+    <span class="k">auto</span> <span class="n">l1</span> <span class="o">=</span> <span class="n">light</span><span class="p">{{</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">},</span> <span class="p">{</span><span class="mi">500</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">500</span><span class="p">}};</span>
+    <span class="k">auto</span> <span class="n">l2</span> <span class="o">=</span> <span class="n">light</span><span class="p">{{</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">0</span><span class="p">},</span> <span class="p">{</span><span class="mi">500</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">500</span><span class="p">}};</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">light</span><span class="o">&gt;</span> <span class="n">lights</span> <span class="o">=</span> <span class="p">{</span><span class="n">l1</span><span class="p">,</span> <span class="n">l2</span><span class="p">};</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">amb_light_intensity</span><span class="p">{</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">};</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">eye_pos</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">};</span>
+
+    <span class="kt">float</span> <span class="n">p</span> <span class="o">=</span> <span class="mi">150</span><span class="p">;</span>
+
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">color</span> <span class="o">=</span> <span class="n">payload</span><span class="p">.</span><span class="n">color</span><span class="p">;</span> 
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">point</span> <span class="o">=</span> <span class="n">payload</span><span class="p">.</span><span class="n">view_pos</span><span class="p">;</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">normal</span> <span class="o">=</span> <span class="n">payload</span><span class="p">.</span><span class="n">normal</span><span class="p">;</span>
+
+    <span class="kt">float</span> <span class="n">kh</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">kn</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">;</span>
+    
+    <span class="kt">float</span> <span class="n">x</span> <span class="o">=</span> <span class="n">normal</span><span class="p">.</span><span class="n">x</span><span class="p">();</span>
+    <span class="kt">float</span> <span class="n">y</span> <span class="o">=</span> <span class="n">normal</span><span class="p">.</span><span class="n">y</span><span class="p">();</span>
+    <span class="kt">float</span> <span class="n">z</span> <span class="o">=</span> <span class="n">normal</span><span class="p">.</span><span class="n">z</span><span class="p">();</span>
+    <span class="kt">float</span> <span class="n">u</span> <span class="o">=</span> <span class="n">payload</span><span class="p">.</span><span class="n">tex_coords</span><span class="p">.</span><span class="n">x</span><span class="p">();</span>
+    <span class="kt">float</span> <span class="n">v</span> <span class="o">=</span> <span class="n">payload</span><span class="p">.</span><span class="n">tex_coords</span><span class="p">.</span><span class="n">y</span><span class="p">();</span>
+    <span class="kt">float</span> <span class="n">w</span> <span class="o">=</span> <span class="n">payload</span><span class="p">.</span><span class="n">texture</span><span class="o">-&gt;</span><span class="n">width</span><span class="p">;</span>
+    <span class="kt">float</span> <span class="n">h</span> <span class="o">=</span> <span class="n">payload</span><span class="p">.</span><span class="n">texture</span><span class="o">-&gt;</span><span class="n">height</span><span class="p">;</span>
+
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">t</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">y</span> <span class="o">/</span> <span class="n">std</span><span class="o">::</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">z</span> <span class="o">*</span> <span class="n">z</span><span class="p">),</span> <span class="n">std</span><span class="o">::</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">z</span> <span class="o">*</span> <span class="n">z</span><span class="p">),</span> <span class="n">z</span> <span class="o">*</span> <span class="n">y</span> <span class="o">/</span> <span class="n">std</span><span class="o">::</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">z</span> <span class="o">*</span> <span class="n">z</span><span class="p">));</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">b</span> <span class="o">=</span> <span class="n">normal</span><span class="p">.</span><span class="n">cross</span><span class="p">(</span><span class="n">t</span><span class="p">);</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix3f</span> <span class="n">TBN</span><span class="p">;</span>
+    <span class="n">TBN</span> <span class="o">&lt;&lt;</span> <span class="n">t</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">normal</span><span class="p">;</span>
+
+    <span class="kt">float</span> <span class="n">dU</span> <span class="o">=</span> <span class="n">kh</span> <span class="o">*</span> <span class="n">kn</span> <span class="o">*</span> <span class="p">(</span><span class="n">payload</span><span class="p">.</span><span class="n">texture</span><span class="o">-&gt;</span><span class="n">getColor</span><span class="p">(</span><span class="n">u</span> <span class="o">+</span> <span class="mf">1.0f</span> <span class="o">/</span> <span class="n">w</span><span class="p">,</span> <span class="n">v</span><span class="p">).</span><span class="n">norm</span><span class="p">()</span> <span class="o">-</span> <span class="n">payload</span><span class="p">.</span><span class="n">texture</span><span class="o">-&gt;</span><span class="n">getColor</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">).</span><span class="n">norm</span><span class="p">());</span>
+    <span class="kt">float</span> <span class="n">dV</span> <span class="o">=</span> <span class="n">kh</span> <span class="o">*</span> <span class="n">kn</span> <span class="o">*</span> <span class="p">(</span><span class="n">payload</span><span class="p">.</span><span class="n">texture</span><span class="o">-&gt;</span><span class="n">getColor</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span> <span class="o">+</span> <span class="mf">1.0f</span> <span class="o">/</span> <span class="n">h</span><span class="p">).</span><span class="n">norm</span><span class="p">()</span> <span class="o">-</span> <span class="n">payload</span><span class="p">.</span><span class="n">texture</span><span class="o">-&gt;</span><span class="n">getColor</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">).</span><span class="n">norm</span><span class="p">());</span>
+
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">ln</span><span class="p">(</span><span class="o">-</span><span class="n">dU</span><span class="p">,</span> <span class="o">-</span><span class="n">dV</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">);</span>
+    <span class="n">point</span> <span class="o">=</span> <span class="n">point</span> <span class="o">+</span> <span class="n">kn</span> <span class="o">*</span> <span class="n">normal</span> <span class="o">*</span> <span class="n">payload</span><span class="p">.</span><span class="n">texture</span><span class="o">-&gt;</span><span class="n">getColor</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">).</span><span class="n">norm</span><span class="p">();</span>
+    <span class="n">normal</span> <span class="o">=</span> <span class="n">TBN</span> <span class="o">*</span> <span class="n">ln</span><span class="p">;</span>
+    <span class="n">normal</span> <span class="o">=</span> <span class="n">normal</span><span class="p">.</span><span class="n">normalized</span><span class="p">();</span>
+
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">result_color</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">};</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">La</span> <span class="o">=</span> <span class="n">ka</span><span class="p">.</span><span class="n">cwiseProduct</span><span class="p">(</span><span class="n">amb_light_intensity</span><span class="p">);</span>
+    <span class="n">result_color</span> <span class="o">+=</span> <span class="n">La</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">light</span> <span class="p">:</span> <span class="n">lights</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">view_dir</span> <span class="o">=</span> <span class="p">(</span><span class="n">eye_pos</span> <span class="o">-</span> <span class="n">point</span><span class="p">).</span><span class="n">normalized</span><span class="p">();</span>
+        <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">light_dir</span> <span class="o">=</span> <span class="p">(</span><span class="n">light</span><span class="p">.</span><span class="n">position</span> <span class="o">-</span> <span class="n">point</span><span class="p">).</span><span class="n">normalized</span><span class="p">();</span>
+        <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">half_dir</span> <span class="o">=</span> <span class="p">(</span><span class="n">view_dir</span> <span class="o">+</span> <span class="n">light_dir</span><span class="p">).</span><span class="n">normalized</span><span class="p">();</span>
+        <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">point_to_light</span> <span class="o">=</span> <span class="n">light</span><span class="p">.</span><span class="n">position</span> <span class="o">-</span> <span class="n">point</span><span class="p">;</span>
+        <span class="kt">double</span> <span class="n">r</span> <span class="o">=</span> <span class="n">point_to_light</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">point_to_light</span><span class="p">);</span>
+        <span class="kt">double</span> <span class="n">NoL</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">max</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">,</span> <span class="n">normal</span><span class="p">.</span><span class="n">normalized</span><span class="p">().</span><span class="n">dot</span><span class="p">(</span><span class="n">light_dir</span><span class="p">));</span>
+        <span class="kt">double</span> <span class="n">VoH</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">max</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">,</span> <span class="n">normal</span><span class="p">.</span><span class="n">normalized</span><span class="p">().</span><span class="n">dot</span><span class="p">(</span><span class="n">half_dir</span><span class="p">));</span>
+
+        <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">Ld</span> <span class="o">=</span> <span class="n">kd</span><span class="p">.</span><span class="n">cwiseProduct</span><span class="p">(</span><span class="n">light</span><span class="p">.</span><span class="n">intensity</span> <span class="o">/</span> <span class="n">r</span><span class="p">)</span> <span class="o">*</span> <span class="n">NoL</span><span class="p">;</span>
+        <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3f</span> <span class="n">Ls</span> <span class="o">=</span> <span class="n">ks</span><span class="p">.</span><span class="n">cwiseProduct</span><span class="p">(</span><span class="n">light</span><span class="p">.</span><span class="n">intensity</span> <span class="o">/</span> <span class="n">r</span><span class="p">)</span> <span class="o">*</span> <span class="n">std</span><span class="o">::</span><span class="n">pow</span><span class="p">(</span><span class="n">VoH</span><span class="p">,</span> <span class="n">p</span><span class="p">);</span>
+
+        <span class="n">result_color</span> <span class="o">+=</span> <span class="p">(</span><span class="n">Ld</span> <span class="o">+</span> <span class="n">Ls</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">result_color</span> <span class="o">*</span> <span class="mf">255.f</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="参考资料">参考资料</h1>
+
+<p><a href="https://www.bilibili.com/video/BV1X7411F744?p=8">Lecture 07 Shading 1 (Illumination, Shading and  Graphics Pipeline)</a></p>
+
+<p><a href="https://www.bilibili.com/video/BV1X7411F744?p=9">Lecture 08 Shading 2 (Shading, Pipeline and Texture Mapping)</a></p>
+
+<p><a href="https://www.bilibili.com/video/BV1X7411F744?p=10">Lecture 09 Shading 3 (Texture Mapping Cont.)</a></p>
+
+<p><a href="https://www.bilibili.com/video/BV1X7411F744?p=11">Lecture 10 Geometry 1 (Introduction)</a></p>
+
+<p><a href="https://www.cnblogs.com/graphics/archive/2013/02/21/2920627.html">求反射向量</a></p>
+
+<p><a href="https://rhetty.github.io/2018/03/20/%E4%B8%89%E8%A7%92%E5%BD%A2%E7%BA%BF%E6%80%A7%E6%8F%92%E5%80%BC%E2%80%94%E2%80%94%E9%87%8D%E5%BF%83%E5%9D%90%E6%A0%87/">三角形线性插值——重心坐标</a></p>
+
+<p><a href="https://dmtamakuwala.blogspot.com/2013/07/pixel-vs-texel.html">Pixel vs. Texel</a></p>
+
+<p><a href="http://people.hsc.edu/faculty-staff/robbk/Coms385/Lectures/30%20Textures%20-%20Magnification%20and%20Minification.ppt">Textures - Magnification and Minification</a></p>
+
+<p><a href="https://cgl.ethz.ch/teaching/former/vc_master_06/Downloads/Mipmaps_1.pdf">MipMap Texturing</a></p>
+
+<p><a href="https://www.youtube.com/watch?v=8OtOFN17jxM">Mipmapping</a></p>
+
+<p><a href="https://paroj.github.io/gltut/Texturing/Tut15%20Magnification.html">Linear Filtering</a></p>
+
+<p><a href="https://paroj.github.io/gltut/Texturing/Tut15%20Needs%20More%20Pictures.html">Needs More Pictures</a></p>
+
+<p><a href="https://zh.wikipedia.org/wiki/%E5%87%B9%E5%87%B8%E8%B4%B4%E5%9B%BE">凹凸贴图</a></p>
+
+<p><a href="https://zh.wikipedia.org/wiki/%E6%B3%95%E7%BA%BF%E8%B4%B4%E5%9B%BE">法线贴图</a></p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">scarletsky</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-09-01
+        <a href="/commit/c96fd6e64d6a60230f7d46d89e949f65246469e3" title="chore: add homework3 in games101">(c96fd6e)</a>
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/games101/">games101</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/2021/03/06/gl-depth-transformation/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">深度变换总结</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/2020/06/10/games101-notes-rasterization/">
+            <span class="next-text nav-default">Games101 笔记 —— 光栅化</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="scarletsky/scarletsky.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:scarletsky1025@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/scarletsky" class="iconfont icon-github" title="github"></a>
+  <a href="https://scarletsky.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>scarletsky</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>org-mode on scarletsky</title>
+    <link>https://scarletsky.github.io/tags/org-mode/</link>
+    <description>Recent content in org-mode on scarletsky</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 29 Sep 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://scarletsky.github.io/tags/org-mode/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Org mode in Spacemacs</title>
+      <link>https://scarletsky.github.io/2017/09/29/org-mode-in-spacemacs/</link>
+      <pubDate>Fri, 29 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2017/09/29/org-mode-in-spacemacs/</guid>
+      <description>简介 Org mode 是 Emacs 中的一个 Major mode，本质上只是一种类似记事本的纯文本格式。它与 Markdown 非常相似，都是通过自定义标记来赋予文本样式和语义。我们可以用 Org mode</description>
+    </item>
+    
+  </channel>
+</rss>

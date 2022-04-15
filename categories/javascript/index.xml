@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>javascript on scarletsky</title>
+    <link>https://scarletsky.github.io/categories/javascript/</link>
+    <description>Recent content in javascript on scarletsky</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 13 Jan 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://scarletsky.github.io/categories/javascript/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>JavaScript 进度管理</title>
+      <link>https://scarletsky.github.io/2020/01/13/manage-progress/</link>
+      <pubDate>Mon, 13 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2020/01/13/manage-progress/</guid>
+      <description>前言 我们写程序的时候会经常遇到显示进度的需求，如加载进度、上传进度等。 最常见的实现方式是通过记录 已完成数量(loadedCount) 和 总数量</description>
+    </item>
+    
+    <item>
+      <title>实现一个简单限流的 Promise 队列</title>
+      <link>https://scarletsky.github.io/2019/11/02/a-simple-throttle-promise-queue/</link>
+      <pubDate>Sat, 02 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2019/11/02/a-simple-throttle-promise-queue/</guid>
+      <description>前言 Promise.all 可以用来并行处理一组 Promise，在 Promise 数量不大的时候是一个很好的方案。 但当 Promise 的数量非常庞大的时候，Promise.all 很容易出现磁</description>
+    </item>
+    
+    <item>
+      <title>Webpack 打包含动态加载的类库</title>
+      <link>https://scarletsky.github.io/2019/02/19/webpack-bundling-libraries-with-dynamic-imports/</link>
+      <pubDate>Tue, 19 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2019/02/19/webpack-bundling-libraries-with-dynamic-imports/</guid>
+      <description>前言 在编写库的时候，我们有时候会希望按需加载某些依赖，例如如果代码的运行环境不支持某些功能的话，就加载相关的 Polyfill 。 webpack 作为当前最流行的打包工具，</description>
+    </item>
+    
+    <item>
+      <title>用 JSDOC 编写 JavaScript 文档</title>
+      <link>https://scarletsky.github.io/2017/12/23/write-javascript-document-by-jsdoc/</link>
+      <pubDate>Sat, 23 Dec 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2017/12/23/write-javascript-document-by-jsdoc/</guid>
+      <description>简介 JSDOC 是一个 API 文档生成器，你只需要在代码中添加特定格式的注释，它就可以从注释中为你生成 HTML 文档。 安装 全局安装： 1 npm install -g jsdoc 如果你更倾向项目内使用</description>
+    </item>
+    
+    <item>
+      <title>Promise 实现原理</title>
+      <link>https://scarletsky.github.io/2017/11/17/how-to-implement-promise-in-javascript/</link>
+      <pubDate>Fri, 17 Nov 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2017/11/17/how-to-implement-promise-in-javascript/</guid>
+      <description>简介 Promise 是目前流行的处理异步操作结果的方式。 本文假设读者已经了解过 Promise/A+ 规范，并熟悉 Promise 的用法。 构造 我们先看看如何构造一个 Promise ： 1 2 3 4 5 new Promise(function(resolve, reject) { setTimeout(function() {</description>
+    </item>
+    
+    <item>
+      <title>如何用 JavaScript 实现 Popover</title>
+      <link>https://scarletsky.github.io/2017/02/18/implement-popover-with-javascript/</link>
+      <pubDate>Sat, 18 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2017/02/18/implement-popover-with-javascript/</guid>
+      <description>简介 Popover 是我们日常开发中用得比较多的组件，通常用于给定一个触发元素，当某特定事件 (hover, click等) 在该元素上触发时，弹出相关的菜单供用户选择。 目</description>
+    </item>
+    
+    <item>
+      <title>用 JavaScript 构建事件系统</title>
+      <link>https://scarletsky.github.io/2017/01/30/build-your-own-event-system-in-javascript/</link>
+      <pubDate>Mon, 30 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2017/01/30/build-your-own-event-system-in-javascript/</guid>
+      <description>简介 在组件化开发越来越流行的今天，事件系统演者着非常重要的角色，它经常作为组件间通讯的桥梁。 本文将讨论如何用 JavaScript 实现一个简单的事件系统。 基本结</description>
+    </item>
+    
+    <item>
+      <title>在 Node.js 中为 Restful API 编写单元测试</title>
+      <link>https://scarletsky.github.io/2016/10/05/write-unit-tests-for-restful-api-in-nodejs/</link>
+      <pubDate>Wed, 05 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/10/05/write-unit-tests-for-restful-api-in-nodejs/</guid>
+      <description>简介 单元测试是针对程序模块来进行正确性检验的测试工作，程序单元是应用的最小可测试部件。 在 Web 应用中，我们可以把 Restful API 看作是构成应用的单元。 Restful API 比</description>
+    </item>
+    
+    <item>
+      <title>浅谈单页应用中前端分页的实现方案</title>
+      <link>https://scarletsky.github.io/2016/09/11/talking-about-front-end-pagination-implementation-in-spa/</link>
+      <pubDate>Sun, 11 Sep 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/09/11/talking-about-front-end-pagination-implementation-in-spa/</guid>
+      <description>简介 分页是开发中最常见的需求之一。 对于分页，我们讨论的最多的是后端的数据库分页，这关乎到我们应用程序的性能，也是分页这个需求的核心。 而前端要</description>
+    </item>
+    
+    <item>
+      <title>自定义 Redux 中的 combineReducers</title>
+      <link>https://scarletsky.github.io/2016/08/20/write-your-own-combine-reducers-in-redux/</link>
+      <pubDate>Sat, 20 Aug 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/08/20/write-your-own-combine-reducers-in-redux/</guid>
+      <description>简介 Redux 中的 combineReducers 能让我们很方便地把多个 reducers 组合起来，成为一个新的 reducer。 然而，随着我们的应用变得越来越复杂，combineReducers</description>
+    </item>
+    
+    <item>
+      <title>如何用 JavaScript 下载文件</title>
+      <link>https://scarletsky.github.io/2016/07/03/download-file-using-javascript/</link>
+      <pubDate>Sun, 03 Jul 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/07/03/download-file-using-javascript/</guid>
+      <description>简介 我们知道，下载文件是一个非常常见的需求，但由于浏览器的安全策略的限制，我们通常只能通过一个额外的页面，访问某个文件的 url 来实现下载功能，但</description>
+    </item>
+    
+    <item>
+      <title>如何实现无限滚动</title>
+      <link>https://scarletsky.github.io/2016/04/20/how-to-implement-infinite-scroll/</link>
+      <pubDate>Wed, 20 Apr 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/04/20/how-to-implement-infinite-scroll/</guid>
+      <description>简介 无限滚动对我们来说已经是很常见的功能了，具体表现为当页面滚动到某个位置时就自动加载数据，本文将探讨无限滚动的实现原理以及优化。 原理 我们先</description>
+    </item>
+    
+    <item>
+      <title>Lodash 中 assign，extend 和 merge 的区别</title>
+      <link>https://scarletsky.github.io/2016/04/02/assign-vs-extend-vs-merge-in-lodash/</link>
+      <pubDate>Sat, 02 Apr 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/04/02/assign-vs-extend-vs-merge-in-lodash/</guid>
+      <description>简介 我们经常在别人的代码中看见 assign，extend，merge 函数，这三个函数用起来很相似，都是合并源对象的属性到目标对象中。 既然都是</description>
+    </item>
+    
+    <item>
+      <title>在 Node.js 中利用 js-xlsx 处理 Excel 文件</title>
+      <link>https://scarletsky.github.io/2016/01/30/nodejs-process-excel/</link>
+      <pubDate>Sat, 30 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/01/30/nodejs-process-excel/</guid>
+      <description>简介 本文介绍用 Node.js 中的 js-xlsx 库来处理 Excel 文件。 js-xlsx 库是目前 Github 上 star 数量最多的处理 Excel 的库，功能强大，但上手难度稍大。文档有些乱，不适合快速上手。 本文对 js-xlsx 库</description>
+    </item>
+    
+    <item>
+      <title>The Little JavaScript Closures</title>
+      <link>https://scarletsky.github.io/2015/12/02/the-little-javascript-closures/</link>
+      <pubDate>Wed, 02 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/12/02/the-little-javascript-closures/</guid>
+      <description>写在前面 本文尝试模仿 The Little Schema 的风格，介绍 JavaScript 的闭包。本文同时也是我学习 JavaScript 闭包的一次总结。欢迎一起讨论。 简介 什么是闭包？ 闭包是一个函数 闭包都是函数</description>
+    </item>
+    
+    <item>
+      <title>React-DnD 的使用</title>
+      <link>https://scarletsky.github.io/2015/11/17/react-dnd-usage/</link>
+      <pubDate>Tue, 17 Nov 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/11/17/react-dnd-usage/</guid>
+      <description>介绍 React DnD 是一组 React 高阶组件，可以用来帮你构建复杂的拖拽接口，同时解耦你的组件。React DnD 非常适合像 Trello 和 Storify 这样的应用，在不同地方通过拖拽转移数</description>
+    </item>
+    
+    <item>
+      <title>Node.js 中 Stream API 的使用</title>
+      <link>https://scarletsky.github.io/2015/10/22/node-stream-api-learning/</link>
+      <pubDate>Thu, 22 Oct 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/10/22/node-stream-api-learning/</guid>
+      <description>基本介绍 在 Node.js 中，读取文件的方式有两种，一种是用 fs.readFile，另外一种是利用 fs.createReadStream 来读取。 fs.readFile 对于每个 Node.js 使用者来说最熟悉不过了，简单易懂，</description>
+    </item>
+    
+    <item>
+      <title>CommonJS 学习笔记</title>
+      <link>https://scarletsky.github.io/2015/08/19/commonjs-learning/</link>
+      <pubDate>Wed, 19 Aug 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/08/19/commonjs-learning/</guid>
+      <description>概述 CommonJS 是 JavaScript 模块化的规范，Node.js采用了这个规范。 根据 CommonJS 规范，一个 JavaScript 文件就是一个模块，其他模块可以通过 require 来获取 module.exports 中暴露的内容，而其他部分</description>
+    </item>
+    
+    <item>
+      <title>JavaScript 中 Object.defineProperty 的使用</title>
+      <link>https://scarletsky.github.io/2015/08/18/object-learning-in-javascript/</link>
+      <pubDate>Tue, 18 Aug 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/08/18/object-learning-in-javascript/</guid>
+      <description>Object.defineProperty The Object.defineProperty() method defines a new property directly on an object, or modifies an existing property on an object, and returns the object. 直接在一个对象上定义一个新的属性，或修改一个已经存在的属性。这个方法会返回该对象。 语法 Object.defineProperty(obj, prop, descriptor)</description>
+    </item>
+    
+    <item>
+      <title>利用 Gulp 处理前端工作流程</title>
+      <link>https://scarletsky.github.io/2015/08/14/use-gulp-for-front-end-workflow/</link>
+      <pubDate>Fri, 14 Aug 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/08/14/use-gulp-for-front-end-workflow/</guid>
+      <description>基本用法 1 2 3 4 5 6 7 8 9 10 11 12 // gulpfile.js gulp.task(&amp;#39;foo&amp;#39;, function() { gulp.src(glob) .pipe(...) .pipe(...) .pipe(gulp.dest(...)) .pipe(...) .pipe(gulp.dest(...)) }); // shell $ gulp foo 基本 API gulp.src(glob[, options]) 根据 glob 匹配文件，返回 stream，可以通过 .pipe() 方法传递给后续的插件</description>
+    </item>
+    
+    <item>
+      <title>HTML5 Canvas 技巧</title>
+      <link>https://scarletsky.github.io/2015/03/15/html5-canvas-tricks/</link>
+      <pubDate>Sun, 15 Mar 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/03/15/html5-canvas-tricks/</guid>
+      <description>注意事项 用 &amp;lt;canvas&amp;gt; 标签进行绘图时必须要设置 width 和 height 属性，这里并不是指 CSS 属性中的 width 和 height，而是 &amp;lt;canvas&amp;gt; 标签本身的属性！ 1 2 3 4 5 6 7 8 9 10 11 12 13 &amp;lt;!-- 正</description>
+    </item>
+    
+    <item>
+      <title>JavaScript 利用 Blob 进行分片上传</title>
+      <link>https://scarletsky.github.io/2015/01/27/javascript-upload-slice-file-using-blob/</link>
+      <pubDate>Tue, 27 Jan 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/01/27/javascript-upload-slice-file-using-blob/</guid>
+      <description>基本流程 用户选择文件 判断文件大小 如果文件小于限定文件大小，则直接上传 否则进行分片上传 分片流程 给定限定大小。 利用 Blob 对象的 slice 方法把文件分成 N 份。</description>
+    </item>
+    
+    <item>
+      <title>JavaScript 常用技巧</title>
+      <link>https://scarletsky.github.io/2015/01/26/javascript-tricks/</link>
+      <pubDate>Mon, 26 Jan 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/01/26/javascript-tricks/</guid>
+      <description>字符串操作 首字母大写 1 2 3 str.replace(/\b\w+/g, function (word) { return word.substring(0, 1).toLowerCase() + word.substring(1); }); 截取字符串最后几位 1 str.substring(str.length-X) 进制转换 1 2 d.toString(16) (十进制 -&amp;gt; 十六进制) parseInt(‘ff’, 16) (十六进</description>
+    </item>
+    
+    <item>
+      <title>D3.js 学习笔记2</title>
+      <link>https://scarletsky.github.io/2015/01/04/d3js-learning-2/</link>
+      <pubDate>Sun, 04 Jan 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2015/01/04/d3js-learning-2/</guid>
+      <description>Layout 和它的名字相比，D3 中的 Layout 并不会放任何东西在屏幕上。实际上，Layout 方法和可视化输出并没有直接关系。D3 Layout 会把你交给它的数据转换成更加</description>
+    </item>
+    
+    <item>
+      <title>D3.js 学习笔记1</title>
+      <link>https://scarletsky.github.io/2014/12/29/d3js-learning-1/</link>
+      <pubDate>Mon, 29 Dec 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2014/12/29/d3js-learning-1/</guid>
+      <description>基础操作 d3.select, d3.selectAll 选择元素 selection.append 在选择集合中添加元素 selection.data 为选择元素进行数据绑定，常与 enter 和 exit 一起使用 selection.data(data).enter 返回缺失元素集合 selection.data(data).exit 返回多余元素集合 selection.text 设置或获取选定元</description>
+    </item>
+    
+    <item>
+      <title>The Digest Loop and $apply</title>
+      <link>https://scarletsky.github.io/2014/10/16/the-digest-loop-and-apply/</link>
+      <pubDate>Thu, 16 Oct 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2014/10/16/the-digest-loop-and-apply/</guid>
+      <description>让我们来看一下 Angular 底下是怎么工作的。我们是怎样通过几行代码让神奇的数据绑定起作用的呢？我们先来理解一下 $digest 循环和 $apply 方法是怎样工作的。 在通常的浏览</description>
+    </item>
+    
+  </channel>
+</rss>

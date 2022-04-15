@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Webpack 打包含动态加载的类库 - scarletsky</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="scarletsky" /><meta name="description" content="前言 在编写库的时候，我们有时候会希望按需加载某些依赖，例如如果代码的运行环境不支持某些功能的话，就加载相关的 Polyfill 。 webpack 作为当前最流行的打包工具，" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.74.3 with theme even" />
+
+
+<link rel="canonical" href="https://scarletsky.github.io/2019/02/19/webpack-bundling-libraries-with-dynamic-imports/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.2e81bbed97b8b282c1aeb57488cc71c8d8c8ec559f3931531bd396bf31e0d4dd.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Webpack 打包含动态加载的类库" />
+<meta property="og:description" content="前言 在编写库的时候，我们有时候会希望按需加载某些依赖，例如如果代码的运行环境不支持某些功能的话，就加载相关的 Polyfill 。 webpack 作为当前最流行的打包工具，" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://scarletsky.github.io/2019/02/19/webpack-bundling-libraries-with-dynamic-imports/" />
+<meta property="article:published_time" content="2019-02-19T12:11:01+00:00" />
+<meta property="article:modified_time" content="2019-04-30T08:32:59+08:00" />
+<meta itemprop="name" content="Webpack 打包含动态加载的类库">
+<meta itemprop="description" content="前言 在编写库的时候，我们有时候会希望按需加载某些依赖，例如如果代码的运行环境不支持某些功能的话，就加载相关的 Polyfill 。 webpack 作为当前最流行的打包工具，">
+<meta itemprop="datePublished" content="2019-02-19T12:11:01+00:00" />
+<meta itemprop="dateModified" content="2019-04-30T08:32:59+08:00" />
+<meta itemprop="wordCount" content="2313">
+
+
+
+<meta itemprop="keywords" content="webpack," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Webpack 打包含动态加载的类库"/>
+<meta name="twitter:description" content="前言 在编写库的时候，我们有时候会希望按需加载某些依赖，例如如果代码的运行环境不支持某些功能的话，就加载相关的 Polyfill 。 webpack 作为当前最流行的打包工具，"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">scarletsky.github.io</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">scarletsky.github.io</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Webpack 打包含动态加载的类库</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-02-19 </span>
+        <div class="post-category">
+            <a href="/categories/javascript/"> javascript </a>
+            <a href="/categories/webpack/"> webpack </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#前言">前言</a></li>
+<li><a href="#示例类库">示例类库</a></li>
+<li><a href="#问题">问题</a></li>
+<li><a href="#解决方案">解决方案</a>
+<ul>
+<li><a href="#方案一-由应用层处理">方案一：由应用层处理</a></li>
+<li><a href="#方案二-由类库处理">方案二：由类库处理</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h2 id="前言">前言</h2>
+
+<p>在编写库的时候，我们有时候会希望按需加载某些依赖，例如如果代码的运行环境不支持某些功能的话，就加载相关的 Polyfill 。
+webpack 作为当前最流行的打包工具，早已支持动态加载的功能了。
+本文将讨论一种用 webpack 打包含动态加载的类库的方法。
+<strong>注意，本文是写给类库作者看的，如果读者写的是应用，那就没有必要往下看了。</strong></p>
+
+<h2 id="示例类库">示例类库</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="c1">// my-lib.js
+</span><span class="c1"></span><span class="kr">class</span> <span class="nx">MyLib</span> <span class="p">{</span>
+    <span class="nx">loadDeps</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">global</span><span class="p">.</span><span class="nx">TextDecoder</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">([</span>
+                    <span class="kr">import</span><span class="p">(</span><span class="s1">&#39;./deps/text-encoding&#39;</span><span class="p">),</span>
+                    <span class="kr">import</span><span class="p">(</span><span class="s1">&#39;./deps/other-dep.js&#39;</span><span class="p">),</span>
+                    <span class="kr">import</span><span class="p">(</span><span class="s1">&#39;./deps/another-dep.js&#39;</span><span class="p">),</span>
+                <span class="p">]).</span><span class="nx">then</span><span class="p">(</span><span class="nx">resolve</span><span class="p">).</span><span class="k">catch</span><span class="p">(</span><span class="nx">reject</span><span class="p">);</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="nx">resolve</span><span class="p">();</span>
+            <span class="p">}</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+
+    <span class="nx">initialize</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">decoder</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">TextDecoder</span><span class="p">();</span>
+        <span class="c1">// ...
+</span><span class="c1"></span>    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>这个类库中有个 <code>loadDeps</code> 方法，会根据运行环境检测 <code>TextDecoder</code> 是否存在，如果不存在就会去加载依赖，这些依赖是在本地目录中。
+当我们把类库发布到 npm 之后，我们就会这么使用它：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="c1">// app.js
+</span><span class="c1"></span><span class="kr">import</span> <span class="nx">MyLib</span> <span class="nx">from</span> <span class="s1">&#39;my-lib&#39;</span><span class="p">;</span>
+<span class="kr">class</span> <span class="nx">App</span> <span class="p">{</span>
+    <span class="nx">constructor</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">myLib</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyLib</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kr">const</span> <span class="nx">app</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">App</span><span class="p">();</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">myLib</span><span class="p">.</span><span class="nx">loadDeps</span><span class="p">().</span><span class="nx">then</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">app</span><span class="p">.</span><span class="nx">myLib</span><span class="p">.</span><span class="nx">initialize</span><span class="p">();</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">app</span><span class="p">.</span><span class="nx">myLib</span><span class="p">.</span><span class="nx">decoder</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>这样，我们的类库无论在什么环境都能使用到 <code>TextDecoder</code> 了。</p>
+
+<p><strong>但，真的会这么顺利吗？</strong></p>
+
+<h2 id="问题">问题</h2>
+
+<p>当我们发布到 npm 仓库之前，我们会先用 Webpack 构建项目，这时候 webpack 就会分析文件中的依赖路径，把依赖文件生成到 <code>output.path</code> 中，同时 <code>import()</code>方法就已经变成 webpack 内部的方法了，依赖的路径也变成 <code>output.publicPath</code> 相关的了。</p>
+
+<p>假设我们的 webpack 配置是这样的：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="c1">// webpack.config.js
+</span><span class="c1"></span><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">output</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">filename</span><span class="o">:</span> <span class="s1">&#39;index.js&#39;</span><span class="p">,</span>
+        <span class="nx">chunkFilename</span><span class="o">:</span> <span class="s1">&#39;[name].js&#39;</span><span class="p">,</span>
+        <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;dist/&#39;</span><span class="p">,</span>
+        <span class="nx">publicPath</span><span class="o">:</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span>
+        <span class="nx">libraryTarget</span><span class="o">:</span> <span class="s1">&#39;umd&#39;</span>
+    <span class="p">},</span>
+    <span class="c1">// ...
+</span><span class="c1"></span><span class="p">};</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>然后输出了这些文件：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">// webpack output
+Built at: 02/19/2019 5:08:41 PM
+  Asset      Size  Chunks             Chunk Names
+   1.js  79 bytes       1  [emitted]
+   2.js  79 bytes       2  [emitted]
+   3.js  79 bytes       3  [emitted]
+index.js   144 KiB       0  [emitted]  main
+Entrypoint main = index.js</code></pre></td></tr></table>
+</div>
+</div>
+<p>那么当应用层调用 <code>app.myLib.loadDeps()</code> 的时候会加载依赖的路径会是怎样的呢？
+猜对了，浏览器会尝试加载这些路径：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">/1.js
+/2.js
+/3.js</code></pre></td></tr></table>
+</div>
+</div>
+<p>但是结果呢？当然是 <code>404</code> 了。因为网站的根目录没有这些文件呀，除非你把这些文件复制到网站根目录。
+同样道理，如果 <code>publicPath</code> 是相对路径的话(假设是 <code>''</code>)，那么请求依赖的路径就会相对于当前的 URL 了，即如果当前 URL 是 <code>/topics/:uid</code>，那请求的路径就会是 <code>/topics/:uid/1.js</code>。除非当前目录下有这些依赖，不然结果还是 <code>404</code>。
+当然，我们还可以修改服务端配置，把 <code>/1.js</code> 和 <code>**/1.js</code> 都指向 <code>/path/to/project/node_modules/my-lib/dist/1.js</code>。
+对应用层来说，为了一个库而改服务器配置就显得太麻烦了。
+对一个类库来说，它应该管理好自己的依赖，不应该让应用层甚至是服务器端来配合。</p>
+
+<h2 id="解决方案">解决方案</h2>
+
+<p>我们需要解决这个路径问题，既要保证结果正确，又要方便开发。
+很明显，这个问题是因为 webpack 打包的时候处理了 <code>import()</code> 导致的，如果我们不在编译时处理，而是运行时处理，这不就可以达到目的了吗？</p>
+
+<p>先来准备一下 <code>dist/</code> 的目录结构， 修改 webpack 的配置：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">CopyWebpackPlugin</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;copy-webpack-plugin&#39;</span><span class="p">);</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">output</span><span class="o">:</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span>
+    <span class="nx">plugins</span><span class="o">:</span> <span class="p">[</span>
+       <span class="k">new</span> <span class="nx">CopyWebpackPlugin</span><span class="p">([{</span>
+           <span class="nx">from</span><span class="o">:</span> <span class="s1">&#39;src/deps/&#39;</span><span class="p">,</span>
+           <span class="nx">to</span><span class="o">:</span> <span class="s1">&#39;.&#39;</span>
+       <span class="p">}])</span> 
+    <span class="p">]</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p><code>CopyWebpackPlugin</code> 会把 <code>src/deps/</code> 中的文件复制到 <code>dist/</code> 目录中，这时候 <code>dist/</code> 就会变成：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">dist
+├── 1.js
+├── 2.js
+├── 3.js
+├── text-encoding.js
+├── other-dep.js
+├── another-dep.js
+└── index.js</code></pre></td></tr></table>
+</div>
+</div>
+<p>下一步就是让 webpack 不解析 <code>import()</code> 了，这里有两种做法：</p>
+
+<h3 id="方案一-由应用层处理">方案一：由应用层处理</h3>
+
+<p>这个方案很容易实现，只需要让应用层来调用 <code>import()</code> 就可以了。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="c1">// my-lib.js
+</span><span class="c1"></span><span class="kr">class</span> <span class="nx">MyLib</span> <span class="p">{</span>
+    <span class="nx">constructor</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">onLoadDeps</span> <span class="o">=</span> <span class="nx">options</span><span class="p">.</span><span class="nx">onLoadDeps</span> <span class="o">||</span> <span class="kc">null</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nx">loadDeps</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">global</span><span class="p">.</span><span class="nx">TextDecoder</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">onLoadDeps</span><span class="p">)</span> <span class="p">{</span>
+                   <span class="k">this</span><span class="p">.</span><span class="nx">onLoadDeps</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nx">resolve</span><span class="p">).</span><span class="k">catch</span><span class="p">(</span><span class="nx">reject</span><span class="p">);</span>
+                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                    <span class="nb">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">([</span>
+                        <span class="kr">import</span><span class="p">(</span><span class="s1">&#39;./deps/text-encoding&#39;</span><span class="p">),</span>
+                        <span class="kr">import</span><span class="p">(</span><span class="s1">&#39;./deps/other-dep.js&#39;</span><span class="p">),</span>
+                        <span class="kr">import</span><span class="p">(</span><span class="s1">&#39;./deps/another-dep.js&#39;</span><span class="p">),</span>
+                    <span class="p">]).</span><span class="nx">then</span><span class="p">(</span><span class="nx">resolve</span><span class="p">).</span><span class="k">catch</span><span class="p">(</span><span class="nx">reject</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="nx">resolve</span><span class="p">();</span>
+            <span class="p">}</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// app.js
+</span><span class="c1"></span><span class="kr">import</span> <span class="nx">MyLib</span> <span class="nx">from</span> <span class="s1">&#39;my-lib&#39;</span><span class="p">;</span>
+<span class="kr">class</span> <span class="nx">App</span> <span class="p">{</span>
+    <span class="nx">constructor</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">myLib</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyLib</span><span class="p">({</span>
+            <span class="nx">onLoadDeps</span><span class="o">:</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">([</span>
+                <span class="kr">import</span><span class="p">(</span><span class="s1">&#39;my-lib/dist/text-encoding&#39;</span><span class="p">),</span>
+                <span class="kr">import</span><span class="p">(</span><span class="s1">&#39;my-lib/dist/other-dep.js&#39;</span><span class="p">),</span>
+                <span class="kr">import</span><span class="p">(</span><span class="s1">&#39;my-lib/dist/another-dep.js&#39;</span><span class="p">),</span>
+            <span class="p">]);</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>这种做法非常简单，而且在开发环境下也不需要任何处理就能正常运行了。
+不足之处是如果有多个项目都引用了这个类库的话，那么当类库添加了新的依赖时，所有引用了这个类库的项目都要改动源码。这会是一个比较繁琐的事情。
+对于这个解决方案，其实还有一个变种，相对来说更加方便：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="c1">// my-lib.js
+</span><span class="c1"></span><span class="kr">class</span> <span class="nx">MyLib</span> <span class="p">{</span>
+    <span class="nx">constructor</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">importPrefix</span> <span class="o">=</span> <span class="nx">options</span><span class="p">.</span><span class="nx">importPrefix</span> <span class="o">||</span> <span class="s1">&#39;./deps&#39;</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nx">loadDeps</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">global</span><span class="p">.</span><span class="nx">TextDecoder</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">([</span>
+                    <span class="kr">import</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">importPrefix</span> <span class="o">+</span> <span class="s1">&#39;/text-encoding&#39;</span><span class="p">),</span>
+                    <span class="kr">import</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">importPrefix</span> <span class="o">+</span> <span class="s1">&#39;/other-dep.js&#39;</span><span class="p">),</span>
+                    <span class="kr">import</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">importPrefix</span> <span class="o">+</span> <span class="s1">&#39;/another-dep.js&#39;</span><span class="p">),</span>
+                <span class="p">]).</span><span class="nx">then</span><span class="p">(</span><span class="nx">resolve</span><span class="p">).</span><span class="k">catch</span><span class="p">(</span><span class="nx">reject</span><span class="p">);</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="nx">resolve</span><span class="p">();</span>
+            <span class="p">}</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// app.js
+</span><span class="c1"></span><span class="kr">import</span> <span class="nx">MyLib</span> <span class="nx">from</span> <span class="s1">&#39;my-lib&#39;</span><span class="p">;</span>
+<span class="kr">class</span> <span class="nx">App</span> <span class="p">{</span>
+    <span class="nx">constructor</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">myLib</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyLib</span><span class="p">({</span> <span class="nx">importPrefix</span><span class="o">:</span> <span class="s1">&#39;my-lib/dist&#39;</span> <span class="p">});</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p><strong>注意：这个变种方案有可能会出现 Critical dependency: the request of a dependency is an expression 的报错。</strong></p>
+
+<h3 id="方案二-由类库处理">方案二：由类库处理</h3>
+
+<p>这个方案稍微复杂一点点。
+想要 webpack 不处理 <code>import()</code>，那么就不能让 webpack 去解析含有 <code>import()</code> 的文件，即需要把含有加载依赖的部分分离到另一个文件中。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="c1">// runtime.js
+</span><span class="c1"></span><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">onLoadDeps</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">([</span>
+            <span class="kr">import</span><span class="p">(</span><span class="s1">&#39;my-lib/dist/text-encoding&#39;</span><span class="p">),</span>
+            <span class="kr">import</span><span class="p">(</span><span class="s1">&#39;my-lib/dist/other-dep.js&#39;</span><span class="p">),</span>
+            <span class="kr">import</span><span class="p">(</span><span class="s1">&#39;my-lib/dist/another-dep.js&#39;</span><span class="p">),</span>
+        <span class="p">]);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p><strong>注意：因为 webpack 不会解析这个文件，loader 就不会处理这个文件，所以这个文件里面最好使用 Node.js 原生支持的语法。</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="c1">// my-lib.js
+</span><span class="c1"></span><span class="kr">import</span> <span class="nx">RUNTIME</span> <span class="nx">from</span> <span class="s1">&#39;./runtime&#39;</span><span class="p">;</span>
+
+<span class="kr">class</span> <span class="nx">MyLib</span> <span class="p">{</span>
+    <span class="nx">loadDeps</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+           <span class="k">if</span> <span class="p">(</span><span class="nx">global</span><span class="p">.</span><span class="nx">TextDecoder</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span>
+               <span class="nx">RUNTIME</span><span class="p">.</span><span class="nx">onLoadDeps</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nx">resolve</span><span class="p">).</span><span class="k">catch</span><span class="p">(</span><span class="nx">reject</span><span class="p">);</span>
+           <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+               <span class="nx">resolve</span><span class="p">();</span>
+           <span class="p">}</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>然后修改 webpack 配置：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">output</span><span class="o">:</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span>
+    <span class="nx">module</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">noParse</span><span class="o">:</span> <span class="sr">/src\/runtime/</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="nx">plugins</span><span class="o">:</span> <span class="p">[</span> <span class="p">...</span> <span class="p">]</span> 
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>这样，webpack 在处理 <code>my-lib.js</code> 的时候会把 <code>runtime.js</code> 加载进来，但不会去解析它。所以会得到以下的结果：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="c1">// dist/index.js
+</span><span class="c1"></span><span class="cm">/******/</span> <span class="p">([</span>
+<span class="cm">/* 0 */</span>
+<span class="cm">/***/</span> <span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">module</span><span class="p">,</span> <span class="nx">exports</span><span class="p">)</span> <span class="p">{</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">onLoadDeps</span><span class="o">:</span> <span class="kd">function</span> <span class="nx">onLoadDeps</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">([</span><span class="kr">import</span><span class="p">(</span><span class="s1">&#39;my-lib/dist/text-encoding&#39;</span><span class="p">),</span> <span class="kr">import</span><span class="p">(</span><span class="s1">&#39;my-lib/dist/other-dep.js&#39;</span><span class="p">),</span> <span class="kr">import</span><span class="p">(</span><span class="s1">&#39;my-lib/dist/another-dep.js&#39;</span><span class="p">)]);</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="cm">/***/</span> <span class="p">}),</span>
+<span class="cm">/* 1 */</span>
+<span class="cm">/***/</span> <span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">module</span><span class="p">,</span> <span class="nx">__webpack_exports__</span><span class="p">,</span> <span class="nx">__webpack_require__</span><span class="p">)</span> <span class="p">{</span>
+
+<span class="c1">// ...
+</span><span class="c1"></span>
+<span class="kd">var</span> <span class="nx">MyLib</span> <span class="o">=</span>
+<span class="cm">/*#__PURE__*/</span>
+<span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="kd">function</span> <span class="nx">MyLib</span><span class="p">()</span> <span class="p">{}</span>
+
+  <span class="kd">var</span> <span class="nx">_proto</span> <span class="o">=</span> <span class="nx">MyLib</span><span class="p">.</span><span class="nx">prototype</span><span class="p">;</span>
+
+  <span class="nx">_proto</span><span class="p">.</span><span class="nx">loadDeps</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">loadDeps</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">_this</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">global</span><span class="p">.</span><span class="nx">TextDecoder</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">_runtime__WEBPACK_IMPORTED_MODULE_0___default</span><span class="p">.</span><span class="nx">a</span><span class="p">.</span><span class="nx">onLoadDeps</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nx">resolve</span><span class="p">).</span><span class="k">catch</span><span class="p">(</span><span class="nx">reject</span><span class="p">);</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">resolve</span><span class="p">();</span>
+      <span class="p">}</span>
+    <span class="p">});</span>
+  <span class="p">};</span>
+
+  <span class="nx">_proto</span><span class="p">.</span><span class="nx">initialize</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">initialize</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">decoder</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">TextDecoder</span><span class="p">();</span> <span class="c1">// ...
+</span><span class="c1"></span>  <span class="p">};</span>
+
+  <span class="k">return</span> <span class="nx">MyLib</span><span class="p">;</span>
+<span class="p">}();</span>
+
+<span class="c1">// ...
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>如果应用层引用了这个类库，那么 webpack 打包应用的时候就会处理类库中的 <code>import()</code>，这样就和应用层平时的动态加载一样了，上面的问题也就解决了。
+最后剩下一个问题，那就是在开发环境下，我们也需要测试 <code>runtime.js</code>，但这时候它是 <code>import('my-lib/dist/xxx')</code> 的，这个肯定会报 <code>Error: Cannot find module</code> 的错误。
+这时候可以像方案一那样，用 <code>import(importPrefix + '/text-encoding')</code> 的方式来解决，也可以利用 <code>NormalModuleReplacementPlugin</code> 来解决。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="c1">// webpack.dev.js
+</span><span class="c1"></span><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1">// ...
+</span><span class="c1"></span>    <span class="nx">plugins</span><span class="o">:</span> <span class="p">[</span>
+        <span class="k">new</span> <span class="nx">webpack</span><span class="p">.</span><span class="nx">NormalModuleReplacementPlugin</span><span class="p">(</span><span class="sr">/my-lib\/dist\/(.*)/</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">resource</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">resource</span><span class="p">.</span><span class="nx">request</span> <span class="o">=</span> <span class="nx">resource</span><span class="p">.</span><span class="nx">request</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/my-lib\/dist/</span><span class="p">,</span> <span class="s1">&#39;../src/deps&#39;</span><span class="p">)</span>
+        <span class="p">}),</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>这个插件可以改变重定向资源，上面的配置是把 <code>my-lib/dist/*</code> 里面的资源都重定向到 <code>../src/deps</code>。
+更多详细的用法，可以参考下官方文档 <a href="https://webpack.js.org/plugins/normal-module-replacement-plugin/">NormalModuleReplacementPlugin</a>。
+<strong>注意：这个插件最好只用在开发环境中。</strong></p>
+
+<p>这个方案虽然有些繁琐，但最大的优点是可以把依赖管理都交给类库自己处理，不需要应用层干预。就算类库日后改变打包位置（不再是 <code>dist/</code>） 也无需让应用层知道。</p>
+
+<p>(完)。</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">scarletsky</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2019-04-30
+        <a href="/commit/95a170dd24bf4b87af8e8309e95f31f929054a4a" title="chore: format markdown">(95a170d)</a>
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/webpack/">webpack</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/2019/05/02/migrate-hexo-to-hugo/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">从 Hexo 迁移到 Hugo</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/2019/01/10/wireless-remote-debugging-with-safari-on-ios/">
+            <span class="next-text nav-default">【译】远程调试 iOS Safari</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="scarletsky/scarletsky.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:scarletsky1025@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/scarletsky" class="iconfont icon-github" title="github"></a>
+  <a href="https://scarletsky.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>scarletsky</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

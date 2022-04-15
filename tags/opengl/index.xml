@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>opengl on scarletsky</title>
+    <link>https://scarletsky.github.io/tags/opengl/</link>
+    <description>Recent content in opengl on scarletsky</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 06 Mar 2021 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://scarletsky.github.io/tags/opengl/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>深度变换总结</title>
+      <link>https://scarletsky.github.io/2021/03/06/gl-depth-transformation/</link>
+      <pubDate>Sat, 06 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2021/03/06/gl-depth-transformation/</guid>
+      <description>空间变换 上图是 OpenGL 中的变换过程，可以用下面几行代码来描述： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 attribute vec3 localPosition; // local space -&amp;gt; world space vec4 worldPosition = modelMatrix * vec4(localPosition, 1.0); // world space -&amp;gt; view space vec4 viewPosiion = viewMatrix *</description>
+    </item>
+    
+  </channel>
+</rss>

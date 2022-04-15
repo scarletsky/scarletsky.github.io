@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>D3.js 学习笔记2 - scarletsky</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="scarletsky" /><meta name="description" content="Layout 和它的名字相比，D3 中的 Layout 并不会放任何东西在屏幕上。实际上，Layout 方法和可视化输出并没有直接关系。D3 Layout 会把你交给它的数据转换成更加" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.74.3 with theme even" />
+
+
+<link rel="canonical" href="https://scarletsky.github.io/2015/01/04/d3js-learning-2/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.2e81bbed97b8b282c1aeb57488cc71c8d8c8ec559f3931531bd396bf31e0d4dd.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="D3.js 学习笔记2" />
+<meta property="og:description" content="Layout 和它的名字相比，D3 中的 Layout 并不会放任何东西在屏幕上。实际上，Layout 方法和可视化输出并没有直接关系。D3 Layout 会把你交给它的数据转换成更加" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://scarletsky.github.io/2015/01/04/d3js-learning-2/" />
+<meta property="article:published_time" content="2015-01-04T17:28:04+00:00" />
+<meta property="article:modified_time" content="2019-04-30T08:32:59+08:00" />
+<meta itemprop="name" content="D3.js 学习笔记2">
+<meta itemprop="description" content="Layout 和它的名字相比，D3 中的 Layout 并不会放任何东西在屏幕上。实际上，Layout 方法和可视化输出并没有直接关系。D3 Layout 会把你交给它的数据转换成更加">
+<meta itemprop="datePublished" content="2015-01-04T17:28:04+00:00" />
+<meta itemprop="dateModified" content="2019-04-30T08:32:59+08:00" />
+<meta itemprop="wordCount" content="1443">
+
+
+
+<meta itemprop="keywords" content="d3.js," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="D3.js 学习笔记2"/>
+<meta name="twitter:description" content="Layout 和它的名字相比，D3 中的 Layout 并不会放任何东西在屏幕上。实际上，Layout 方法和可视化输出并没有直接关系。D3 Layout 会把你交给它的数据转换成更加"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">scarletsky.github.io</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">scarletsky.github.io</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">D3.js 学习笔记2</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2015-01-04 </span>
+        <div class="post-category">
+            <a href="/categories/javascript/"> javascript </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#layout">Layout</a>
+<ul>
+<li><a href="#pie-layout">Pie Layout</a></li>
+<li><a href="#stack-layout">Stack Layout</a></li>
+</ul></li>
+<li><a href="#参考资料">参考资料</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h1 id="layout">Layout</h1>
+
+<p>和它的名字相比，D3 中的 Layout 并不会放任何东西在屏幕上。实际上，Layout 方法和可视化输出并没有直接关系。D3 Layout 会把你交给它的数据转换成更加方便处理的数据。</p>
+
+<p>D3 中包含的全部的 Layout 列表如下：</p>
+
+<ul>
+<li>Bundle</li>
+<li>Chord</li>
+<li>Cluster</li>
+<li>Force</li>
+<li>Histogram</li>
+<li>Pack</li>
+<li>Partition</li>
+<li>Pie</li>
+<li>Stack</li>
+<li>Tree</li>
+<li>Treemap</li>
+</ul>
+
+<p>每一种 Layout 都会提供一些特别的方法帮助你处理数据。</p>
+
+<p>本文主要介绍一下 <code>Pie Layout</code> 和 <code>Stack Layout</code>。</p>
+
+<h2 id="pie-layout">Pie Layout</h2>
+
+<p>Pie Layout 可以帮助你生成类似饼状图的数据结构。我们先看看它的使用方法。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">dataset</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">25</span> <span class="p">];</span>
+<span class="kd">var</span> <span class="nx">pie</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">layout</span><span class="p">.</span><span class="nx">pie</span><span class="p">();</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>如下图所示，你会看到 Pie Layout 会帮助你生成新的数据。
+<img src="http://7tebgv.com1.z0.glb.clouddn.com/d3js-learning-2-01.png" alt="" /></p>
+
+<p>我们来看看如何用这些数据来生成饼状图。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">dataset</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">25</span> <span class="p">];</span>
+<span class="kd">var</span> <span class="nx">pie</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">layout</span><span class="p">.</span><span class="nx">pie</span><span class="p">();</span>
+
+<span class="kd">var</span> <span class="nx">w</span> <span class="o">=</span> <span class="mi">300</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">h</span> <span class="o">=</span> <span class="mi">300</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">outerRadius</span> <span class="o">=</span> <span class="nx">w</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">innerRadius</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">arc</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">svg</span><span class="p">.</span><span class="nx">arc</span><span class="p">()</span>  <span class="c1">// 创建弧形。
+</span><span class="c1"></span>                <span class="p">.</span><span class="nx">innerRadius</span><span class="p">(</span><span class="nx">innerRadius</span><span class="p">)</span>  <span class="c1">// 内径
+</span><span class="c1"></span>                <span class="p">.</span><span class="nx">outerRadius</span><span class="p">(</span><span class="nx">outerRadius</span><span class="p">);</span> <span class="c1">// 外径
+</span><span class="c1"></span>
+<span class="c1">//Create SVG element
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">svg</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="s2">&#34;body&#34;</span><span class="p">)</span>
+            <span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s2">&#34;svg&#34;</span><span class="p">)</span>
+            <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&#34;width&#34;</span><span class="p">,</span> <span class="nx">w</span><span class="p">)</span>
+            <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&#34;height&#34;</span><span class="p">,</span> <span class="nx">h</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">arcs</span> <span class="o">=</span> <span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s2">&#34;g.arc&#34;</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">pie</span><span class="p">(</span><span class="nx">dataset</span><span class="p">))</span>
+        <span class="p">.</span><span class="nx">enter</span><span class="p">()</span>
+        <span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s2">&#34;g&#34;</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&#34;class&#34;</span><span class="p">,</span> <span class="s2">&#34;arc&#34;</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&#34;transform&#34;</span><span class="p">,</span> <span class="s2">&#34;translate(&#34;</span> <span class="o">+</span> <span class="nx">outerRadius</span> <span class="o">+</span> <span class="s2">&#34;, &#34;</span> <span class="o">+</span> <span class="nx">outerRadius</span> <span class="o">+</span> <span class="s2">&#34;)&#34;</span><span class="p">);</span>  <span class="c1">// 圆心位置
+</span><span class="c1"></span>
+<span class="kd">var</span> <span class="nx">color</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">scale</span><span class="p">.</span><span class="nx">category10</span><span class="p">();</span>  <span class="c1">// 创建颜色
+</span><span class="c1"></span>
+<span class="c1">//Draw arc paths
+</span><span class="c1"></span><span class="nx">arcs</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s2">&#34;path&#34;</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&#34;fill&#34;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">color</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>  <span class="c1">// 会返回不同的颜色
+</span><span class="c1"></span>    <span class="p">})</span>
+    <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&#34;d&#34;</span><span class="p">,</span> <span class="nx">arc</span><span class="p">);</span>  <span class="c1">// d 是 path 的属性，用来定义路径的生成规则。
+</span><span class="c1"></span>
+<span class="nx">arcs</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s2">&#34;text&#34;</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&#34;transform&#34;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s2">&#34;translate(&#34;</span> <span class="o">+</span> <span class="nx">arc</span><span class="p">.</span><span class="nx">centroid</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&#34;)&#34;</span><span class="p">;</span>  <span class="c1">// arc.centroid 是弧形中一个重要方法，会返回该弧形的中心位置。
+</span><span class="c1"></span>    <span class="p">})</span>
+    <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&#34;text-anchor&#34;</span><span class="p">,</span> <span class="s2">&#34;middle&#34;</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">d</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+    <span class="p">});</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>你可以在下面这个连接里看到效果：
+<a href="http://examples.oreilly.com/0636920026938/chapter_11/01_pie.html">http://examples.oreilly.com/0636920026938/chapter_<sup>11</sup>&frasl;<sub>01</sub>_pie.html</a></p>
+
+<h2 id="stack-layout">Stack Layout</h2>
+
+<p>Stack Layout 可以帮你处理如下图所示的类似“叠加柱形图”那样的数据结构。</p>
+
+<p><img src="http://7tebgv.com1.z0.glb.clouddn.com/d3js-learning-2-02.png" alt="" /></p>
+
+<p>我们先来看看一组数据：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">_dataset</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span> <span class="nx">apples</span><span class="o">:</span> <span class="mi">5</span><span class="p">,</span> <span class="nx">oranges</span><span class="o">:</span> <span class="mi">10</span><span class="p">,</span> <span class="nx">grapes</span><span class="o">:</span> <span class="mi">22</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="nx">apples</span><span class="o">:</span> <span class="mi">4</span><span class="p">,</span> <span class="nx">oranges</span><span class="o">:</span> <span class="mi">12</span><span class="p">,</span> <span class="nx">grapes</span><span class="o">:</span> <span class="mi">28</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="nx">apples</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span> <span class="nx">oranges</span><span class="o">:</span> <span class="mi">19</span><span class="p">,</span> <span class="nx">grapes</span><span class="o">:</span> <span class="mi">32</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="nx">apples</span><span class="o">:</span> <span class="mi">7</span><span class="p">,</span> <span class="nx">oranges</span><span class="o">:</span> <span class="mi">23</span><span class="p">,</span> <span class="nx">grapes</span><span class="o">:</span> <span class="mi">35</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="nx">apples</span><span class="o">:</span> <span class="mi">23</span><span class="p">,</span> <span class="nx">oranges</span><span class="o">:</span> <span class="mi">17</span><span class="p">,</span> <span class="nx">grapes</span><span class="o">:</span> <span class="mi">43</span> <span class="p">}</span>
+<span class="p">];</span>  <span class="c1">// 转换前的数据
+</span><span class="c1"></span>
+<span class="kd">var</span> <span class="nx">dataset</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">[</span>
+                <span class="p">{</span> <span class="nx">x</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span> <span class="mi">5</span> <span class="p">},</span>
+                <span class="p">{</span> <span class="nx">x</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span> <span class="mi">4</span> <span class="p">},</span>
+                <span class="p">{</span> <span class="nx">x</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span> <span class="mi">2</span> <span class="p">},</span>
+                <span class="p">{</span> <span class="nx">x</span><span class="o">:</span> <span class="mi">3</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span> <span class="mi">7</span> <span class="p">},</span>
+                <span class="p">{</span> <span class="nx">x</span><span class="o">:</span> <span class="mi">4</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span> <span class="mi">23</span> <span class="p">}</span>
+        <span class="p">],</span>
+        <span class="p">[</span>
+                <span class="p">{</span> <span class="nx">x</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span> <span class="mi">10</span> <span class="p">},</span>
+                <span class="p">{</span> <span class="nx">x</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span> <span class="mi">12</span> <span class="p">},</span>
+                <span class="p">{</span> <span class="nx">x</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span> <span class="mi">19</span> <span class="p">},</span>
+                <span class="p">{</span> <span class="nx">x</span><span class="o">:</span> <span class="mi">3</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span> <span class="mi">23</span> <span class="p">},</span>
+                <span class="p">{</span> <span class="nx">x</span><span class="o">:</span> <span class="mi">4</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span> <span class="mi">17</span> <span class="p">}</span>
+        <span class="p">],</span>
+        <span class="p">[</span>
+                <span class="p">{</span> <span class="nx">x</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span> <span class="mi">22</span> <span class="p">},</span>
+                <span class="p">{</span> <span class="nx">x</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span> <span class="mi">28</span> <span class="p">},</span>
+                <span class="p">{</span> <span class="nx">x</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span> <span class="mi">32</span> <span class="p">},</span>
+                <span class="p">{</span> <span class="nx">x</span><span class="o">:</span> <span class="mi">3</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span> <span class="mi">35</span> <span class="p">},</span>
+                <span class="p">{</span> <span class="nx">x</span><span class="o">:</span> <span class="mi">4</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span> <span class="mi">43</span> <span class="p">}</span>
+        <span class="p">]</span>
+<span class="p">];</span>  <span class="c1">// 转换后的数据
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>要使用 Stack Layout，首先要把我们的数据处理一遍，把相同类型的数据归为一组，例如上面代码所示那样，第一组数据是 apples，第二组数据是 oranges， 第三组数据室 grapes。注意，分组后的数据必须同时包含 x 和 y，其中 x 只是代表他们的 id，y 才是真正的数据。</p>
+
+<p>处理好数据之后我们可以试试调用 stack 方法。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">stack</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">layout</span><span class="p">.</span><span class="nx">stack</span><span class="p">();</span>
+<span class="nx">stack</span><span class="p">(</span><span class="nx">dataset</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>之后我们可以看到下面的结果：
+<img src="http://7tebgv.com1.z0.glb.clouddn.com/d3js-learning-2-03.png" alt="" /></p>
+
+<p>看到规律了吗？用 stack 方法处理过的数据，都会多了一个 <code>y0</code> 的键。而这个键的值刚好就是前面数据的 y 值之和。利用这个 <code>y0</code>，我们就可以很方便的创建“叠加柱形图”了。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="c1">//Width and height
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">w</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">h</span> <span class="o">=</span> <span class="mi">300</span><span class="p">;</span>
+
+<span class="c1">//Original data
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">dataset</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">[</span>
+        <span class="p">{</span> <span class="nx">x</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span> <span class="mi">5</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="nx">x</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span> <span class="mi">4</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="nx">x</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span> <span class="mi">2</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="nx">x</span><span class="o">:</span> <span class="mi">3</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span> <span class="mi">7</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="nx">x</span><span class="o">:</span> <span class="mi">4</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span> <span class="mi">23</span> <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="p">[</span>
+        <span class="p">{</span> <span class="nx">x</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span> <span class="mi">10</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="nx">x</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span> <span class="mi">12</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="nx">x</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span> <span class="mi">19</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="nx">x</span><span class="o">:</span> <span class="mi">3</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span> <span class="mi">23</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="nx">x</span><span class="o">:</span> <span class="mi">4</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span> <span class="mi">17</span> <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="p">[</span>
+        <span class="p">{</span> <span class="nx">x</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span> <span class="mi">22</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="nx">x</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span> <span class="mi">28</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="nx">x</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span> <span class="mi">32</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="nx">x</span><span class="o">:</span> <span class="mi">3</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span> <span class="mi">35</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="nx">x</span><span class="o">:</span> <span class="mi">4</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span> <span class="mi">43</span> <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">];</span>
+
+<span class="c1">//Set up stack method
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">stack</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">layout</span><span class="p">.</span><span class="nx">stack</span><span class="p">();</span>
+
+<span class="c1">//Data, stacked
+</span><span class="c1"></span><span class="nx">stack</span><span class="p">(</span><span class="nx">dataset</span><span class="p">);</span>
+
+<span class="c1">//Set up scales
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">xScale</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">scale</span><span class="p">.</span><span class="nx">ordinal</span><span class="p">()</span>
+    <span class="p">.</span><span class="nx">domain</span><span class="p">(</span><span class="nx">d3</span><span class="p">.</span><span class="nx">range</span><span class="p">(</span><span class="nx">dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">length</span><span class="p">))</span>
+    <span class="p">.</span><span class="nx">rangeRoundBands</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="nx">w</span><span class="p">],</span> <span class="mf">0.05</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">yScale</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">scale</span><span class="p">.</span><span class="nx">linear</span><span class="p">()</span>
+    <span class="p">.</span><span class="nx">domain</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span>
+        <span class="nx">d3</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">dataset</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="nx">d</span><span class="p">.</span><span class="nx">y0</span> <span class="o">+</span> <span class="nx">d</span><span class="p">.</span><span class="nx">y</span><span class="p">;</span>
+            <span class="p">});</span>
+        <span class="p">})</span>
+    <span class="p">])</span>
+    <span class="p">.</span><span class="nx">range</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="nx">h</span><span class="p">]);</span>
+
+<span class="c1">//Easy colors accessible via a 10-step ordinal scale
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">colors</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">scale</span><span class="p">.</span><span class="nx">category10</span><span class="p">();</span>
+
+<span class="c1">//Create SVG element
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">svg</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="s2">&#34;body&#34;</span><span class="p">)</span>
+            <span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s2">&#34;svg&#34;</span><span class="p">)</span>
+            <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&#34;width&#34;</span><span class="p">,</span> <span class="nx">w</span><span class="p">)</span>
+            <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&#34;height&#34;</span><span class="p">,</span> <span class="nx">h</span><span class="p">);</span>
+
+<span class="c1">// Add a group for each row of data
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">groups</span> <span class="o">=</span> <span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s2">&#34;g&#34;</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">dataset</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">enter</span><span class="p">()</span>
+    <span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s2">&#34;g&#34;</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">style</span><span class="p">(</span><span class="s2">&#34;fill&#34;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">colors</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+    <span class="p">});</span>
+
+<span class="c1">// Add a rect for each data value
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">rects</span> <span class="o">=</span> <span class="nx">groups</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s2">&#34;rect&#34;</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">d</span><span class="p">;</span> <span class="p">})</span>
+    <span class="p">.</span><span class="nx">enter</span><span class="p">()</span>
+    <span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s2">&#34;rect&#34;</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&#34;x&#34;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">xScale</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+    <span class="p">})</span>
+    <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&#34;y&#34;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">yScale</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">y0</span><span class="p">);</span>
+    <span class="p">})</span>
+    <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&#34;height&#34;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">yScale</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">y</span><span class="p">);</span>
+    <span class="p">})</span>
+    <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&#34;width&#34;</span><span class="p">,</span> <span class="nx">xScale</span><span class="p">.</span><span class="nx">rangeBand</span><span class="p">());</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>结果可以看看下面连接：
+<a href="http://examples.oreilly.com/0636920026938/chapter_11/03_stacked_bar.html">http://examples.oreilly.com/0636920026938/chapter_<sup>11</sup>&frasl;<sub>03</sub>_stacked_bar.html</a></p>
+
+<p>什么？你不想要从上往下的柱形图？你想要从下往上的柱形图？</p>
+
+<p>其实要生成从下往上的柱形图很简单，只需要把 yScale 的 range 反过来，然后画图的时候调整一下 y 和 height 属性就好了。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">yScale</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">scale</span><span class="p">.</span><span class="nx">linear</span><span class="p">()</span>
+    <span class="p">...</span>
+    <span class="p">.</span><span class="nx">range</span><span class="p">([</span><span class="nx">h</span><span class="p">,</span> <span class="mi">0</span><span class="p">]);</span> <span class="c1">// 原来是 [0, h]
+</span><span class="c1"></span>
+<span class="p">...</span>
+<span class="kd">var</span> <span class="nx">rects</span> <span class="o">=</span> <span class="nx">groups</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s2">&#34;rect&#34;</span><span class="p">)</span>
+    <span class="p">...</span>
+    <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&#34;y&#34;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">yScale</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">y0</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="nx">h</span> <span class="o">-</span> <span class="nx">yScale</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">y</span><span class="p">));</span> <span class="c1">// 原来是 return yScale(d.y0)
+</span><span class="c1"></span>    <span class="p">})</span>
+    <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&#34;height&#34;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">h</span> <span class="o">-</span> <span class="nx">yScale</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">y</span><span class="p">);</span>  <span class="c1">// 原来是 return yScale(d.y)
+</span><span class="c1"></span>    <span class="p">})</span>
+    <span class="p">...</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="参考资料">参考资料</h1>
+
+<ul>
+<li><a href="http://chimera.labs.oreilly.com/books/1230000000345/ch11.html">http://chimera.labs.oreilly.com/books/1230000000345/ch11.html</a></li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">scarletsky</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2019-04-30
+        <a href="/commit/95a170dd24bf4b87af8e8309e95f31f929054a4a" title="chore: format markdown">(95a170d)</a>
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/d3.js/">d3.js</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/2015/01/13/html5-drag-and-drop-api/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">HTML5 Drag and Drop API</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/2014/12/29/d3js-learning-1/">
+            <span class="next-text nav-default">D3.js 学习笔记1</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="scarletsky/scarletsky.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:scarletsky1025@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/scarletsky" class="iconfont icon-github" title="github"></a>
+  <a href="https://scarletsky.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>scarletsky</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

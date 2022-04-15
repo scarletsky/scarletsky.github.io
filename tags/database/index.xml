@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>database on scarletsky</title>
+    <link>https://scarletsky.github.io/tags/database/</link>
+    <description>Recent content in database on scarletsky</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 26 Apr 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://scarletsky.github.io/tags/database/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>PostgreSQL 中的客户端认证</title>
+      <link>https://scarletsky.github.io/2017/04/26/client-authentication-in-postgresql/</link>
+      <pubDate>Wed, 26 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2017/04/26/client-authentication-in-postgresql/</guid>
+      <description>简介 当客户端与数据库服务器连接时，它需要指定用哪个数据库用户的身份来连接。 PostgreSQL 为我们提供了很多种客户端认证的方式，我们可以根据自己的需要来选择</description>
+    </item>
+    
+  </channel>
+</rss>

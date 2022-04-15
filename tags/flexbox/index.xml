@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>flexbox on scarletsky</title>
+    <link>https://scarletsky.github.io/tags/flexbox/</link>
+    <description>Recent content in flexbox on scarletsky</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 23 Jan 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://scarletsky.github.io/tags/flexbox/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>简单易懂的 Flexbox</title>
+      <link>https://scarletsky.github.io/2016/01/23/simple-flexbox/</link>
+      <pubDate>Sat, 23 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://scarletsky.github.io/2016/01/23/simple-flexbox/</guid>
+      <description>简介 Flexbox 是 CSS 3 的布局方式，可以轻松实现传统布局中难以实现的布局。 基本用法 设置父容器的 display 为 flex，然后调节容器相关的属性。 调节子元素相关的属性</description>
+    </item>
+    
+  </channel>
+</rss>

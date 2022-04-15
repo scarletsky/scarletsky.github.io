@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Non-deterministic value and List Monad in Haskell - scarletsky</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="scarletsky" /><meta name="description" content="简介 看 《Learn you a haskell for a great good》 这本书的过程中，有时候会看到 non-determinism 这个词，虽然具体不知道什么意思，但不影响阅读，所以就没深究。 最近看到 List" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.74.3 with theme even" />
+
+
+<link rel="canonical" href="https://scarletsky.github.io/2016/07/16/non-determinism-value-and-list-monad-in-haskell/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.2e81bbed97b8b282c1aeb57488cc71c8d8c8ec559f3931531bd396bf31e0d4dd.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Non-deterministic value and List Monad in Haskell" />
+<meta property="og:description" content="简介 看 《Learn you a haskell for a great good》 这本书的过程中，有时候会看到 non-determinism 这个词，虽然具体不知道什么意思，但不影响阅读，所以就没深究。 最近看到 List" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://scarletsky.github.io/2016/07/16/non-determinism-value-and-list-monad-in-haskell/" />
+<meta property="article:published_time" content="2016-07-16T16:01:39+00:00" />
+<meta property="article:modified_time" content="2019-04-30T08:32:59+08:00" />
+<meta itemprop="name" content="Non-deterministic value and List Monad in Haskell">
+<meta itemprop="description" content="简介 看 《Learn you a haskell for a great good》 这本书的过程中，有时候会看到 non-determinism 这个词，虽然具体不知道什么意思，但不影响阅读，所以就没深究。 最近看到 List">
+<meta itemprop="datePublished" content="2016-07-16T16:01:39+00:00" />
+<meta itemprop="dateModified" content="2019-04-30T08:32:59+08:00" />
+<meta itemprop="wordCount" content="930">
+
+
+
+<meta itemprop="keywords" content="haskell," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Non-deterministic value and List Monad in Haskell"/>
+<meta name="twitter:description" content="简介 看 《Learn you a haskell for a great good》 这本书的过程中，有时候会看到 non-determinism 这个词，虽然具体不知道什么意思，但不影响阅读，所以就没深究。 最近看到 List"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">scarletsky.github.io</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">scarletsky.github.io</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Non-deterministic value and List Monad in Haskell</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2016-07-16 </span>
+        <div class="post-category">
+            <a href="/categories/haskell/"> haskell </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#简介">简介</a></li>
+<li><a href="#deterministic-value-与-non-deterministic-value">deterministic value 与 non-deterministic value</a></li>
+<li><a href="#list-monad">List Monad</a></li>
+<li><a href="#参考资料">参考资料</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h2 id="简介">简介</h2>
+
+<p>看 《Learn you a haskell for a great good》 这本书的过程中，有时候会看到 <strong>non-determinism</strong> 这个词，虽然具体不知道什么意思，但不影响阅读，所以就没深究。
+最近看到 List Monad 部分的时候，这个词的出现频率比以前高得多。这时候我才留意到，<strong>non-determinism</strong> 之前也是在 List 相关的地方出现的。
+那么，<strong>non-determinism</strong> 到底指的是什么呢？</p>
+
+<h2 id="deterministic-value-与-non-deterministic-value">deterministic value 与 non-deterministic value</h2>
+
+<p>在理解 <strong>non-deterministic value</strong> 之前，我们先看看什么是 <strong>deterministic value</strong>。</p>
+
+<p>从字面意思推测，<strong>deterministic value</strong> 是确定的值，那确定的值到底是什么呢？书中有这么一段话：</p>
+
+<blockquote>
+<p>A value like 5 is deterministic. It has only one result and we know exactly what it is. On the other hand, a value like [3,8,9] contains several results, so we can view it as one value that is actually many values at the same time.</p>
+</blockquote>
+
+<p>像 5 这种只表示一种结果的值，它就是确定的值。
+像 [3,8,9] 那样，它包含了多个值，我们可以把它看成是用一个值来表示多个结果，例如它可以表示 3，也可以表示 8，也可以表示 9，因此它是非确定值。</p>
+
+<p><strong>deterministic value</strong> 和 <strong>non-deterministic value</strong> 的区别就在这里。</p>
+
+<p>那么 <strong>non-deterministic value</strong> 到底有什么用呢？
+我们知道了它可以表示多个结果，那么在动态计算的时候就很方便了，先看看下面这个简单的例子：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-hs" data-lang="hs"><span class="kr">do</span>
+  <span class="n">x</span> <span class="ow">&lt;-</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>
+  <span class="n">y</span> <span class="ow">&lt;-</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
+  <span class="n">return</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>因为 <code>x</code> 可以 1 或者 2， <code>y</code> 可以表示 4 或者 5 或者 6，所以 <code>x+y</code> 就可以表示出 <code>1+4</code>, <code>1+5</code>, <code>1+6</code>, <code>2+4</code>, <code>2+5</code>, <code>2+6</code> 这么多结果了！</p>
+
+<h2 id="list-monad">List Monad</h2>
+
+<p>理解了 <strong>non-deterministic value</strong> 之后，我们再来看看 List Monad。
+我们知道，不同的 Monad 带有不同的 context，如 Maybe Monad 带有可能失败的 context，那 List Monad 带有怎样的 context 呢？
+答案就是 <strong>non-determinism</strong>。</p>
+
+<p>先看看 List Monad 的定义：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-hs" data-lang="hs"><span class="kr">instance</span> <span class="kt">Monad</span> <span class="kt">[]</span> <span class="kr">where</span>
+  <span class="n">return</span> <span class="n">x</span> <span class="ow">=</span> <span class="p">[</span><span class="n">x</span><span class="p">]</span>
+  <span class="n">xs</span> <span class="o">&gt;&gt;=</span> <span class="n">f</span> <span class="ow">=</span> <span class="n">concat</span> <span class="p">(</span><span class="n">map</span> <span class="n">f</span> <span class="n">xs</span><span class="p">)</span>
+  <span class="n">fail</span> <span class="kr">_</span> <span class="kt">[]</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>我们主要看看 <code>&gt;&gt;=</code> 的实现，它把 f 应用到 List 中的每个元素中，然后再把结果扁平化而已。
+虽然看起来很简单，但用起来很强大：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-hs" data-lang="hs"><span class="c1">-- 1</span>
+<span class="nf">ghci</span><span class="o">&gt;</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span> <span class="o">&gt;&gt;=</span> <span class="nf">\</span><span class="n">x</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span><span class="o">-</span><span class="n">x</span><span class="p">]</span>  
+<span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="o">-</span><span class="mi">5</span><span class="p">]</span>
+
+<span class="c1">-- 2</span>
+<span class="nf">ghci</span><span class="o">&gt;</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;=</span> <span class="nf">\</span><span class="n">x</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;&gt;=</span> <span class="nf">\</span><span class="n">y</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">y</span><span class="o">*</span><span class="mi">2</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">]</span>
+
+<span class="c1">-- 3</span>
+<span class="nf">ghci</span><span class="o">&gt;</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span> <span class="o">&gt;&gt;=</span> <span class="nf">\</span><span class="n">n</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="sc">&#39;a&#39;</span><span class="p">,</span><span class="sc">&#39;b&#39;</span><span class="p">]</span> <span class="o">&gt;&gt;=</span> <span class="nf">\</span><span class="n">ch</span> <span class="ow">-&gt;</span> <span class="n">return</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">ch</span><span class="p">)</span>
+<span class="p">[(</span><span class="mi">1</span><span class="p">,</span><span class="sc">&#39;a&#39;</span><span class="p">),(</span><span class="mi">1</span><span class="p">,</span><span class="sc">&#39;b&#39;</span><span class="p">),(</span><span class="mi">2</span><span class="p">,</span><span class="sc">&#39;a&#39;</span><span class="p">),(</span><span class="mi">2</span><span class="p">,</span><span class="sc">&#39;b&#39;</span><span class="p">)]</span>
+
+<span class="c1">-- 4</span>
+<span class="nf">ghci</span><span class="o">&gt;</span> <span class="p">[</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">ch</span><span class="p">)</span> <span class="o">|</span> <span class="n">n</span> <span class="ow">&lt;-</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="n">ch</span> <span class="ow">&lt;-</span> <span class="p">[</span><span class="sc">&#39;a&#39;</span><span class="p">,</span> <span class="sc">&#39;b&#39;</span><span class="p">]</span> <span class="p">]</span>
+<span class="p">[(</span><span class="mi">1</span><span class="p">,</span><span class="sc">&#39;a&#39;</span><span class="p">),(</span><span class="mi">1</span><span class="p">,</span><span class="sc">&#39;b&#39;</span><span class="p">),(</span><span class="mi">2</span><span class="p">,</span><span class="sc">&#39;a&#39;</span><span class="p">),(</span><span class="mi">2</span><span class="p">,</span><span class="sc">&#39;b&#39;</span><span class="p">)]</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>留意最后两个例子，事实上列表推导 (List Comprehension) 只是 List Monad 的一种语法糖而已。</p>
+
+<p>最后提一下一个很炫的技巧：用 <code>filterM</code> 来生成一个列表的幂集 (Power Set)，即该列表中的所有子列表，如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-hs" data-lang="hs"><span class="c1">-- [1,2,3] 的幂集就是</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>  
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>  
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>  
+<span class="p">[</span><span class="mi">1</span><span class="p">]</span>  
+<span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>  
+<span class="p">[</span><span class="mi">2</span><span class="p">]</span>  
+<span class="p">[</span><span class="mi">3</span><span class="p">]</span>  
+<span class="kt">[]</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>利用 <code>filterM</code> 和 List Monad 可以非常轻松地实现幂集：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-hs" data-lang="hs"><span class="kr">import</span> <span class="nn">Control.Monad</span>
+
+<span class="nf">powerset</span> <span class="ow">::</span> <span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="p">[[</span><span class="n">a</span><span class="p">]]</span>
+<span class="nf">powerset</span> <span class="n">xs</span> <span class="ow">=</span> <span class="n">filterM</span> <span class="p">(</span><span class="nf">\</span><span class="n">x</span> <span class="ow">-&gt;</span> <span class="p">[</span> <span class="kt">True</span><span class="p">,</span> <span class="kt">False</span> <span class="p">])</span> <span class="n">xs</span>
+
+<span class="c1">-- in ghci</span>
+<span class="nf">ghci</span><span class="o">&gt;</span> <span class="n">powerset</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">1</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">2</span><span class="p">],[</span><span class="mi">3</span><span class="p">],</span><span class="kt">[]</span><span class="p">]</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>很神奇吧！想知道为什么的话，去看看下面的链接吧：
+<a href="http://stackoverflow.com/questions/28872396/haskells-filterm-with-filterm-x-true-false-1-2-3">http://stackoverflow.com/questions/28872396/haskells-filterm-with-filterm-x-true-false-1-2-3</a></p>
+
+<h2 id="参考资料">参考资料</h2>
+
+<ul>
+<li><a href="http://stackoverflow.com/questions/29886852/why-is-the-following-haskell-code-non-deterministic">http://stackoverflow.com/questions/29886852/why-is-the-following-haskell-code-non-deterministic</a></li>
+<li><a href="http://stackoverflow.com/questions/20638893/how-can-non-determinism-be-modeled-with-a-list-monad">http://stackoverflow.com/questions/20638893/how-can-non-determinism-be-modeled-with-a-list-monad</a></li>
+<li><a href="http://learnyoua.haskell.sg/content/zh-cn/ch12/a-fistful-of-monads.html">http://learnyoua.haskell.sg/content/zh-cn/ch12/a-fistful-of-monads.html</a></li>
+<li><a href="http://learnyoua.haskell.sg/content/zh-cn/ch13/for-a-few-monads-more.html">http://learnyoua.haskell.sg/content/zh-cn/ch13/for-a-few-monads-more.html</a></li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">scarletsky</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2019-04-30
+        <a href="/commit/95a170dd24bf4b87af8e8309e95f31f929054a4a" title="chore: format markdown">(95a170d)</a>
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/haskell/">haskell</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/2016/07/29/use-gitlab-ci-for-continuous-integration/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">用 GitLab CI 进行持续集成</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/2016/07/03/download-file-using-javascript/">
+            <span class="next-text nav-default">如何用 JavaScript 下载文件</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="scarletsky/scarletsky.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:scarletsky1025@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/scarletsky" class="iconfont icon-github" title="github"></a>
+  <a href="https://scarletsky.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>scarletsky</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

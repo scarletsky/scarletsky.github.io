@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>D3.js 学习笔记1 - scarletsky</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="scarletsky" /><meta name="description" content="基础操作 d3.select, d3.selectAll 选择元素 selection.append 在选择集合中添加元素 selection.data 为选择元素进行数据绑定，常与 enter 和 exit 一起使用 selection.data(data).enter 返回缺失元素集合 selection.data(data).exit 返回多余元素集合 selection.text 设置或获取选定元" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.74.3 with theme even" />
+
+
+<link rel="canonical" href="https://scarletsky.github.io/2014/12/29/d3js-learning-1/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.2e81bbed97b8b282c1aeb57488cc71c8d8c8ec559f3931531bd396bf31e0d4dd.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="D3.js 学习笔记1" />
+<meta property="og:description" content="基础操作 d3.select, d3.selectAll 选择元素 selection.append 在选择集合中添加元素 selection.data 为选择元素进行数据绑定，常与 enter 和 exit 一起使用 selection.data(data).enter 返回缺失元素集合 selection.data(data).exit 返回多余元素集合 selection.text 设置或获取选定元" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://scarletsky.github.io/2014/12/29/d3js-learning-1/" />
+<meta property="article:published_time" content="2014-12-29T16:28:04+00:00" />
+<meta property="article:modified_time" content="2019-04-30T08:32:59+08:00" />
+<meta itemprop="name" content="D3.js 学习笔记1">
+<meta itemprop="description" content="基础操作 d3.select, d3.selectAll 选择元素 selection.append 在选择集合中添加元素 selection.data 为选择元素进行数据绑定，常与 enter 和 exit 一起使用 selection.data(data).enter 返回缺失元素集合 selection.data(data).exit 返回多余元素集合 selection.text 设置或获取选定元">
+<meta itemprop="datePublished" content="2014-12-29T16:28:04+00:00" />
+<meta itemprop="dateModified" content="2019-04-30T08:32:59+08:00" />
+<meta itemprop="wordCount" content="2172">
+
+
+
+<meta itemprop="keywords" content="d3.js," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="D3.js 学习笔记1"/>
+<meta name="twitter:description" content="基础操作 d3.select, d3.selectAll 选择元素 selection.append 在选择集合中添加元素 selection.data 为选择元素进行数据绑定，常与 enter 和 exit 一起使用 selection.data(data).enter 返回缺失元素集合 selection.data(data).exit 返回多余元素集合 selection.text 设置或获取选定元"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">scarletsky.github.io</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">scarletsky.github.io</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">D3.js 学习笔记1</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2014-12-29 </span>
+        <div class="post-category">
+            <a href="/categories/javascript/"> javascript </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#基础操作">基础操作</a></li>
+<li><a href="#尺度-scale">尺度(Scale)</a></li>
+<li><a href="#定量变换-quantitative">定量变换(Quantitative)</a></li>
+<li><a href="#序数变换-ordinal">序数变换(Ordinal)</a></li>
+<li><a href="#坐标轴">坐标轴</a></li>
+<li><a href="#绘图">绘图</a></li>
+<li><a href="#事件绑定">事件绑定</a></li>
+<li><a href="#参考资料">参考资料</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h1 id="基础操作">基础操作</h1>
+
+<ul>
+<li><code>d3.select</code>, <code>d3.selectAll</code> 选择元素</li>
+<li><code>selection.append</code> 在选择集合中添加元素</li>
+<li><code>selection.data</code> 为选择元素进行数据绑定，常与 <code>enter</code> 和 <code>exit</code> 一起使用</li>
+<li><code>selection.data(data).enter</code> 返回缺失元素集合</li>
+<li><code>selection.data(data).exit</code> 返回多余元素集合</li>
+<li><code>selection.text</code> 设置或获取选定元素的标签体文本内容</li>
+<li><code>selection.attr</code> 设置或获取指定属性</li>
+<li><code>selection.transition</code> 启用动画效果，只要设置前和设置后的属性发生变化就会发生动画，一般和 <code>duration</code>，<code>delay</code> 一起用。</li>
+</ul>
+
+<p>更多操作可以参考本文末尾的官方 API 文档。</p>
+
+<h1 id="尺度-scale">尺度(Scale)</h1>
+
+<p>尺度(Scale)在 D3 中是一个很重要的概念。</p>
+
+<p>根据官方的定义，尺度是将输入域映射为输出范围的函数。尺度可以让用户定义参数的函数。一旦生成一个尺度，你可以调用此尺度函数，传入一个数据值，然后它会返回一个缩放后的值。你可以任意定义和使用尺度。</p>
+
+<p>D3 中有两种尺度，分别是 <strong>定量变换(Quantitative)</strong> 和 <strong>序数变换(Ordinal)</strong>。</p>
+
+<h1 id="定量变换-quantitative">定量变换(Quantitative)</h1>
+
+<p>定量变换有一个连续的域，如 [0, 1000] 这种线性区间，它可以很方便的进行数据转换。</p>
+
+<p>例如当我们有一个 [0, 1000] 的区间，但我们在作图的时候不想显示这么大的区间，只想让它显示 [0, 100] 的区间，这时候我们就可以利用定量变换进行数据转换了。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="c1">// 创建定量变换
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">yScale</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">scale</span><span class="p">.</span><span class="nx">linear</span><span class="p">()</span>
+                     <span class="p">.</span><span class="nx">domain</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1000</span><span class="p">])</span>
+                     <span class="p">.</span><span class="nx">range</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">])</span>
+<span class="c1">// 使用定量变换
+</span><span class="c1"></span><span class="nx">yScale</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span> <span class="c1">// 100
+</span><span class="c1"></span><span class="nx">yScale</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="c1">// 5
+</span><span class="c1"></span>
+<span class="nx">yScale</span><span class="p">.</span><span class="nx">domain</span><span class="p">()</span> <span class="c1">// [0, 1000]
+</span><span class="c1"></span><span class="nx">yScale</span><span class="p">.</span><span class="nx">range</span><span class="p">()</span> <span class="c1">// [0, 100]
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="序数变换-ordinal">序数变换(Ordinal)</h1>
+
+<p>序数变换是包含一组离散的值，如 [&lsquo;January&rsquo;, &lsquo;February&rsquo;, &lsquo;March&rsquo;]，像这样的值是无法创建连续区间的，只能用来创建离散区间。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">dataset</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;January&#39;</span><span class="p">,</span> <span class="s1">&#39;February&#39;</span><span class="p">,</span> <span class="s1">&#39;March&#39;</span><span class="p">];</span>
+<span class="kd">var</span> <span class="nx">xScale</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">scale</span><span class="p">.</span><span class="nx">ordinal</span><span class="p">()</span>
+                     <span class="p">.</span><span class="nx">domain</span><span class="p">(</span><span class="nx">d3</span><span class="p">.</span><span class="nx">range</span><span class="p">(</span><span class="nx">dataset</span><span class="p">.</span><span class="nx">length</span><span class="p">))</span>
+                     <span class="p">.</span><span class="nx">rangeBands</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span> <span class="o">*</span> <span class="nx">dataset</span><span class="p">.</span><span class="nx">length</span><span class="p">]);</span>
+
+<span class="nx">xScale</span><span class="p">.</span><span class="nx">range</span><span class="p">()</span> <span class="c1">// [0, 100, 200];
+</span><span class="c1"></span><span class="nx">xScale</span><span class="p">.</span><span class="nx">rangeBand</span><span class="p">()</span> <span class="c1">// 100
+</span><span class="c1"></span><span class="nx">xScale</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1">// 0
+</span><span class="c1"></span><span class="nx">xScale</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1">// 100
+</span><span class="c1"></span><span class="nx">xScale</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c1">// 200
+</span><span class="c1"></span><span class="nx">xScale</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="c1">// undefined
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>看了上面代码之后可以发现，序数变换和定量变换在创建和使用上都是不同的。</p>
+
+<p>创建定量变换时传进 <code>.domain</code> 中的是一个区间，而创建序数变换时传进去的是一组数，序数变换利用这组数去创建一个等宽度的区间。</p>
+
+<p>使用定量变换时，无论我们传什么数值进去，它都能返回一个和 <code>domain</code> 对应的值。但使用序数变换时，我们只能通过下标去获取值，当下标大于数组长度时，它会返回 <code>undefined</code> ，和数组类似。</p>
+
+<h1 id="坐标轴">坐标轴</h1>
+
+<p>利用尺度(Scale)，我们可以很轻松的创建坐标轴。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">xAxis</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">svg</span><span class="p">.</span><span class="nx">axis</span><span class="p">()</span>  <span class="c1">// 创建坐标轴
+</span><span class="c1"></span>                  <span class="p">.</span><span class="nx">scale</span><span class="p">(</span><span class="nx">xScale</span><span class="p">)</span> <span class="c1">// 设置坐标轴的尺度变换，该尺度变换设定了数值和像素位置的转换规则
+</span><span class="c1"></span>                  <span class="p">.</span><span class="nx">orient</span><span class="p">(</span><span class="s1">&#39;bottom&#39;</span><span class="p">)</span> <span class="c1">// 设置坐标轴刻度的方向
+</span><span class="c1"></span>                  <span class="p">.</span><span class="nx">ticks</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="c1">// 控制坐标轴刻度的产生方式，需要注意的是这个只是建议值，D3 会自动判断最合适的值
+</span><span class="c1"></span>                  <span class="p">.</span><span class="nx">tickFormat</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="k">return</span> <span class="nx">dataset</span><span class="p">[</span><span class="nx">d</span><span class="p">].</span><span class="nx">keyword</span><span class="p">;</span> <span class="c1">// 设置刻度文字的格式，注意这里的 d 的值是索引值。
+</span><span class="c1"></span>                  <span class="p">});</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="绘图">绘图</h1>
+
+<p>D3 是利用 svg 进行绘图的，在操作上和用 <code>jQuery</code> 操作 <code>dom</code> 类似。</p>
+
+<p>在进行绘图的时候需要注意一点：绘图方向是从上往下，从左往右的。也就是左上角的坐标是 (0, 0)，右下角的坐标是 (width, height)。</p>
+
+<p>我们先看看如何用 D3 生成一个柱形图。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">dataset</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="nx">keyword</span><span class="o">:</span> <span class="s1">&#39;未检查人数&#39;</span><span class="p">,</span> <span class="nx">value</span><span class="o">:</span> <span class="mi">2345</span><span class="p">},</span>
+    <span class="p">{</span><span class="nx">keyword</span><span class="o">:</span> <span class="s1">&#39;已检查人数&#39;</span><span class="p">,</span> <span class="nx">value</span><span class="o">:</span> <span class="mi">1232</span><span class="p">},</span>
+    <span class="p">{</span><span class="nx">keyword</span><span class="o">:</span> <span class="s1">&#39;放弃治疗人数&#39;</span><span class="p">,</span> <span class="nx">value</span><span class="o">:</span> <span class="mi">4562</span><span class="p">},</span>
+    <span class="p">{</span><span class="nx">keyword</span><span class="o">:</span> <span class="s1">&#39;未知人数&#39;</span><span class="p">,</span> <span class="nx">value</span><span class="o">:</span> <span class="mi">562</span><span class="p">},</span>
+    <span class="p">{</span><span class="nx">keyword</span><span class="o">:</span> <span class="s1">&#39;测试人数&#39;</span><span class="p">,</span> <span class="nx">value</span><span class="o">:</span> <span class="mi">2462</span><span class="p">},</span>
+    <span class="p">{</span><span class="nx">keyword</span><span class="o">:</span> <span class="s1">&#39;全部人数&#39;</span><span class="p">,</span> <span class="nx">value</span><span class="o">:</span> <span class="mi">8678</span><span class="p">}</span>
+<span class="p">];</span>
+
+<span class="kd">var</span> <span class="nx">chartPadding</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">barLabelWidth</span> <span class="o">=</span> <span class="mi">200</span><span class="p">;</span> <span class="c1">// space reserved for bar labels
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">barLabelOffset</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">valueLabelWidth</span> <span class="o">=</span> <span class="mi">40</span><span class="p">;</span> <span class="c1">// space reserved for value labels (right)
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">maxBarHeight</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">barHeight</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">xScale</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">scale</span><span class="p">.</span><span class="nx">ordinal</span><span class="p">()</span>
+                     <span class="p">.</span><span class="nx">domain</span><span class="p">(</span><span class="nx">d3</span><span class="p">.</span><span class="nx">range</span><span class="p">(</span><span class="nx">dataset</span><span class="p">.</span><span class="nx">length</span><span class="p">))</span>
+                     <span class="p">.</span><span class="nx">rangeBands</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="nx">barLabelWidth</span> <span class="o">*</span> <span class="nx">dataset</span><span class="p">.</span><span class="nx">length</span><span class="p">])</span>
+
+<span class="kd">var</span> <span class="nx">yScale</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">scale</span><span class="p">.</span><span class="nx">linear</span><span class="p">()</span>
+                     <span class="p">.</span><span class="nx">domain</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+                        <span class="kd">var</span> <span class="nx">maxValue</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">dataset</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">d</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span> <span class="p">});</span>
+                        <span class="kd">var</span> <span class="nx">valueLength</span> <span class="o">=</span> <span class="p">(</span><span class="nx">maxValue</span> <span class="o">+</span> <span class="s1">&#39;&#39;</span><span class="p">).</span><span class="nx">length</span><span class="p">;</span>
+                        <span class="k">return</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">ceil</span><span class="p">(</span><span class="nx">maxValue</span> <span class="o">/</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">pow</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="nx">valueLength</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">pow</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="nx">valueLength</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+                      <span class="p">})()])</span>
+                     <span class="p">.</span><span class="nx">range</span><span class="p">([</span><span class="nx">maxBarHeight</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+
+<span class="kd">var</span> <span class="nx">xAxis</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">svg</span><span class="p">.</span><span class="nx">axis</span><span class="p">()</span>
+                  <span class="p">.</span><span class="nx">scale</span><span class="p">(</span><span class="nx">xScale</span><span class="p">)</span>
+                  <span class="p">.</span><span class="nx">orient</span><span class="p">(</span><span class="s1">&#39;bottom&#39;</span><span class="p">)</span>
+                  <span class="p">.</span><span class="nx">ticks</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+                  <span class="p">.</span><span class="nx">tickFormat</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="k">return</span> <span class="nx">dataset</span><span class="p">[</span><span class="nx">d</span><span class="p">].</span><span class="nx">keyword</span><span class="p">;</span>
+                  <span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">yAxis</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">svg</span><span class="p">.</span><span class="nx">axis</span><span class="p">()</span>
+                  <span class="p">.</span><span class="nx">scale</span><span class="p">(</span><span class="nx">yScale</span><span class="p">)</span>
+                  <span class="p">.</span><span class="nx">orient</span><span class="p">(</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
+                  <span class="p">.</span><span class="nx">ticks</span><span class="p">(</span><span class="mi">6</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">svg</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="s1">&#39;#chart2&#39;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;svg&#39;</span><span class="p">);</span>
+<span class="nx">svg</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">,</span> <span class="nx">chartPadding</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="nx">barLabelWidth</span> <span class="o">*</span> <span class="nx">dataset</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span>
+   <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;height&#39;</span><span class="p">,</span> <span class="nx">chartPadding</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="nx">maxBarHeight</span> <span class="o">+</span> <span class="nx">barLabelOffset</span><span class="p">);</span>
+
+<span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">&#39;rect&#39;</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="nx">dataset</span><span class="p">).</span><span class="nx">enter</span><span class="p">().</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;rect&#39;</span><span class="p">)</span>
+   <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">d</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">chartPadding</span> <span class="o">+</span> <span class="nx">xScale</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="o">+</span> <span class="nx">xScale</span><span class="p">.</span><span class="nx">rangeBand</span><span class="p">()</span> <span class="o">/</span> <span class="mi">4</span><span class="p">;</span> <span class="p">})</span>
+   <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;height&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+   <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">chartPadding</span> <span class="o">+</span> <span class="nx">maxBarHeight</span><span class="p">;</span> <span class="p">})</span>
+   <span class="p">.</span><span class="nx">transition</span><span class="p">()</span>
+   <span class="p">.</span><span class="nx">duration</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+   <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">chartPadding</span> <span class="o">+</span> <span class="nx">yScale</span><span class="p">(</span><span class="nx">d</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]);</span> <span class="p">})</span>
+   <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">,</span> <span class="nx">xScale</span><span class="p">.</span><span class="nx">rangeBand</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+   <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;height&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">d</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">maxBarHeight</span> <span class="o">-</span> <span class="nx">yScale</span><span class="p">(</span><span class="nx">d</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]);</span> <span class="p">})</span>
+
+<span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="nx">dataset</span><span class="p">).</span><span class="nx">enter</span><span class="p">().</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">)</span>
+   <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">d</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">chartPadding</span> <span class="o">+</span> <span class="nx">xScale</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="o">+</span> <span class="nx">xScale</span><span class="p">.</span><span class="nx">rangeBand</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span> <span class="p">})</span>
+   <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">chartPadding</span> <span class="o">+</span> <span class="nx">maxBarHeight</span> <span class="o">-</span> <span class="nx">barLabelOffset</span><span class="p">;</span> <span class="p">})</span>
+   <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;fill&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">)</span>
+   <span class="p">.</span><span class="nx">transition</span><span class="p">()</span>
+   <span class="p">.</span><span class="nx">duration</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+   <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">chartPadding</span> <span class="o">+</span> <span class="nx">yScale</span><span class="p">(</span><span class="nx">d</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">])</span> <span class="o">-</span> <span class="nx">barLabelOffset</span><span class="p">;</span> <span class="p">})</span>
+   <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">,</span> <span class="nx">xScale</span><span class="p">.</span><span class="nx">rangeBand</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+   <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;text-anchor&#39;</span><span class="p">,</span> <span class="s1">&#39;middle&#39;</span><span class="p">)</span>
+   <span class="p">.</span><span class="nx">tween</span><span class="p">(</span><span class="s2">&#34;text&#34;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">interpolateRound</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">d</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]);</span>
+      <span class="k">return</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">t</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">textContent</span> <span class="o">=</span> <span class="nx">i</span><span class="p">(</span><span class="nx">t</span><span class="p">);</span>
+      <span class="p">};</span>
+    <span class="p">})</span>
+
+<span class="nx">svg</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;g&#39;</span><span class="p">)</span>
+   <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;class&#39;</span><span class="p">,</span> <span class="s1">&#39;axis&#39;</span><span class="p">)</span>
+   <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&#34;transform&#34;</span><span class="p">,</span> <span class="s2">&#34;translate(&#34;</span> <span class="o">+</span> <span class="nx">chartPadding</span> <span class="o">+</span><span class="s2">&#34;, &#34;</span> <span class="o">+</span> <span class="p">(</span><span class="nx">maxBarHeight</span> <span class="o">+</span> <span class="nx">chartPadding</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&#34;)&#34;</span><span class="p">)</span>
+   <span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">xAxis</span><span class="p">);</span>
+
+<span class="nx">svg</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;g&#39;</span><span class="p">)</span>
+   <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;class&#39;</span><span class="p">,</span> <span class="s1">&#39;axis&#39;</span><span class="p">)</span>
+   <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&#34;transform&#34;</span><span class="p">,</span> <span class="s2">&#34;translate(&#34;</span> <span class="o">+</span> <span class="nx">chartPadding</span> <span class="o">+</span><span class="s2">&#34;, &#34;</span> <span class="o">+</span> <span class="nx">chartPadding</span> <span class="o">+</span> <span class="s2">&#34;)&#34;</span><span class="p">)</span>
+   <span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">yAxis</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>上面的代码有几个地方是需要注意的。</p>
+
+<ul>
+<li><strong>为什么定义 yScale 的时候，domain 是一个正向的区间，但 range 是一个反向的区间呢？</strong></li>
+</ul>
+
+<p>还记得我们之前说过左上角的坐标是(0, 0)，右下角的坐标是(width, height) 吗？细心想想就可以发现，这和我们平时绘制柱形图时用的纵坐标是相反的。因此，我们需要定义一个符合我们使用习惯的尺度。</p>
+
+<ul>
+<li><strong>为什么我们的柱形图是从下往上画出来的吗？之前不是说绘图是从上往下，从左往右的吗？怎么会变成从下往上的呢？</strong></li>
+</ul>
+
+<p>实际上，绘图确实是从上往下画的，之所以看到柱形图从下往上，是由于我们的绘图的起始位置一直往上移动，而且柱形的高度也在一直变化，这样就做成了一种错觉。</p>
+
+<p>很多时候，我们只需要换一种思路，就能实现我们想要的效果了。</p>
+
+<ul>
+<li><strong>为什么坐标轴要最后才添加？一开始就添加坐标轴会有问题吗？</strong></li>
+</ul>
+
+<p>假设我们先画坐标轴，再画柱形图，最后画柱形图上面的文字。
+如果我们用上面的方式去生成柱形图上的文字的话，<code>svg.selectAll('text')</code> 会把坐标轴里面的文字都选上，数据绑定就会失效(因为元素数量大于数据数量)。这样结果就是不能生成柱形上面的文字了。</p>
+
+<p>要解决的话其实也很简单，只要能区分柱形图上的文字和坐标轴上的文字就行了。怎么区分？加个 <code>id</code>, <code>class</code> 什么的，或者该结构也行。</p>
+
+<h1 id="事件绑定">事件绑定</h1>
+
+<p>D3 的事件绑定和 jQuery 类似，如果熟悉 jQuery 的事件绑定的话，可以很快掌握 D3 的事件绑定。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="c1">// 基本用法
+</span><span class="c1"></span><span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// do some thing
+</span><span class="c1"></span>  <span class="p">})</span><span class="err">；</span>
+
+<span class="c1">// 常见用法
+</span><span class="c1"></span><span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">&#39;rect&#39;</span><span class="p">)</span>
+   <span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">dataset</span><span class="p">)</span>
+   <span class="p">.</span><span class="nx">enter</span><span class="p">()</span>
+   <span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;rect&#39;</span><span class="p">)</span>
+   <span class="p">...</span> <span class="c1">// 设置属性
+</span><span class="c1"></span>   <span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">d</span><span class="p">);</span> <span class="c1">// 该矩形对应的数据
+</span><span class="c1"></span>   <span class="p">})</span>
+   <span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;mouseover&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+     <span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
+       <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;fill&#39;</span><span class="p">,</span> <span class="s1">&#39;orange&#39;</span><span class="p">);</span>
+   <span class="p">});</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="参考资料">参考资料</h1>
+
+<ul>
+<li><a href="https://github.com/mbostock/d3/wiki/Api-%E5%8F%82%E8%80%83">官方 API 文档</a></li>
+<li><a href="http://pkuwwt.gitcafe.com/d3-tutorial-cn/scales.html">D3 中文教程</a></li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">scarletsky</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2019-04-30
+        <a href="/commit/95a170dd24bf4b87af8e8309e95f31f929054a4a" title="chore: format markdown">(95a170d)</a>
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/d3.js/">d3.js</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/2015/01/04/d3js-learning-2/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">D3.js 学习笔记2</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/2014/10/25/mongodb-security-and-auth/">
+            <span class="next-text nav-default">MongoDB 安全与认证</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="scarletsky/scarletsky.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:scarletsky1025@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/scarletsky" class="iconfont icon-github" title="github"></a>
+  <a href="https://scarletsky.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>scarletsky</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
